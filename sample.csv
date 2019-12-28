@@ -1,139 +1,17 @@
-a,b,c,d,
-1,100,X,TRUE,"{
-  ""lineItems"": [
-    {
-      ""id"": ""a653fede-f4a6-47d7-d823-c5bed2ac6d0d"",
-      ""quantity"": 1,
-      ""unitPrice"": 9,
-      ""variationId"": ""2a16ba67-8fb8-4b27-b669-ec9450a39c14"",
-      ""itemName"": ""(10) Chicken Wings"",
-      ""specialInstruction"": ""ORDER NOTES: Include napkins"",
-      ""unitTax"": 0.15,
-      ""modifierGroups"": [
-        {
-          ""modifierGroupId"": ""15b40371-e06a-4ddc-e8f5-2658d9c83168"",
-          ""modifierOptions"": [
-            {
-              ""modifierOptionId"": ""1e66aef4-8fb1-460a-b314-d903ef6dfffe"",
-              ""modifierOptionName"": ""Blue Cheese"",
-              ""unitPrice"": 1
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  ""customer"": {
-    ""email"": ""d593de00-99bd-4e76-b59c-373a775a1ad7@itsacheckmate.com"",
-    ""firstName"": ""Hasi"",
-    ""lastName"": ""Baba"",
-    ""contact"": [
-      {
-        ""address"": {
-          ""address1"": ""1"",
-          ""address2"": ""Downing Street"",
-          ""city"": ""Berlin"",
-          ""state"": ""CA"",
-          ""zipCode"": ""22211""
-        },
-        ""contactType"": ""HOME"",
-        ""phone"": {
-          ""areaCode"": ""555"",
-          ""exchangeCode"": ""555"",
-          ""subscriberNumber"": ""555""
-        }
-      }
-    ]
-  },
-  ""aggregatorId"": ""checkmate"",
-  ""aggregatorOrderReference"": ""{{$timestamp}}"",
-  ""providerId"": ""delivery_hero"",
-  ""providerOrderReference"": ""{{$timestamp}}"",
-  ""orderType"": ""DELIVERY"",
-  ""orderReadyTime"": 1586347350000,
-  ""deliveryFee"": 0,
-  ""subTotal"": 10,
-  ""tax"": 0.15,
-  ""tip"": 0,
-  ""total"": 10.15,
-  ""discount"": 0,
-  ""paymentDetails"": {
-    ""paymentMethod"": ""THIRD_PARTY"",
-    ""paymentMode"": ""CARD"",
-    ""paymentReferenceId"": ""delivery_hero-07012019-1162""
-  }
-}"
-2,200,X,FALSE,
-3,300,X,TRUE,
-4,400,X,FALSE,
-5,500,X,TRUE,
-6,600,X,FALSE,
-7,700,X,TRUE,
-8,800,X,FALSE,"{
-  ""lineItems"": [
-    {
-      ""id"": ""a653fede-f4a6-47d7-d823-c5bed2ac6d0d"",
-      ""quantity"": 1,
-      ""unitPrice"": 9,
-      ""variationId"": ""2a16ba67-8fb8-4b27-b669-ec9450a39c14"",
-      ""itemName"": ""(10) Chicken Wings"",
-      ""specialInstruction"": ""ORDER NOTES: Include napkins"",
-      ""unitTax"": 0.15,
-      ""modifierGroups"": [
-        {
-          ""modifierGroupId"": ""15b40371-e06a-4ddc-e8f5-2658d9c83168"",
-          ""modifierOptions"": [
-            {
-              ""modifierOptionId"": ""1e66aef4-8fb1-460a-b314-d903ef6dfffe"",
-              ""modifierOptionName"": ""Blue Cheese"",
-              ""unitPrice"": 1
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  ""customer"": {
-    ""email"": ""d593de00-99bd-4e76-b59c-373a775a1ad7@itsacheckmate.com"",
-    ""firstName"": ""Hasi"",
-    ""lastName"": ""Baba"",
-    ""contact"": [
-      {
-        ""address"": {
-          ""address1"": ""1"",
-          ""address2"": ""Downing Street"",
-          ""city"": ""Berlin"",
-          ""state"": ""CA"",
-          ""zipCode"": ""22211""
-        },
-        ""contactType"": ""HOME"",
-        ""phone"": {
-          ""areaCode"": ""555"",
-          ""exchangeCode"": ""555"",
-          ""subscriberNumber"": ""555""
-        }
-      }
-    ]
-  },
-  ""aggregatorId"": ""checkmate"",
-  ""aggregatorOrderReference"": ""{{$timestamp}}"",
-  ""providerId"": ""delivery_hero"",
-  ""providerOrderReference"": ""{{$timestamp}}"",
-  ""orderType"": ""DELIVERY"",
-  ""orderReadyTime"": 1586347350000,
-  ""deliveryFee"": 0,
-  ""subTotal"": 10,
-  ""tax"": 0.15,
-  ""tip"": 0,
-  ""total"": 10.15,
-  ""discount"": 0,
-  ""paymentDetails"": {
-    ""paymentMethod"": ""THIRD_PARTY"",
-    ""paymentMode"": ""CARD"",
-    ""paymentReferenceId"": ""delivery_hero-07012019-1162""
-  }
-}"
-9,900,X,TRUE,
-10,1000,X,FALSE,
-11,1100,X,TRUE,
-12,1200,X,FALSE,
+TS_ID,TC_ID,INDEX,API_ID
+1,1,1,TRUE
+1,1,2,FALSE
+1,1,3,TRUE
+1,1,4,FALSE
+2,1,1,TRUE
+2,1,2,FALSE
+2,1,3,TRUE
+2,2,1,FALSE
+2,2,2,TRUE
+2,2,3,FALSE
+3,1,1,TRUE
+3,1,2,FALSE
+3,2,1,TRUE
+3,2,2,FALSE
+3,3,1,TRUE
+3,3,2,FALSE
