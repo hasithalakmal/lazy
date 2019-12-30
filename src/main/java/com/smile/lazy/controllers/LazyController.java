@@ -1,5 +1,6 @@
 package com.smile.lazy.controllers;
 
+import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.exception.LazyException;
 import com.smile.lazy.manager.LazyManager;
 import org.slf4j.Logger;
@@ -7,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,12 +31,12 @@ public class LazyController extends BaseController {
         return currentTime;
     }
 
-    @GetMapping(value = "lazy-api/test")
+    @PostMapping(value = "lazy-api/services/execute")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String test() throws LazyException {
-        LOGGER.info("Start test method");
-        lazyManager.test();
+    public String test(@RequestBody LazySuite lazySuite) throws LazyException {
+        LOGGER.info("Start lazy test suite execution [{}]", lazySuite);
+        lazyManager.test(lazySuite);
         return "Success";
     }
 }
