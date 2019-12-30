@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.smile.lazy.sample.SampleTestSuite1.populateSampleTestSuite;
+
 @RestController
 public class LazyController extends BaseController {
 
@@ -35,6 +37,10 @@ public class LazyController extends BaseController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public String test(@RequestBody LazySuite lazySuite) throws LazyException {
+        //TODO - Remove this
+        if (lazySuite == null) {
+            lazySuite = populateSampleTestSuite();
+        }
         LOGGER.info("Start lazy test suite execution [{}]", lazySuite);
         lazyManager.test(lazySuite);
         return "Success";

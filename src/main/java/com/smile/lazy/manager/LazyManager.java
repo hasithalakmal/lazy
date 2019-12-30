@@ -26,9 +26,6 @@ public class LazyManager {
     private ApiCallGenerator apiCallGenerator;
 
     public void test(LazySuite lazySuite) throws LazyException {
-        if (lazySuite == null) {
-            lazySuite = populateSampleTestSuite();
-        }
         for (TestSuite testSuite : lazySuite.getTestSuites()) {
             for (TestScenario testScenario : testSuite.getTestScenarios()) {
                 for (TestCase testCase : testScenario.getTestCases()) {
