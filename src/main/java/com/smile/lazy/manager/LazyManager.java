@@ -1,11 +1,8 @@
 package com.smile.lazy.manager;
 
-import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.response.LazyResponse;
 import com.smile.lazy.beans.suite.ApiCall;
-import com.smile.lazy.beans.suite.Header;
-import com.smile.lazy.beans.suite.HeaderGroup;
 import com.smile.lazy.beans.suite.TestCase;
 import com.smile.lazy.beans.suite.TestScenario;
 import com.smile.lazy.beans.suite.TestSuite;
@@ -14,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import static com.smile.lazy.sample.SampleTestSuite1.populateSampleTestSuite;
 
 @Service
 public class LazyManager {
