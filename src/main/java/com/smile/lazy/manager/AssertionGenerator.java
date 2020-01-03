@@ -53,56 +53,66 @@ public class AssertionGenerator {
     } else if (dataSource == DataSourceEnum.RESPONSE_HEADER) {
       LOGGER.warn("NOT IMPLEMENTED");
     } else if (dataSource == DataSourceEnum.BODY) {
-      String responseBody = lazyApiCallResponse.getResponseBody();
-      assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(),
-          responseBody);
-      AssertionValue assertionValue = assertionRule.getAssertionValue();
-      if (assertionValue == null) {
-        if (operation == AssertionOperationEnum.NULL) {
-          assertionResult.setPass(StringUtils.isBlank(responseBody));
-        } else if (operation == AssertionOperationEnum.NOT_NULL) {
-          assertionResult.setPass(StringUtils.isNotBlank(responseBody));
-        } else {
-          LOGGER.warn("Operation is not supported for given assertion values");
-        }
-      } else {
-        if (assertionValue instanceof BodyValueAssertion) {
-          BodyValueAssertion bodyValueAssertion = (BodyValueAssertion) assertionValue;
-          Object document = Configuration.defaultConfiguration().jsonProvider().parse(responseBody);
-          String actualValue = JsonPath.read(document, bodyValueAssertion.getJsonPath());
-          String expectedValue = bodyValueAssertion.getExpectedValue1();
-
-          if (operation == AssertionOperationEnum.NULL) {
-            assertionResult.setPass(StringUtils.isBlank(actualValue));
-          } else if (operation == AssertionOperationEnum.NOT_NULL) {
-            assertionResult.setPass(StringUtils.isNotBlank(actualValue));
-          } else if (operation == AssertionOperationEnum.EQUAL) {
-            assertionResult.setPass(actualValue.equals(expectedValue));
-          } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
-            assertionResult.setPass(!actualValue.equals(expectedValue));
-          } else if (operation == AssertionOperationEnum.CONTAINS) {
-            assertionResult.setPass(actualValue.contains(expectedValue));
-          } else if (operation == AssertionOperationEnum.NOT_CONTAINS) {
-            assertionResult.setPass(!actualValue.contains(expectedValue));
-          } else {
-            LOGGER.warn("Operation is not supported for given body assertion values");
-          }
-
-        } else {
-          String expectedValue = assertionValue.getExpectedValue1();
-          if (operation == AssertionOperationEnum.EQUAL) {
-            assertionResult.setPass(responseBody.equals(expectedValue));
-          } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
-            assertionResult.setPass(!responseBody.equals(expectedValue));
-          }
-        }
-      }
-
-
+      assertionResult = requestBodyAssertion(apiCall, lazyApiCallResponse, assertionRule, operation);
     } else {
       LOGGER.warn("Assertion datasource is not supported");
     }
     assertionResultList.getResults().add(assertionResult);
+  }
+
+  private AssertionResult requestBodyAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
+      AssertionRule assertionRule, AssertionOperationEnum operation) {
+    AssertionResult assertionResult;
+    String responseBody = lazyApiCallResponse.getResponseBody();
+    assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(),
+        responseBody);
+    AssertionValue assertionValue = assertionRule.getAssertionValue();
+    if (assertionValue == null) {
+      if (operation == AssertionOperationEnum.NULL) {
+        assertionResult.setPass(StringUtils.isBlank(responseBody));
+      } else if (operation == AssertionOperationEnum.NOT_NULL) {
+        assertionResult.setPass(StringUtils.isNotBlank(responseBody));
+      } else {
+        LOGGER.warn("Operation is not supported for given assertion values");
+      }
+    } else {
+      requestBodyValueAssertion(operation, assertionResult, responseBody, assertionValue);
+    }
+    return assertionResult;
+  }
+
+  private void requestBodyValueAssertion(AssertionOperationEnum operation, AssertionResult assertionResult,
+      String responseBody, AssertionValue assertionValue) {
+    if (assertionValue instanceof BodyValueAssertion) {
+      BodyValueAssertion bodyValueAssertion = (BodyValueAssertion) assertionValue;
+      Object document = Configuration.defaultConfiguration().jsonProvider().parse(responseBody);
+      String actualValue = JsonPath.read(document, bodyValueAssertion.getJsonPath());
+      String expectedValue = bodyValueAssertion.getExpectedValue1();
+
+      if (operation == AssertionOperationEnum.NULL) {
+        assertionResult.setPass(StringUtils.isBlank(actualValue));
+      } else if (operation == AssertionOperationEnum.NOT_NULL) {
+        assertionResult.setPass(StringUtils.isNotBlank(actualValue));
+      } else if (operation == AssertionOperationEnum.EQUAL) {
+        assertionResult.setPass(actualValue.equals(expectedValue));
+      } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
+        assertionResult.setPass(!actualValue.equals(expectedValue));
+      } else if (operation == AssertionOperationEnum.CONTAINS) {
+        assertionResult.setPass(actualValue.contains(expectedValue));
+      } else if (operation == AssertionOperationEnum.NOT_CONTAINS) {
+        assertionResult.setPass(!actualValue.contains(expectedValue));
+      } else {
+        LOGGER.warn("Operation is not supported for given body assertion values");
+      }
+
+    } else {
+      String expectedValue = assertionValue.getExpectedValue1();
+      if (operation == AssertionOperationEnum.EQUAL) {
+        assertionResult.setPass(responseBody.equals(expectedValue));
+      } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
+        assertionResult.setPass(!responseBody.equals(expectedValue));
+      }
+    }
   }
 
   private AssertionResult responseTimeAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
