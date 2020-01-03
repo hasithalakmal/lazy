@@ -16,26 +16,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class LazyManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LazyManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(LazyManager.class);
+  @Autowired
+  AssertionGenerator assertionGenerator;
+  @Autowired
+  private ApiCallGenerator apiCallGenerator;
 
-    @Autowired
-    private ApiCallGenerator apiCallGenerator;
-
-    @Autowired
-    AssertionGenerator assertionGenerator;
-
-    public AssertionResultList test(LazySuite lazySuite) throws LazyException {
-        AssertionResultList assertionResultList = new AssertionResultList();
-        for (TestSuite testSuite : lazySuite.getTestSuites()) {
-            for (TestScenario testScenario : testSuite.getTestScenarios()) {
-                for (TestCase testCase : testScenario.getTestCases()) {
-                    for (ApiCall apiCall : testCase.getApiCalls()) {
-                        LazyApiCallResponse response = apiCallGenerator.executeApiCall(apiCall);
-                        assertionGenerator.executeApiCall(apiCall, response, assertionResultList);
-                    }
-                }
-            }
+  public AssertionResultList test(LazySuite lazySuite) throws LazyException {
+    AssertionResultList assertionResultList = new AssertionResultList();
+    for (TestSuite testSuite : lazySuite.getTestSuites()) {
+      for (TestScenario testScenario : testSuite.getTestScenarios()) {
+        for (TestCase testCase : testScenario.getTestCases()) {
+          for (ApiCall apiCall : testCase.getApiCalls()) {
+            LazyApiCallResponse response = apiCallGenerator.executeApiCall(apiCall);
+            assertionGenerator.executeApiCall(apiCall, response, assertionResultList);
+          }
         }
-        return assertionResultList;
+      }
     }
+    return assertionResultList;
+  }
 }

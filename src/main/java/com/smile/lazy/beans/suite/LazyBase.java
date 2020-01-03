@@ -1,47 +1,50 @@
 package com.smile.lazy.beans.suite;
 
 import com.smile.lazy.beans.DefaultValues;
+import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import java.io.Serializable;
-
 public class LazyBase implements Serializable {
 
-    private DefaultValues defaultValues;
+  private DefaultValues defaultValues;
 
-    public DefaultValues getDefaultValues() {
-        return defaultValues;
+  public DefaultValues getDefaultValues() {
+    return defaultValues;
+  }
+
+  public void setDefaultValues(DefaultValues defaultValues) {
+    this.defaultValues = defaultValues;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
 
-    public void setDefaultValues(DefaultValues defaultValues) {
-        this.defaultValues = defaultValues;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    LazyBase lazyBase = (LazyBase) o;
 
-        if (o == null || getClass() != o.getClass()) return false;
+    return new EqualsBuilder()
+        .append(defaultValues, lazyBase.defaultValues)
+        .isEquals();
+  }
 
-        LazyBase lazyBase = (LazyBase) o;
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37)
+        .append(defaultValues)
+        .toHashCode();
+  }
 
-        return new EqualsBuilder()
-              .append(defaultValues, lazyBase.defaultValues)
-              .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-              .append(defaultValues)
-              .toHashCode();
-    }
-
-    @Override
-    public String toString() {
-        return "LazyBase{" +
-              "defaultValues=" + defaultValues +
-              '}';
-    }
+  @Override
+  public String toString() {
+    return "LazyBase{" +
+        "defaultValues=" + defaultValues +
+        '}';
+  }
 }
