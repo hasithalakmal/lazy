@@ -44,8 +44,9 @@ public class SampleTestSuite1 {
     ApiCall apiCall1 = new ApiCall(1, "Create Account", defaultValues, defaultCreateAssertionGroup);
     apiCall1.setUri("service/accounts");
     apiCall1.setHttpMethod("POST");
-    apiCall1.setRequestBody(
-        "{\"status\":\"ACTIVE\",\"createdBy\":\"12345\",\"parentId\":\"1\",\"enterpriseId\":\"1\",\"accountName\":\"Sathara-1577641690\",\"ownerName\":\"Hasitha-1577641690\",\"versionId\":\"1.0.0\",\"settings\":[{\"key\":\"setting1\",\"value\":\"1577641690\"},{\"key\":\"setting2\",\"value\":\"1577641690\"}]}");
+    apiCall1.setRequestBody("{\"status\":\"ACTIVE\",\"createdBy\":\"12345\",\"parentId\":\"1\",\"enterpriseId\":\"1\","
+        + "\"accountName\":\"Sathara-1577641690\",\"ownerName\":\"Hasitha-1577641690\",\"versionId\":\"1.0.0\","
+        + "\"settings\":[{\"key\":\"setting1\",\"value\":\"1577641690\"},{\"key\":\"setting2\",\"value\":\"1577641690\"}]}");
 
     AssertionRuleGroup assertionRuleGroup1 = new AssertionRuleGroup(1000, "Create Account success assertions");
     AssertionRule assertionRule1 = new AssertionRule(DataSourceEnum.BODY, AssertionOperationEnum.NOT_NULL,
