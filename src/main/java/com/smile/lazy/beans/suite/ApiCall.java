@@ -10,7 +10,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import java.io.Serializable;
 import java.util.List;
 
-public class ApiCall extends LazyBase implements Serializable {
+public class ApiCall implements Serializable {
 
     private int apiCallId;
     private String apiCallDisplayId;
@@ -28,12 +28,21 @@ public class ApiCall extends LazyBase implements Serializable {
     private HeaderGroup headerGroup;
     private String httpMethod;
     private String requestBody;
+    private AssertionRuleGroup defaultAssertionRuleGroup;
     private AssertionRuleGroup assertionRuleGroup;
+    private DefaultValues defaultValues;
+
+    public ApiCall(int apiCallId, String apiCallName,  DefaultValues defaultValues, AssertionRuleGroup defaultAssertionRuleGroup) {
+        this.apiCallId = apiCallId;
+        this.apiCallName = apiCallName;
+        this.defaultValues = defaultValues;
+        this.defaultAssertionRuleGroup = defaultAssertionRuleGroup;
+    }
 
     public ApiCall(int apiCallId, String apiCallName, DefaultValues defaultValues) {
         this.apiCallId = apiCallId;
         this.apiCallName = apiCallName;
-        super.setDefaultValues(defaultValues);
+        this.defaultValues = defaultValues;
     }
 
     public int getApiCallId() {
@@ -182,12 +191,28 @@ public class ApiCall extends LazyBase implements Serializable {
         this.requestBody = requestBody;
     }
 
+    public AssertionRuleGroup getDefaultAssertionRuleGroup() {
+        return defaultAssertionRuleGroup;
+    }
+
+    public void setDefaultAssertionRuleGroup(AssertionRuleGroup defaultAssertionRuleGroup) {
+        this.defaultAssertionRuleGroup = defaultAssertionRuleGroup;
+    }
+
     public AssertionRuleGroup getAssertionRuleGroup() {
         return assertionRuleGroup;
     }
 
     public void setAssertionRuleGroup(AssertionRuleGroup assertionRuleGroup) {
         this.assertionRuleGroup = assertionRuleGroup;
+    }
+
+    public DefaultValues getDefaultValues() {
+        return defaultValues;
+    }
+
+    public void setDefaultValues(DefaultValues defaultValues) {
+        this.defaultValues = defaultValues;
     }
 
     @Override
@@ -215,7 +240,9 @@ public class ApiCall extends LazyBase implements Serializable {
               .append(headerGroup, apiCall.headerGroup)
               .append(httpMethod, apiCall.httpMethod)
               .append(requestBody, apiCall.requestBody)
+              .append(defaultAssertionRuleGroup, apiCall.defaultAssertionRuleGroup)
               .append(assertionRuleGroup, apiCall.assertionRuleGroup)
+              .append(defaultValues, apiCall.defaultValues)
               .isEquals();
     }
 
@@ -238,7 +265,9 @@ public class ApiCall extends LazyBase implements Serializable {
               .append(headerGroup)
               .append(httpMethod)
               .append(requestBody)
+              .append(defaultAssertionRuleGroup)
               .append(assertionRuleGroup)
+              .append(defaultValues)
               .toHashCode();
     }
 
@@ -261,7 +290,9 @@ public class ApiCall extends LazyBase implements Serializable {
               ", headerGroup=" + headerGroup +
               ", httpMethod='" + httpMethod + '\'' +
               ", requestBody='" + requestBody + '\'' +
+              ", defaultAssertionRuleGroup='" + defaultAssertionRuleGroup + '\'' +
               ", assertionRuleGroup=" + assertionRuleGroup +
+              ", defaultValues=" + defaultValues +
               '}';
     }
 }

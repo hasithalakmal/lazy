@@ -9,14 +9,38 @@ import java.io.Serializable;
 
 public class AssertionRule implements Serializable {
 
-    DataSourceEnum dataSource;
     private int assertionRuleId;
     private int assertionRuleSequenceId;
     private String assertionRuleName;
     private String assertionRuleDescription;
     private Boolean active;
+    DataSourceEnum dataSource;
     private AssertionOperationEnum assertionOperation;
     private AssertionValue assertionValue;
+
+    public AssertionRule(DataSourceEnum dataSource, AssertionOperationEnum assertionOperation) {
+        this.dataSource = dataSource;
+        this.assertionOperation = assertionOperation;
+    }
+
+    public AssertionRule(int assertionRuleId, DataSourceEnum dataSource, AssertionOperationEnum assertionOperation) {
+        this.assertionRuleId = assertionRuleId;
+        this.dataSource = dataSource;
+        this.assertionOperation = assertionOperation;
+    }
+
+    public AssertionRule(DataSourceEnum dataSource, AssertionOperationEnum assertionOperation, AssertionValue assertionValue) {
+        this.dataSource = dataSource;
+        this.assertionOperation = assertionOperation;
+        this.assertionValue = assertionValue;
+    }
+
+    public AssertionRule(int assertionRuleId, DataSourceEnum dataSource, AssertionOperationEnum assertionOperation, AssertionValue assertionValue) {
+        this.assertionRuleId = assertionRuleId;
+        this.dataSource = dataSource;
+        this.assertionOperation = assertionOperation;
+        this.assertionValue = assertionValue;
+    }
 
     public int getAssertionRuleId() {
         return assertionRuleId;

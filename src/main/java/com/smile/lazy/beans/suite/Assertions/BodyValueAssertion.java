@@ -9,6 +9,15 @@ public class BodyValueAssertion extends AssertionValue implements Serializable {
 
     private String jsonPath;
 
+    public BodyValueAssertion(String jsonPath) {
+        this.jsonPath = jsonPath;
+    }
+
+    public BodyValueAssertion(String jsonPath, String expectedValue) {
+        super(expectedValue);
+        this.jsonPath = jsonPath;
+    }
+
     public String getJsonPath() {
         return jsonPath;
     }

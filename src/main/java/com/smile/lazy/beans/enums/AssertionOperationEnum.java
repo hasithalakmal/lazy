@@ -12,6 +12,7 @@ public enum AssertionOperationEnum {
     LESS_THAN_OR_EQUAL("LESS_THAN_OR_EQUAL"), //key and value
     CONTAINS("CONTAINS"), //key and value
     NOT_CONTAINS("NOT_CONTAINS"), //key and value
+    BETWEEN("BETWEEN"), //key and value
     TRUE("TRUE"); //condition
 
     private String value;

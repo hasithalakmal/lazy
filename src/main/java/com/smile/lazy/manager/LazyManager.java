@@ -1,7 +1,8 @@
 package com.smile.lazy.manager;
 
 import com.smile.lazy.beans.LazySuite;
-import com.smile.lazy.beans.response.LazyResponse;
+import com.smile.lazy.beans.response.LazyApiCallResponse;
+import com.smile.lazy.beans.result.AssertionResultList;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.beans.suite.TestCase;
 import com.smile.lazy.beans.suite.TestScenario;
@@ -20,16 +21,21 @@ public class LazyManager {
     @Autowired
     private ApiCallGenerator apiCallGenerator;
 
-    public void test(LazySuite lazySuite) throws LazyException {
+    @Autowired
+    AssertionGenerator assertionGenerator;
+
+    public AssertionResultList test(LazySuite lazySuite) throws LazyException {
+        AssertionResultList assertionResultList = new AssertionResultList();
         for (TestSuite testSuite : lazySuite.getTestSuites()) {
             for (TestScenario testScenario : testSuite.getTestScenarios()) {
                 for (TestCase testCase : testScenario.getTestCases()) {
                     for (ApiCall apiCall : testCase.getApiCalls()) {
-                        LazyResponse response = apiCallGenerator.executeApiCall(apiCall);
+                        LazyApiCallResponse response = apiCallGenerator.executeApiCall(apiCall);
+                        assertionGenerator.executeApiCall(apiCall, response, assertionResultList);
                     }
                 }
             }
         }
-
+        return assertionResultList;
     }
 }

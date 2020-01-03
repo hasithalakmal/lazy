@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AssertionRuleGroup implements Serializable {
@@ -14,6 +15,11 @@ public class AssertionRuleGroup implements Serializable {
     private String assertionRuleGroupDescription;
     private Boolean active;
     private List<AssertionRule> assertionRules;
+
+    public AssertionRuleGroup(int assertionRuleGroupId, String assertionRuleGroupName) {
+        this.assertionRuleGroupId = assertionRuleGroupId;
+        this.assertionRuleGroupName = assertionRuleGroupName;
+    }
 
     public int getAssertionRuleGroupId() {
         return assertionRuleGroupId;
@@ -56,6 +62,9 @@ public class AssertionRuleGroup implements Serializable {
     }
 
     public List<AssertionRule> getAssertionRules() {
+        if(assertionRules == null) {
+            assertionRules = new ArrayList<>();
+        }
         return assertionRules;
     }
 

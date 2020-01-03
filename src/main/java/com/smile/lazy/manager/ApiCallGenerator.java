@@ -1,6 +1,6 @@
 package com.smile.lazy.manager;
 
-import com.smile.lazy.beans.response.LazyResponse;
+import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.common.ErrorCodes;
 import com.smile.lazy.exception.LazyException;
@@ -29,7 +29,7 @@ public class ApiCallGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiCallGenerator.class);
 
-    public LazyResponse executeApiCall(ApiCall apiCall) throws LazyException {
+    public LazyApiCallResponse executeApiCall(ApiCall apiCall) throws LazyException {
 
         try (CloseableHttpClient httpClient = createDefault()) {
             URI uri = populateRequestUri(apiCall);
@@ -49,8 +49,8 @@ public class ApiCallGenerator {
             CloseableHttpResponse response = httpClient.execute(request);
             long executionEndTime = System.currentTimeMillis();
 
-            printResponse(response);
-            return new LazyResponse(response, (executionEndTime - executionStartTime));
+            String result = getResponseBody(response);
+            return new LazyApiCallResponse(response, (executionEndTime - executionStartTime), result);
         } catch (URISyntaxException e) {
             final String message = "Invalid URI syntax";
             LOGGER.error(message, e);
@@ -73,24 +73,17 @@ public class ApiCallGenerator {
     }
 
     //TODO - remove this method
-    private void printResponse(CloseableHttpResponse response) throws IOException {
+    private String getResponseBody(CloseableHttpResponse response) throws IOException {
+        String result = null;
         try {
-
-            // Get HttpResponse Status
-            System.out.println(response.getProtocolVersion());              // HTTP/1.1
-            System.out.println(response.getStatusLine().getStatusCode());   // 200
-            System.out.println(response.getStatusLine().getReasonPhrase()); // OK
-            System.out.println(response.getStatusLine().toString());        // HTTP/1.1 200 OK
-
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                // return it as a String
-                String result = EntityUtils.toString(entity);
-                System.out.println(result);
+                result =  EntityUtils.toString(entity);
             }
 
         } finally {
             response.close();
+            return result;
         }
     }
 

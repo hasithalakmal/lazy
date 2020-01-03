@@ -6,18 +6,25 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 
 import java.io.Serializable;
 
-public class LazyResponse implements Serializable {
+public class LazyApiCallResponse implements Serializable {
 
     private CloseableHttpResponse closeableHttpResponse;
     private long responseTime;
+    private String responseBody;
 
-    public LazyResponse(CloseableHttpResponse closeableHttpResponse) {
+    public LazyApiCallResponse(CloseableHttpResponse closeableHttpResponse) {
         this.closeableHttpResponse = closeableHttpResponse;
     }
 
-    public LazyResponse(CloseableHttpResponse closeableHttpResponse, long responseTime) {
+    public LazyApiCallResponse(CloseableHttpResponse closeableHttpResponse, long responseTime) {
         this.closeableHttpResponse = closeableHttpResponse;
         this.responseTime = responseTime;
+    }
+
+    public LazyApiCallResponse(CloseableHttpResponse closeableHttpResponse, long responseTime, String responseBody) {
+        this.closeableHttpResponse = closeableHttpResponse;
+        this.responseTime = responseTime;
+        this.responseBody = responseBody;
     }
 
     public CloseableHttpResponse getCloseableHttpResponse() {
@@ -32,6 +39,14 @@ public class LazyResponse implements Serializable {
         return responseTime;
     }
 
+    public String getResponseBody() {
+        return responseBody;
+    }
+
+    public void setResponseBody(String responseBody) {
+        this.responseBody = responseBody;
+    }
+
     public void setResponseTime(long responseTime) {
         this.responseTime = responseTime;
     }
@@ -42,10 +57,11 @@ public class LazyResponse implements Serializable {
 
         if (o == null || getClass() != o.getClass()) return false;
 
-        LazyResponse that = (LazyResponse) o;
+        LazyApiCallResponse that = (LazyApiCallResponse) o;
 
         return new EqualsBuilder()
               .append(responseTime, that.responseTime)
+              .append(responseBody, that.responseBody)
               .append(closeableHttpResponse, that.closeableHttpResponse)
               .isEquals();
     }
@@ -55,6 +71,7 @@ public class LazyResponse implements Serializable {
         return new HashCodeBuilder(17, 37)
               .append(closeableHttpResponse)
               .append(responseTime)
+              .append(responseBody)
               .toHashCode();
     }
 
@@ -63,6 +80,7 @@ public class LazyResponse implements Serializable {
         return "LazyResponse{" +
               "closeableHttpResponse=" + closeableHttpResponse +
               ", responseTime=" + responseTime +
+              ", responseBody=" + responseBody +
               '}';
     }
 }
