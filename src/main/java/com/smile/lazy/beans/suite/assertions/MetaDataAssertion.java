@@ -1,4 +1,4 @@
-package com.smile.lazy.beans.suite.Assertions;
+package com.smile.lazy.beans.suite.assertions;
 
 import java.io.Serializable;
 

@@ -1,5 +1,6 @@
-package com.smile.lazy.beans.suite.Actions;
+package com.smile.lazy.beans.suite.actions;
 
+import com.smile.lazy.beans.enums.ActionTypeEnum;
 import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -8,6 +9,11 @@ public class VariableCleanAction extends Action implements Serializable {
 
   private int environmentId;
   private String variableKey;
+
+  public VariableCleanAction(ActionTypeEnum actionType, String variableKey) {
+    super(actionType);
+    this.variableKey = variableKey;
+  }
 
   public int getEnvironmentId() {
     return environmentId;

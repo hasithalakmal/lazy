@@ -1,4 +1,4 @@
-package com.smile.lazy.beans.suite.Actions;
+package com.smile.lazy.beans.suite.actions;
 
 import com.smile.lazy.beans.enums.ActionTypeEnum;
 import java.io.Serializable;
@@ -7,26 +7,41 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Action implements Serializable {
 
-  private int actionId;
-  private int actionSequenceId;
+  private Integer actionId;
+  private Integer actionSequenceId;
   private String actionName;
   private String actionDescription;
   private Boolean active;
   private ActionTypeEnum actionType;
 
-  public int getActionId() {
+  public Action(ActionTypeEnum actionType) {
+    this.actionType = actionType;
+  }
+
+  public Action(Integer actionId, ActionTypeEnum actionType) {
+    this.actionId = actionId;
+    this.actionType = actionType;
+  }
+
+  public Action(Integer actionId, Integer actionSequenceId, ActionTypeEnum actionType) {
+    this.actionId = actionId;
+    this.actionSequenceId = actionSequenceId;
+    this.actionType = actionType;
+  }
+
+  public Integer getActionId() {
     return actionId;
   }
 
-  public void setActionId(int actionId) {
+  public void setActionId(Integer actionId) {
     this.actionId = actionId;
   }
 
-  public int getActionSequenceId() {
+  public Integer getActionSequenceId() {
     return actionSequenceId;
   }
 
-  public void setActionSequenceId(int actionSequenceId) {
+  public void setActionSequenceId(Integer actionSequenceId) {
     this.actionSequenceId = actionSequenceId;
   }
 

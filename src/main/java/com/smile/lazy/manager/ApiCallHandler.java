@@ -2,6 +2,7 @@ package com.smile.lazy.manager;
 
 import static org.apache.http.impl.client.HttpClients.createDefault;
 
+import com.smile.lazy.beans.environment.Environment;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.common.ErrorCodes;
@@ -24,11 +25,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ApiCallGenerator {
+public class ApiCallHandler {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ApiCallGenerator.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ApiCallHandler.class);
 
-  public LazyApiCallResponse executeApiCall(ApiCall apiCall) throws LazyException {
+  public LazyApiCallResponse executeApiCall(ApiCall apiCall, Environment globalEnvironment) throws LazyException {
 
     try (CloseableHttpClient httpClient = createDefault()) {
       URI uri = populateRequestUri(apiCall);

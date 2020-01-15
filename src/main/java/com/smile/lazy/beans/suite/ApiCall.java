@@ -1,9 +1,10 @@
 package com.smile.lazy.beans.suite;
 
 import com.smile.lazy.beans.DefaultValues;
-import com.smile.lazy.beans.suite.Actions.Action;
-import com.smile.lazy.beans.suite.Assertions.AssertionRuleGroup;
+import com.smile.lazy.beans.suite.actions.Action;
+import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -11,7 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class ApiCall implements Serializable {
 
-  private int apiCallId;
+  private Integer apiCallId;
   private String apiCallDisplayId;
   private String apiCallName;
   private String apiCallDescription;
@@ -31,7 +32,11 @@ public class ApiCall implements Serializable {
   private AssertionRuleGroup assertionRuleGroup;
   private DefaultValues defaultValues;
 
-  public ApiCall(int apiCallId, String apiCallName, DefaultValues defaultValues,
+  public ApiCall(String apiCallName) {
+    this.apiCallName = apiCallName;
+  }
+
+  public ApiCall(Integer apiCallId, String apiCallName, DefaultValues defaultValues,
       AssertionRuleGroup defaultAssertionRuleGroup) {
     this.apiCallId = apiCallId;
     this.apiCallName = apiCallName;
@@ -39,17 +44,17 @@ public class ApiCall implements Serializable {
     this.defaultAssertionRuleGroup = defaultAssertionRuleGroup;
   }
 
-  public ApiCall(int apiCallId, String apiCallName, DefaultValues defaultValues) {
+  public ApiCall(Integer apiCallId, String apiCallName, DefaultValues defaultValues) {
     this.apiCallId = apiCallId;
     this.apiCallName = apiCallName;
     this.defaultValues = defaultValues;
   }
 
-  public int getApiCallId() {
+  public Integer getApiCallId() {
     return apiCallId;
   }
 
-  public void setApiCallId(int apiCallId) {
+  public void setApiCallId(Integer apiCallId) {
     this.apiCallId = apiCallId;
   }
 
@@ -86,6 +91,9 @@ public class ApiCall implements Serializable {
   }
 
   public List<Action> getPreActions() {
+    if (preActions == null) {
+      preActions = new ArrayList<>();
+    }
     return preActions;
   }
 

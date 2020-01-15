@@ -1,6 +1,6 @@
 package com.smile.lazy.beans.suite;
 
-import com.smile.lazy.beans.suite.Actions.Action;
+import com.smile.lazy.beans.suite.actions.Action;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class TestCase implements Serializable {
 
-  private int testCaseId;
+  private Integer testCaseId;
   private String testCaseDisplayId;
   private String testCaseName;
   private String testCaseDescription;
@@ -18,16 +18,16 @@ public class TestCase implements Serializable {
   private List<Action> preActions;
   private List<Action> postActions;
 
-  public TestCase(int testCaseId, String testCaseName) {
-    this.testCaseId = testCaseId;
+  public TestCase(String testCaseDisplayId, String testCaseName) {
+    this.testCaseDisplayId = testCaseDisplayId;
     this.testCaseName = testCaseName;
   }
 
-  public int getTestCaseId() {
+  public Integer getTestCaseId() {
     return testCaseId;
   }
 
-  public void setTestCaseId(int testCaseId) {
+  public void setTestCaseId(Integer testCaseId) {
     this.testCaseId = testCaseId;
   }
 

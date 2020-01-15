@@ -19,7 +19,8 @@ public class LazySuite implements Serializable {
   private List<TestSuite> testSuites;
   private DefaultValues defaultValues;
   private Environment globalEnvironment;
-  private Map<String, Environment> environments;
+  private Map<String, Environment> environments; //environmentDisplayId, environment
+  private Map<String, String> attributes; //attribute key, value
 
   public LazySuite(int lazySuiteId, String lazySuiteName, DefaultValues defaultValues) {
     this.lazySuiteId = lazySuiteId;
@@ -102,6 +103,14 @@ public class LazySuite implements Serializable {
     this.environments = environments;
   }
 
+  public Map<String, String> getAttributes() {
+    return attributes;
+  }
+
+  public void setAttributes(Map<String, String> attributes) {
+    this.attributes = attributes;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -124,6 +133,7 @@ public class LazySuite implements Serializable {
         .append(defaultValues, lazySuite.defaultValues)
         .append(globalEnvironment, lazySuite.globalEnvironment)
         .append(environments, lazySuite.environments)
+        .append(attributes, lazySuite.attributes)
         .isEquals();
   }
 
@@ -139,6 +149,7 @@ public class LazySuite implements Serializable {
         .append(defaultValues)
         .append(globalEnvironment)
         .append(environments)
+        .append(attributes)
         .toHashCode();
   }
 
@@ -154,6 +165,7 @@ public class LazySuite implements Serializable {
         ", defaultValues=" + defaultValues +
         ", globalEnvironment=" + globalEnvironment +
         ", environments=" + environments +
+        ", attributes=" + attributes +
         '}';
   }
 }

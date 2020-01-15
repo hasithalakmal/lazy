@@ -8,9 +8,9 @@ import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.result.AssertionResult;
 import com.smile.lazy.beans.result.AssertionResultList;
 import com.smile.lazy.beans.suite.ApiCall;
-import com.smile.lazy.beans.suite.Assertions.AssertionRule;
-import com.smile.lazy.beans.suite.Assertions.AssertionValue;
-import com.smile.lazy.beans.suite.Assertions.BodyValueAssertion;
+import com.smile.lazy.beans.suite.assertions.AssertionRule;
+import com.smile.lazy.beans.suite.assertions.AssertionValue;
+import com.smile.lazy.beans.suite.assertions.BodyValueAssertion;
 import com.smile.lazy.exception.LazyException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,12 +18,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AssertionGenerator {
+public class AssertionHandler {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ApiCallGenerator.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AssertionHandler.class);
 
-  public void executeApiCall(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
-      AssertionResultList assertionResultList) throws LazyException {
+  public void executeApiCallAssertions(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList) throws LazyException {
 
     if (apiCall.getDefaultAssertionRuleGroup() != null) {
       for (AssertionRule assertionRule : apiCall.getDefaultAssertionRuleGroup().getAssertionRules()) {
@@ -39,8 +38,7 @@ public class AssertionGenerator {
 
   }
 
-  private void executeAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
-      AssertionResultList assertionResultList, AssertionRule assertionRule) throws LazyException {
+  private void executeAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList, AssertionRule assertionRule) throws LazyException {
     DataSourceEnum dataSource = assertionRule.getDataSource();
     AssertionOperationEnum operation = assertionRule.getAssertionOperation();
     AssertionResult assertionResult = null;

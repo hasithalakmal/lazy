@@ -1,4 +1,4 @@
-package com.smile.lazy.beans.suite.Assertions;
+package com.smile.lazy.beans.suite.assertions;
 
 import com.smile.lazy.beans.enums.OperationEnum;
 import java.io.Serializable;

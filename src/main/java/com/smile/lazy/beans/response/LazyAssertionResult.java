@@ -1,6 +1,6 @@
 package com.smile.lazy.beans.response;
 
-import com.smile.lazy.beans.suite.Assertions.AssertionRule;
+import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import java.io.Serializable;
 import java.util.Objects;
 

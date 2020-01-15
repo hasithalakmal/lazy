@@ -1,5 +1,6 @@
-package com.smile.lazy.beans.suite.Actions;
+package com.smile.lazy.beans.suite.actions;
 
+import com.smile.lazy.beans.enums.ActionTypeEnum;
 import com.smile.lazy.beans.enums.DataSourceEnum;
 import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -7,19 +8,24 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class VariableDeclarationAction extends Action implements Serializable {
 
-  private int environmentId;
+  private String environmentDisplayId;
   private DataSourceEnum dataSourceEnum;
   private String jsonPath;
   private String variableValue;
   private String variableKey;
   private String dataType;
 
-  public int getEnvironmentId() {
-    return environmentId;
+  public VariableDeclarationAction(ActionTypeEnum actionType, String variableKey) {
+    super(actionType);
+    this.variableKey = variableKey;
   }
 
-  public void setEnvironmentId(int environmentId) {
-    this.environmentId = environmentId;
+  public String getEnvironmentDisplayId() {
+    return environmentDisplayId;
+  }
+
+  public void setEnvironmentDisplayId(String environmentDisplayId) {
+    this.environmentDisplayId = environmentDisplayId;
   }
 
   public DataSourceEnum getDataSourceEnum() {
@@ -76,7 +82,7 @@ public class VariableDeclarationAction extends Action implements Serializable {
 
     return new EqualsBuilder()
         .appendSuper(super.equals(o))
-        .append(environmentId, that.environmentId)
+        .append(environmentDisplayId, that.environmentDisplayId)
         .append(dataSourceEnum, that.dataSourceEnum)
         .append(jsonPath, that.jsonPath)
         .append(variableValue, that.variableValue)
@@ -89,7 +95,7 @@ public class VariableDeclarationAction extends Action implements Serializable {
   public int hashCode() {
     return new HashCodeBuilder(17, 37)
         .appendSuper(super.hashCode())
-        .append(environmentId)
+        .append(environmentDisplayId)
         .append(dataSourceEnum)
         .append(jsonPath)
         .append(variableValue)
@@ -101,7 +107,7 @@ public class VariableDeclarationAction extends Action implements Serializable {
   @Override
   public String toString() {
     return "VariableDeclarationAction{" +
-        "environmentId=" + environmentId +
+        "environmentId=" + environmentDisplayId +
         ", dataSourceEnum=" + dataSourceEnum +
         ", jsonPath='" + jsonPath + '\'' +
         ", variableValue='" + variableValue + '\'' +

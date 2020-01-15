@@ -15,6 +15,17 @@ public class EnvironmentVariable implements Serializable {
   private String key;
   private String value;
 
+  public EnvironmentVariable(String key, String value) {
+    this.key = key;
+    this.value = value;
+  }
+
+  public EnvironmentVariable(String key, String value, String dataType) {
+    this.dataType = dataType;
+    this.key = key;
+    this.value = value;
+  }
+
   public int getEnvironmentVariableId() {
     return environmentVariableId;
   }

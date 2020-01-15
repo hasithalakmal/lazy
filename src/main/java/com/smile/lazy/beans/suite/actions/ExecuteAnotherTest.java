@@ -1,5 +1,6 @@
-package com.smile.lazy.beans.suite.Actions;
+package com.smile.lazy.beans.suite.actions;
 
+import com.smile.lazy.beans.enums.ActionTypeEnum;
 import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -12,6 +13,10 @@ public class ExecuteAnotherTest extends Action implements Serializable {
   private int apiCallId;
   private int apiCallDisplayId; //Can use to execute api call directly
   private Action action;
+
+  public ExecuteAnotherTest(ActionTypeEnum actionType) {
+    super(actionType);
+  }
 
   public int getTestSuiteId() {
     return testSuiteId;

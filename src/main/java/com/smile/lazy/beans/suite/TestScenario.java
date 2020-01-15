@@ -1,6 +1,6 @@
 package com.smile.lazy.beans.suite;
 
-import com.smile.lazy.beans.suite.Actions.Action;
+import com.smile.lazy.beans.suite.actions.Action;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class TestScenario implements Serializable {
 
-  private int testScenarioId;
+  private Integer testScenarioId;
   private String testScenarioDisplayId;
   private String testScenarioName;
   private String testScenarioDescription;
@@ -18,16 +18,16 @@ public class TestScenario implements Serializable {
   private List<Action> preActions;
   private List<Action> postActions;
 
-  public TestScenario(int testScenarioId, String testScenarioName) {
-    this.testScenarioId = testScenarioId;
+  public TestScenario(String testScenarioDisplayId, String testScenarioName) {
+    this.testScenarioDisplayId = testScenarioDisplayId;
     this.testScenarioName = testScenarioName;
   }
 
-  public int getTestScenarioId() {
+  public Integer getTestScenarioId() {
     return testScenarioId;
   }
 
-  public void setTestScenarioId(int testScenarioId) {
+  public void setTestScenarioId(Integer testScenarioId) {
     this.testScenarioId = testScenarioId;
   }
 
