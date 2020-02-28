@@ -18,6 +18,7 @@ public class AssertionResult implements Serializable {
   private int assertionRuleId;
   private String actualValue;
   private Boolean pass;
+  private String assertionStatus;
 
   public AssertionResult(int resultId, int apiCallId, int assertionRuleId, String actualValue) {
     this.resultId = resultId;
@@ -32,6 +33,15 @@ public class AssertionResult implements Serializable {
     this.assertionRuleId = assertionRuleId;
     this.actualValue = actualValue;
     this.pass = pass;
+  }
+
+  public AssertionResult(int resultId, int apiCallId, int assertionRuleId, String actualValue, Boolean pass, String assertionStatus) {
+    this.resultId = resultId;
+    this.apiCallId = apiCallId;
+    this.assertionRuleId = assertionRuleId;
+    this.actualValue = actualValue;
+    this.pass = pass;
+    this.assertionStatus = assertionStatus;
   }
 
   public int getResultId() {
@@ -130,6 +140,14 @@ public class AssertionResult implements Serializable {
     this.pass = pass;
   }
 
+  public String getAssertionStatus() {
+    return assertionStatus;
+  }
+
+  public void setAssertionStatus(String assertionStatus) {
+    this.assertionStatus = assertionStatus;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -155,6 +173,7 @@ public class AssertionResult implements Serializable {
         .append(active, that.active)
         .append(actualValue, that.actualValue)
         .append(pass, that.pass)
+        .append(assertionStatus, that.assertionStatus)
         .isEquals();
   }
 
@@ -173,6 +192,7 @@ public class AssertionResult implements Serializable {
         .append(assertionRuleId)
         .append(actualValue)
         .append(pass)
+        .append(assertionStatus)
         .toHashCode();
   }
 
@@ -191,6 +211,7 @@ public class AssertionResult implements Serializable {
         ", assertionRuleId=" + assertionRuleId +
         ", actualValue='" + actualValue + '\'' +
         ", pass=" + pass +
+        ", assertionStatus=" + assertionStatus +
         '}';
   }
 }

@@ -11,10 +11,12 @@ import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionValue;
 import com.smile.lazy.beans.suite.assertions.BodyValueAssertion;
+import com.smile.lazy.common.ErrorCodes;
 import com.smile.lazy.exception.LazyException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -38,22 +40,27 @@ public class AssertionHandler {
 
   }
 
-  private void executeAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList, AssertionRule assertionRule) throws LazyException {
+  private void executeAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList,
+                                AssertionRule assertionRule) throws LazyException{
     DataSourceEnum dataSource = assertionRule.getDataSource();
     AssertionOperationEnum operation = assertionRule.getAssertionOperation();
     AssertionResult assertionResult = null;
-    if (dataSource == DataSourceEnum.RESPONSE_CODE) {
+    if (lazyApiCallResponse == null) {
+      //TODO - Fix result id
+      assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), null, false, "SKIPPED");
+    } else if (dataSource == DataSourceEnum.RESPONSE_CODE) {
       assertionResult = responseCodeAssertion(apiCall, lazyApiCallResponse, assertionRule, operation);
     } else if (dataSource == DataSourceEnum.RESPONSE_TIME) {
       assertionResult = responseTimeAssertion(apiCall, lazyApiCallResponse, assertionRule, operation);
     } else if (dataSource == DataSourceEnum.RESPONSE_CODE_NAME) {
-      LOGGER.warn("NOT IMPLEMENTED");
+      assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), null, false, "NOT_IMPLEMENTED");
     } else if (dataSource == DataSourceEnum.RESPONSE_HEADER) {
-      LOGGER.warn("NOT IMPLEMENTED");
+      assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), null, false, "NOT_IMPLEMENTED");
     } else if (dataSource == DataSourceEnum.BODY) {
       assertionResult = requestBodyAssertion(apiCall, lazyApiCallResponse, assertionRule, operation);
     } else {
       LOGGER.warn("Assertion datasource is not supported");
+      throw new LazyException(HttpStatus.NOT_IMPLEMENTED, ErrorCodes.NOT_IMPLEMENTED, "Given dataSource has not supported yet");
     }
     assertionResultList.getResults().add(assertionResult);
   }

@@ -201,8 +201,13 @@ public class LazyManager {
         preActionHandler.executePreAction(lazySuite, preAction);
       }
 
-      LazyApiCallResponse response = apiCallHandler.executeApiCall(apiCall, globalEnvironment);
-      assertionHandler.executeApiCallAssertions(apiCall, response, assertionResultList);
+      try {
+        LazyApiCallResponse response = apiCallHandler.executeApiCall(apiCall, globalEnvironment);
+        assertionHandler.executeApiCallAssertions(apiCall, response, assertionResultList);
+      } catch (Exception ex) {
+        LOGGER.warn("API call execution failed since skipping the assertion execution");
+        assertionHandler.executeApiCallAssertions(apiCall, null, assertionResultList);
+      }
 
       idDto.setApiCallId(idDto.getApiCallId()+1);
     }
