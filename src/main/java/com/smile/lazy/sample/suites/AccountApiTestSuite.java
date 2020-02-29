@@ -1,6 +1,5 @@
 package com.smile.lazy.sample.suites;
 
-import com.smile.lazy.beans.suite.Stack;
 import com.smile.lazy.beans.suite.TestSuite;
 
 import static com.smile.lazy.sample.scenarios.CreateAccountTestScenario.getAccountCreationTestScenario;

@@ -3,7 +3,6 @@ package com.smile.lazy.sample.apicall;
 import com.smile.lazy.beans.enums.AssertionOperationEnum;
 import com.smile.lazy.beans.enums.DataSourceEnum;
 import com.smile.lazy.beans.suite.ApiCall;
-import com.smile.lazy.beans.suite.Stack;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
 import com.smile.lazy.beans.suite.assertions.BodyValueAssertion;
@@ -32,7 +31,7 @@ public class AccountApiCalls {
     private static AssertionRuleGroup createAssertionRuleGroupForAccountCreation(String expectedAccountName) {
         AssertionRuleGroup assertionRuleGroup1 = new AssertionRuleGroup(1000, "Create Account success assertions");
         AssertionRule assertionRule1 =
-              new AssertionRule("Account name not null assertion",DataSourceEnum.BODY, AssertionOperationEnum.NOT_NULL,
+              new AssertionRule("Account name not null assertion", DataSourceEnum.BODY, AssertionOperationEnum.NOT_NULL,
                     new BodyValueAssertion("$['accountName']"));
         AssertionRule assertionRule2 = new AssertionRule("Account name match assertion", DataSourceEnum.BODY, AssertionOperationEnum.EQUAL,
               new BodyValueAssertion("$['accountName']", expectedAccountName));

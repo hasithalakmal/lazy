@@ -1,6 +1,5 @@
 package com.smile.lazy.sample.testcase;
 
-import com.smile.lazy.beans.suite.Stack;
 import com.smile.lazy.beans.suite.TestCase;
 
 import static com.smile.lazy.sample.apicall.AccountApiCalls.createAccountApiCall;

@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class StackManager {
 
-    public Stack mergeTwoStacks(Stack parentStack, Stack childStack){
+    public Stack mergeTwoStacks(Stack parentStack, Stack childStack) {
 
         Stack mergedStack = SerializationUtils.clone(parentStack);
 

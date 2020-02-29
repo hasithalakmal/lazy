@@ -5,6 +5,7 @@ import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.suite.Global;
 import com.smile.lazy.beans.suite.Stack;
 import com.smile.lazy.sample.suites.AccountApiTestSuite;
+
 import static com.smile.lazy.utils.SampleDefaultValues.createDefaultValues;
 
 public class SampleLazySuite1 {

@@ -1,6 +1,5 @@
 package com.smile.lazy.beans.suite;
 
-import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.environment.Environment;
 import com.smile.lazy.beans.result.AssertionResultList;
 import org.apache.commons.lang3.builder.EqualsBuilder;
