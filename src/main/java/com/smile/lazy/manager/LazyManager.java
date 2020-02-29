@@ -213,11 +213,6 @@ public class LazyManager {
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_API_CALL, error);
             }
 
-//            if (apiCall.getStack().getDefaultValues() == null) {
-//                LOGGER.warn("No default values found for the API call - {}, hence adding global default values", apiCallName);
-//                apiCall.getStack().setDefaultValues(lazySuite.getStack().getDefaultValues());
-//            }
-
             LOGGER.info("Executing api call - [{}] - [{}]", idDto.getApiCallId(), apiCallName);
 
             Environment globalEnvironment = lazySuite.getGlobal().getGlobalEnvironment();
