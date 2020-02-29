@@ -1,51 +1,52 @@
 package com.smile.lazy.beans.suite.assertions;
 
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.io.Serializable;
+
 public class ConditionAssertion extends AssertionValue implements Serializable {
 
-  private String condition;
+    private String condition;
 
-  public String getCondition() {
-    return condition;
-  }
-
-  public void setCondition(String condition) {
-    this.condition = condition;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public String getCondition() {
+        return condition;
     }
 
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 
-    ConditionAssertion that = (ConditionAssertion) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
 
-    return new EqualsBuilder()
-        .appendSuper(super.equals(o))
-        .append(condition, that.condition)
-        .isEquals();
-  }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-  @Override
-  public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .appendSuper(super.hashCode())
-        .append(condition)
-        .toHashCode();
-  }
+        ConditionAssertion that = (ConditionAssertion) o;
 
-  @Override
-  public String toString() {
-    return "ConditionAssertion{" +
-        "condition='" + condition + '\'' +
-        "} " + super.toString();
-  }
+        return new EqualsBuilder()
+              .appendSuper(super.equals(o))
+              .append(condition, that.condition)
+              .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+              .appendSuper(super.hashCode())
+              .append(condition)
+              .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "ConditionAssertion{" +
+              "condition='" + condition + '\'' +
+              "} " + super.toString();
+    }
 }

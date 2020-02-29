@@ -1,58 +1,58 @@
 package com.smile.lazy.beans.suite.actions;
 
 import com.smile.lazy.beans.enums.ActionTypeEnum;
-import com.smile.lazy.beans.suite.ApiCall;
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.io.Serializable;
+
 public class ExecuteAnotherApiCall extends Action implements Serializable {
 
-  private int apiCallId;
+    private int apiCallId;
 
-  public ExecuteAnotherApiCall(ActionTypeEnum actionType, int apiCallId) {
-    super(actionType);
-    this.apiCallId = apiCallId;
-  }
-
-  public int getApiCallId() {
-    return apiCallId;
-  }
-
-  public void setApiCallId(int apiCallId) {
-    this.apiCallId = apiCallId;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public ExecuteAnotherApiCall(ActionTypeEnum actionType, int apiCallId) {
+        super(actionType);
+        this.apiCallId = apiCallId;
     }
 
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    public int getApiCallId() {
+        return apiCallId;
     }
 
-    ExecuteAnotherApiCall that = (ExecuteAnotherApiCall) o;
+    public void setApiCallId(int apiCallId) {
+        this.apiCallId = apiCallId;
+    }
 
-    return new EqualsBuilder()
-        .appendSuper(super.equals(o))
-        .append(apiCallId, that.apiCallId)
-        .isEquals();
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
 
-  @Override
-  public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .appendSuper(super.hashCode())
-        .append(apiCallId)
-        .toHashCode();
-  }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-  @Override
-  public String toString() {
-    return "ExecuteAnotherApiCall{" +
-        "apiCallId=" + apiCallId +
-        '}';
-  }
+        ExecuteAnotherApiCall that = (ExecuteAnotherApiCall) o;
+
+        return new EqualsBuilder()
+              .appendSuper(super.equals(o))
+              .append(apiCallId, that.apiCallId)
+              .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+              .appendSuper(super.hashCode())
+              .append(apiCallId)
+              .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "ExecuteAnotherApiCall{" +
+              "apiCallId=" + apiCallId +
+              '}';
+    }
 }

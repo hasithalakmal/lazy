@@ -1,50 +1,51 @@
 package com.smile.lazy.beans.suite;
 
 import com.smile.lazy.beans.DefaultValues;
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.io.Serializable;
+
 public class LazyBase implements Serializable {
 
-  private DefaultValues defaultValues;
+    private DefaultValues defaultValues;
 
-  public DefaultValues getDefaultValues() {
-    return defaultValues;
-  }
-
-  public void setDefaultValues(DefaultValues defaultValues) {
-    this.defaultValues = defaultValues;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public DefaultValues getDefaultValues() {
+        return defaultValues;
     }
 
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+    public void setDefaultValues(DefaultValues defaultValues) {
+        this.defaultValues = defaultValues;
     }
 
-    LazyBase lazyBase = (LazyBase) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
 
-    return new EqualsBuilder()
-        .append(defaultValues, lazyBase.defaultValues)
-        .isEquals();
-  }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-  @Override
-  public int hashCode() {
-    return new HashCodeBuilder(17, 37)
-        .append(defaultValues)
-        .toHashCode();
-  }
+        LazyBase lazyBase = (LazyBase) o;
 
-  @Override
-  public String toString() {
-    return "LazyBase{" +
-        "defaultValues=" + defaultValues +
-        '}';
-  }
+        return new EqualsBuilder()
+              .append(defaultValues, lazyBase.defaultValues)
+              .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+              .append(defaultValues)
+              .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "LazyBase{" +
+              "defaultValues=" + defaultValues +
+              '}';
+    }
 }
