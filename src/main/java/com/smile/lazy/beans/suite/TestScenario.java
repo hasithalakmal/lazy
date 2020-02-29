@@ -21,10 +21,9 @@ public class TestScenario implements Serializable {
     private List<Action> postActions;
     private Stack stack;
 
-    public TestScenario(String testScenarioDisplayId, String testScenarioName, Stack stack) {
+    public TestScenario(String testScenarioDisplayId, String testScenarioName) {
         this.testScenarioDisplayId = testScenarioDisplayId;
         this.testScenarioName = testScenarioName;
-        this.stack = SerializationUtils.clone(stack);
     }
 
     public Integer getTestScenarioId() {
@@ -95,6 +94,9 @@ public class TestScenario implements Serializable {
     }
 
     public Stack getStack() {
+        if (stack == null) {
+            this.stack = new Stack();
+        }
         return stack;
     }
 

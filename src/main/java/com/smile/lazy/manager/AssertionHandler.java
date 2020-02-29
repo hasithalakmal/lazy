@@ -26,8 +26,8 @@ public class AssertionHandler {
 
     public void executeApiCallAssertions(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList) throws LazyException {
 
-        if (apiCall.getDefaultAssertionRuleGroup() != null) {
-            for (AssertionRule assertionRule : apiCall.getDefaultAssertionRuleGroup().getAssertionRules()) {
+        if (apiCall.getStack().getDefaultAssertionGroup() != null) {
+            for (AssertionRule assertionRule : apiCall.getStack().getDefaultAssertionGroup().getAssertionRules()) {
                 executeAssertion(apiCall, lazyApiCallResponse, assertionResultList, assertionRule);
             }
         }
@@ -62,6 +62,7 @@ public class AssertionHandler {
             LOGGER.warn("Assertion datasource is not supported");
             throw new LazyException(HttpStatus.NOT_IMPLEMENTED, ErrorCodes.NOT_IMPLEMENTED, "Given dataSource has not supported yet");
         }
+        assertionResult.setAssertionRule(assertionRule);
         assertionResultList.getResults().add(assertionResult);
     }
 

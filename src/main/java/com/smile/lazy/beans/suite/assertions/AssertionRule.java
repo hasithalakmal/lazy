@@ -18,6 +18,12 @@ public class AssertionRule implements Serializable {
     private AssertionOperationEnum assertionOperation;
     private AssertionValue assertionValue;
 
+    public AssertionRule(String assertionRuleName, DataSourceEnum dataSource, AssertionOperationEnum assertionOperation) {
+        this.assertionRuleName = assertionRuleName;
+        this.dataSource = dataSource;
+        this.assertionOperation = assertionOperation;
+    }
+
     public AssertionRule(DataSourceEnum dataSource, AssertionOperationEnum assertionOperation) {
         this.dataSource = dataSource;
         this.assertionOperation = assertionOperation;
@@ -29,8 +35,14 @@ public class AssertionRule implements Serializable {
         this.assertionOperation = assertionOperation;
     }
 
-    public AssertionRule(DataSourceEnum dataSource, AssertionOperationEnum assertionOperation,
-                         AssertionValue assertionValue) {
+    public AssertionRule(String assertionRuleName, DataSourceEnum dataSource, AssertionOperationEnum assertionOperation, AssertionValue assertionValue) {
+        this.assertionRuleName = assertionRuleName;
+        this.dataSource = dataSource;
+        this.assertionOperation = assertionOperation;
+        this.assertionValue = assertionValue;
+    }
+
+    public AssertionRule(DataSourceEnum dataSource, AssertionOperationEnum assertionOperation, AssertionValue assertionValue) {
         this.dataSource = dataSource;
         this.assertionOperation = assertionOperation;
         this.assertionValue = assertionValue;

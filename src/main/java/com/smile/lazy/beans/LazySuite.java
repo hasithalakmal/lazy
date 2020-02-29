@@ -1,5 +1,6 @@
 package com.smile.lazy.beans;
 
+import com.smile.lazy.beans.suite.Global;
 import com.smile.lazy.beans.suite.Stack;
 import com.smile.lazy.beans.suite.TestSuite;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -18,12 +19,14 @@ public class LazySuite implements Serializable {
     private Boolean active;
     private List<TestSuite> testSuites;
     private Stack stack;
+    private Global global;
 
 
-    public LazySuite(int lazySuiteId, String lazySuiteName, Stack stack) {
+    public LazySuite(int lazySuiteId, String lazySuiteName, Stack stack, Global global) {
         this.lazySuiteId = lazySuiteId;
         this.lazySuiteName = lazySuiteName;
         this.stack = stack;
+        this.global = global;
     }
 
     public int getLazySuiteId() {
@@ -85,6 +88,14 @@ public class LazySuite implements Serializable {
         this.stack = stack;
     }
 
+    public Global getGlobal() {
+        return global;
+    }
+
+    public void setGlobal(Global global) {
+        this.global = global;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -105,6 +116,7 @@ public class LazySuite implements Serializable {
               .append(active, lazySuite.active)
               .append(testSuites, lazySuite.testSuites)
               .append(stack, lazySuite.stack)
+              .append(global, lazySuite.global)
               .isEquals();
     }
 
@@ -118,6 +130,7 @@ public class LazySuite implements Serializable {
               .append(active)
               .append(testSuites)
               .append(stack)
+              .append(global)
               .toHashCode();
     }
 
@@ -131,6 +144,7 @@ public class LazySuite implements Serializable {
               ", active=" + active +
               ", testSuites=" + testSuites +
               ", stack=" + stack +
+              ", global=" + global +
               '}';
     }
 }

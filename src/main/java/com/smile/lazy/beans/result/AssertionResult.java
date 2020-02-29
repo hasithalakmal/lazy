@@ -1,5 +1,6 @@
 package com.smile.lazy.beans.result;
 
+import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -19,6 +20,7 @@ public class AssertionResult implements Serializable {
     private int assertionRuleId;
     private String actualValue;
     private Boolean pass;
+    private AssertionRule assertionRule;
     private String assertionStatus;
 
     public AssertionResult(int resultId, int apiCallId, int assertionRuleId, String actualValue) {
@@ -141,6 +143,14 @@ public class AssertionResult implements Serializable {
         this.pass = pass;
     }
 
+    public AssertionRule getAssertionRule() {
+        return assertionRule;
+    }
+
+    public void setAssertionRule(AssertionRule assertionRule) {
+        this.assertionRule = assertionRule;
+    }
+
     public String getAssertionStatus() {
         return assertionStatus;
     }
@@ -174,6 +184,7 @@ public class AssertionResult implements Serializable {
               .append(active, that.active)
               .append(actualValue, that.actualValue)
               .append(pass, that.pass)
+              .append(assertionRule, that.assertionRule)
               .append(assertionStatus, that.assertionStatus)
               .isEquals();
     }
@@ -193,6 +204,7 @@ public class AssertionResult implements Serializable {
               .append(assertionRuleId)
               .append(actualValue)
               .append(pass)
+              .append(assertionRule)
               .append(assertionStatus)
               .toHashCode();
     }
@@ -212,6 +224,7 @@ public class AssertionResult implements Serializable {
               ", assertionRuleId=" + assertionRuleId +
               ", actualValue='" + actualValue + '\'' +
               ", pass=" + pass +
+              ", assertionRule=" + assertionRule +
               ", assertionStatus=" + assertionStatus +
               '}';
     }

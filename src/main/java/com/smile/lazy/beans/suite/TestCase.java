@@ -21,10 +21,9 @@ public class TestCase implements Serializable {
     private List<Action> postActions;
     private Stack stack;
 
-    public TestCase(String testCaseDisplayId, String testCaseName, Stack stack) {
+    public TestCase(String testCaseDisplayId, String testCaseName) {
         this.testCaseDisplayId = testCaseDisplayId;
         this.testCaseName = testCaseName;
-        this.stack = SerializationUtils.clone(stack);
     }
 
     public Integer getTestCaseId() {
@@ -95,6 +94,9 @@ public class TestCase implements Serializable {
     }
 
     public Stack getStack() {
+        if (stack == null) {
+            this.stack = new Stack();
+        }
         return stack;
     }
 

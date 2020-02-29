@@ -40,11 +40,12 @@ public class PreActionHandler {
 
             EnvironmentVariable environmentVariable = new EnvironmentVariable(variableDeclarationAction.getVariableKey(), variableValue, variableDeclarationAction.getDataType());
             if (ActionTypeEnum.SET_GLOBAL_VARIABLE == actionType) {
-                lazySuite.getStack().getGlobalEnvironment().getEnvironmentVariableMap().put(variableDeclarationAction.getVariableKey(), environmentVariable);
+                lazySuite.getGlobal().getGlobalEnvironment().getEnvironmentVariableMap().put(variableDeclarationAction.getVariableKey(),
+                      environmentVariable);
             } else if (ActionTypeEnum.SET_ENVIRONMENT_VARIABLE == actionType) {
                 String environmentDisplayId = variableDeclarationAction.getEnvironmentDisplayId();
-                if (lazySuite.getStack().getEnvironments().containsKey(environmentDisplayId)) {
-                    Environment environment = lazySuite.getStack().getEnvironments().get(environmentDisplayId);
+                if (lazySuite.getGlobal().getEnvironments().containsKey(environmentDisplayId)) {
+                    Environment environment = lazySuite.getGlobal().getEnvironments().get(environmentDisplayId);
                     environment.getEnvironmentVariableMap().put(variableDeclarationAction.getVariableKey(), environmentVariable);
                 }
             } else {

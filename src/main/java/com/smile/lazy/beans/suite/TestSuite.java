@@ -26,10 +26,9 @@ public class TestSuite implements Serializable {
         this.stack = SerializationUtils.clone(stack);
     }
 
-    public TestSuite(String testSuiteDisplayId, String testSuiteName, Stack stack) {
+    public TestSuite(String testSuiteDisplayId, String testSuiteName) {
         this.testSuiteDisplayId = testSuiteDisplayId;
         this.testSuiteName = testSuiteName;
-        this.stack = SerializationUtils.clone(stack);
     }
 
     public Integer getTestSuiteId() {
@@ -100,6 +99,9 @@ public class TestSuite implements Serializable {
     }
 
     public Stack getStack() {
+        if (stack == null) {
+            this.stack = new Stack();
+        }
         return stack;
     }
 

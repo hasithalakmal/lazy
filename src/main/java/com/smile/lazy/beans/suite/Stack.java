@@ -18,6 +18,9 @@ public class Stack implements Serializable {
     private Map<String, Environment> environments; //environmentDisplayId, environment
     private Map<String, String> attributes; //attribute key, value
 
+    public Stack() {
+    }
+
     public Stack(DefaultValues defaultValues) {
         this.defaultValues = defaultValues;
     }

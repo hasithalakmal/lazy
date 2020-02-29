@@ -29,26 +29,12 @@ public class ApiCall implements Serializable {
     private HeaderGroup headerGroup;
     private String httpMethod;
     private String requestBody;
-    private AssertionRuleGroup defaultAssertionRuleGroup;
     private AssertionRuleGroup assertionRuleGroup;
     private Stack stack;
 
-    public ApiCall(String apiCallName) {
-        this.apiCallName = apiCallName;
-    }
-
-    public ApiCall(Integer apiCallId, String apiCallName, Stack stack,
-                   AssertionRuleGroup defaultAssertionRuleGroup) {
+    public ApiCall(Integer apiCallId, String apiCallName) {
         this.apiCallId = apiCallId;
         this.apiCallName = apiCallName;
-        this.stack = SerializationUtils.clone(stack);
-        this.defaultAssertionRuleGroup = defaultAssertionRuleGroup;
-    }
-
-    public ApiCall(Integer apiCallId, String apiCallName, Stack stack) {
-        this.apiCallId = apiCallId;
-        this.apiCallName = apiCallName;
-        this.stack = SerializationUtils.clone(stack);
     }
 
     public Integer getApiCallId() {
@@ -200,14 +186,6 @@ public class ApiCall implements Serializable {
         this.requestBody = requestBody;
     }
 
-    public AssertionRuleGroup getDefaultAssertionRuleGroup() {
-        return defaultAssertionRuleGroup;
-    }
-
-    public void setDefaultAssertionRuleGroup(AssertionRuleGroup defaultAssertionRuleGroup) {
-        this.defaultAssertionRuleGroup = defaultAssertionRuleGroup;
-    }
-
     public AssertionRuleGroup getAssertionRuleGroup() {
         return assertionRuleGroup;
     }
@@ -253,7 +231,6 @@ public class ApiCall implements Serializable {
               .append(headerGroup, apiCall.headerGroup)
               .append(httpMethod, apiCall.httpMethod)
               .append(requestBody, apiCall.requestBody)
-              .append(defaultAssertionRuleGroup, apiCall.defaultAssertionRuleGroup)
               .append(assertionRuleGroup, apiCall.assertionRuleGroup)
               .append(stack, apiCall.stack)
               .isEquals();
@@ -278,7 +255,6 @@ public class ApiCall implements Serializable {
               .append(headerGroup)
               .append(httpMethod)
               .append(requestBody)
-              .append(defaultAssertionRuleGroup)
               .append(assertionRuleGroup)
               .append(stack)
               .toHashCode();
@@ -303,7 +279,6 @@ public class ApiCall implements Serializable {
               ", headerGroup=" + headerGroup +
               ", httpMethod='" + httpMethod + '\'' +
               ", requestBody='" + requestBody + '\'' +
-              ", defaultAssertionRuleGroup='" + defaultAssertionRuleGroup + '\'' +
               ", assertionRuleGroup=" + assertionRuleGroup +
               ", stack=" + stack +
               '}';

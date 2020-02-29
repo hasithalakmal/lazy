@@ -27,7 +27,7 @@ public class LazyManagerTest {
                 System.out.println(result);
             });
         } catch (Exception ex) {
-            Assert.fail("Success scenarios should not be failed");
+            Assert.fail("Success scenarios should not be failed", ex);
         }
 
     }

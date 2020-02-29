@@ -7,6 +7,7 @@ import com.smile.lazy.beans.environment.Environment;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.result.AssertionResultList;
 import com.smile.lazy.beans.suite.ApiCall;
+import com.smile.lazy.beans.suite.Global;
 import com.smile.lazy.beans.suite.Header;
 import com.smile.lazy.beans.suite.TestCase;
 import com.smile.lazy.beans.suite.TestScenario;
@@ -38,6 +39,9 @@ public class LazyManager {
     @Autowired
     private PreActionHandler preActionHandler;
 
+    @Autowired
+    private StackManager stackManager;
+
     public AssertionResultList test(LazySuite lazySuite) throws LazyException {
 
         if (lazySuite == null) {
@@ -55,16 +59,18 @@ public class LazyManager {
         DefaultValues defaultValues = lazySuite.getStack().getDefaultValues();
         validateDefaultValues(defaultValues);
 
-        AssertionResultList assertionResultList = new AssertionResultList();
-        Environment globalEnvironment = lazySuite.getStack().getGlobalEnvironment();
-        if (globalEnvironment == null) {
-            LOGGER.warn("Global environment should not be null, hence initialize global environment");
-            lazySuite.getStack().setGlobalEnvironment(new Environment());
+        if (lazySuite.getGlobal() == null) {
+            lazySuite.setGlobal(new Global());
         }
 
-        IdDto idDto = new IdDto();
+        Environment globalEnvironment = lazySuite.getGlobal().getGlobalEnvironment();
+        if (globalEnvironment == null) {
+            LOGGER.warn("Global environment should not be null, hence initialize global environment");
+            lazySuite.getGlobal().setGlobalEnvironment(new Environment());
+        }
 
-        executeTestSuites(lazySuite, assertionResultList, idDto);
+        AssertionResultList assertionResultList = new AssertionResultList();
+        executeTestSuites(lazySuite, assertionResultList, new IdDto());
         return assertionResultList;
     }
 
@@ -105,6 +111,8 @@ public class LazyManager {
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
             }
 
+            testSuite.setStack(stackManager.mergeTwoStacks(lazySuite.getStack(), testSuite.getStack()));
+
             if (testSuite.getTestSuiteId() == null) {
                 testSuite.setTestSuiteId(idDto.getTestSuiteId());
             }
@@ -131,6 +139,7 @@ public class LazyManager {
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_SCENARIO, error);
             }
 
+            testScenario.setStack(stackManager.mergeTwoStacks(testSuite.getStack(), testScenario.getStack()));
             if (testScenario.getTestScenarioId() == null) {
                 testScenario.setTestScenarioId(idDto.getTestScenarioId());
             }
@@ -156,6 +165,8 @@ public class LazyManager {
                 LOGGER.error(error);
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_CASE, error);
             }
+
+            testCase.setStack(stackManager.mergeTwoStacks(testScenario.getStack(), testCase.getStack()));
 
             if (testCase.getTestCaseId() == null) {
                 testCase.setTestCaseId(idDto.getTestCaseId());
@@ -183,6 +194,8 @@ public class LazyManager {
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_API_CALL, error);
             }
 
+            apiCall.setStack(stackManager.mergeTwoStacks(testCase.getStack(), apiCall.getStack()));
+
             if (apiCall.getStack() == null) {
                 String error = "Api call stack should not be null";
                 LOGGER.error(error);
@@ -200,14 +213,14 @@ public class LazyManager {
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_API_CALL, error);
             }
 
-            if (apiCall.getStack().getDefaultValues() == null) {
-                LOGGER.warn("No default values found for the API call - {}, hence adding global default values", apiCallName);
-                apiCall.getStack().setDefaultValues(lazySuite.getStack().getDefaultValues());
-            }
+//            if (apiCall.getStack().getDefaultValues() == null) {
+//                LOGGER.warn("No default values found for the API call - {}, hence adding global default values", apiCallName);
+//                apiCall.getStack().setDefaultValues(lazySuite.getStack().getDefaultValues());
+//            }
 
             LOGGER.info("Executing api call - [{}] - [{}]", idDto.getApiCallId(), apiCallName);
 
-            Environment globalEnvironment = lazySuite.getStack().getGlobalEnvironment();
+            Environment globalEnvironment = lazySuite.getGlobal().getGlobalEnvironment();
 
             List<Action> preActions = apiCall.getPreActions();
             for (Action preAction : preActions) {

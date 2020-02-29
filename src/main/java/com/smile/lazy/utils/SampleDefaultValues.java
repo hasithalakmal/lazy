@@ -1,0 +1,21 @@
+package com.smile.lazy.utils;
+
+import com.smile.lazy.beans.DefaultValues;
+import com.smile.lazy.beans.suite.Header;
+import com.smile.lazy.beans.suite.HeaderGroup;
+
+public class SampleDefaultValues {
+
+    public static DefaultValues createDefaultValues() {
+        return new com.smile.lazy.beans.DefaultValues("http", "localhost", 8080, "account-api", createDefaultHeaderGroup(), "GET");
+    }
+
+    static HeaderGroup createDefaultHeaderGroup() {
+        HeaderGroup defaultHeaderGroup = new HeaderGroup(1, "Simple Header Group");
+        Header header1 = new Header(1, "Accept Header", "accept", "application/json");
+        Header header2 = new Header(2, "Content type Header", "content-type", "application/json");
+        defaultHeaderGroup.getHeaders().add(header1);
+        defaultHeaderGroup.getHeaders().add(header2);
+        return defaultHeaderGroup;
+    }
+}
