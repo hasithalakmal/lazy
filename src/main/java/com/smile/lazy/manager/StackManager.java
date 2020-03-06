@@ -4,10 +4,12 @@ import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.environment.Environment;
 import com.smile.lazy.beans.suite.HeaderGroup;
 import com.smile.lazy.beans.suite.Stack;
+import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
 import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -41,9 +43,9 @@ public class StackManager {
             mergedStack.setAttributes(attributes);
         }
 
-        AssertionRuleGroup defaultAssertionGroup = childStack.getDefaultAssertionGroup();
-        if (defaultAssertionGroup != null && !defaultAssertionGroup.getAssertionRules().isEmpty()) {
-            mergedStack.setDefaultAssertionGroup(defaultAssertionGroup);
+        List<AssertionRule> defaultAssertions = childStack.getDefaultAssertions();
+        if (!defaultAssertions.isEmpty()) {
+            mergedStack.setDefaultAssertions(defaultAssertions);
         }
 
         HeaderGroup headerGroup = childStack.getHeaderGroup();

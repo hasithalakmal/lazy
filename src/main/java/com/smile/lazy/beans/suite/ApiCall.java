@@ -1,6 +1,7 @@
 package com.smile.lazy.beans.suite;
 
 import com.smile.lazy.beans.suite.actions.Action;
+import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +30,8 @@ public class ApiCall implements Serializable {
     private HeaderGroup headerGroup;
     private String httpMethod;
     private String requestBody;
-    private AssertionRuleGroup assertionRuleGroup;
+    private List<AssertionRule> assertionRules;
+    private List<String> disabledAssertions;
     private Stack stack;
 
     public ApiCall(Integer apiCallId, String apiCallName) {
@@ -89,6 +91,9 @@ public class ApiCall implements Serializable {
     }
 
     public List<Action> getPostActions() {
+        if (postActions == null) {
+            postActions = new ArrayList<>();
+        }
         return postActions;
     }
 
@@ -186,20 +191,76 @@ public class ApiCall implements Serializable {
         this.requestBody = requestBody;
     }
 
-    public AssertionRuleGroup getAssertionRuleGroup() {
-        return assertionRuleGroup;
+    public List<AssertionRule> getAssertionRules() {
+        if (assertionRules == null) {
+         assertionRules = new ArrayList<>();
+        }
+        return assertionRules;
     }
 
-    public void setAssertionRuleGroup(AssertionRuleGroup assertionRuleGroup) {
-        this.assertionRuleGroup = assertionRuleGroup;
+    public void setAssertionRules(List<AssertionRule> assertionRules) {
+        if (this.assertionRules == null || this.assertionRules.isEmpty()) {
+            this.assertionRules = assertionRules;
+        } else {
+            this.assertionRules.addAll(assertionRules);
+        }
     }
 
     public Stack getStack() {
+        if (stack == null) {
+            this.stack = new Stack();
+        }
         return stack;
     }
 
     public void setStack(Stack stack) {
         this.stack = SerializationUtils.clone(stack);
+    }
+
+    public List<String> getDisabledAssertions() {
+        if (this.disabledAssertions == null) {
+            this.disabledAssertions = new ArrayList<>();
+        }
+        return disabledAssertions;
+    }
+
+    public void setDisabledAssertions(List<String> disabledAssertions) {
+        this.disabledAssertions = disabledAssertions;
+    }
+
+    //TODO - think how to remove these logics from the beans
+    public void addAssertionRule(AssertionRule assertionRule) {
+        if (this.assertionRules == null || this.assertionRules.isEmpty()) {
+            this.assertionRules = new ArrayList<>();
+        }
+        this.assertionRules.add(assertionRule);
+    }
+
+    public void addAssertionGroup(AssertionRuleGroup assertionRuleGroup) {
+        if (this.assertionRules == null || this.assertionRules.isEmpty()) {
+            this.assertionRules = new ArrayList<>();
+        }
+        if (assertionRuleGroup != null && !assertionRuleGroup.getAssertionRules().isEmpty()) {
+            for (AssertionRule newAssertionRule: assertionRuleGroup.getAssertionRules()) {
+                String newAssertionRuleKey = newAssertionRule.getAssertionRuleKey();
+                if (StringUtils.isNotBlank(newAssertionRuleKey)) {
+                    for (AssertionRule existingRule: this.assertionRules) {
+                        String existingAssertionRuleKey = existingRule.getAssertionRuleKey();
+                        if (StringUtils.isNotBlank(existingAssertionRuleKey) && newAssertionRuleKey.equals(existingAssertionRuleKey)) {
+                            existingRule.setActive(Boolean.FALSE);
+                        }
+                    }
+                }
+                this.assertionRules.add(newAssertionRule);
+            }
+        }
+    }
+
+    public void disableAssertion(String assertionKey) {
+        if (this.disabledAssertions == null || this.disabledAssertions.isEmpty()) {
+            this.disabledAssertions = new ArrayList<>();
+        }
+        this.disabledAssertions.add(assertionKey);
     }
 
     @Override
@@ -231,7 +292,6 @@ public class ApiCall implements Serializable {
               .append(headerGroup, apiCall.headerGroup)
               .append(httpMethod, apiCall.httpMethod)
               .append(requestBody, apiCall.requestBody)
-              .append(assertionRuleGroup, apiCall.assertionRuleGroup)
               .append(stack, apiCall.stack)
               .isEquals();
     }
@@ -255,7 +315,6 @@ public class ApiCall implements Serializable {
               .append(headerGroup)
               .append(httpMethod)
               .append(requestBody)
-              .append(assertionRuleGroup)
               .append(stack)
               .toHashCode();
     }
@@ -279,7 +338,6 @@ public class ApiCall implements Serializable {
               ", headerGroup=" + headerGroup +
               ", httpMethod='" + httpMethod + '\'' +
               ", requestBody='" + requestBody + '\'' +
-              ", assertionRuleGroup=" + assertionRuleGroup +
               ", stack=" + stack +
               '}';
     }

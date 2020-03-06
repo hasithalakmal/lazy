@@ -1,13 +1,11 @@
 package com.smile.lazy.sample.scenarios;
 
-import com.smile.lazy.beans.enums.AssertionOperationEnum;
-import com.smile.lazy.beans.enums.DataSourceEnum;
-import com.smile.lazy.beans.enums.DataTypeEnum;
-import com.smile.lazy.beans.enums.UnitEnum;
 import com.smile.lazy.beans.suite.TestScenario;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
-import com.smile.lazy.beans.suite.assertions.AssertionValue;
+import com.smile.lazy.wrapper.Assert;
+
+import java.util.List;
 
 import static com.smile.lazy.sample.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase;
 
@@ -15,23 +13,19 @@ public class CreateAccountTestScenario {
 
     public static TestScenario getAccountCreationTestScenario() {
         TestScenario testScenario1 = new TestScenario("Smile-Test-Scenario-1", "Create Account");
-        testScenario1.getStack().setDefaultAssertionGroup(createDefaultAssertionRuleGroup());
+        testScenario1.getStack().addDefaultAssertionGroup(createDefaultAssertionRuleGroup());
         testScenario1.getTestCases().add(getCreateAccountTestCase());
         return testScenario1;
     }
 
     private static AssertionRuleGroup createDefaultAssertionRuleGroup() {
-        AssertionRule defaultCreateAssertionRule1 = new AssertionRule("Response time assertion", DataSourceEnum.RESPONSE_TIME,
-              AssertionOperationEnum.LESS_THAN,
-              new AssertionValue("20000", DataTypeEnum.INTEGER, UnitEnum.MILLI_SECONDS));
-        AssertionRule defaultCreateAssertionRule2 = new AssertionRule("Response code assertion", DataSourceEnum.RESPONSE_CODE,
-              AssertionOperationEnum.EQUAL, new AssertionValue("201", DataTypeEnum.INTEGER));
-        AssertionRule defaultCreateAssertionRule3 = new AssertionRule("Response body not null assertion", DataSourceEnum.BODY,
-              AssertionOperationEnum.NOT_NULL);
         AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup(1, "Default create assertion group");
-        defaultCreateAssertionGroup.getAssertionRules().add(defaultCreateAssertionRule1);
-        defaultCreateAssertionGroup.getAssertionRules().add(defaultCreateAssertionRule2);
-        defaultCreateAssertionGroup.getAssertionRules().add(defaultCreateAssertionRule3);
+        List<AssertionRule> assertionRules = defaultCreateAssertionGroup.getAssertionRules();
+        assertionRules.add(Assert.responseTimeAssertion_ms_lt("2000"));
+        AssertionRule responseCodeAssertion = Assert.responseCodeAssertion("201");
+        responseCodeAssertion.setAssertionRuleKey("created.http.status.assertion");
+        assertionRules.add(responseCodeAssertion);
+        assertionRules.add(Assert.responseBodyNotNull());
         return defaultCreateAssertionGroup;
     }
 }

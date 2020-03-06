@@ -26,18 +26,32 @@ public class AssertionHandler {
 
     public void executeApiCallAssertions(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList) throws LazyException {
 
-        if (apiCall.getStack().getDefaultAssertionGroup() != null) {
-            for (AssertionRule assertionRule : apiCall.getStack().getDefaultAssertionGroup().getAssertionRules()) {
+        if (apiCall.getStack().getDefaultAssertions() != null) {
+            for (AssertionRule assertionRule : apiCall.getStack().getDefaultAssertions()) {
+                if (validateAssertionEnablement(apiCall, assertionRule)) {
+                    continue;
+                }
                 executeAssertion(apiCall, lazyApiCallResponse, assertionResultList, assertionRule);
             }
         }
 
-        if (apiCall.getAssertionRuleGroup() != null) {
-            for (AssertionRule assertionRule : apiCall.getAssertionRuleGroup().getAssertionRules()) {
-                executeAssertion(apiCall, lazyApiCallResponse, assertionResultList, assertionRule);
+        for (AssertionRule assertionRule : apiCall.getAssertionRules()) {
+            if (validateAssertionEnablement(apiCall, assertionRule)) {
+                continue;
             }
+            executeAssertion(apiCall, lazyApiCallResponse, assertionResultList, assertionRule);
         }
 
+    }
+
+    private boolean validateAssertionEnablement(ApiCall apiCall, AssertionRule assertionRule) {
+        if (!apiCall.getDisabledAssertions().isEmpty()
+              && StringUtils.isNotBlank(assertionRule.getAssertionRuleKey())
+              && apiCall.getDisabledAssertions().contains(assertionRule.getAssertionRuleKey())) {
+            LOGGER.info("Skipping assertion rule [{}] since it has disabled", assertionRule.getAssertionRuleKey());
+            return true;
+        }
+        return false;
     }
 
     private void executeAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList,

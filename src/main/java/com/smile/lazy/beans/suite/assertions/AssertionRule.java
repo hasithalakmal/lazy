@@ -11,6 +11,7 @@ public class AssertionRule implements Serializable {
 
     DataSourceEnum dataSource;
     private int assertionRuleId;
+    private String assertionRuleKey;
     private int assertionRuleSequenceId;
     private String assertionRuleName;
     private String assertionRuleDescription;
@@ -62,6 +63,14 @@ public class AssertionRule implements Serializable {
 
     public void setAssertionRuleId(int assertionRuleId) {
         this.assertionRuleId = assertionRuleId;
+    }
+
+    public String getAssertionRuleKey() {
+        return assertionRuleKey;
+    }
+
+    public void setAssertionRuleKey(String assertionRuleKey) {
+        this.assertionRuleKey = assertionRuleKey;
     }
 
     public int getAssertionRuleSequenceId() {
@@ -134,6 +143,7 @@ public class AssertionRule implements Serializable {
 
         return new EqualsBuilder()
               .append(assertionRuleId, that.assertionRuleId)
+              .append(assertionRuleKey, that.assertionRuleKey)
               .append(assertionRuleSequenceId, that.assertionRuleSequenceId)
               .append(assertionRuleName, that.assertionRuleName)
               .append(assertionRuleDescription, that.assertionRuleDescription)
@@ -148,6 +158,7 @@ public class AssertionRule implements Serializable {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
               .append(assertionRuleId)
+              .append(assertionRuleKey)
               .append(assertionRuleSequenceId)
               .append(assertionRuleName)
               .append(assertionRuleDescription)
@@ -162,6 +173,7 @@ public class AssertionRule implements Serializable {
     public String toString() {
         return "AssertionRule{" +
               "assertionRuleId=" + assertionRuleId +
+              ", assertionRuleKey=" + assertionRuleKey +
               ", assertionRuleSequenceId=" + assertionRuleSequenceId +
               ", assertionRuleName='" + assertionRuleName + '\'' +
               ", assertionRuleDescription='" + assertionRuleDescription + '\'' +

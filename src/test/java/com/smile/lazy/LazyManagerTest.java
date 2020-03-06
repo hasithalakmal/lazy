@@ -1,5 +1,6 @@
 package com.smile.lazy;
 
+import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.result.AssertionResultList;
 import com.smile.lazy.manager.LazyManager;
 import org.junit.jupiter.api.Test;
@@ -19,11 +20,12 @@ public class LazyManagerTest {
     @Test
     public void testEmployee() throws Exception {
         try {
-            AssertionResultList results = lazyManager.test(populateSampleTestSuite());
+            LazySuite sampleLazySuite = populateSampleTestSuite();
+            AssertionResultList results = lazyManager.test(sampleLazySuite);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getResults());
             results.getResults().forEach(result -> {
-//        Assert.assertTrue(result.getPass(), result.getActualValue());
+                Assert.assertTrue(result.getPass(), result.getActualValue());
                 System.out.println(result);
             });
         } catch (Exception ex) {

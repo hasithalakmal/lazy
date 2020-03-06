@@ -21,6 +21,12 @@ public class VariableDeclarationAction extends Action implements Serializable {
         this.variableKey = variableKey;
     }
 
+    public VariableDeclarationAction(ActionTypeEnum actionType, String variableKey, String jsonPath) {
+        super(actionType);
+        this.variableKey = variableKey;
+        this.jsonPath = jsonPath;
+    }
+
     public String getEnvironmentDisplayId() {
         return environmentDisplayId;
     }

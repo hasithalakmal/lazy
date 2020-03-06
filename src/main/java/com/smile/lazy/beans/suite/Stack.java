@@ -2,16 +2,20 @@ package com.smile.lazy.beans.suite;
 
 import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.environment.Environment;
+import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Stack implements Serializable {
 
-    AssertionRuleGroup defaultAssertionGroup;
+    private List<AssertionRule> defaultAssertions;
     private DefaultValues defaultValues;
     private HeaderGroup headerGroup;
     private Environment globalEnvironment;
@@ -46,12 +50,15 @@ public class Stack implements Serializable {
         this.headerGroup = headerGroup;
     }
 
-    public AssertionRuleGroup getDefaultAssertionGroup() {
-        return defaultAssertionGroup;
+    public List<AssertionRule> getDefaultAssertions() {
+        if (defaultAssertions == null) {
+            defaultAssertions = new ArrayList<>();
+        }
+        return defaultAssertions;
     }
 
-    public void setDefaultAssertionGroup(AssertionRuleGroup defaultAssertionGroup) {
-        this.defaultAssertionGroup = defaultAssertionGroup;
+    public void setDefaultAssertions(List<AssertionRule> defaultAssertions) {
+        this.defaultAssertions = defaultAssertions;
     }
 
     public Environment getGlobalEnvironment() {
@@ -78,6 +85,34 @@ public class Stack implements Serializable {
         this.attributes = attributes;
     }
 
+    //TODO - think how to remove these logics from the beans
+    public void addDefaultAssertionRule(AssertionRule assertionRule) {
+        if (this.defaultAssertions == null || this.defaultAssertions.isEmpty()) {
+            this.defaultAssertions = new ArrayList<>();
+        }
+        this.defaultAssertions.add(assertionRule);
+    }
+
+    public void addDefaultAssertionGroup(AssertionRuleGroup assertionRuleGroup) {
+        if (this.defaultAssertions == null || this.defaultAssertions.isEmpty()) {
+            this.defaultAssertions = new ArrayList<>();
+        }
+        if (assertionRuleGroup != null && !assertionRuleGroup.getAssertionRules().isEmpty()) {
+            for (AssertionRule newAssertionRule: assertionRuleGroup.getAssertionRules()) {
+                String newAssertionRuleKey = newAssertionRule.getAssertionRuleKey();
+                if (StringUtils.isNotBlank(newAssertionRuleKey)) {
+                    for (AssertionRule existingRule: this.defaultAssertions) {
+                        String existingAssertionRuleKey = existingRule.getAssertionRuleKey();
+                        if (StringUtils.isNotBlank(existingAssertionRuleKey) && newAssertionRuleKey.equals(existingAssertionRuleKey)) {
+                            existingRule.setActive(Boolean.FALSE);
+                        }
+                    }
+                }
+                this.defaultAssertions.add(newAssertionRule);
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,7 +124,7 @@ public class Stack implements Serializable {
         return new EqualsBuilder()
               .append(defaultValues, stack.defaultValues)
               .append(headerGroup, stack.headerGroup)
-              .append(defaultAssertionGroup, stack.defaultAssertionGroup)
+              .append(defaultAssertions, stack.defaultAssertions)
               .append(globalEnvironment, stack.globalEnvironment)
               .append(environments, stack.environments)
               .append(attributes, stack.attributes)
@@ -101,7 +136,7 @@ public class Stack implements Serializable {
         return new HashCodeBuilder(17, 37)
               .append(defaultValues)
               .append(headerGroup)
-              .append(defaultAssertionGroup)
+              .append(defaultAssertions)
               .append(globalEnvironment)
               .append(environments)
               .append(attributes)
@@ -113,7 +148,7 @@ public class Stack implements Serializable {
         return "Stack{" +
               "defaultValues=" + defaultValues +
               ", defaultHeaderGroup=" + headerGroup +
-              ", defaultCreateAssertionGroup=" + defaultAssertionGroup +
+              ", defaultCreateAssertionGroup=" + defaultAssertions +
               ", globalEnvironment=" + globalEnvironment +
               ", environments=" + environments +
               ", attributes=" + attributes +
