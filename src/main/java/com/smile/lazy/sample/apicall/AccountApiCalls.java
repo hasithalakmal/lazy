@@ -1,11 +1,13 @@
 package com.smile.lazy.sample.apicall;
 
-import com.smile.lazy.beans.enums.AssertionOperationEnum;
-import com.smile.lazy.beans.enums.DataSourceEnum;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
-import com.smile.lazy.beans.suite.assertions.BodyValueAssertion;
+import com.smile.lazy.wrapper.Assert;
+
+import java.util.List;
+
+import static com.smile.lazy.wrapper.Assert.notNullBodyValueAssertion;
 
 public class AccountApiCalls {
 
@@ -30,13 +32,9 @@ public class AccountApiCalls {
 
     private static AssertionRuleGroup createAssertionRuleGroupForAccountCreation(String expectedAccountName) {
         AssertionRuleGroup assertionRuleGroup1 = new AssertionRuleGroup(1000, "Create Account success assertions");
-        AssertionRule assertionRule1 =
-              new AssertionRule("Account name not null assertion", DataSourceEnum.BODY, AssertionOperationEnum.NOT_NULL,
-                    new BodyValueAssertion("$['accountName']"));
-        AssertionRule assertionRule2 = new AssertionRule("Account name match assertion", DataSourceEnum.BODY, AssertionOperationEnum.EQUAL,
-              new BodyValueAssertion("$['accountName']", expectedAccountName));
-        assertionRuleGroup1.getAssertionRules().add(assertionRule1);
-        assertionRuleGroup1.getAssertionRules().add(assertionRule2);
+        List<AssertionRule> assertionRules = assertionRuleGroup1.getAssertionRules();
+        assertionRules.add(Assert.notNullBodyValueAssertion("$['accountName']"));
+        assertionRules.add(Assert.equalBodyValueAssertion("$['accountName']", expectedAccountName));
         return assertionRuleGroup1;
     }
 }

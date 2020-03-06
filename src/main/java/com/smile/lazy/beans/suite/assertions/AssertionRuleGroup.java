@@ -16,6 +16,10 @@ public class AssertionRuleGroup implements Serializable {
     private Boolean active;
     private List<AssertionRule> assertionRules;
 
+    public AssertionRuleGroup(String assertionRuleGroupName) {
+        this.assertionRuleGroupName = assertionRuleGroupName;
+    }
+
     public AssertionRuleGroup(int assertionRuleGroupId, String assertionRuleGroupName) {
         this.assertionRuleGroupId = assertionRuleGroupId;
         this.assertionRuleGroupName = assertionRuleGroupName;
