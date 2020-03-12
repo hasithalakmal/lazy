@@ -13,6 +13,7 @@ import com.smile.lazy.beans.suite.assertions.AssertionValue;
 import com.smile.lazy.beans.suite.assertions.BodyValueAssertion;
 import com.smile.lazy.common.ErrorCodes;
 import com.smile.lazy.exception.LazyException;
+import com.smile.lazy.utils.VariableManipulationUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,6 @@ public class AssertionHandler {
             }
             executeAssertion(apiCall, lazyApiCallResponse, assertionResultList, assertionRule);
         }
-
     }
 
     private boolean validateAssertionEnablement(ApiCall apiCall, AssertionRule assertionRule) {
@@ -95,18 +95,18 @@ public class AssertionHandler {
                 LOGGER.warn("Operation is not supported for given assertion values");
             }
         } else {
-            requestBodyValueAssertion(operation, assertionResult, responseBody, assertionValue);
+            requestBodyValueAssertion(apiCall, operation, assertionResult, responseBody, assertionValue);
         }
         return assertionResult;
     }
 
-    private void requestBodyValueAssertion(AssertionOperationEnum operation, AssertionResult assertionResult,
+    private void requestBodyValueAssertion(ApiCall apiCall, AssertionOperationEnum operation, AssertionResult assertionResult,
                                            String responseBody, AssertionValue assertionValue) {
         if (assertionValue instanceof BodyValueAssertion) {
             BodyValueAssertion bodyValueAssertion = (BodyValueAssertion) assertionValue;
             Object document = Configuration.defaultConfiguration().jsonProvider().parse(responseBody);
             String actualValue = JsonPath.read(document, bodyValueAssertion.getJsonPath());
-            String expectedValue = bodyValueAssertion.getExpectedValue1();
+            String expectedValue = VariableManipulationUtil.getVariableValue(bodyValueAssertion.getExpectedValue1(), apiCall.getStack());
 
             if (operation == AssertionOperationEnum.NULL) {
                 assertionResult.setPass(StringUtils.isBlank(actualValue));
@@ -125,7 +125,7 @@ public class AssertionHandler {
             }
 
         } else {
-            String expectedValue = assertionValue.getExpectedValue1();
+            String expectedValue = VariableManipulationUtil.getVariableValue(assertionValue.getExpectedValue1(), apiCall.getStack());
             if (operation == AssertionOperationEnum.EQUAL) {
                 assertionResult.setPass(responseBody.equals(expectedValue));
             } else if (operation == AssertionOperationEnum.NOT_EQUAL) {

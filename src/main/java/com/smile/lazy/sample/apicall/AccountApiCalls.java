@@ -1,12 +1,9 @@
 package com.smile.lazy.sample.apicall;
 
-import com.smile.lazy.beans.enums.ActionTypeEnum;
-import com.smile.lazy.beans.enums.DataSourceEnum;
 import com.smile.lazy.beans.suite.ApiCall;
-import com.smile.lazy.beans.suite.actions.Action;
-import com.smile.lazy.beans.suite.actions.VariableDeclarationAction;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
+import com.smile.lazy.wrapper.Actions;
 import com.smile.lazy.wrapper.Assert;
 
 import java.util.List;
@@ -21,9 +18,8 @@ public class AccountApiCalls {
               + "\"accountName\":\"Sathara-1577641690\",\"ownerName\":\"Hasitha-1577641690\",\"versionId\":\"1.0.0\","
               + "\"settings\":[{\"key\":\"setting1\",\"value\":\"1577641690\"},{\"key\":\"setting2\",\"value\":\"1577641690\"}]}");
         apiCall1.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
-        Action setAccountId = new VariableDeclarationAction(ActionTypeEnum.SET_GLOBAL_VARIABLE, DataSourceEnum.BODY,
-              "created.account.id.1", "$['accountId']");
-        apiCall1.getPostActions().add(setAccountId);
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id.1", "$['accountId']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name.1", "$['accountName']"));
         return apiCall1;
     }
 
@@ -32,7 +28,7 @@ public class AccountApiCalls {
         apiCall2.disableAssertion("created.http.status.assertion");
         apiCall2.setUri("service/accounts/{{lazy.global.created.account.id.1}}");
         apiCall2.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
-//        apiCall2.addAssertionRule(Assert.equalBodyValueAssertion("$['accountId']", "{{lazy.global.created.account.id.1}}"));
+        apiCall2.addAssertionRule(Assert.equalBodyValueAssertion("$['accountId']", "{{lazy.global.created.account.id.1}}"));
         apiCall2.addAssertionRule(Assert.responseCodeAssertion("200"));
         return apiCall2;
     }
