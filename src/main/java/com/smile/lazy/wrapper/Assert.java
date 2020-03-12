@@ -14,11 +14,11 @@ public class Assert {
         //This is a private constructor
     }
 
-    public static AssertionRule responseBodyNotNull(){
+    public static AssertionRule responseBodyNotNull() {
         return responseBodyNotNull("Response body not null assertion");
     }
 
-    public static AssertionRule responseBodyNotNull(String assertionName){
+    public static AssertionRule responseBodyNotNull(String assertionName) {
         return new AssertionRule("Response body not null assertion", DataSourceEnum.BODY, AssertionOperationEnum.NOT_NULL);
     }
 
@@ -51,11 +51,11 @@ public class Assert {
               new AssertionValue(time, DataTypeEnum.INTEGER, UnitEnum.MILLI_SECONDS));
     }
 
-    public static AssertionRule responseCodeAssertion(String code){
+    public static AssertionRule responseCodeAssertion(String code) {
         return responseCodeAssertion("Response code assertion", code);
     }
 
-    public static AssertionRule responseCodeAssertion(String assertionName, String code){
+    public static AssertionRule responseCodeAssertion(String assertionName, String code) {
         return new AssertionRule(assertionName, DataSourceEnum.RESPONSE_CODE, AssertionOperationEnum.EQUAL, new AssertionValue(code, DataTypeEnum.INTEGER));
     }
 

@@ -15,9 +15,9 @@ public class AssertionManipulationUtil {
     public static List<AssertionRule> getRuleListFromAssertionGroup(AssertionRuleGroup assertionRuleGroup) {
         List<AssertionRule> assertionRules = new ArrayList<>();
         if (assertionRuleGroup != null && !assertionRuleGroup.getAssertionRules().isEmpty()) {
-          assertionRules.addAll(assertionRuleGroup.getAssertionRules());
+            assertionRules.addAll(assertionRuleGroup.getAssertionRules());
         }
-       return assertionRules;
+        return assertionRules;
     }
 
 }

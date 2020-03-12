@@ -1,6 +1,5 @@
 package com.smile.lazy.beans.suite;
 
-import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
@@ -107,7 +106,7 @@ public class ApiCall implements Serializable {
         if (StringUtils.isBlank(protocol)) {
             protocol = getStack().getDefaultValues().getProtocol();
         }
-        protocol= VariableManipulationUtil.getVariableValue(protocol, stack);
+        protocol = VariableManipulationUtil.getVariableValue(protocol, stack);
         return protocol;
     }
 
@@ -202,7 +201,7 @@ public class ApiCall implements Serializable {
 
     public List<AssertionRule> getAssertionRules() {
         if (assertionRules == null) {
-         assertionRules = new ArrayList<>();
+            assertionRules = new ArrayList<>();
         }
         return assertionRules;
     }
@@ -250,10 +249,10 @@ public class ApiCall implements Serializable {
             this.assertionRules = new ArrayList<>();
         }
         if (assertionRuleGroup != null && !assertionRuleGroup.getAssertionRules().isEmpty()) {
-            for (AssertionRule newAssertionRule: assertionRuleGroup.getAssertionRules()) {
+            for (AssertionRule newAssertionRule : assertionRuleGroup.getAssertionRules()) {
                 String newAssertionRuleKey = newAssertionRule.getAssertionRuleKey();
                 if (StringUtils.isNotBlank(newAssertionRuleKey)) {
-                    for (AssertionRule existingRule: this.assertionRules) {
+                    for (AssertionRule existingRule : this.assertionRules) {
                         String existingAssertionRuleKey = existingRule.getAssertionRuleKey();
                         if (StringUtils.isNotBlank(existingAssertionRuleKey) && newAssertionRuleKey.equals(existingAssertionRuleKey)) {
                             existingRule.setActive(Boolean.FALSE);

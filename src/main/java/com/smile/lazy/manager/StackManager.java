@@ -5,7 +5,6 @@ import com.smile.lazy.beans.environment.Environment;
 import com.smile.lazy.beans.suite.HeaderGroup;
 import com.smile.lazy.beans.suite.Stack;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
-import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
 import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.stereotype.Service;
 

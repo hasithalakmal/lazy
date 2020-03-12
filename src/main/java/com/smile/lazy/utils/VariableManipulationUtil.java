@@ -15,7 +15,7 @@ public class VariableManipulationUtil {
         }
         if (givenValue.contains("{{lazy.") && givenValue.contains("}}")) {
             List<String> variables = Arrays.asList(StringUtils.substringsBetween(givenValue, "{{lazy.", "}}"));
-            for (String variable: variables) {
+            for (String variable : variables) {
                 String completePlaceholder = "{{lazy.".concat(variable).concat("}}");
                 if (completePlaceholder.startsWith("{{lazy.global.")) {
                     String variableKey = StringUtils.replace(variable, "global.", "", 1);

@@ -1,6 +1,5 @@
 package com.smile.lazy.manager;
 
-import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.common.ErrorCodes;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Repository;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Map;
 
 import static org.apache.http.impl.client.HttpClients.createDefault;
 

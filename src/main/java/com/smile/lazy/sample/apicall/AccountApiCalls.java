@@ -7,12 +7,9 @@ import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.beans.suite.actions.VariableDeclarationAction;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
-import com.smile.lazy.utils.AssertionManipulationUtil;
 import com.smile.lazy.wrapper.Assert;
 
 import java.util.List;
-
-import static com.smile.lazy.wrapper.Assert.notNullBodyValueAssertion;
 
 public class AccountApiCalls {
 

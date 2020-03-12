@@ -3,7 +3,6 @@ package com.smile.lazy.manager;
 import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
-import com.smile.lazy.beans.environment.Environment;
 import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.result.AssertionResultList;

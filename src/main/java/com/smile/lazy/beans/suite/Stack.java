@@ -57,11 +57,11 @@ public class Stack implements Serializable {
         this.defaultAssertions = defaultAssertions;
     }
 
-    public Map<String, EnvironmentVariable>  getGlobalEnvironment() {
+    public Map<String, EnvironmentVariable> getGlobalEnvironment() {
         return globalEnvironment;
     }
 
-    public void setGlobalEnvironment(Map<String, EnvironmentVariable>  globalEnvironment) {
+    public void setGlobalEnvironment(Map<String, EnvironmentVariable> globalEnvironment) {
         this.globalEnvironment = globalEnvironment;
     }
 
@@ -94,10 +94,10 @@ public class Stack implements Serializable {
             this.defaultAssertions = new ArrayList<>();
         }
         if (assertionRuleGroup != null && !assertionRuleGroup.getAssertionRules().isEmpty()) {
-            for (AssertionRule newAssertionRule: assertionRuleGroup.getAssertionRules()) {
+            for (AssertionRule newAssertionRule : assertionRuleGroup.getAssertionRules()) {
                 String newAssertionRuleKey = newAssertionRule.getAssertionRuleKey();
                 if (StringUtils.isNotBlank(newAssertionRuleKey)) {
-                    for (AssertionRule existingRule: this.defaultAssertions) {
+                    for (AssertionRule existingRule : this.defaultAssertions) {
                         String existingAssertionRuleKey = existingRule.getAssertionRuleKey();
                         if (StringUtils.isNotBlank(existingAssertionRuleKey) && newAssertionRuleKey.equals(existingAssertionRuleKey)) {
                             existingRule.setActive(Boolean.FALSE);
