@@ -125,12 +125,12 @@ public class AssertionHandler {
             }
 
         } else {
-            String expectedValue = VariableManipulationUtil.getVariableValue(assertionValue.getExpectedValue1(), apiCall.getStack());
-            if (operation == AssertionOperationEnum.EQUAL) {
-                assertionResult.setPass(responseBody.equals(expectedValue));
-            } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
-                assertionResult.setPass(!responseBody.equals(expectedValue));
-            }
+//            String expectedValue = VariableManipulationUtil.getVariableValue(assertionValue.getExpectedValue1(), apiCall.getStack());
+//            if (operation == AssertionOperationEnum.EQUAL) {
+//                assertionResult.setPass(responseBody.equals(expectedValue));
+//            } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
+//                assertionResult.setPass(!responseBody.equals(expectedValue));
+//            }
         }
     }
 

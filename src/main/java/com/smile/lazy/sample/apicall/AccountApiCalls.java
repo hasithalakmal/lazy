@@ -27,7 +27,7 @@ public class AccountApiCalls {
         ApiCall apiCall2 = new ApiCall(2, "Get Account by Id");
         apiCall2.disableAssertion("created.http.status.assertion");
         apiCall2.setUri("service/accounts/{{lazy.global.created.account.id.1}}");
-        apiCall2.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
+        apiCall2.addAssertionGroup(accountAssertionGroup1("{{lazy.global.created.account.name.1}}"));
         apiCall2.addAssertionRule(Assert.equalBodyValueAssertion("$['accountId']", "{{lazy.global.created.account.id.1}}"));
         apiCall2.addAssertionRule(Assert.responseCodeAssertion("200"));
         return apiCall2;
