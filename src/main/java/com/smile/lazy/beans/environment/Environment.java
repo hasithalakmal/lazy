@@ -1,6 +1,7 @@
 package com.smile.lazy.beans.environment;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Environment implements Serializable {
@@ -53,6 +54,9 @@ public class Environment implements Serializable {
     }
 
     public Map<String, EnvironmentVariable> getEnvironmentVariableMap() {
+        if (environmentVariableMap == null) {
+            environmentVariableMap = new HashMap<>();
+        }
         return environmentVariableMap;
     }
 

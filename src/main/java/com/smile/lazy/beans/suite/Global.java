@@ -1,31 +1,36 @@
 package com.smile.lazy.beans.suite;
 
 import com.smile.lazy.beans.environment.Environment;
+import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.result.AssertionResultList;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Global implements Serializable {
 
-    private Environment globalEnvironment;
+    private Map<String, EnvironmentVariable> globalEnvironment; // Key, value
     private Map<String, Environment> environments; //environmentDisplayId, environment
     private AssertionResultList assertionResultList;
 
     public Global() {
     }
 
-    public Global(Environment globalEnvironment) {
+    public Global(Map<String, EnvironmentVariable> globalEnvironment) {
         this.globalEnvironment = globalEnvironment;
     }
 
-    public Environment getGlobalEnvironment() {
+    public Map<String, EnvironmentVariable> getGlobalEnvironment() {
+        if (globalEnvironment == null) {
+            globalEnvironment = new HashMap<>();
+        }
         return globalEnvironment;
     }
 
-    public void setGlobalEnvironment(Environment globalEnvironment) {
+    public void setGlobalEnvironment(Map<String, EnvironmentVariable> globalEnvironment) {
         this.globalEnvironment = globalEnvironment;
     }
 

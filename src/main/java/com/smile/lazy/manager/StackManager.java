@@ -28,11 +28,6 @@ public class StackManager {
             mergedStack.setDefaultValues(defaultValues);
         }
 
-        Environment globalEnvironment = childStack.getGlobalEnvironment();
-        if (globalEnvironment != null) {
-            mergedStack.setGlobalEnvironment(globalEnvironment);
-        }
-
         Map<String, Environment> environments = childStack.getEnvironments();
         if (environments != null) {
             mergedStack.setEnvironments(environments);

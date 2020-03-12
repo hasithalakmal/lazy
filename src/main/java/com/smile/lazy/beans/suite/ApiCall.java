@@ -1,8 +1,10 @@
 package com.smile.lazy.beans.suite;
 
+import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
+import com.smile.lazy.utils.VariableManipulationUtil;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -105,6 +107,7 @@ public class ApiCall implements Serializable {
         if (StringUtils.isBlank(protocol)) {
             protocol = getStack().getDefaultValues().getProtocol();
         }
+        protocol= VariableManipulationUtil.getVariableValue(protocol, stack);
         return protocol;
     }
 
@@ -116,6 +119,7 @@ public class ApiCall implements Serializable {
         if (StringUtils.isBlank(hostName)) {
             hostName = getStack().getDefaultValues().getHostName();
         }
+        hostName = VariableManipulationUtil.getVariableValue(hostName, stack);
         return hostName;
     }
 
@@ -138,6 +142,7 @@ public class ApiCall implements Serializable {
         if (StringUtils.isBlank(contextPath)) {
             contextPath = getStack().getDefaultValues().getContextPath();
         }
+        contextPath = VariableManipulationUtil.getVariableValue(contextPath, stack);
         return contextPath;
     }
 
@@ -146,6 +151,7 @@ public class ApiCall implements Serializable {
     }
 
     public String getUri() {
+        uri = VariableManipulationUtil.getVariableValue(uri, stack);
         return uri;
     }
 
@@ -176,6 +182,8 @@ public class ApiCall implements Serializable {
         if (StringUtils.isBlank(httpMethod)) {
             httpMethod = getStack().getDefaultValues().getHttpMethod();
         }
+        httpMethod = VariableManipulationUtil.getVariableValue(httpMethod, stack);
+
         return httpMethod;
     }
 
@@ -184,6 +192,7 @@ public class ApiCall implements Serializable {
     }
 
     public String getRequestBody() {
+        requestBody = VariableManipulationUtil.getVariableValue(requestBody, stack);
         return requestBody;
     }
 

@@ -2,6 +2,7 @@ package com.smile.lazy.beans.suite;
 
 import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.environment.Environment;
+import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +19,7 @@ public class Stack implements Serializable {
     private List<AssertionRule> defaultAssertions;
     private DefaultValues defaultValues;
     private HeaderGroup headerGroup;
-    private Environment globalEnvironment;
+    private Map<String, EnvironmentVariable> globalEnvironment; //key, value
     private Map<String, Environment> environments; //environmentDisplayId, environment
     private Map<String, String> attributes; //attribute key, value
 
@@ -27,11 +28,6 @@ public class Stack implements Serializable {
 
     public Stack(DefaultValues defaultValues) {
         this.defaultValues = defaultValues;
-    }
-
-    public Stack(DefaultValues defaultValues, Environment globalEnvironment) {
-        this.defaultValues = defaultValues;
-        this.globalEnvironment = globalEnvironment;
     }
 
     public DefaultValues getDefaultValues() {
@@ -61,11 +57,11 @@ public class Stack implements Serializable {
         this.defaultAssertions = defaultAssertions;
     }
 
-    public Environment getGlobalEnvironment() {
+    public Map<String, EnvironmentVariable>  getGlobalEnvironment() {
         return globalEnvironment;
     }
 
-    public void setGlobalEnvironment(Environment globalEnvironment) {
+    public void setGlobalEnvironment(Map<String, EnvironmentVariable>  globalEnvironment) {
         this.globalEnvironment = globalEnvironment;
     }
 

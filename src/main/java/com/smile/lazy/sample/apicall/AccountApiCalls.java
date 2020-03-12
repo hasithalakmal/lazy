@@ -1,6 +1,7 @@
 package com.smile.lazy.sample.apicall;
 
 import com.smile.lazy.beans.enums.ActionTypeEnum;
+import com.smile.lazy.beans.enums.DataSourceEnum;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.beans.suite.actions.VariableDeclarationAction;
@@ -23,7 +24,8 @@ public class AccountApiCalls {
               + "\"accountName\":\"Sathara-1577641690\",\"ownerName\":\"Hasitha-1577641690\",\"versionId\":\"1.0.0\","
               + "\"settings\":[{\"key\":\"setting1\",\"value\":\"1577641690\"},{\"key\":\"setting2\",\"value\":\"1577641690\"}]}");
         apiCall1.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
-        Action setAccountId = new VariableDeclarationAction(ActionTypeEnum.SET_GLOBAL_VARIABLE, "created.account.id.1", "$['accountName']");
+        Action setAccountId = new VariableDeclarationAction(ActionTypeEnum.SET_GLOBAL_VARIABLE, DataSourceEnum.BODY,
+              "created.account.id.1", "$['accountId']");
         apiCall1.getPostActions().add(setAccountId);
         return apiCall1;
     }
@@ -31,9 +33,9 @@ public class AccountApiCalls {
     public static ApiCall getAccountApiCall() {
         ApiCall apiCall2 = new ApiCall(2, "Get Account by Id");
         apiCall2.disableAssertion("created.http.status.assertion");
-        apiCall2.setUri("service/accounts/{{lazy.created.account.id.1}}");
+        apiCall2.setUri("service/accounts/{{lazy.global.created.account.id.1}}");
         apiCall2.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
-        apiCall2.addAssertionRule(Assert.equalBodyValueAssertion("$['accountId']", "{{lazy.created.account.id.1}}"));
+//        apiCall2.addAssertionRule(Assert.equalBodyValueAssertion("$['accountId']", "{{lazy.global.created.account.id.1}}"));
         apiCall2.addAssertionRule(Assert.responseCodeAssertion("200"));
         return apiCall2;
     }

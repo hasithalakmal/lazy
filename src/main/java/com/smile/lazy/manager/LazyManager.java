@@ -4,6 +4,7 @@ import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.environment.Environment;
+import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.result.AssertionResultList;
 import com.smile.lazy.beans.suite.ApiCall;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LazyManager {
@@ -37,7 +39,7 @@ public class LazyManager {
     private ApiCallHandler apiCallHandler;
 
     @Autowired
-    private PreActionHandler preActionHandler;
+    private ActionHandler actionHandler;
 
     @Autowired
     private StackManager stackManager;
@@ -61,12 +63,6 @@ public class LazyManager {
 
         if (lazySuite.getGlobal() == null) {
             lazySuite.setGlobal(new Global());
-        }
-
-        Environment globalEnvironment = lazySuite.getGlobal().getGlobalEnvironment();
-        if (globalEnvironment == null) {
-            LOGGER.warn("Global environment should not be null, hence initialize global environment");
-            lazySuite.getGlobal().setGlobalEnvironment(new Environment());
         }
 
         AssertionResultList assertionResultList = new AssertionResultList();
@@ -215,19 +211,27 @@ public class LazyManager {
 
             LOGGER.info("Executing api call - [{}] - [{}]", idDto.getApiCallId(), apiCallName);
 
-            Environment globalEnvironment = lazySuite.getGlobal().getGlobalEnvironment();
-
             List<Action> preActions = apiCall.getPreActions();
             for (Action preAction : preActions) {
-                preActionHandler.executePreAction(lazySuite, preAction);
+                actionHandler.executePreAction(lazySuite, preAction);
             }
 
+            Map<String, EnvironmentVariable> globalEnvironment = lazySuite.getGlobal().getGlobalEnvironment();
+            apiCall.getStack().setGlobalEnvironment(globalEnvironment);
+
+            List<Action> postActions = apiCall.getPostActions();
             try {
-                LazyApiCallResponse response = apiCallHandler.executeApiCall(apiCall, globalEnvironment);
+                LazyApiCallResponse response = apiCallHandler.executeApiCall(apiCall);
                 assertionHandler.executeApiCallAssertions(apiCall, response, assertionResultList);
+                for (Action postAction : postActions) {
+                    actionHandler.executePostAction(lazySuite, response, postAction);
+                }
             } catch (Exception ex) {
                 LOGGER.warn("API call execution failed since skipping the assertion execution");
                 assertionHandler.executeApiCallAssertions(apiCall, null, assertionResultList);
+                for (Action postAction : postActions) {
+                    actionHandler.executePostAction(lazySuite, null, postAction);
+                }
             }
 
             idDto.setApiCallId(idDto.getApiCallId() + 1);

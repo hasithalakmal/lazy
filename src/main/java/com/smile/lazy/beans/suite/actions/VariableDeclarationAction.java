@@ -2,6 +2,7 @@ package com.smile.lazy.beans.suite.actions;
 
 import com.smile.lazy.beans.enums.ActionTypeEnum;
 import com.smile.lazy.beans.enums.DataSourceEnum;
+import com.smile.lazy.beans.enums.DataTypeEnum;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -14,15 +15,20 @@ public class VariableDeclarationAction extends Action implements Serializable {
     private String jsonPath;
     private String variableValue;
     private String variableKey;
-    private String dataType;
+    private DataTypeEnum dataType;
 
-    public VariableDeclarationAction(ActionTypeEnum actionType, String variableKey) {
+    public VariableDeclarationAction(ActionTypeEnum actionType, DataSourceEnum dataSourceEnum, String variableKey, String jsonPath) {
         super(actionType);
+        this.dataSourceEnum = dataSourceEnum;
         this.variableKey = variableKey;
+        this.dataType = DataTypeEnum.STRING;
+        this.jsonPath = jsonPath;
     }
 
-    public VariableDeclarationAction(ActionTypeEnum actionType, String variableKey, String jsonPath) {
+    public VariableDeclarationAction(ActionTypeEnum actionType, DataSourceEnum dataSourceEnum, DataTypeEnum dataType, String variableKey, String jsonPath) {
         super(actionType);
+        this.dataSourceEnum = dataSourceEnum;
+        this.dataType = dataType;
         this.variableKey = variableKey;
         this.jsonPath = jsonPath;
     }
@@ -67,11 +73,11 @@ public class VariableDeclarationAction extends Action implements Serializable {
         this.variableKey = variableKey;
     }
 
-    public String getDataType() {
+    public DataTypeEnum getDataType() {
         return dataType;
     }
 
-    public void setDataType(String dataType) {
+    public void setDataType(DataTypeEnum dataType) {
         this.dataType = dataType;
     }
 

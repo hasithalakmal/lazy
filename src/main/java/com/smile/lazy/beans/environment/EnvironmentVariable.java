@@ -1,5 +1,6 @@
 package com.smile.lazy.beans.environment;
 
+import com.smile.lazy.beans.enums.DataTypeEnum;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -12,18 +13,12 @@ public class EnvironmentVariable implements Serializable {
     private String environmentVariableName;
     private String environmentVariableDescription;
     private Boolean active;
-    private String dataType;
+    private DataTypeEnum dataType;
     private String key;
     private String value;
 
-    public EnvironmentVariable(String key, String value) {
-        this.key = key;
-        this.value = value;
-    }
-
-    public EnvironmentVariable(String key, String value, String dataType) {
+    public EnvironmentVariable(String value, DataTypeEnum dataType) {
         this.dataType = dataType;
-        this.key = key;
         this.value = value;
     }
 
@@ -67,11 +62,11 @@ public class EnvironmentVariable implements Serializable {
         this.active = active;
     }
 
-    public String getDataType() {
+    public DataTypeEnum getDataType() {
         return dataType;
     }
 
-    public void setDataType(String dataType) {
+    public void setDataType(DataTypeEnum dataType) {
         this.dataType = dataType;
     }
 

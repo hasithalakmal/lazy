@@ -84,8 +84,7 @@ public class AssertionHandler {
                                                  AssertionRule assertionRule, AssertionOperationEnum operation) {
         AssertionResult assertionResult;
         String responseBody = lazyApiCallResponse.getResponseBody();
-        assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(),
-              responseBody);
+        assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), responseBody);
         AssertionValue assertionValue = assertionRule.getAssertionValue();
         if (assertionValue == null) {
             if (operation == AssertionOperationEnum.NULL) {

@@ -10,7 +10,7 @@ public class CreateAccountSuccessTestCase {
     public static TestCase getCreateAccountTestCase() {
         TestCase testCase1 = new TestCase("Smile-Test-Case-1", "Create Account successfully");
         testCase1.getApiCalls().add(createAccountApiCall());
-//        testCase1.getApiCalls().add(getAccountApiCall());
+        testCase1.getApiCalls().add(getAccountApiCall());
         return testCase1;
     }
 }

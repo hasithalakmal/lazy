@@ -89,6 +89,9 @@ public class LazySuite implements Serializable {
     }
 
     public Global getGlobal() {
+        if (global == null) {
+            global = new Global();
+        }
         return global;
     }
 
