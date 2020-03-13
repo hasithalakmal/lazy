@@ -49,6 +49,11 @@
             <groupId>com.jayway.jsonpath</groupId>
             <version>2.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
     </dependencies>
     <description>API Management framework</description>
     <groupId>com.smile24</groupId>

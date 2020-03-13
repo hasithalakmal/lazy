@@ -23,6 +23,17 @@ public class AccountApiCalls {
         return apiCall1;
     }
 
+    public static ApiCall createAccountApiCallWithJsonFile() {
+        ApiCall apiCall1 = new ApiCall(1, "Create Account");
+        apiCall1.setUri("service/accounts");
+        apiCall1.setHttpMethod("POST");
+        apiCall1.setRequestBodyFromJson("request-body/account-api/create-account/create-simple-account.json");
+        apiCall1.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id.1", "$['accountId']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name.1", "$['accountName']"));
+        return apiCall1;
+    }
+
     public static ApiCall getAccountApiCall() {
         ApiCall apiCall2 = new ApiCall(2, "Get Account by Id");
         apiCall2.disableAssertion("created.http.status.assertion");
@@ -32,7 +43,6 @@ public class AccountApiCalls {
         apiCall2.addAssertionRule(Assert.responseCodeAssertion("200"));
         return apiCall2;
     }
-
 
     private static AssertionRuleGroup accountAssertionGroup1(String expectedAccountName) {
         AssertionRuleGroup assertionRuleGroup1 = new AssertionRuleGroup(1000, "Create Account success assertions");

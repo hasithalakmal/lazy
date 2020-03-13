@@ -8,8 +8,18 @@ import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -269,6 +279,28 @@ public class ApiCall implements Serializable {
             this.disabledAssertions = new ArrayList<>();
         }
         this.disabledAssertions.add(assertionKey);
+    }
+
+    public void setRequestBodyFromJson(String filePath){
+        JSONParser parser = new JSONParser();
+        File file = null;
+        try {
+            file = ResourceUtils.getFile("classpath:"+filePath);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try (Reader reader = new FileReader(file)) {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+            String requestBodyValue = jsonObject.toJSONString();
+            System.out.println(requestBodyValue);
+            requestBody = requestBodyValue;
+        } catch (IOException e) {
+            //TODO - handle exception
+            e.printStackTrace();
+        } catch (ParseException e) {
+            //TODO - handle exception
+            e.printStackTrace();
+        }
     }
 
     @Override

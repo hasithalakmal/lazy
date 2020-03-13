@@ -31,7 +31,13 @@ public class LazyManagerTest {
         } catch (Exception ex) {
             Assert.fail("Success scenarios should not be failed", ex);
         }
+    }
 
+    @Test
+    public void simple(){
+        System.out.println("{\"status\":\"ACTIVE\",\"createdBy\":\"12345\",\"parentId\":\"1\",\"enterpriseId\":\"1\","
+              + "\"accountName\":\"Sathara-1577641690\",\"ownerName\":\"Hasitha-1577641690\",\"versionId\":\"1.0.0\","
+              + "\"settings\":[{\"key\":\"setting1\",\"value\":\"1577641690\"},{\"key\":\"setting2\",\"value\":\"1577641690\"}]}");
     }
 
 }
