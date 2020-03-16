@@ -18,6 +18,8 @@ public class ErrorCodes {
 
     public static final String INVALID_LAZY_TEST_API_CALL = "Lazy-60000";
 
+    //Lazy Core related error codes
+    public static final String INVALID_TABLE = "Lazy-70000";
 
     private ErrorCodes() {
         //This is a private constructor

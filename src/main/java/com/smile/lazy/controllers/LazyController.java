@@ -43,6 +43,6 @@ public class LazyController extends BaseController {
             lazySuite = populateSampleTestSuite();
         }
         LOGGER.info("Start lazy test suite execution [{}]", lazySuite);
-        return lazyManager.test(lazySuite);
+        return lazyManager.executeLazySuite(lazySuite);
     }
 }

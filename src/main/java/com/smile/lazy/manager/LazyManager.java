@@ -3,8 +3,11 @@ package com.smile.lazy.manager;
 import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
+import com.smile.lazy.beans.dto.ResultRecodeTo;
+import com.smile.lazy.beans.dto.ResultSummeryTo;
 import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
+import com.smile.lazy.beans.result.AssertionResult;
 import com.smile.lazy.beans.result.AssertionResultList;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.beans.suite.Global;
@@ -14,6 +17,7 @@ import com.smile.lazy.beans.suite.TestScenario;
 import com.smile.lazy.beans.suite.TestSuite;
 import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.common.ErrorCodes;
+import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.exception.LazyException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -43,7 +47,7 @@ public class LazyManager {
     @Autowired
     private StackManager stackManager;
 
-    public AssertionResultList test(LazySuite lazySuite) throws LazyException {
+    public AssertionResultList executeLazySuite(LazySuite lazySuite) throws LazyException {
 
         if (lazySuite == null) {
             String error = "Null lazy suite";
@@ -66,7 +70,34 @@ public class LazyManager {
 
         AssertionResultList assertionResultList = new AssertionResultList();
         executeTestSuites(lazySuite, assertionResultList, new IdDto());
+
+        ResultSummeryTo assertionResultTo = getResultSummery(assertionResultList);
+        try {
+            String table = assertionResultTo.prettyPrintString();
+            LOGGER.info(table);
+        } catch (LazyCoreException e) {
+            String error = "Invalid results table generated";
+            LOGGER.error(error);
+            throw new LazyException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCodes.INVALID_TABLE, error);
+        }
         return assertionResultList;
+    }
+
+    private ResultSummeryTo getResultSummery(AssertionResultList assertionResultList){
+        ResultSummeryTo resultSummeryTo = new ResultSummeryTo();
+        for (AssertionResult assertionResult: assertionResultList.getResults()) {
+            ResultRecodeTo resultRecodeTo = new ResultRecodeTo();
+            resultRecodeTo.setResultId(Integer.toString(assertionResult.getResultId()));
+            resultRecodeTo.setAssertionName(assertionResult.getAssertionRule().getAssertionRuleName());
+            resultRecodeTo.setActualResult(assertionResult.getActualValue());
+            resultRecodeTo.setExpectedResult(assertionResult.getAssertionRule().getAssertionValue() == null ? null :
+                  assertionResult.getAssertionRule().getAssertionValue().getExpectedValue1());
+            resultRecodeTo.setStatus(assertionResult.getAssertionStatus());
+            resultRecodeTo.setIsPass(assertionResult.getPass().toString());
+            resultSummeryTo.getResultRecodeToList().add(resultRecodeTo);
+        }
+
+        return resultSummeryTo;
     }
 
     private void validateDefaultValues(DefaultValues defaultValues) throws LazyException {

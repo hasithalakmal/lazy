@@ -21,7 +21,7 @@ public class LazyManagerTest {
     public void testEmployee() throws Exception {
         try {
             LazySuite sampleLazySuite = populateSampleTestSuite();
-            AssertionResultList results = lazyManager.test(sampleLazySuite);
+            AssertionResultList results = lazyManager.executeLazySuite(sampleLazySuite);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getResults());
             results.getResults().forEach(result -> {
