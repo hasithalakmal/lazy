@@ -2,6 +2,7 @@ package com.smile.lazy.beans.printer;
 
 import com.smile.lazy.common.ErrorCodes;
 import com.smile.lazy.exception.LazyCoreException;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -108,40 +109,10 @@ public class LazyTable {
         return rowBreaker;
     }
 
-    public String tableAsPrintableString(){
-        String table = "";
-        String rowBreaker ="";
-        String leftAlignFormat = "";
-        for (Integer key : columnMaxCharacters.keySet()){
-            int columnLength = columnMaxCharacters.get(key) + padding;
-            String columnDash = "+"+"-".repeat(columnLength + 2);
-            rowBreaker += columnDash;
-            leftAlignFormat += format("| %-{0}s ", columnLength);
-        }
-        rowBreaker += "+\n";
-        leftAlignFormat +="|\n";
-        table += rowBreaker;
-
-
-
-
-
-
-        System.out.format("+-----------------+------+%n");
-        System.out.format("| Column name     | ID   |%n");
-        System.out.format("+-----------------+------+%n");
-        for (int i = 0; i < 5; i++) {
-            String.format(leftAlignFormat, "some data" + i, i * i);
-        }
-        System.out.format("+-----------------+------+%n");
-
-        return "";
-    }
-
     private void calculateMaxLengths(List<String> columnValues) {
         int count = 1;
         for (String header : columnValues) {
-            int length = header.length();
+            int length = StringUtils.isBlank(header) ? 0 : header.length();
             if (columnMaxCharacters.containsKey(count)) {
                 Integer existingValue = columnMaxCharacters.get(count);
                 if (existingValue < length){

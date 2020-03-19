@@ -252,13 +252,13 @@ public class LazyManager {
             List<Action> postActions = apiCall.getPostActions();
             try {
                 LazyApiCallResponse response = apiCallHandler.executeApiCall(apiCall);
-                assertionHandler.executeApiCallAssertions(apiCall, response, assertionResultList);
+                assertionHandler.executeApiCallAssertions(apiCall, idDto, response, assertionResultList);
                 for (Action postAction : postActions) {
                     actionHandler.executePostAction(lazySuite, response, postAction);
                 }
             } catch (Exception ex) {
                 LOGGER.warn("API call execution failed since skipping the assertion execution");
-                assertionHandler.executeApiCallAssertions(apiCall, null, assertionResultList);
+                assertionHandler.executeApiCallAssertions(apiCall, idDto, null, assertionResultList);
                 for (Action postAction : postActions) {
                     actionHandler.executePostAction(lazySuite, null, postAction);
                 }

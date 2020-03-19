@@ -79,24 +79,62 @@ public class ResultSummeryTo {
               '}';
     }
 
-    public String prettyPrintString() throws LazyCoreException {
-
-        LazyTable lazyTable = new LazyTable(Arrays.asList("Assertion Name", "Actual Result", "Is Pass"));
-        for (ResultRecodeTo result :resultRecodeToList){
-            lazyTable.addRow(Arrays.asList(result.getAssertionName(), result.getActualResult(), result.getIsPass()));
+    public String prettyPrintString(boolean withActualResults) throws LazyCoreException {
+        LazyTable lazyTable = withActualResults ?
+              new LazyTable(Arrays.asList( "Result Id", "API Call Name", "Assertion Name", "Expected Results", "Actual Result", "Execution Status","Is Pass")) :
+              new LazyTable(Arrays.asList( "Result Id", "API Call Name", "Assertion Name", "Execution Status","Is Pass"));
+        for (ResultRecodeTo result :resultRecodeToList) {
+            if (withActualResults) {
+                lazyTable.addRow(Arrays.asList(result.getResultId(),
+                      result.getApiCallName(),
+                      result.getAssertionName(),
+                      result.getExpectedResult(),
+                      result.getActualResult(),
+                      result.getStatus(),
+                      result.getIsPass()));
+            } else {
+                lazyTable.addRow(Arrays.asList(result.getResultId(),
+                      result.getApiCallName(),
+                      result.getAssertionName(),
+                      result.getStatus(),
+                      result.getIsPass()));
+            }
         }
         String formatString = lazyTable.getFormatterString();
         String breakerString = lazyTable.getBreakerString();
         String table = "\n";
         table += breakerString;
-        String headersString = String.format(formatString, "Assertion Name", "Actual Result", "Is Pass");
+        String headersString = withActualResults ?
+              String.format(formatString, "Result Id", "API Call Name", "Assertion Name", "Expected Results", "Actual Result", "Execution Status", "Is Pass") :
+              String.format(formatString, "Result Id", "API Call Name", "Assertion Name", "Execution Status", "Is Pass");
         table += headersString;
         table += breakerString;
         for (ResultRecodeTo result :resultRecodeToList){
-            String rowString = String.format(formatString,result.getAssertionName(), result.getActualResult(), result.getIsPass());
+            String rowString = "";
+            if (withActualResults) {
+                String.format(formatString,
+                      result.getResultId(),
+                      result.getApiCallName(),
+                      result.getAssertionName(),
+                      result.getExpectedResult(),
+                      result.getActualResult(),
+                      result.getStatus(),
+                      result.getIsPass());
+            } else{
+                rowString = String.format(formatString,
+                      result.getResultId(),
+                      result.getApiCallName(),
+                      result.getAssertionName(),
+                      result.getStatus(),
+                      result.getIsPass());
+            }
             table += rowString;
         }
         table += breakerString;
         return table;
+    }
+
+    public String prettyPrintString() throws LazyCoreException {
+        return prettyPrintString(false);
     }
 }

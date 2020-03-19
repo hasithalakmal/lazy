@@ -1,5 +1,6 @@
 package com.smile.lazy.beans.result;
 
+import com.smile.lazy.beans.enums.AssertionResultStatus;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -152,6 +153,9 @@ public class AssertionResult implements Serializable {
     }
 
     public String getAssertionStatus() {
+        if (assertionStatus == null) {
+            assertionStatus = AssertionResultStatus.EXECUTED.getValue();
+        }
         return assertionStatus;
     }
 

@@ -2,7 +2,9 @@ package com.smile.lazy.manager;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
+import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.enums.AssertionOperationEnum;
+import com.smile.lazy.beans.enums.AssertionResultStatus;
 import com.smile.lazy.beans.enums.DataSourceEnum;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.result.AssertionResult;
@@ -25,14 +27,14 @@ public class AssertionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AssertionHandler.class);
 
-    public void executeApiCallAssertions(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList) throws LazyException {
+    public void executeApiCallAssertions(ApiCall apiCall, IdDto idDto, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList) throws LazyException {
 
         if (apiCall.getStack().getDefaultAssertions() != null) {
             for (AssertionRule assertionRule : apiCall.getStack().getDefaultAssertions()) {
                 if (validateAssertionEnablement(apiCall, assertionRule)) {
                     continue;
                 }
-                executeAssertion(apiCall, lazyApiCallResponse, assertionResultList, assertionRule);
+                executeAssertion(apiCall, idDto, lazyApiCallResponse, assertionResultList, assertionRule);
             }
         }
 
@@ -40,7 +42,7 @@ public class AssertionHandler {
             if (validateAssertionEnablement(apiCall, assertionRule)) {
                 continue;
             }
-            executeAssertion(apiCall, lazyApiCallResponse, assertionResultList, assertionRule);
+            executeAssertion(apiCall, idDto, lazyApiCallResponse, assertionResultList, assertionRule);
         }
     }
 
@@ -54,37 +56,41 @@ public class AssertionHandler {
         return false;
     }
 
-    private void executeAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList,
+    private void executeAssertion(ApiCall apiCall, IdDto idDto, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList,
                                   AssertionRule assertionRule) throws LazyException {
         DataSourceEnum dataSource = assertionRule.getDataSource();
         AssertionOperationEnum operation = assertionRule.getAssertionOperation();
         AssertionResult assertionResult = null;
+        Integer assertionResultId = idDto.getAssertionResultId();
         if (lazyApiCallResponse == null) {
             //TODO - Fix result id
-            assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), null, false, "SKIPPED");
+            assertionResult = new AssertionResult(assertionResultId, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), null, false,
+                  AssertionResultStatus.SKIPPED.getValue());
         } else if (dataSource == DataSourceEnum.RESPONSE_CODE) {
-            assertionResult = responseCodeAssertion(apiCall, lazyApiCallResponse, assertionRule, operation);
+            assertionResult = responseCodeAssertion(assertionResultId, apiCall, lazyApiCallResponse, assertionRule, operation);
         } else if (dataSource == DataSourceEnum.RESPONSE_TIME) {
-            assertionResult = responseTimeAssertion(apiCall, lazyApiCallResponse, assertionRule, operation);
+            assertionResult = responseTimeAssertion(assertionResultId, apiCall, lazyApiCallResponse, assertionRule, operation);
         } else if (dataSource == DataSourceEnum.RESPONSE_CODE_NAME) {
-            assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), null, false, "NOT_IMPLEMENTED");
+            assertionResult = new AssertionResult(assertionResultId, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), null, false,
+                  AssertionResultStatus.NOT_IMPLEMENTED.getValue());
         } else if (dataSource == DataSourceEnum.RESPONSE_HEADER) {
-            assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), null, false, "NOT_IMPLEMENTED");
+            assertionResult = new AssertionResult(assertionResultId, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), null, false, AssertionResultStatus.NOT_IMPLEMENTED.getValue());
         } else if (dataSource == DataSourceEnum.BODY) {
-            assertionResult = requestBodyAssertion(apiCall, lazyApiCallResponse, assertionRule, operation);
+            assertionResult = requestBodyAssertion(assertionResultId, apiCall, lazyApiCallResponse, assertionRule, operation);
         } else {
             LOGGER.warn("Assertion datasource is not supported");
             throw new LazyException(HttpStatus.NOT_IMPLEMENTED, ErrorCodes.NOT_IMPLEMENTED, "Given dataSource has not supported yet");
         }
         assertionResult.setAssertionRule(assertionRule);
+        idDto.setAssertionResultId(assertionResultId+1);
         assertionResultList.getResults().add(assertionResult);
     }
 
-    private AssertionResult requestBodyAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
+    private AssertionResult requestBodyAssertion(Integer assertionResultId, ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
                                                  AssertionRule assertionRule, AssertionOperationEnum operation) {
         AssertionResult assertionResult;
         String responseBody = lazyApiCallResponse.getResponseBody();
-        assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), responseBody);
+        assertionResult = new AssertionResult(assertionResultId, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(), responseBody);
         AssertionValue assertionValue = assertionRule.getAssertionValue();
         if (assertionValue == null) {
             if (operation == AssertionOperationEnum.NULL) {
@@ -134,13 +140,13 @@ public class AssertionHandler {
         }
     }
 
-    private AssertionResult responseTimeAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
+    private AssertionResult responseTimeAssertion(Integer assertionResultId, ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
                                                   AssertionRule assertionRule, AssertionOperationEnum operation) {
         AssertionResult assertionResult;
         AssertionValue assertionValue = assertionRule.getAssertionValue();
         String expectedValue = assertionValue.getExpectedValue1();
         long responseTime = lazyApiCallResponse.getResponseTime();
-        assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(),
+        assertionResult = new AssertionResult(assertionResultId, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(),
               Long.toString(responseTime));
         if (operation == AssertionOperationEnum.LESS_THAN) {
             assertionResult.setPass(responseTime < Integer.parseInt(expectedValue));
@@ -160,13 +166,13 @@ public class AssertionHandler {
         return assertionResult;
     }
 
-    private AssertionResult responseCodeAssertion(ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
+    private AssertionResult responseCodeAssertion(Integer assertionResultId, ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
                                                   AssertionRule assertionRule, AssertionOperationEnum operation) {
         AssertionResult assertionResult;
         AssertionValue assertionValue = assertionRule.getAssertionValue();
         String expectedValue = assertionValue.getExpectedValue1();
         int responseCode = lazyApiCallResponse.getCloseableHttpResponse().getStatusLine().getStatusCode();
-        assertionResult = new AssertionResult(1, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(),
+        assertionResult = new AssertionResult(assertionResultId, apiCall.getApiCallId(), assertionRule.getAssertionRuleId(),
               Integer.toString(responseCode));
         if (operation == AssertionOperationEnum.EQUAL) {
             assertionResult.setPass(responseCode == Integer.parseInt(expectedValue));
