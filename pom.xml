@@ -56,7 +56,7 @@
         </dependency>
     </dependencies>
     <description>API Management framework</description>
-    <groupId>com.smile24</groupId>
+    <groupId>com.smile</groupId>
     <modelVersion>4.0.0</modelVersion>
     <name>lazy</name>
 
