@@ -5,9 +5,9 @@ import com.smile.lazy.beans.enums.DataSourceEnum;
 import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.beans.suite.actions.VariableDeclarationAction;
 
-public class ActionsImpl {
+public class Actions {
 
-    private ActionsImpl() {
+    private Actions() {
         //This is a private constructor
     }
 

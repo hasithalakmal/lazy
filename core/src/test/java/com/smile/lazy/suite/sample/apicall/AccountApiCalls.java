@@ -3,7 +3,7 @@ package com.smile.lazy.suite.sample.apicall;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
-import com.smile.lazy.wrapper.ActionsImpl;
+import com.smile.lazy.wrapper.Actions;
 import com.smile.lazy.wrapper.Assert;
 
 import java.util.List;
@@ -18,8 +18,8 @@ public class AccountApiCalls {
               + "\"accountName\":\"Sathara-1577641690\",\"ownerName\":\"Hasitha-1577641690\",\"versionId\":\"1.0.0\","
               + "\"settings\":[{\"key\":\"setting1\",\"value\":\"1577641690\"},{\"key\":\"setting2\",\"value\":\"1577641690\"}]}");
         apiCall1.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
-        apiCall1.getPostActions().add(ActionsImpl.createGlobalVariableFromBody("created.account.id.1", "$['accountId']"));
-        apiCall1.getPostActions().add(ActionsImpl.createGlobalVariableFromBody("created.account.name.1", "$['accountName']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id.1", "$['accountId']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name.1", "$['accountName']"));
         return apiCall1;
     }
 
@@ -29,8 +29,8 @@ public class AccountApiCalls {
         apiCall1.setHttpMethod("POST");
         apiCall1.setRequestBodyFromJson("request-body/account-api/create-account/create-simple-account.json");
         apiCall1.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
-        apiCall1.getPostActions().add(ActionsImpl.createGlobalVariableFromBody("created.account.id.1", "$['accountId']"));
-        apiCall1.getPostActions().add(ActionsImpl.createGlobalVariableFromBody("created.account.name.1", "$['accountName']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id.1", "$['accountId']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name.1", "$['accountName']"));
         return apiCall1;
     }
 
