@@ -5,8 +5,13 @@ import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.dto.ResultRecodeTo;
 import com.smile.lazy.beans.dto.ResultSummeryTo;
-import com.smile.lazy.beans.result.AssertionResult;
-import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.beans.executor.ApiCallExecutionData;
+import com.smile.lazy.beans.executor.AssertionExecutionData;
+import com.smile.lazy.beans.executor.AssertionResult;
+import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.TestCaseExecutionData;
+import com.smile.lazy.beans.executor.TestScenarioExecutionData;
+import com.smile.lazy.beans.executor.TestSuiteExecutionData;
 import com.smile.lazy.beans.suite.Global;
 import com.smile.lazy.beans.suite.Header;
 import com.smile.lazy.common.ErrorCodes;
@@ -36,7 +41,7 @@ public class LazyManagerImpl implements LazyManager {
     private TestSuiteManager testSuiteManager;
 
     @Override
-    public AssertionResultList executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException {
+    public LazyExecutionData executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Ready to execute lazy suite - [{}]", JsonUtil.getJsonStringFromObject(lazySuite));
@@ -73,17 +78,17 @@ public class LazyManagerImpl implements LazyManager {
             lazySuite.setGlobal(new Global());
         }
 
-        AssertionResultList assertionResultList = new AssertionResultList();
+        LazyExecutionData lazyExecutionData = new LazyExecutionData();
         LOGGER.info("Ready to execute lazy suite - [{}]", lazySuiteName);
-        testSuiteManager.executeTestSuites(lazySuite, assertionResultList, new IdDto());
+        testSuiteManager.executeTestSuites(lazySuite, lazyExecutionData, new IdDto());
         LOGGER.info("Executed lazy suite - [{}]", lazySuiteName);
 
-        printResultTable(assertionResultList);
-        return assertionResultList;
+        printResultTable(lazyExecutionData);
+        return lazyExecutionData;
     }
 
-    private void printResultTable(AssertionResultList assertionResultList) throws LazyException {
-        ResultSummeryTo assertionResultTo = getResultSummery(assertionResultList);
+    private void printResultTable(LazyExecutionData lazyExecutionData) throws LazyException {
+        ResultSummeryTo assertionResultTo = getResultSummery(lazyExecutionData);
         try {
             String table = assertionResultTo.prettyPrintString();
             LOGGER.info(table);
@@ -94,20 +99,29 @@ public class LazyManagerImpl implements LazyManager {
         }
     }
 
-    private ResultSummeryTo getResultSummery(AssertionResultList assertionResultList) {
+    private ResultSummeryTo getResultSummery(LazyExecutionData lazyExecutionData) {
         ResultSummeryTo resultSummeryTo = new ResultSummeryTo();
-        for (AssertionResult assertionResult : assertionResultList.getResults()) {
-            ResultRecodeTo resultRecodeTo = new ResultRecodeTo();
-            resultRecodeTo.setResultId(Integer.toString(assertionResult.getResultId()));
-            resultRecodeTo.setAssertionName(assertionResult.getAssertionRule().getAssertionRuleName());
-            resultRecodeTo.setActualResult(assertionResult.getActualValue());
-            resultRecodeTo.setExpectedResult(assertionResult.getAssertionRule().getAssertionValue() == null ? null :
-                  assertionResult.getAssertionRule().getAssertionValue().getExpectedValue1());
-            resultRecodeTo.setStatus(assertionResult.getAssertionStatus());
-            resultRecodeTo.setIsPass(assertionResult.getPass().toString());
-            resultSummeryTo.getResultRecodeToList().add(resultRecodeTo);
+        for (TestSuiteExecutionData testSuiteExecutionData: lazyExecutionData.getTestSuiteExecutionData()){
+            for (TestScenarioExecutionData testScenarioExecutionData: testSuiteExecutionData.getTestScenarioExecutionData()) {
+                for (TestCaseExecutionData testCaseExecutionData: testScenarioExecutionData.getTestCaseExecutionDataList()) {
+                    for (ApiCallExecutionData apiCallExecutionData :testCaseExecutionData.getApiCallExecutionDataList()) {
+                        for (AssertionExecutionData assertionExecutionData: apiCallExecutionData.getAssertionExecutionDataList()) {
+                            AssertionResult assertionResult = assertionExecutionData.getAssertionResult();
+                            ResultRecodeTo resultRecodeTo = new ResultRecodeTo();
+                            resultRecodeTo.setResultId(Integer.toString(assertionResult.getResultId()));
+                            resultRecodeTo.setApiCallName(apiCallExecutionData.getApiCallName());
+                            resultRecodeTo.setAssertionName(assertionResult.getAssertionRule().getAssertionRuleName());
+                            resultRecodeTo.setActualResult(assertionResult.getActualValue());
+                            resultRecodeTo.setExpectedResult(assertionResult.getAssertionRule().getAssertionValue() == null ? null :
+                                  assertionResult.getAssertionRule().getAssertionValue().getExpectedValue1());
+                            resultRecodeTo.setStatus(assertionResult.getAssertionStatus());
+                            resultRecodeTo.setIsPass(assertionResult.getPass().toString());
+                            resultSummeryTo.getResultRecodeToList().add(resultRecodeTo);
+                        }
+                    }
+                }
+            }
         }
-
         return resultSummeryTo;
     }
 

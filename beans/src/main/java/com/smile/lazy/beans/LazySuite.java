@@ -1,5 +1,7 @@
 package com.smile.lazy.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.suite.Global;
 import com.smile.lazy.beans.suite.Stack;
 import com.smile.lazy.beans.suite.TestSuite;
@@ -10,6 +12,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LazySuite implements Serializable {
 
     private int lazySuiteId;

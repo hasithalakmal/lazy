@@ -1,7 +1,7 @@
 package com.smile.lazy.manager;
 
 import com.smile.lazy.beans.LazySuite;
-import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.beans.executor.LazyExecutionData;
 import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.exception.LazyException;
 
@@ -17,5 +17,5 @@ public interface LazyManager {
      * @return
      * @throws LazyException
      */
-    AssertionResultList executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException;
+    LazyExecutionData executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException;
 }

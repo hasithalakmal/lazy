@@ -4,8 +4,9 @@ import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.executor.ApiCallExecutionData;
+import com.smile.lazy.beans.executor.TestCaseExecutionData;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
-import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.beans.executor.LazyExecutionData;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.beans.suite.TestCase;
 import com.smile.lazy.beans.suite.actions.Action;
@@ -41,7 +42,7 @@ public class ApiCallManagerImpl implements com.smile.lazy.manager.ApiCallManager
     private StackHandler stackManager;
 
     @Override
-    public void executeApiCalls(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto, TestCase testCase) throws LazyException,
+    public void executeApiCalls(LazySuite lazySuite, TestCaseExecutionData testCaseExecutionData, IdDto idDto, TestCase testCase) throws LazyException,
           LazyCoreException {
         LOGGER.debug("Ready to executing all api calls...");
         for (ApiCall apiCall : testCase.getApiCalls()) {
@@ -65,22 +66,23 @@ public class ApiCallManagerImpl implements com.smile.lazy.manager.ApiCallManager
                 apiCallHandler.printExecutionData(apiCallExecutionData);
                 LOGGER.info("Executed api call - [{}] - [{}]", apiCallId, apiCallName);
 
-                executeAssertions(assertionResultList, idDto, apiCall, response, apiCallExecutionData);
+                executeAssertions(idDto, apiCall, response, apiCallExecutionData);
                 executePostActions(lazySuite, apiCall, apiCallName, apiCallId, response);
             } catch (Exception ex) {
                 LOGGER.warn("API call execution failed since skipping the assertion execution");
-                executeAssertions(assertionResultList, idDto, apiCall, null, apiCallExecutionData);
+                executeAssertions(idDto, apiCall, null, apiCallExecutionData);
                 executePostActionsOnFailed(lazySuite, apiCall, apiCallName, apiCallId);
             }
+            testCaseExecutionData.getApiCallExecutionDataList().add(apiCallExecutionData);
             LOGGER.info("Completed execution of api call - [{}] - [{}]", apiCallId, apiCallName);
             idDto.setApiCallId(apiCallId + 1);
         }
         LOGGER.debug("Executed all api cases...");
     }
 
-    private void executeAssertions(AssertionResultList assertionResultList, IdDto idDto, ApiCall apiCall, LazyApiCallResponse response, ApiCallExecutionData apiCallExecutionData) throws LazyException, LazyCoreException {
+    private void executeAssertions(IdDto idDto, ApiCall apiCall, LazyApiCallResponse response, ApiCallExecutionData apiCallExecutionData) throws LazyException, LazyCoreException {
         LOGGER.debug("Executing assertions of the api call - [{}] - [{}]", apiCall.getApiCallId(), apiCall.getApiCallName());
-        assertionHandler.executeAllAssertions(apiCall, idDto, response, assertionResultList, apiCallExecutionData);
+        assertionHandler.executeAllAssertions(apiCall, idDto, response, apiCallExecutionData);
         LOGGER.debug("Executed assertions of the api call - [{}] - [{}]", apiCall.getApiCallId(), apiCall.getApiCallName());
     }
 

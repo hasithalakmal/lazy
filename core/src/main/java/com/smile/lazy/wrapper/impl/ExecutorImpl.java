@@ -1,7 +1,7 @@
 package com.smile.lazy.wrapper.impl;
 
 import com.smile.lazy.beans.LazySuite;
-import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.beans.executor.LazyExecutionData;
 import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.exception.LazyException;
 import com.smile.lazy.manager.LazyManager;
@@ -18,7 +18,7 @@ public class ExecutorImpl implements Executor {
     private LazyManager lazyManager;
 
     @Override
-    public AssertionResultList executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException {
+    public LazyExecutionData executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException {
         LOGGER.info("Start lazy suite execution");
         return lazyManager.executeLazySuite(lazySuite);
     }

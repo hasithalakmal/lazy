@@ -1,10 +1,13 @@
 package com.smile.lazy.beans.executor;
 
-import com.smile.lazy.beans.result.AssertionResult;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AssertionExecutionData {
 
     private AssertionRule assertionRule;

@@ -1,11 +1,15 @@
 package com.smile.lazy.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.suite.HeaderGroup;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DefaultValues implements Serializable {
 
     private String protocol;

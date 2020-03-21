@@ -1,5 +1,7 @@
 package com.smile.lazy.beans.suite;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.environment.Environment;
 import com.smile.lazy.beans.environment.EnvironmentVariable;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Stack implements Serializable {
 
     private List<AssertionRule> defaultAssertions;

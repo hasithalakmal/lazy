@@ -2,7 +2,9 @@ package com.smile.lazy.manager.impl;
 
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
-import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.TestCaseExecutionData;
+import com.smile.lazy.beans.executor.TestScenarioExecutionData;
 import com.smile.lazy.beans.suite.TestCase;
 import com.smile.lazy.beans.suite.TestScenario;
 import com.smile.lazy.common.ErrorCodes;
@@ -30,7 +32,8 @@ public class TestCaseManagerImpl implements com.smile.lazy.manager.TestCaseManag
     private ApiCallManager apiCallManager;
 
     @Override
-    public void executeTestCases(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto, TestScenario testScenario) throws LazyException, LazyCoreException {
+    public void executeTestCases(LazySuite lazySuite, TestScenarioExecutionData testScenarioExecutionData, IdDto idDto, TestScenario testScenario) throws LazyException,
+          LazyCoreException {
         LOGGER.debug("Ready to executing all test cases...");
         for (TestCase testCase : testScenario.getTestCases()) {
             validateTestCase(testCase);
@@ -40,8 +43,11 @@ public class TestCaseManagerImpl implements com.smile.lazy.manager.TestCaseManag
             Integer testCaseId = populateTestCaseId(idDto, testCase, testCaseName);
 
             LOGGER.info("Executing test case - [{}] - [{}]", testCaseId, testCaseName);
-            apiCallManager.executeApiCalls(lazySuite, assertionResultList, idDto, testCase);
+            TestCaseExecutionData testCaseExecutionData = new TestCaseExecutionData(testCaseId, testCaseName);
+            apiCallManager.executeApiCalls(lazySuite, testCaseExecutionData, idDto, testCase);
             LOGGER.info("Executed test case - [{}] - [{}]", testCaseId, testCaseName);
+
+            testScenarioExecutionData.getTestCaseExecutionDataList().add(testCaseExecutionData);
 
             idDto.setTestCaseId(testCaseId + 1);
         }

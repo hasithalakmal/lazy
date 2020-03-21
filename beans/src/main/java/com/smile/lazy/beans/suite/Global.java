@@ -1,8 +1,10 @@
 package com.smile.lazy.beans.suite;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.environment.Environment;
 import com.smile.lazy.beans.environment.EnvironmentVariable;
-import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.beans.executor.LazyExecutionData;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -10,11 +12,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Global implements Serializable {
 
     private Map<String, EnvironmentVariable> globalEnvironment; // Key, value
     private Map<String, Environment> environments; //environmentDisplayId, environment
-    private AssertionResultList assertionResultList;
+    private LazyExecutionData assertionResultList;
 
     public Global() {
     }
@@ -42,11 +46,11 @@ public class Global implements Serializable {
         this.environments = environments;
     }
 
-    public AssertionResultList getAssertionResultList() {
+    public LazyExecutionData getAssertionResultList() {
         return assertionResultList;
     }
 
-    public void setAssertionResultList(AssertionResultList assertionResultList) {
+    public void setAssertionResultList(LazyExecutionData assertionResultList) {
         this.assertionResultList = assertionResultList;
     }
 

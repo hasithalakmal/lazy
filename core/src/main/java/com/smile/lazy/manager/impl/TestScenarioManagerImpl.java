@@ -2,7 +2,9 @@ package com.smile.lazy.manager.impl;
 
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
-import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.TestScenarioExecutionData;
+import com.smile.lazy.beans.executor.TestSuiteExecutionData;
 import com.smile.lazy.beans.suite.TestScenario;
 import com.smile.lazy.beans.suite.TestSuite;
 import com.smile.lazy.common.ErrorCodes;
@@ -30,7 +32,7 @@ public class TestScenarioManagerImpl implements com.smile.lazy.manager.TestScena
     private TestCaseManager testCaseManager;
 
     @Override
-    public void executeTestScenarios(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto, TestSuite testSuite)
+    public void executeTestScenarios(LazySuite lazySuite, TestSuiteExecutionData testSuiteExecutionData, IdDto idDto, TestSuite testSuite)
           throws LazyException, LazyCoreException {
         LOGGER.debug("Ready to executing all test scenarios...");
         for (TestScenario testScenario : testSuite.getTestScenarios()) {
@@ -41,8 +43,11 @@ public class TestScenarioManagerImpl implements com.smile.lazy.manager.TestScena
             Integer testScenarioId = populateTestScenarioId(idDto, testScenario, testScenarioName);
 
             LOGGER.info("Executing test scenario - [{}] - [{}]", testScenarioId, testScenarioName);
-            testCaseManager.executeTestCases(lazySuite, assertionResultList, idDto, testScenario);
+            TestScenarioExecutionData testScenarioExecutionData = new TestScenarioExecutionData(testScenarioId, testScenarioName);
+            testCaseManager.executeTestCases(lazySuite, testScenarioExecutionData, idDto, testScenario);
             LOGGER.info("Executed test scenario - [{}] - [{}]", testScenarioId, testScenarioName);
+
+            testSuiteExecutionData.getTestScenarioExecutionData().add(testScenarioExecutionData);
 
             idDto.setTestScenarioId(testScenarioId + 1);
         }

@@ -9,8 +9,8 @@ import com.smile.lazy.beans.enums.DataSourceEnum;
 import com.smile.lazy.beans.executor.ApiCallExecutionData;
 import com.smile.lazy.beans.executor.AssertionExecutionData;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
-import com.smile.lazy.beans.result.AssertionResult;
-import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.beans.executor.AssertionResult;
+import com.smile.lazy.beans.executor.LazyExecutionData;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionValue;
@@ -35,15 +35,15 @@ public class AssertionHandlerImpl {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssertionHandlerImpl.class);
 
     public void executeAllAssertions(ApiCall apiCall, IdDto idDto, LazyApiCallResponse lazyApiCallResponse,
-                                     AssertionResultList assertionResultList, ApiCallExecutionData apiCallExecutionData) throws LazyException, LazyCoreException {
+                                     ApiCallExecutionData apiCallExecutionData) throws LazyException, LazyCoreException {
 
-        executeGlobalAssertions(apiCall, idDto, lazyApiCallResponse, assertionResultList, apiCallExecutionData);
+        executeGlobalAssertions(apiCall, idDto, lazyApiCallResponse, apiCallExecutionData);
 
-        executeLocalAssertions(apiCall, idDto, lazyApiCallResponse, assertionResultList, apiCallExecutionData);
+        executeLocalAssertions(apiCall, idDto, lazyApiCallResponse, apiCallExecutionData);
     }
 
     private void executeLocalAssertions(ApiCall apiCall, IdDto idDto, LazyApiCallResponse lazyApiCallResponse,
-                                        AssertionResultList assertionResultList, ApiCallExecutionData apiCallExecutionData) throws LazyException, LazyCoreException {
+                                        ApiCallExecutionData apiCallExecutionData) throws LazyException, LazyCoreException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Ready to execute all api call [{}] assertion rules...", apiCall.getApiCallName());
         }
@@ -67,7 +67,6 @@ public class AssertionHandlerImpl {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Set assertion rule - [{}] - scope to LOCAL", assertionRuleName);
             }
-            assertionResultList.getResults().add(assertionExecutionData.getAssertionResult());
             apiCallExecutionData.getAssertionExecutionDataList().add(assertionExecutionData);
 
             idDto.setAssertionRuleId(idDto.getAssertionRuleId() + 1);
@@ -77,7 +76,8 @@ public class AssertionHandlerImpl {
         }
     }
 
-    private void executeGlobalAssertions(ApiCall apiCall, IdDto idDto, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList, ApiCallExecutionData apiCallExecutionData) throws LazyCoreException, LazyException {
+    private void executeGlobalAssertions(ApiCall apiCall, IdDto idDto, LazyApiCallResponse lazyApiCallResponse,
+                                         ApiCallExecutionData apiCallExecutionData) throws LazyCoreException, LazyException {
         if (apiCall.getStack().getDefaultAssertions() != null) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Ready to execute all global assertion rules...");
@@ -102,7 +102,6 @@ public class AssertionHandlerImpl {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Set assertion rule - [{}] - scope to GLOBAL", assertionRuleName);
                 }
-                assertionResultList.getResults().add(assertionExecutionData.getAssertionResult());
                 apiCallExecutionData.getAssertionExecutionDataList().add(assertionExecutionData);
 
                 idDto.setAssertionRuleId(idDto.getAssertionRuleId() + 1);

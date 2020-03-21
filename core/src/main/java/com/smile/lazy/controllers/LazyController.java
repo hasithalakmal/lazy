@@ -1,7 +1,7 @@
 package com.smile.lazy.controllers;
 
 import com.smile.lazy.beans.LazySuite;
-import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.beans.executor.LazyExecutionData;
 import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.exception.LazyException;
 import com.smile.lazy.manager.LazyManager;
@@ -37,7 +37,7 @@ public class LazyController extends BaseController{
     @PostMapping(value = "lazy-api/services/execute")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public AssertionResultList test(@RequestBody LazySuite lazySuite) throws LazyException, LazyCoreException {
+    public LazyExecutionData test(@RequestBody LazySuite lazySuite) throws LazyException, LazyCoreException {
         LOGGER.info("Start lazy test suite execution [{}]", lazySuite);
         return lazyManager.executeLazySuite(lazySuite);
     }

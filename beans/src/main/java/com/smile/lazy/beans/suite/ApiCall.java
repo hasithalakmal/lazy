@@ -1,5 +1,7 @@
 package com.smile.lazy.beans.suite;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
@@ -22,6 +24,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiCall implements Serializable {
 
     private Integer apiCallId;

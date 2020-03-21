@@ -1,9 +1,14 @@
 package com.smile.lazy.beans.environment;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Environment implements Serializable {
 
     private int environmentId;

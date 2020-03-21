@@ -1,5 +1,7 @@
-package com.smile.lazy.beans.result;
+package com.smile.lazy.beans.executor;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.enums.AssertionResultStatus;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -7,6 +9,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AssertionResult implements Serializable {
 
     private int resultId;

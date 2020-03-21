@@ -1,11 +1,15 @@
 package com.smile.lazy.beans.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.http.client.methods.CloseableHttpResponse;
 
 import java.io.Serializable;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class LazyApiCallResponse implements Serializable {
 
     private CloseableHttpResponse closeableHttpResponse;

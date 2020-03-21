@@ -1,5 +1,7 @@
 package com.smile.lazy.beans.executor;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.suite.HeaderGroup;
 import com.smile.lazy.beans.suite.QueryParam;
@@ -10,6 +12,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiCallExecutionData {
 
     private Integer apiCallId;

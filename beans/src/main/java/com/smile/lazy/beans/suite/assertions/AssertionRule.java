@@ -1,5 +1,7 @@
 package com.smile.lazy.beans.suite.assertions;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.enums.AssertionOperationEnum;
 import com.smile.lazy.beans.enums.DataSourceEnum;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -7,6 +9,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AssertionRule implements Serializable {
 
     DataSourceEnum dataSource;

@@ -2,7 +2,9 @@ package com.smile.lazy.manager.impl;
 
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
-import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.TestScenarioExecutionData;
+import com.smile.lazy.beans.executor.TestSuiteExecutionData;
 import com.smile.lazy.beans.suite.TestSuite;
 import com.smile.lazy.common.ErrorCodes;
 import com.smile.lazy.exception.LazyCoreException;
@@ -29,7 +31,7 @@ public class TestSuiteManagerImpl implements com.smile.lazy.manager.TestSuiteMan
     private TestScenarioManager testScenarioManager;
 
     @Override
-    public void executeTestSuites(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto) throws LazyException, LazyCoreException {
+    public void executeTestSuites(LazySuite lazySuite, LazyExecutionData lazyExecutionData, IdDto idDto) throws LazyException, LazyCoreException {
         LOGGER.debug("Ready to executing all test suites of lazy suite [{}]...", lazySuite.getLazySuiteName());
         for (TestSuite testSuite : lazySuite.getTestSuites()) {
             validateTestSuite(testSuite);
@@ -39,9 +41,11 @@ public class TestSuiteManagerImpl implements com.smile.lazy.manager.TestSuiteMan
             Integer testSuiteId = populateTestSuiteId(idDto, testSuite, testSuiteName);
 
             LOGGER.info("Ready to execute test suite - [{}] - [{}]", testSuiteId, testSuiteName);
-            testScenarioManager.executeTestScenarios(lazySuite, assertionResultList, idDto, testSuite);
+            TestSuiteExecutionData testSuiteExecutionData = new TestSuiteExecutionData(testSuiteId, testSuiteName);
+            testScenarioManager.executeTestScenarios(lazySuite, testSuiteExecutionData, idDto, testSuite);
             LOGGER.info("Executed test suite - [{}] - [{}]", testSuiteId, testSuiteName);
 
+            lazyExecutionData.getTestSuiteExecutionData().add(testSuiteExecutionData);
             idDto.setTestSuiteId(testSuiteId + 1);
         }
         LOGGER.debug("Executed all test suites...");
