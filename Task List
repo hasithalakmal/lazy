@@ -5,8 +5,8 @@
 5) Action Implementation
 6) enable/disable assertions
 7) overrite assertions
-8) Print results
+8) [done] Print results
 9) Get Results SCV
 10) Response print flag
-11) move code as a library and use it in a separate project
-12) Code reformat
+11) [done] move code as a library and use it in a separate project
+12) [done] Code reformat
