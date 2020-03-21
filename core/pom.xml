@@ -30,10 +30,10 @@
                 </configuration>
                 <groupId>org.apache.maven.plugins</groupId>
             </plugin>
-            <plugin>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <groupId>org.springframework.boot</groupId>
-            </plugin>
+<!--            <plugin>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 

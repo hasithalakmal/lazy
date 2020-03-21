@@ -1,4 +1,4 @@
-package com.smile.lazy.manager;
+package com.smile.lazy.manager.Impl;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
@@ -24,9 +24,9 @@ import org.springframework.stereotype.Service;
 import static java.text.MessageFormat.format;
 
 @Service
-public class ActionHandler {
+public class ActionHandlerImpl {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ActionHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ActionHandlerImpl.class);
 
     public void executePostAction(LazySuite lazySuite, LazyApiCallResponse lazyApiCallResponse, Action action) throws LazyException {
         ActionTypeEnum actionType = action.getActionType();

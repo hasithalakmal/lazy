@@ -1,4 +1,4 @@
-package com.smile.lazy.manager;
+package com.smile.lazy.manager.Impl;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
@@ -23,9 +23,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AssertionHandler {
+public class AssertionHandlerImpl {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AssertionHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AssertionHandlerImpl.class);
 
     public void executeApiCallAssertions(ApiCall apiCall, IdDto idDto, LazyApiCallResponse lazyApiCallResponse, AssertionResultList assertionResultList) throws LazyException {
 

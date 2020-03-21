@@ -1,4 +1,4 @@
-package com.smile.lazy.manager;
+package com.smile.lazy.manager.Impl;
 
 import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.suite.ApiCall;
@@ -25,9 +25,9 @@ import java.net.URISyntaxException;
 import static org.apache.http.impl.client.HttpClients.createDefault;
 
 @Repository
-public class ApiCallHandler {
+public class ApiCallHandlerImpl {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApiCallHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiCallHandlerImpl.class);
 
     public LazyApiCallResponse executeApiCall(ApiCall apiCall) throws LazyException {
 
