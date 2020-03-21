@@ -6,5 +6,5 @@ import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.exception.LazyException;
 
 public interface Executor {
-    AssertionResultList test(LazySuite lazySuite) throws LazyException, LazyCoreException;
+    AssertionResultList executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException;
 }

@@ -6,7 +6,7 @@ import com.smile.lazy.suite.sample.apicall.AccountApiCalls;
 public class CreateAccountSuccessTestCase {
 
     public static TestCase getCreateAccountTestCase() {
-        TestCase testCase1 = new TestCase("Smile-Test-Case-1", "Create Account successfully");
+        TestCase testCase1 = new TestCase( "Create Account successfully");
         testCase1.getApiCalls().add(AccountApiCalls.createAccountApiCall());
         testCase1.getApiCalls().add(AccountApiCalls.getAccountApiCall());
         testCase1.getApiCalls().add(AccountApiCalls.createAccountApiCallWithJsonFile());

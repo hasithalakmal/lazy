@@ -18,7 +18,7 @@ public class ExecutorImpl implements Executor {
     private LazyManager lazyManager;
 
     @Override
-    public AssertionResultList test(LazySuite lazySuite) throws LazyException, LazyCoreException {
+    public AssertionResultList executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException {
         LOGGER.info("Start lazy suite execution");
         return lazyManager.executeLazySuite(lazySuite);
     }

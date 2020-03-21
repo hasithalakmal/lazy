@@ -21,8 +21,7 @@ public class TestCase implements Serializable {
     private List<Action> postActions;
     private Stack stack;
 
-    public TestCase(String testCaseDisplayId, String testCaseName) {
-        this.testCaseDisplayId = testCaseDisplayId;
+    public TestCase(String testCaseName) {
         this.testCaseName = testCaseName;
     }
 
