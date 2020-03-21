@@ -78,7 +78,7 @@ public class ApiCallHandlerImpl {
             throw new LazyException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCodes.IO_EXCEPTION, message);
         }
 
-        String requestData = format("\n\n----------------------------------------------------------------- \nExecuting api call [{0}] - [{1}] \n",
+        String requestData = format("\n\n----------------------------------------------------------------- \nExecuting api call [{0}] - [{1}] \n----------------------------------------------------------------- \n",
               apiCallExecutionData.getApiCallId(), apiCallExecutionData.getApiCallName());
         requestData += format(getPrintKey("Http Method") + ": [{0}]\n", apiCallExecutionData.getHttpMethod());
         requestData += format(getPrintKey("Request URL") + ": [{0}]\n", apiCallExecutionData.getUrl().toString());
@@ -88,15 +88,15 @@ public class ApiCallHandlerImpl {
         if (apiCallExecutionData.getHeaderGroup() != null && !CollectionUtils.isEmpty(apiCallExecutionData.getHeaderGroup().getHeaders())) {
             requestData += format(getPrintKey("Header List") + ":\n");
             for (Header header : apiCallExecutionData.getHeaderGroup().getHeaders()) {
-                requestData += format(getPrintKey("") + "[{0}:{1}]\n", header.getKey(), header.getValue());
+                requestData += format(getPrintKey("") + " - [{0}:{1}]\n", header.getKey(), header.getValue());
             }
         }
-        requestData += "\n\nExecuting actual API Call......\n\n";
+        requestData += "-----------------------------------------------------------------\n";
         requestData += format(getPrintKey("Execution time") + ": [{0}] milli seconds\n", apiCallExecutionData.getResponse().getResponseTime());
         requestData += format(getPrintKey("HTTP status code") + ": [{0}]\n",
               apiCallExecutionData.getResponse().getCloseableHttpResponse().getStatusLine().getStatusCode());
         requestData += format(getPrintKey("Response") + ": [{0}]\n", apiCallExecutionData.getResponse().getResponseBody());
-        requestData += "\n-----------------------------------------------------------------\n\n";
+        requestData += "-----------------------------------------------------------------\n\n";
         LOGGER.info(requestData);
 
 
