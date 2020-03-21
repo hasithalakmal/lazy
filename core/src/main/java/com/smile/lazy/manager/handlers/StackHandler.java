@@ -1,4 +1,4 @@
-package com.smile.lazy.manager.Impl;
+package com.smile.lazy.manager.handlers;
 
 import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.environment.Environment;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class StackManagerImpl {
+public class StackHandler {
 
     public Stack mergeTwoStacks(Stack parentStack, Stack childStack) {
 

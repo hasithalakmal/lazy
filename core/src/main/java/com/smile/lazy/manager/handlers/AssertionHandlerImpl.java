@@ -1,4 +1,4 @@
-package com.smile.lazy.manager.Impl;
+package com.smile.lazy.manager.handlers;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
@@ -82,7 +82,7 @@ public class AssertionHandlerImpl {
             throw new LazyException(HttpStatus.NOT_IMPLEMENTED, ErrorCodes.NOT_IMPLEMENTED, "Given dataSource has not supported yet");
         }
         assertionResult.setAssertionRule(assertionRule);
-        idDto.setAssertionResultId(assertionResultId+1);
+        idDto.setAssertionResultId(assertionResultId + 1);
         assertionResultList.getResults().add(assertionResult);
     }
 

@@ -3,7 +3,7 @@ package com.smile.lazy;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.result.AssertionResultList;
 import com.smile.lazy.manager.LazyManager;
-import com.smile.lazy.sample.SampleLazySuite1;
+import com.smile.lazy.suite.sample.SampleLazySuite1;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,7 @@ public class LazyManagerTest {
     private LazyManager lazyManager;
 
     @Test
-    public void testEmployee(){
+    public void testEmployee() {
         try {
             LazySuite sampleLazySuite = SampleLazySuite1.populateSampleTestSuite();
             AssertionResultList results = lazyManager.executeLazySuite(sampleLazySuite);
@@ -33,7 +33,7 @@ public class LazyManagerTest {
     }
 
     @Test
-    public void simple(){
+    public void simple() {
         System.out.println("{\"status\":\"ACTIVE\",\"createdBy\":\"12345\",\"parentId\":\"1\",\"enterpriseId\":\"1\","
               + "\"accountName\":\"Sathara-1577641690\",\"ownerName\":\"Hasitha-1577641690\",\"versionId\":\"1.0.0\","
               + "\"settings\":[{\"key\":\"setting1\",\"value\":\"1577641690\"},{\"key\":\"setting2\",\"value\":\"1577641690\"}]}");

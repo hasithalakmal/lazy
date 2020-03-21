@@ -1,9 +1,9 @@
-package com.smile.lazy.sample.scenarios;
+package com.smile.lazy.suite.sample.scenarios;
 
 import com.smile.lazy.beans.suite.TestScenario;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
-import com.smile.lazy.sample.testcase.CreateAccountSuccessTestCase;
+import com.smile.lazy.suite.sample.testcase.CreateAccountSuccessTestCase;
 import com.smile.lazy.wrapper.Assert;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class CreateAccountTestScenario {
     private static AssertionRuleGroup createDefaultAssertionRuleGroup() {
         AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup(1, "Default create assertion group");
         List<AssertionRule> assertionRules = defaultCreateAssertionGroup.getAssertionRules();
-        assertionRules.add(Assert.responseTimeAssertion_ms_lt("2000"));
+        assertionRules.add(Assert.responseTimeAssertionGreaterThanGivenMilliSeconds("2000"));
         AssertionRule responseCodeAssertion = Assert.responseCodeAssertion("201");
         responseCodeAssertion.setAssertionRuleKey("created.http.status.assertion");
         assertionRules.add(responseCodeAssertion);

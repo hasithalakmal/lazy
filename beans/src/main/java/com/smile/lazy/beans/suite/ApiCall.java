@@ -1,8 +1,8 @@
 package com.smile.lazy.beans.suite;
 
+import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
-import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.utils.VariableManipulationUtil;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -282,11 +282,11 @@ public class ApiCall implements Serializable {
         this.disabledAssertions.add(assertionKey);
     }
 
-    public void setRequestBodyFromJson(String filePath){
+    public void setRequestBodyFromJson(String filePath) {
         JSONParser parser = new JSONParser();
         File file = null;
         try {
-            file = ResourceUtils.getFile("classpath:"+filePath);
+            file = ResourceUtils.getFile("classpath:" + filePath);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 
-public class BaseController {
+public abstract class BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
     private static final String UNKNOWN_ERROR_MSG = "Unknown error has been thrown. Please contact the administrator";

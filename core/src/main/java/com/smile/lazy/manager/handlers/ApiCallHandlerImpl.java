@@ -1,4 +1,4 @@
-package com.smile.lazy.manager.Impl;
+package com.smile.lazy.manager.handlers;
 
 import com.smile.lazy.beans.executor.ApiCallExecutionData;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
@@ -80,23 +80,23 @@ public class ApiCallHandlerImpl {
 
         String requestData = format("\n\n-----------------------------------------------------------------Executing api call [{0}] - [{1}] \n",
               apiCallExecutionData.getApiCallId(), apiCallExecutionData.getApiCallName());
-        requestData += format(getPrintKey("Http Method") +": [{0}]\n", apiCallExecutionData.getHttpMethod());
-        requestData += format(getPrintKey("Request URL") +": [{0}]\n", apiCallExecutionData.getUrl().toString());
+        requestData += format(getPrintKey("Http Method") + ": [{0}]\n", apiCallExecutionData.getHttpMethod());
+        requestData += format(getPrintKey("Request URL") + ": [{0}]\n", apiCallExecutionData.getUrl().toString());
         if (!apiCallExecutionData.getHttpMethod().equals("GET")) {
-            requestData += format(getPrintKey("Request Body") +": [{0}]\n", apiCallExecutionData.getRequestBody());
+            requestData += format(getPrintKey("Request Body") + ": [{0}]\n", apiCallExecutionData.getRequestBody());
         }
-        if (apiCallExecutionData.getHeaderGroup() != null && !CollectionUtils.isEmpty(apiCallExecutionData.getHeaderGroup().getHeaders())){
-            requestData += format(getPrintKey("Header List") +":\n");
+        if (apiCallExecutionData.getHeaderGroup() != null && !CollectionUtils.isEmpty(apiCallExecutionData.getHeaderGroup().getHeaders())) {
+            requestData += format(getPrintKey("Header List") + ":\n");
             for (Header header : apiCallExecutionData.getHeaderGroup().getHeaders()) {
-                requestData += format(getPrintKey("") +"[{0}:{1}]\n", header.getKey(), header.getValue());
+                requestData += format(getPrintKey("") + "[{0}:{1}]\n", header.getKey(), header.getValue());
             }
         }
-        requestData +="\n\nExecuting actual API Call......\n\n";
-        requestData +=format(getPrintKey("Execution time") +": [{0}] milli seconds\n", apiCallExecutionData.getResponse().getResponseTime());
-        requestData +=format(getPrintKey("HTTP status code") +": [{0}]\n",
+        requestData += "\n\nExecuting actual API Call......\n\n";
+        requestData += format(getPrintKey("Execution time") + ": [{0}] milli seconds\n", apiCallExecutionData.getResponse().getResponseTime());
+        requestData += format(getPrintKey("HTTP status code") + ": [{0}]\n",
               apiCallExecutionData.getResponse().getCloseableHttpResponse().getStatusLine().getStatusCode());
-        requestData +=format(getPrintKey("Response") +": [{0}]\n", apiCallExecutionData.getResponse().getResponseBody());
-        requestData +="\n-----------------------------------------------------------------\n\n";
+        requestData += format(getPrintKey("Response") + ": [{0}]\n", apiCallExecutionData.getResponse().getResponseBody());
+        requestData += "\n-----------------------------------------------------------------\n\n";
         LOGGER.info(requestData);
 
 

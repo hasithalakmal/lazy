@@ -19,7 +19,7 @@ public class Assert {
     }
 
     public static AssertionRule responseBodyNotNull(String assertionName) {
-        return new AssertionRule("Response body not null assertion", DataSourceEnum.BODY, AssertionOperationEnum.NOT_NULL);
+        return new AssertionRule(assertionName, DataSourceEnum.BODY, AssertionOperationEnum.NOT_NULL);
     }
 
     public static AssertionRule notNullBodyValueAssertion(String jsonPath) {
@@ -41,11 +41,11 @@ public class Assert {
               new BodyValueAssertion(jsonPath, value));
     }
 
-    public static AssertionRule responseTimeAssertion_ms_lt(String time) {
-        return responseTimeAssertion_ms_lt("Response time assertion - milli seconds - less than", time);
+    public static AssertionRule responseTimeAssertionGreaterThanGivenMilliSeconds(String time) {
+        return responseTimeAssertionGreaterThanGivenMilliSeconds("Response time assertion - milli seconds - less than", time);
     }
 
-    public static AssertionRule responseTimeAssertion_ms_lt(String assertionName, String time) {
+    public static AssertionRule responseTimeAssertionGreaterThanGivenMilliSeconds(String assertionName, String time) {
         return new AssertionRule(assertionName, DataSourceEnum.RESPONSE_TIME,
               AssertionOperationEnum.LESS_THAN,
               new AssertionValue(time, DataTypeEnum.INTEGER, UnitEnum.MILLI_SECONDS));

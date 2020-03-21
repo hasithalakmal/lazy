@@ -1,4 +1,4 @@
-package com.smile.lazy.manager.Impl;
+package com.smile.lazy.manager.handlers;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;

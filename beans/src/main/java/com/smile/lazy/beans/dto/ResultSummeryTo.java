@@ -81,9 +81,9 @@ public class ResultSummeryTo {
 
     public String prettyPrintString(boolean withActualResults) throws LazyCoreException {
         LazyTable lazyTable = withActualResults ?
-              new LazyTable(Arrays.asList( "Result Id", "API Call Name", "Assertion Name", "Expected Results", "Actual Result", "Execution Status","Is Pass")) :
-              new LazyTable(Arrays.asList( "Result Id", "API Call Name", "Assertion Name", "Execution Status","Is Pass"));
-        for (ResultRecodeTo result :resultRecodeToList) {
+              new LazyTable(Arrays.asList("Result Id", "API Call Name", "Assertion Name", "Expected Results", "Actual Result", "Execution Status", "Is Pass")) :
+              new LazyTable(Arrays.asList("Result Id", "API Call Name", "Assertion Name", "Execution Status", "Is Pass"));
+        for (ResultRecodeTo result : resultRecodeToList) {
             if (withActualResults) {
                 lazyTable.addRow(Arrays.asList(result.getResultId(),
                       result.getApiCallName(),
@@ -109,7 +109,7 @@ public class ResultSummeryTo {
               String.format(formatString, "Result Id", "API Call Name", "Assertion Name", "Execution Status", "Is Pass");
         table += headersString;
         table += breakerString;
-        for (ResultRecodeTo result :resultRecodeToList){
+        for (ResultRecodeTo result : resultRecodeToList) {
             String rowString = "";
             if (withActualResults) {
                 String.format(formatString,
@@ -120,7 +120,7 @@ public class ResultSummeryTo {
                       result.getActualResult(),
                       result.getStatus(),
                       result.getIsPass());
-            } else{
+            } else {
                 rowString = String.format(formatString,
                       result.getResultId(),
                       result.getApiCallName(),

@@ -1,7 +1,7 @@
-package com.smile.lazy.sample.testcase;
+package com.smile.lazy.suite.sample.testcase;
 
 import com.smile.lazy.beans.suite.TestCase;
-import com.smile.lazy.sample.apicall.AccountApiCalls;
+import com.smile.lazy.suite.sample.apicall.AccountApiCalls;
 
 public class CreateAccountSuccessTestCase {
 

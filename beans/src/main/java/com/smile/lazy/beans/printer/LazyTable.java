@@ -54,7 +54,7 @@ public class LazyTable {
             LOGGER.error(error);
             throw new LazyCoreException(ErrorCodes.INVALID_TABLE, error);
         }
-        for (List<String> row: rows) {
+        for (List<String> row : rows) {
             validateRow(row);
         }
         this.rows = rows;
@@ -90,19 +90,19 @@ public class LazyTable {
 
     public String getFormatterString() {
         String leftAlignFormat = "";
-        for (Integer key : columnMaxCharacters.keySet()){
+        for (Integer key : columnMaxCharacters.keySet()) {
             int columnLength = columnMaxCharacters.get(key) + padding;
             leftAlignFormat += format("| %-{0}s ", columnLength);
         }
-        leftAlignFormat +="|\n";
+        leftAlignFormat += "|\n";
         return leftAlignFormat;
     }
 
-    public String getBreakerString(){
-        String rowBreaker ="";
-        for (Integer key : columnMaxCharacters.keySet()){
+    public String getBreakerString() {
+        String rowBreaker = "";
+        for (Integer key : columnMaxCharacters.keySet()) {
             int columnLength = columnMaxCharacters.get(key) + padding;
-            String columnDash = "+"+"-".repeat(columnLength + 2);
+            String columnDash = "+" + "-".repeat(columnLength + 2);
             rowBreaker += columnDash;
         }
         rowBreaker += "+\n";
@@ -115,7 +115,7 @@ public class LazyTable {
             int length = StringUtils.isBlank(header) ? 0 : header.length();
             if (columnMaxCharacters.containsKey(count)) {
                 Integer existingValue = columnMaxCharacters.get(count);
-                if (existingValue < length){
+                if (existingValue < length) {
                     columnMaxCharacters.put(count, length);
                 }
             } else {

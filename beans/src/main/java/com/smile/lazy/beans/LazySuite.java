@@ -1,8 +1,8 @@
 package com.smile.lazy.beans;
 
-import com.smile.lazy.beans.suite.TestSuite;
 import com.smile.lazy.beans.suite.Global;
 import com.smile.lazy.beans.suite.Stack;
+import com.smile.lazy.beans.suite.TestSuite;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 

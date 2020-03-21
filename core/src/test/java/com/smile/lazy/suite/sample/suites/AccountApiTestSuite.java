@@ -1,8 +1,8 @@
-package com.smile.lazy.sample.suites;
+package com.smile.lazy.suite.sample.suites;
 
 import com.smile.lazy.beans.suite.TestSuite;
 
-import static com.smile.lazy.sample.scenarios.CreateAccountTestScenario.getAccountCreationTestScenario;
+import static com.smile.lazy.suite.sample.scenarios.CreateAccountTestScenario.getAccountCreationTestScenario;
 
 public class AccountApiTestSuite {
 
