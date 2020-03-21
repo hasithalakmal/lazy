@@ -78,7 +78,7 @@ public class ApiCallHandlerImpl {
             throw new LazyException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCodes.IO_EXCEPTION, message);
         }
 
-        String requestData = format("\n\n-----------------------------------------------------------------Executing api call [{0}] - [{1}] \n",
+        String requestData = format("\n\n----------------------------------------------------------------- \nExecuting api call [{0}] - [{1}] \n",
               apiCallExecutionData.getApiCallId(), apiCallExecutionData.getApiCallName());
         requestData += format(getPrintKey("Http Method") + ": [{0}]\n", apiCallExecutionData.getHttpMethod());
         requestData += format(getPrintKey("Request URL") + ": [{0}]\n", apiCallExecutionData.getUrl().toString());
