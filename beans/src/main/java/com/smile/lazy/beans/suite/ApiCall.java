@@ -112,7 +112,7 @@ public class ApiCall implements Serializable {
     }
 
     public String getProtocol() {
-        if (StringUtils.isBlank(protocol)) {
+        if (StringUtils.isBlank(protocol) && getStack().getDefaultValues() != null) {
             protocol = getStack().getDefaultValues().getProtocol();
         }
         protocol = VariableManipulationUtil.getVariableValue(protocol, stack);
@@ -124,7 +124,7 @@ public class ApiCall implements Serializable {
     }
 
     public String getHostName() {
-        if (StringUtils.isBlank(hostName)) {
+        if (StringUtils.isBlank(hostName) && getStack().getDefaultValues() != null) {
             hostName = getStack().getDefaultValues().getHostName();
         }
         hostName = VariableManipulationUtil.getVariableValue(hostName, stack);
@@ -136,7 +136,7 @@ public class ApiCall implements Serializable {
     }
 
     public Integer getPort() {
-        if (port == null) {
+        if (port == null && getStack().getDefaultValues() != null) {
             port = getStack().getDefaultValues().getPort();
         }
         return port;
@@ -147,7 +147,7 @@ public class ApiCall implements Serializable {
     }
 
     public String getContextPath() {
-        if (StringUtils.isBlank(contextPath)) {
+        if (StringUtils.isBlank(contextPath) && getStack().getDefaultValues() != null) {
             contextPath = getStack().getDefaultValues().getContextPath();
         }
         contextPath = VariableManipulationUtil.getVariableValue(contextPath, stack);
@@ -159,7 +159,9 @@ public class ApiCall implements Serializable {
     }
 
     public String getUri() {
-        uri = VariableManipulationUtil.getVariableValue(uri, stack);
+        if (stack.getDefaultValues() != null) {
+            uri = VariableManipulationUtil.getVariableValue(uri, stack);
+        }
         return uri;
     }
 
@@ -176,7 +178,7 @@ public class ApiCall implements Serializable {
     }
 
     public HeaderGroup getHeaderGroup() {
-        if (headerGroup == null) {
+        if (headerGroup == null && getStack().getDefaultValues() != null) {
             headerGroup = getStack().getDefaultValues().getHeaderGroup();
         }
         return headerGroup;
@@ -187,7 +189,7 @@ public class ApiCall implements Serializable {
     }
 
     public String getHttpMethod() {
-        if (StringUtils.isBlank(httpMethod)) {
+        if (StringUtils.isBlank(httpMethod) && getStack().getDefaultValues() != null) {
             httpMethod = getStack().getDefaultValues().getHttpMethod();
         }
         httpMethod = VariableManipulationUtil.getVariableValue(httpMethod, stack);

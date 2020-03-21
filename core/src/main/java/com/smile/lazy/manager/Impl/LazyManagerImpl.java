@@ -6,6 +6,7 @@ import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.dto.ResultRecodeTo;
 import com.smile.lazy.beans.dto.ResultSummeryTo;
 import com.smile.lazy.beans.environment.EnvironmentVariable;
+import com.smile.lazy.beans.executor.ApiCallExecutionData;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.result.AssertionResult;
 import com.smile.lazy.beans.result.AssertionResultList;
@@ -20,6 +21,7 @@ import com.smile.lazy.common.ErrorCodes;
 import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.exception.LazyException;
 import com.smile.lazy.manager.LazyManager;
+import com.smile.lazy.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,13 +51,26 @@ public class LazyManagerImpl implements LazyManager {
     private StackManagerImpl stackManager;
 
     @Override
-    public AssertionResultList executeLazySuite(LazySuite lazySuite) throws LazyException {
+    public AssertionResultList executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Ready to execute lazy suite - [{}]", JsonUtil.getJsonStringFromObject(lazySuite));
+        }
 
         if (lazySuite == null) {
             String error = "Null lazy suite";
             LOGGER.error(error);
             throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
         }
+
+        String lazySuiteName = lazySuite.getLazySuiteName();
+        if (StringUtils.isBlank(lazySuiteName)) {
+            String error = "Lazy suite name should not be empty";
+            LOGGER.error(error);
+            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
+        }
+
+        LOGGER.debug("Preparing to execute lazy suite - [{}]", lazySuiteName);
 
         if (lazySuite.getStack() == null) {
             String error = "Lazy suite stack should not be null";
@@ -67,11 +82,16 @@ public class LazyManagerImpl implements LazyManager {
         validateDefaultValues(defaultValues);
 
         if (lazySuite.getGlobal() == null) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("No global object found, hence adding empty global object");
+            }
             lazySuite.setGlobal(new Global());
         }
 
         AssertionResultList assertionResultList = new AssertionResultList();
+        LOGGER.info("Ready to execute lazy suite - [{}]", lazySuiteName);
         executeTestSuites(lazySuite, assertionResultList, new IdDto());
+        LOGGER.info("Executed lazy suite - [{}]", lazySuiteName);
 
         ResultSummeryTo assertionResultTo = getResultSummery(assertionResultList);
         try {
@@ -120,6 +140,7 @@ public class LazyManagerImpl implements LazyManager {
             LOGGER.error(error);
             throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
         }
+        //TODO - validate http method by using ENUM
 
         for (Header header : defaultValues.getHeaderGroup().getHeaders()) {
             if (header == null || StringUtils.isBlank(header.getKey()) || StringUtils.isBlank(header.getValue())) {
@@ -130,19 +151,17 @@ public class LazyManagerImpl implements LazyManager {
         }
     }
 
-    private void executeTestSuites(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto) throws LazyException {
+    private void executeTestSuites(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto) throws LazyException, LazyCoreException {
+        LOGGER.debug("Ready to executing all test suites of lazy suite [{}]...", lazySuite.getLazySuiteName());
         for (TestSuite testSuite : lazySuite.getTestSuites()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Ready to execute test suite - [{}]", JsonUtil.getJsonStringFromObject(testSuite));
+            }
 
             if (testSuite == null) {
                 String error = "Test suite should not be null";
                 LOGGER.error(error);
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
-            }
-
-            testSuite.setStack(stackManager.mergeTwoStacks(lazySuite.getStack(), testSuite.getStack()));
-
-            if (testSuite.getTestSuiteId() == null) {
-                testSuite.setTestSuiteId(idDto.getTestSuiteId());
             }
 
             String testSuiteName = testSuite.getTestSuiteName();
@@ -151,25 +170,45 @@ public class LazyManagerImpl implements LazyManager {
                 LOGGER.error(error);
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
             }
+            LOGGER.debug("Preparing to execute test suite - [{}]", testSuiteName);
 
-            LOGGER.info("Executing test suite - [{}] - [{}]", idDto.getTestSuiteId(), testSuiteName);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Merging two stacks for [{}] test suite : parent stack [{}] - child stack [{}]", testSuiteName,
+                      JsonUtil.getJsonStringFromObject(lazySuite.getStack()), JsonUtil.getJsonStringFromObject(testSuite.getStack()));
+            }
+            testSuite.setStack(stackManager.mergeTwoStacks(lazySuite.getStack(), testSuite.getStack()));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Merged stacks on test suite level for [{}] : merged [{}]", testSuiteName, JsonUtil.getJsonStringFromObject(testSuite.getStack()));
+            }
+
+            Integer testSuiteId = idDto.getTestSuiteId();
+            if (testSuite.getTestSuiteId() == null) {
+                testSuite.setTestSuiteId(testSuiteId);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("No test suite ID found for [{}] hence add test suite Id [{}]", testSuiteName, testSuite.getTestSuiteId());
+                }
+            }
+
+            LOGGER.info("Ready to execute test suite - [{}] - [{}]", testSuiteId, testSuiteName);
             executeTestScenarios(lazySuite, assertionResultList, idDto, testSuite);
-            idDto.setTestSuiteId(idDto.getTestSuiteId() + 1);
+            LOGGER.info("Executed test suite - [{}] - [{}]", testSuiteId, testSuiteName);
+            idDto.setTestSuiteId(testSuiteId + 1);
         }
+        LOGGER.debug("Executed all test suites...");
     }
 
     private void executeTestScenarios(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto, TestSuite testSuite)
-          throws LazyException {
+          throws LazyException, LazyCoreException {
+        LOGGER.debug("Ready to executing all test scenarios...");
         for (TestScenario testScenario : testSuite.getTestScenarios()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Ready to execute test scenario - [{}]", JsonUtil.getJsonStringFromObject(testScenario));
+            }
+
             if (testScenario == null) {
                 String error = "Test scenario should not be null";
                 LOGGER.error(error);
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_SCENARIO, error);
-            }
-
-            testScenario.setStack(stackManager.mergeTwoStacks(testSuite.getStack(), testScenario.getStack()));
-            if (testScenario.getTestScenarioId() == null) {
-                testScenario.setTestScenarioId(idDto.getTestScenarioId());
             }
 
             String testScenarioName = testScenario.getTestScenarioName();
@@ -179,25 +218,44 @@ public class LazyManagerImpl implements LazyManager {
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_SCENARIO, error);
             }
 
-            LOGGER.info("Executing test scenario - [{}] - [{}]", idDto.getTestScenarioId(), testScenarioName);
+            LOGGER.debug("Preparing to execute test scenario - [{}]", testScenarioName);
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Merging two stacks for [{}] test scenario: parent stack [{}] - child stack [{}]", testScenarioName,
+                      JsonUtil.getJsonStringFromObject(testSuite.getStack()), JsonUtil.getJsonStringFromObject(testScenario.getStack()));
+            }
+            testScenario.setStack(stackManager.mergeTwoStacks(testSuite.getStack(), testScenario.getStack()));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Merged stacks on test scenario level for [{}] : merged [{}]", testScenarioName, JsonUtil.getJsonStringFromObject(testScenario.getStack()));
+            }
+
+            Integer testScenarioId = idDto.getTestScenarioId();
+            if (testScenario.getTestScenarioId() == null) {
+                testScenario.setTestScenarioId(testScenarioId);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("No test scenario ID found for [{}] hence add test suite Id [{}]", testScenarioName, testScenario.getTestScenarioId());
+                }
+            }
+
+            LOGGER.info("Executing test scenario - [{}] - [{}]", testScenarioId, testScenarioName);
             executeTestCases(lazySuite, assertionResultList, idDto, testScenario);
-            idDto.setTestScenarioId(idDto.getTestScenarioId() + 1);
+            LOGGER.info("Executed test scenario - [{}] - [{}]", testScenarioId, testScenarioName);
+            idDto.setTestScenarioId(testScenarioId + 1);
         }
+        LOGGER.debug("Executed all test scenarios...");
     }
 
-    private void executeTestCases(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto, TestScenario testScenario) throws LazyException {
+    private void executeTestCases(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto, TestScenario testScenario) throws LazyException, LazyCoreException {
+        LOGGER.debug("Ready to executing all test cases...");
         for (TestCase testCase : testScenario.getTestCases()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Ready to execute test case - [{}]", JsonUtil.getJsonStringFromObject(testCase));
+            }
 
             if (testCase == null) {
                 String error = "Test case should not be null";
                 LOGGER.error(error);
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_CASE, error);
-            }
-
-            testCase.setStack(stackManager.mergeTwoStacks(testScenario.getStack(), testCase.getStack()));
-
-            if (testCase.getTestCaseId() == null) {
-                testCase.setTestCaseId(idDto.getTestCaseId());
             }
 
             String testCaseName = testCase.getTestCaseName();
@@ -207,31 +265,44 @@ public class LazyManagerImpl implements LazyManager {
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_CASE, error);
             }
 
-            LOGGER.info("Executing test case - [{}] - [{}]", idDto.getTestCaseId(), testCaseName);
+            LOGGER.debug("Preparing to execute test case - [{}]", testCaseName);
+
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Merging two stacks for [{}] test case: parent stack [{}] - child stack [{}]", testCaseName,
+                      JsonUtil.getJsonStringFromObject(testScenario.getStack()), JsonUtil.getJsonStringFromObject(testCase.getStack()));
+            }
+            testCase.setStack(stackManager.mergeTwoStacks(testScenario.getStack(), testCase.getStack()));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Merged stacks on test case level for [{}] : merged [{}]", testCaseName, JsonUtil.getJsonStringFromObject(testCase.getStack()));
+            }
+
+            Integer testCaseId = idDto.getTestCaseId();
+            if (testCase.getTestCaseId() == null) {
+                testCase.setTestCaseId(testCaseId);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("No test scenario ID found for [{}] hence add test suite Id [{}]", testCaseName, testCaseId);
+                }
+            }
+
+            LOGGER.info("Executing test case - [{}] - [{}]", testCaseId, testCaseName);
             executeApiCalls(lazySuite, assertionResultList, idDto, testCase);
-            idDto.setTestCaseId(idDto.getTestCaseId() + 1);
+            LOGGER.info("Executed test case - [{}] - [{}]", testCaseId, testCaseName);
+            idDto.setTestCaseId(testCaseId + 1);
         }
+        LOGGER.info("Executed all test cases...");
     }
 
-    private void executeApiCalls(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto, TestCase testCase) throws LazyException {
+    private void executeApiCalls(LazySuite lazySuite, AssertionResultList assertionResultList, IdDto idDto, TestCase testCase) throws LazyException, LazyCoreException {
+        LOGGER.debug("Ready to executing all api calls...");
         for (ApiCall apiCall : testCase.getApiCalls()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Ready to execute api call - [{}]", JsonUtil.getJsonStringFromObject(testCase));
+            }
 
             if (apiCall == null) {
                 String error = "Api call should not be null";
                 LOGGER.error(error);
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_API_CALL, error);
-            }
-
-            apiCall.setStack(stackManager.mergeTwoStacks(testCase.getStack(), apiCall.getStack()));
-
-            if (apiCall.getStack() == null) {
-                String error = "Api call stack should not be null";
-                LOGGER.error(error);
-                throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_API_CALL, error);
-            }
-
-            if (apiCall.getApiCallId() == null) {
-                apiCall.setApiCallId(idDto.getApiCallId());
             }
 
             String apiCallName = apiCall.getApiCallName();
@@ -240,33 +311,83 @@ public class LazyManagerImpl implements LazyManager {
                 LOGGER.error(error);
                 throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_TEST_API_CALL, error);
             }
+            LOGGER.debug("Preparing to execute api call - [{}]", apiCallName);
 
-            LOGGER.info("Executing api call - [{}] - [{}]", idDto.getApiCallId(), apiCallName);
-
-            List<Action> preActions = apiCall.getPreActions();
-            for (Action preAction : preActions) {
-                actionHandler.executePreAction(lazySuite, preAction);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Merging two stacks for [{}] api call: parent stack [{}] - child stack [{}]", apiCallName,
+                      JsonUtil.getJsonStringFromObject(testCase.getStack()), JsonUtil.getJsonStringFromObject(apiCall.getStack()));
+            }
+            apiCall.setStack(stackManager.mergeTwoStacks(testCase.getStack(), apiCall.getStack()));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Merged stacks on test case level for [{}] : merged [{}]", apiCallName, JsonUtil.getJsonStringFromObject(apiCall.getStack()));
             }
 
+            Integer apiCallId = idDto.getApiCallId();
+            if (apiCall.getApiCallId() == null) {
+                apiCall.setApiCallId(apiCallId);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("No test scenario ID found for [{}] hence add test api call Id [{}]", apiCallName, apiCallId);
+                }
+            }
+
+            LOGGER.debug("Executing pre actions of the api call - [{}] - [{}]", apiCallId, apiCallName);
+            executePreActions(lazySuite, apiCall);
+            LOGGER.debug("Executed pre actions of the api call - [{}] - [{}]", apiCallId, apiCallName);
+
+            //TODO - re-structure global and stack
             Map<String, EnvironmentVariable> globalEnvironment = lazySuite.getGlobal().getGlobalEnvironment();
             apiCall.getStack().setGlobalEnvironment(globalEnvironment);
 
             List<Action> postActions = apiCall.getPostActions();
             try {
-                LazyApiCallResponse response = apiCallHandler.executeApiCall(apiCall);
+                LOGGER.info("Executing api call - [{}] - [{}]", apiCallId, apiCallName);
+                ApiCallExecutionData apiCallExecutionData = new ApiCallExecutionData();
+                LazyApiCallResponse response = apiCallHandler.executeApiCall(apiCall, apiCallExecutionData);
+                apiCallHandler.printExecutionData(apiCallExecutionData);
+                LOGGER.info("Executed api call - [{}] - [{}]", apiCallId, apiCallName);
+
+                LOGGER.debug("Executing assertions of the api call - [{}] - [{}]", apiCallId, apiCallName);
                 assertionHandler.executeApiCallAssertions(apiCall, idDto, response, assertionResultList);
-                for (Action postAction : postActions) {
-                    actionHandler.executePostAction(lazySuite, response, postAction);
-                }
+                LOGGER.debug("Executed assertions of the api call - [{}] - [{}]", apiCallId, apiCallName);
+
+                LOGGER.debug("Executing post actions of the api call - [{}] - [{}]", apiCallId, apiCallName);
+                executedPostAction(lazySuite, postActions, response);
+                LOGGER.debug("Executed post actions of the api call - [{}] - [{}]", apiCallId, apiCallName);
             } catch (Exception ex) {
                 LOGGER.warn("API call execution failed since skipping the assertion execution");
-                assertionHandler.executeApiCallAssertions(apiCall, idDto, null, assertionResultList);
-                for (Action postAction : postActions) {
-                    actionHandler.executePostAction(lazySuite, null, postAction);
-                }
-            }
 
-            idDto.setApiCallId(idDto.getApiCallId() + 1);
+                LOGGER.debug("Executing assertions of the [failed]  api call - [{}] - [{}]", apiCallId, apiCallName);
+                assertionHandler.executeApiCallAssertions(apiCall, idDto, null, assertionResultList);
+                LOGGER.debug("Executed assertions of the api [failed]  call - [{}] - [{}]", apiCallId, apiCallName);
+
+                LOGGER.debug("Executing post actions of the [failed] api call - [{}] - [{}]", apiCallId, apiCallName);
+                executedPostAction(lazySuite, postActions, null);
+                LOGGER.debug("Executed post actions of the [failed] api call - [{}] - [{}]", apiCallId, apiCallName);
+            }
+            LOGGER.info("Completed execution of api call - [{}] - [{}]", apiCallId, apiCallName);
+            idDto.setApiCallId(apiCallId + 1);
+        }
+        LOGGER.debug("Executed all api cases...");
+    }
+
+    private void executedPostAction(LazySuite lazySuite, List<Action> postActions, LazyApiCallResponse response) throws LazyException, LazyCoreException {
+        for (Action postAction : postActions) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Ready to execute pre action - [{}]", JsonUtil.getJsonStringFromObject(postAction));
+            } else {
+                LOGGER.info("Ready to execute pre action...");
+            }
+            actionHandler.executePostAction(lazySuite, response, postAction);
+        }
+    }
+
+    private void executePreActions(LazySuite lazySuite, ApiCall apiCall) throws LazyException, LazyCoreException {
+        List<Action> preActions = apiCall.getPreActions();
+        for (Action preAction : preActions) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Ready to execute pre action - [{}]", JsonUtil.getJsonStringFromObject(preAction));
+            }
+            actionHandler.executePreAction(lazySuite, preAction);
         }
     }
 }

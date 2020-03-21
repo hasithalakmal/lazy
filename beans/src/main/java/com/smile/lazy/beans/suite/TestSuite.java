@@ -21,13 +21,7 @@ public class TestSuite implements Serializable {
     private List<Action> postActions;
     private Stack stack;
 
-    public TestSuite(String testSuiteName, Stack stack) {
-        this.testSuiteName = testSuiteName;
-        this.stack = SerializationUtils.clone(stack);
-    }
-
-    public TestSuite(String testSuiteDisplayId, String testSuiteName) {
-        this.testSuiteDisplayId = testSuiteDisplayId;
+    public TestSuite(String testSuiteName) {
         this.testSuiteName = testSuiteName;
     }
 

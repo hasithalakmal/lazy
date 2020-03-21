@@ -4,6 +4,7 @@ public class ErrorCodes {
 
     public static final String UNKNOWN_SERVER_ERROR = "Lazy-10000";
     public static final String NOT_IMPLEMENTED = "Lazy-10010";
+    public static final String JSON_HANDLING_EXCEPTION = "Lazy-10020";
 
     //HTTP method call related exceptions
     public static final String URI_SYNTAX_ERROR = "Lazy-20000";

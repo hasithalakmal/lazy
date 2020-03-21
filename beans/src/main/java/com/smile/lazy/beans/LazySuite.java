@@ -22,8 +22,7 @@ public class LazySuite implements Serializable {
     private Global global;
 
 
-    public LazySuite(int lazySuiteId, String lazySuiteName, Stack stack, Global global) {
-        this.lazySuiteId = lazySuiteId;
+    public LazySuite(String lazySuiteName, Stack stack, Global global) {
         this.lazySuiteName = lazySuiteName;
         this.stack = stack;
         this.global = global;

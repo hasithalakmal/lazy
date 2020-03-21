@@ -1,4 +1,6 @@
-/target/
+target/
+beans/target/
+core/target/
 !.mvn/wrapper/maven-wrapper.jar
 *~lock*
 

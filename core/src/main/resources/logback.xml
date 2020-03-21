@@ -22,7 +22,11 @@
         </encoder>
     </appender>
 
-    <logger name="com.smile.lazy" level="debug" additivity="false">
+    <logger name="org.springframework" level="ERROR" additivity="false">
+        <appender-ref ref="FILE-ROLLING"/>
+    </logger>
+<!--    <logger name="com.smile.lazy" level="DEBUG" additivity="false">-->
+    <logger name="com.smile.lazy" level="INFO" additivity="false">
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
 

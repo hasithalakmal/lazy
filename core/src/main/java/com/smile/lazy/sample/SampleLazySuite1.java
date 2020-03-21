@@ -14,7 +14,7 @@ public class SampleLazySuite1 {
         DefaultValues defaultValues = createDefaultValues();
         Stack lazySuiteStack = new Stack(defaultValues);
         Global global = new Global();
-        LazySuite lazySuite = new LazySuite(1, "Sample lazy suite 1", lazySuiteStack, global);
+        LazySuite lazySuite = new LazySuite("Sample lazy suite 1", lazySuiteStack, global);
         lazySuite.getTestSuites().add(AccountApiTestSuite.getAccountApiTestSuite());
         return lazySuite;
     }

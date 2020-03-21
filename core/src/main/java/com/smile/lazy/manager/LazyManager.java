@@ -1,7 +1,9 @@
 package com.smile.lazy.manager;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.result.AssertionResultList;
+import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.exception.LazyException;
 
 /**
@@ -17,5 +19,5 @@ public interface LazyManager {
      * @return
      * @throws LazyException
      */
-    AssertionResultList executeLazySuite(LazySuite lazySuite) throws LazyException;
+    AssertionResultList executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException;
 }

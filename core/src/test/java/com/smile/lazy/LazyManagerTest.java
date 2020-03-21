@@ -17,7 +17,7 @@ public class LazyManagerTest {
     private LazyManager lazyManager;
 
     @Test
-    public void testEmployee() throws Exception {
+    public void testEmployee(){
         try {
             LazySuite sampleLazySuite = SampleLazySuite1.populateSampleTestSuite();
             AssertionResultList results = lazyManager.executeLazySuite(sampleLazySuite);

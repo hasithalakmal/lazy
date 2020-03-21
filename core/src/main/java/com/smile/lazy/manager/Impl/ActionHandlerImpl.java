@@ -84,6 +84,7 @@ public class ActionHandlerImpl {
 
     }
 
+    //TODO - add logs
     public void executePreAction(LazySuite lazySuite, Action action) throws LazyException {
         ActionTypeEnum actionType = action.getActionType();
         if (action instanceof VariableDeclarationAction) {
@@ -123,7 +124,6 @@ public class ActionHandlerImpl {
             LOGGER.error(error);
             throw new LazyException(HttpStatus.NOT_IMPLEMENTED, ErrorCodes.NOT_IMPLEMENTED, error);
         }
-
     }
 
 }
