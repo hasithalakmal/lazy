@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestSuiteManagerImpl implements com.smile.lazy.manager.TestSuiteManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TestCaseManagerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestSuiteManagerImpl.class);
 
     @Autowired
     private StackHandler stackManager;

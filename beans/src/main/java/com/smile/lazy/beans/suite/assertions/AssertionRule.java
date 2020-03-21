@@ -10,9 +10,9 @@ import java.io.Serializable;
 public class AssertionRule implements Serializable {
 
     DataSourceEnum dataSource;
-    private int assertionRuleId;
+    private Integer assertionRuleId;
     private String assertionRuleKey;
-    private int assertionRuleSequenceId;
+    private Integer assertionRuleSequenceId;
     private String assertionRuleName;
     private String assertionRuleDescription;
     private Boolean active;
@@ -25,17 +25,6 @@ public class AssertionRule implements Serializable {
         this.assertionOperation = assertionOperation;
     }
 
-    public AssertionRule(DataSourceEnum dataSource, AssertionOperationEnum assertionOperation) {
-        this.dataSource = dataSource;
-        this.assertionOperation = assertionOperation;
-    }
-
-    public AssertionRule(int assertionRuleId, DataSourceEnum dataSource, AssertionOperationEnum assertionOperation) {
-        this.assertionRuleId = assertionRuleId;
-        this.dataSource = dataSource;
-        this.assertionOperation = assertionOperation;
-    }
-
     public AssertionRule(String assertionRuleName, DataSourceEnum dataSource, AssertionOperationEnum assertionOperation, AssertionValue assertionValue) {
         this.assertionRuleName = assertionRuleName;
         this.dataSource = dataSource;
@@ -43,25 +32,11 @@ public class AssertionRule implements Serializable {
         this.assertionValue = assertionValue;
     }
 
-    public AssertionRule(DataSourceEnum dataSource, AssertionOperationEnum assertionOperation, AssertionValue assertionValue) {
-        this.dataSource = dataSource;
-        this.assertionOperation = assertionOperation;
-        this.assertionValue = assertionValue;
-    }
-
-    public AssertionRule(int assertionRuleId, DataSourceEnum dataSource, AssertionOperationEnum assertionOperation,
-                         AssertionValue assertionValue) {
-        this.assertionRuleId = assertionRuleId;
-        this.dataSource = dataSource;
-        this.assertionOperation = assertionOperation;
-        this.assertionValue = assertionValue;
-    }
-
-    public int getAssertionRuleId() {
+    public Integer getAssertionRuleId() {
         return assertionRuleId;
     }
 
-    public void setAssertionRuleId(int assertionRuleId) {
+    public void setAssertionRuleId(Integer assertionRuleId) {
         this.assertionRuleId = assertionRuleId;
     }
 
@@ -73,11 +48,11 @@ public class AssertionRule implements Serializable {
         this.assertionRuleKey = assertionRuleKey;
     }
 
-    public int getAssertionRuleSequenceId() {
+    public Integer getAssertionRuleSequenceId() {
         return assertionRuleSequenceId;
     }
 
-    public void setAssertionRuleSequenceId(int assertionRuleSequenceId) {
+    public void setAssertionRuleSequenceId(Integer assertionRuleSequenceId) {
         this.assertionRuleSequenceId = assertionRuleSequenceId;
     }
 

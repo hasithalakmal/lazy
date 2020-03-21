@@ -10,3 +10,8 @@
 10) Response print flag
 11) [done] move code as a library and use it in a separate project
 12) [done] Code reformat
+13) Direct API execution
+14) Unit test implementation
+15) Request body template
+16) Auto test value generator
+17) [DEV]enable/disable assertions

@@ -19,6 +19,8 @@ public class ErrorCodes {
 
     public static final String INVALID_LAZY_TEST_API_CALL = "Lazy-60000";
 
+    public static final String INVALID_LAZY_ASSERTION_RULE = "Lazy-65000";
+
     //Lazy Core related error codes
     public static final String INVALID_TABLE = "Lazy-70000";
 

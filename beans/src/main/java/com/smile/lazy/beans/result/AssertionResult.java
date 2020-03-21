@@ -14,35 +14,24 @@ public class AssertionResult implements Serializable {
     private String resultName;
     private String resultDescription;
     private Boolean active;
-    private int testSuiteId;
-    private int testScenarioId;
-    private int testCaseId;
-    private int apiCallId;
-    private int assertionRuleId;
+    private AssertionRule assertionRule;
     private String actualValue;
     private Boolean pass;
-    private AssertionRule assertionRule;
     private String assertionStatus;
 
-    public AssertionResult(int resultId, int apiCallId, int assertionRuleId, String actualValue) {
+    public AssertionResult(int resultId, String actualValue) {
         this.resultId = resultId;
-        this.apiCallId = apiCallId;
-        this.assertionRuleId = assertionRuleId;
         this.actualValue = actualValue;
     }
 
-    public AssertionResult(int resultId, int apiCallId, int assertionRuleId, String actualValue, Boolean pass) {
+    public AssertionResult(int resultId, String actualValue, Boolean pass) {
         this.resultId = resultId;
-        this.apiCallId = apiCallId;
-        this.assertionRuleId = assertionRuleId;
         this.actualValue = actualValue;
         this.pass = pass;
     }
 
-    public AssertionResult(int resultId, int apiCallId, int assertionRuleId, String actualValue, Boolean pass, String assertionStatus) {
+    public AssertionResult(int resultId, String actualValue, Boolean pass, String assertionStatus) {
         this.resultId = resultId;
-        this.apiCallId = apiCallId;
-        this.assertionRuleId = assertionRuleId;
         this.actualValue = actualValue;
         this.pass = pass;
         this.assertionStatus = assertionStatus;
@@ -88,46 +77,6 @@ public class AssertionResult implements Serializable {
         this.active = active;
     }
 
-    public int getTestSuiteId() {
-        return testSuiteId;
-    }
-
-    public void setTestSuiteId(int testSuiteId) {
-        this.testSuiteId = testSuiteId;
-    }
-
-    public int getTestScenarioId() {
-        return testScenarioId;
-    }
-
-    public void setTestScenarioId(int testScenarioId) {
-        this.testScenarioId = testScenarioId;
-    }
-
-    public int getTestCaseId() {
-        return testCaseId;
-    }
-
-    public void setTestCaseId(int testCaseId) {
-        this.testCaseId = testCaseId;
-    }
-
-    public int getApiCallId() {
-        return apiCallId;
-    }
-
-    public void setApiCallId(int apiCallId) {
-        this.apiCallId = apiCallId;
-    }
-
-    public int getAssertionRuleId() {
-        return assertionRuleId;
-    }
-
-    public void setAssertionRuleId(int assertionRuleId) {
-        this.assertionRuleId = assertionRuleId;
-    }
-
     public String getActualValue() {
         return actualValue;
     }
@@ -141,6 +90,9 @@ public class AssertionResult implements Serializable {
     }
 
     public void setPass(Boolean pass) {
+        if (pass == null) {
+            pass = Boolean.FALSE;
+        }
         this.pass = pass;
     }
 
@@ -177,11 +129,6 @@ public class AssertionResult implements Serializable {
 
         return new EqualsBuilder()
               .append(resultId, that.resultId)
-              .append(testSuiteId, that.testSuiteId)
-              .append(testScenarioId, that.testScenarioId)
-              .append(testCaseId, that.testCaseId)
-              .append(apiCallId, that.apiCallId)
-              .append(assertionRuleId, that.assertionRuleId)
               .append(resultDisplayId, that.resultDisplayId)
               .append(resultName, that.resultName)
               .append(resultDescription, that.resultDescription)
@@ -201,11 +148,6 @@ public class AssertionResult implements Serializable {
               .append(resultName)
               .append(resultDescription)
               .append(active)
-              .append(testSuiteId)
-              .append(testScenarioId)
-              .append(testCaseId)
-              .append(apiCallId)
-              .append(assertionRuleId)
               .append(actualValue)
               .append(pass)
               .append(assertionRule)
@@ -221,11 +163,6 @@ public class AssertionResult implements Serializable {
               ", resultName='" + resultName + '\'' +
               ", resultDescription='" + resultDescription + '\'' +
               ", active=" + active +
-              ", testSuiteId=" + testSuiteId +
-              ", testScenarioId=" + testScenarioId +
-              ", testCaseId=" + testCaseId +
-              ", apiCallId=" + apiCallId +
-              ", assertionRuleId=" + assertionRuleId +
               ", actualValue='" + actualValue + '\'' +
               ", pass=" + pass +
               ", assertionRule=" + assertionRule +

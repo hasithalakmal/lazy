@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ApiCallExecutionData {
@@ -26,6 +27,7 @@ public class ApiCallExecutionData {
     private String requestBody;
     private URI url;
     private LazyApiCallResponse response;
+    private List<AssertionExecutionData> assertionExecutionDataList;
 
     public Integer getApiCallId() {
         return apiCallId;
@@ -147,6 +149,17 @@ public class ApiCallExecutionData {
         this.response = response;
     }
 
+    public List<AssertionExecutionData> getAssertionExecutionDataList() {
+        if (assertionExecutionDataList == null) {
+            assertionExecutionDataList = new ArrayList<>();
+        }
+        return assertionExecutionDataList;
+    }
+
+    public void setAssertionExecutionDataList(List<AssertionExecutionData> assertionExecutionDataList) {
+        this.assertionExecutionDataList = assertionExecutionDataList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -171,6 +184,7 @@ public class ApiCallExecutionData {
               .append(requestBody, apiCall.requestBody)
               .append(url, apiCall.url)
               .append(response, apiCall.response)
+              .append(assertionExecutionDataList, apiCall.assertionExecutionDataList)
               .isEquals();
     }
 
@@ -192,6 +206,7 @@ public class ApiCallExecutionData {
               .append(requestBody)
               .append(url)
               .append(response)
+              .append(assertionExecutionDataList)
               .toHashCode();
     }
 
@@ -213,6 +228,7 @@ public class ApiCallExecutionData {
               ", requestBody='" + requestBody + '\'' +
               ", url='" + url + '\'' +
               ", response=" + response +
+              ", assertionExecutionDataList=" + assertionExecutionDataList +
               '}';
     }
 }

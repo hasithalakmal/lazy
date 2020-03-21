@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AssertionRuleGroup implements Serializable {
 
-    private int assertionRuleGroupId;
+    private Integer assertionRuleGroupId;
     private String assertionRuleGroupDisplayId;
     private String assertionRuleGroupName;
     private String assertionRuleGroupDescription;
@@ -25,11 +25,11 @@ public class AssertionRuleGroup implements Serializable {
         this.assertionRuleGroupName = assertionRuleGroupName;
     }
 
-    public int getAssertionRuleGroupId() {
+    public Integer getAssertionRuleGroupId() {
         return assertionRuleGroupId;
     }
 
-    public void setAssertionRuleGroupId(int assertionRuleGroupId) {
+    public void setAssertionRuleGroupId(Integer assertionRuleGroupId) {
         this.assertionRuleGroupId = assertionRuleGroupId;
     }
 
