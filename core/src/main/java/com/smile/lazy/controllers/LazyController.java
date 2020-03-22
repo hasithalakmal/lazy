@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class LazyController extends BaseController{
+public class LazyController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LazyController.class);
 

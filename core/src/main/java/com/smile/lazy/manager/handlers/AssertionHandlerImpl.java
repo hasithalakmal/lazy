@@ -8,9 +8,8 @@ import com.smile.lazy.beans.enums.AssertionResultStatus;
 import com.smile.lazy.beans.enums.DataSourceEnum;
 import com.smile.lazy.beans.executor.ApiCallExecutionData;
 import com.smile.lazy.beans.executor.AssertionExecutionData;
-import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.executor.AssertionResult;
-import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionValue;
@@ -26,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
-import static java.lang.Boolean.*;
+import static java.lang.Boolean.FALSE;
 import static java.text.MessageFormat.format;
 
 @Repository
@@ -155,13 +154,13 @@ public class AssertionHandlerImpl {
             LOGGER.debug("Executing assertion rule - [{}]", assertionRule.getAssertionRuleName());
         }
         DataSourceEnum dataSource = assertionRule.getDataSource();
-        if(dataSource == null) {
+        if (dataSource == null) {
             String error = "Assertion rule data source should not be null";
             LOGGER.error(error);
             throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_ASSERTION_RULE, error);
         }
         AssertionOperationEnum operation = assertionRule.getAssertionOperation();
-        if(operation == null) {
+        if (operation == null) {
             String error = "Assertion rule operation should not be null";
             LOGGER.error(error);
             throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_ASSERTION_RULE, error);

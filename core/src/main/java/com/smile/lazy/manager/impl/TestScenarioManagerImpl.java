@@ -2,7 +2,6 @@ package com.smile.lazy.manager.impl;
 
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
-import com.smile.lazy.beans.executor.LazyExecutionData;
 import com.smile.lazy.beans.executor.TestScenarioExecutionData;
 import com.smile.lazy.beans.executor.TestSuiteExecutionData;
 import com.smile.lazy.beans.suite.TestScenario;

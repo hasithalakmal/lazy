@@ -23,6 +23,12 @@ public class ErrorCodes {
 
     //Lazy Core related error codes
     public static final String INVALID_TABLE = "Lazy-70000";
+    public static final String INVALID_FILE_PATH = "Lazy-70010";
+    public static final String FILE_READING_ERROR = "Lazy-70011";
+    public static final String INVALID_JSON = "Lazy-70020";
+    public static final String INVALID_TEMPLATE = "Lazy-70030";
+    public static final String TEMPLATE_PROCESSING_ERROR = "Lazy-70040";
+    public static final String INVALID_TEMPLATE_DATA_OBJECT = "Lazy-70050";
 
     private ErrorCodes() {
         //This is a private constructor

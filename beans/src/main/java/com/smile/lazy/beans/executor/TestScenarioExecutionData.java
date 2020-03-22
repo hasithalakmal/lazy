@@ -38,7 +38,7 @@ public class TestScenarioExecutionData {
     }
 
     public List<TestCaseExecutionData> getTestCaseExecutionDataList() {
-        if(testCaseExecutionDataList == null) {
+        if (testCaseExecutionDataList == null) {
             testCaseExecutionDataList = new ArrayList<>();
         }
         return testCaseExecutionDataList;

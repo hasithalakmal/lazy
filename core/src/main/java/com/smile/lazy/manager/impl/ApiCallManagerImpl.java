@@ -6,7 +6,6 @@ import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.executor.ApiCallExecutionData;
 import com.smile.lazy.beans.executor.TestCaseExecutionData;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
-import com.smile.lazy.beans.executor.LazyExecutionData;
 import com.smile.lazy.beans.suite.ApiCall;
 import com.smile.lazy.beans.suite.TestCase;
 import com.smile.lazy.beans.suite.actions.Action;

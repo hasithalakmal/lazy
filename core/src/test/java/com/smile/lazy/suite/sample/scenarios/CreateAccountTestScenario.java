@@ -3,6 +3,7 @@ package com.smile.lazy.suite.sample.scenarios;
 import com.smile.lazy.beans.suite.TestScenario;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
+import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.suite.sample.testcase.CreateAccountSuccessTestCase;
 import com.smile.lazy.wrapper.Assert;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class CreateAccountTestScenario {
 
-    public static TestScenario getAccountCreationTestScenario() {
+    public static TestScenario getAccountCreationTestScenario() throws LazyCoreException {
         TestScenario testScenario1 = new TestScenario("Smile-Test-Scenario-1", "Create Account");
         testScenario1.getStack().addDefaultAssertionGroup(createDefaultAssertionRuleGroup());
         testScenario1.getTestCases().add(CreateAccountSuccessTestCase.getCreateAccountTestCase());

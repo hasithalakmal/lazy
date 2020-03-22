@@ -101,11 +101,11 @@ public class LazyManagerImpl implements LazyManager {
 
     private ResultSummeryTo getResultSummery(LazyExecutionData lazyExecutionData) {
         ResultSummeryTo resultSummeryTo = new ResultSummeryTo();
-        for (TestSuiteExecutionData testSuiteExecutionData: lazyExecutionData.getTestSuiteExecutionData()){
-            for (TestScenarioExecutionData testScenarioExecutionData: testSuiteExecutionData.getTestScenarioExecutionData()) {
-                for (TestCaseExecutionData testCaseExecutionData: testScenarioExecutionData.getTestCaseExecutionDataList()) {
-                    for (ApiCallExecutionData apiCallExecutionData :testCaseExecutionData.getApiCallExecutionDataList()) {
-                        for (AssertionExecutionData assertionExecutionData: apiCallExecutionData.getAssertionExecutionDataList()) {
+        for (TestSuiteExecutionData testSuiteExecutionData : lazyExecutionData.getTestSuiteExecutionData()) {
+            for (TestScenarioExecutionData testScenarioExecutionData : testSuiteExecutionData.getTestScenarioExecutionData()) {
+                for (TestCaseExecutionData testCaseExecutionData : testScenarioExecutionData.getTestCaseExecutionDataList()) {
+                    for (ApiCallExecutionData apiCallExecutionData : testCaseExecutionData.getApiCallExecutionDataList()) {
+                        for (AssertionExecutionData assertionExecutionData : apiCallExecutionData.getAssertionExecutionDataList()) {
                             AssertionResult assertionResult = assertionExecutionData.getAssertionResult();
                             ResultRecodeTo resultRecodeTo = new ResultRecodeTo();
                             resultRecodeTo.setResultId(Integer.toString(assertionResult.getResultId()));

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
+import com.smile.lazy.common.ErrorCodes;
+import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.utils.TemplateUtil;
 import com.smile.lazy.utils.VariableManipulationUtil;
 import org.apache.commons.lang3.SerializationUtils;
@@ -14,6 +16,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
@@ -23,13 +28,16 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.text.MessageFormat.format;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiCall implements Serializable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApiCall.class);
 
     private Integer apiCallId;
     private String apiCallDisplayId;
@@ -289,38 +297,58 @@ public class ApiCall implements Serializable {
         this.disabledAssertions.add(assertionKey);
     }
 
-    public void setRequestBodyFromJson(String filePath) {
+    public void setRequestBodyFromJson(String filePath) throws LazyCoreException {
+        if (StringUtils.isBlank(filePath)) {
+            String error = "File path should not be blank";
+            LOGGER.error(error);
+            throw new LazyCoreException(ErrorCodes.INVALID_FILE_PATH, error);
+        }
         JSONParser parser = new JSONParser();
         File file = null;
         try {
             file = ResourceUtils.getFile("classpath:" + filePath);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            String error = format("File not found in class path [{}]", filePath);
+            LOGGER.error(error, e);
+            throw new LazyCoreException(ErrorCodes.INVALID_FILE_PATH, error);
         }
         try (Reader reader = new FileReader(file)) {
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
-            String requestBodyValue = jsonObject.toJSONString();
-            requestBody = requestBodyValue;
+            requestBody = jsonObject.toJSONString();
         } catch (IOException e) {
-            //TODO - handle exception
-            e.printStackTrace();
+            String error = format("JSON File cannot read [{}]", filePath);
+            LOGGER.error(error, e);
+            throw new LazyCoreException(ErrorCodes.FILE_READING_ERROR, error);
         } catch (ParseException e) {
-            //TODO - handle exception
-            e.printStackTrace();
+            String error = format("Json parsing exception [{}]", filePath);
+            LOGGER.error(error, e);
+            throw new LazyCoreException(ErrorCodes.INVALID_JSON, error);
         }
     }
 
-    public void setRequestBodyFromJsonTemplate(String filePath, Map<String, Object> templateData) {
+    public void setRequestBodyFromJsonTemplate(String filePath, Map<String, Object> templateData) throws LazyCoreException {
+        if (StringUtils.isBlank(filePath)) {
+            String error = "Template file path should not be blank";
+            LOGGER.error(error);
+            throw new LazyCoreException(ErrorCodes.INVALID_FILE_PATH, error);
+        }
+
+        if (CollectionUtils.isEmpty(templateData)) {
+            String error = "Template file path should not be blank";
+            LOGGER.error(error);
+            throw new LazyCoreException(ErrorCodes.INVALID_TEMPLATE_DATA_OBJECT, error);
+        }
         String generatedJson = TemplateUtil.manipulateTemplate(filePath, templateData);
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = null;
         try {
             jsonObject = (JSONObject) parser.parse(generatedJson);
         } catch (ParseException e) {
-            e.printStackTrace();
+            String error = "Template generated invalid JSON";
+            LOGGER.error(error);
+            throw new LazyCoreException(ErrorCodes.INVALID_JSON, error);
         }
-        String requestBodyValue = jsonObject.toJSONString();
-        requestBody = requestBodyValue;
+        requestBody = jsonObject.toJSONString();
     }
 
     @Override

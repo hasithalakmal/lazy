@@ -1,17 +1,17 @@
 {
-    "status": "${accountStatus}",
-    "createdBy": "12345",
-    "parentId": "1",
-    "enterpriseId": "${enterpriseId}",
-    "accountName": "${accountName}",
-    "ownerName": "Hasitha-1577641690",
-    "versionId": "${versionId}",
-    "settings": [
-        <#list settings as setting>
-            {
-                "key": "${setting.key}",
-                "value": "${setting.value}"
-            }
-        </#list>
-    ]
+"status": "${accountStatus}",
+"createdBy": "12345",
+"parentId": "1",
+"enterpriseId": "${enterpriseId}",
+"accountName": "${accountName}",
+"ownerName": "Hasitha-1577641690",
+"versionId": "${versionId}",
+"settings": [
+<#list settings as setting>
+    {
+    "key": "${setting.key}",
+    "value": "${setting.value}"
+    }
+</#list>
+]
 }

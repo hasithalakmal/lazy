@@ -38,7 +38,7 @@ public class TestSuiteExecutionData {
     }
 
     public List<TestScenarioExecutionData> getTestScenarioExecutionData() {
-        if(testScenarioExecutionData == null) {
+        if (testScenarioExecutionData == null) {
             testScenarioExecutionData = new ArrayList<>();
         }
         return testScenarioExecutionData;

@@ -1,10 +1,8 @@
 package com.smile.lazy;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.executor.LazyExecutionData;
 import com.smile.lazy.manager.LazyManager;
-import com.smile.lazy.manager.impl.LazyManagerImpl;
 import com.smile.lazy.suite.sample.SampleLazySuite1;
 import com.smile.lazy.utils.JsonUtil;
 import org.junit.jupiter.api.Test;
