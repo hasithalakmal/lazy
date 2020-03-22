@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
+import com.smile.lazy.utils.TemplateUtil;
 import com.smile.lazy.utils.VariableManipulationUtil;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -297,7 +300,6 @@ public class ApiCall implements Serializable {
         try (Reader reader = new FileReader(file)) {
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
             String requestBodyValue = jsonObject.toJSONString();
-            System.out.println(requestBodyValue);
             requestBody = requestBodyValue;
         } catch (IOException e) {
             //TODO - handle exception
@@ -306,6 +308,19 @@ public class ApiCall implements Serializable {
             //TODO - handle exception
             e.printStackTrace();
         }
+    }
+
+    public void setRequestBodyFromJsonTemplate(String filePath, Map<String, Object> templateData) {
+        String generatedJson = TemplateUtil.manipulateTemplate(filePath, templateData);
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = (JSONObject) parser.parse(generatedJson);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String requestBodyValue = jsonObject.toJSONString();
+        requestBody = requestBodyValue;
     }
 
     @Override

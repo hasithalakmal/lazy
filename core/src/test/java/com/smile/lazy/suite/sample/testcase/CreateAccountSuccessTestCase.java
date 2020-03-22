@@ -11,6 +11,10 @@ public class CreateAccountSuccessTestCase {
         testCase1.getApiCalls().add(AccountApiCalls.getAccountApiCall());
         testCase1.getApiCalls().add(AccountApiCalls.createAccountApiCallWithJsonFile());
         testCase1.getApiCalls().add(AccountApiCalls.getAccountApiCall());
+        testCase1.getApiCalls().add(AccountApiCalls.createAccountApiCallWithTemplateFile());
+        testCase1.getApiCalls().add(AccountApiCalls.getAccountApiCall());
+        testCase1.getApiCalls().add(AccountApiCalls.createAccountApiCallWithTemplateFileComplex());
+        testCase1.getApiCalls().add(AccountApiCalls.getAccountApiCall());
         return testCase1;
     }
 }
