@@ -39,7 +39,7 @@ public class AccountApiCalls {
         return apiCall1;
     }
 
-    public static ApiCall createAccountApiCallWithTemplateFile() {
+    public static ApiCall createAccountApiCallWithTemplateFile() throws LazyCoreException {
         ApiCall apiCall1 = new ApiCall(1, "Create Account - using template");
         apiCall1.setUri("service/accounts");
         apiCall1.setHttpMethod("POST");
@@ -65,7 +65,7 @@ public class AccountApiCalls {
         return apiCall1;
     }
 
-    public static ApiCall createAccountApiCallWithTemplateFileComplex() {
+    public static ApiCall createAccountApiCallWithTemplateFileComplex() throws LazyCoreException {
         ApiCall apiCall1 = new ApiCall(1, "Create Account - using complex template");
         apiCall1.setUri("service/accounts");
         apiCall1.setHttpMethod("POST");
