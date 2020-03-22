@@ -126,25 +126,19 @@ public class ApiCallHandlerImpl {
 
     private void populateHeaders(ApiCall apiCall, HttpRequestBase request) {
         if (apiCall.getHeaderGroup() != null) {
-            apiCall.getHeaderGroup().getHeaders().forEach(header -> {
-                request.addHeader(header.getKey(), header.getValue());
-            });
+            apiCall.getHeaderGroup().getHeaders().forEach(header -> request.addHeader(header.getKey(), header.getValue()));
         }
     }
 
-    //TODO - remove this method
     private String getResponseBody(CloseableHttpResponse response) throws IOException {
         String result = null;
-        try {
+        try (response) {
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 result = EntityUtils.toString(entity);
             }
-
-        } finally {
-            response.close();
-            return result;
         }
+        return result;
     }
 
     private URI populateRequestUri(ApiCall apiCall) throws URISyntaxException {
