@@ -8,21 +8,10 @@
     "versionId": "${versionId}",
     "settings": [
         <#list settings as setting>
-                        {
-                        "key": "${setting.key}",
-                        "value": "${setting.value}"
-                        }
-<#--            <#if setting?is_last>-->
-<#--                {-->
-<#--                "key": "${setting.key}",-->
-<#--                "value": "${setting.value}"-->
-<#--                },-->
-<#--            <#else>-->
-<#--                {-->
-<#--                "key": "${setting.key}",-->
-<#--                "value": "${setting.value}"-->
-<#--                },-->
-<#--            </#if>-->
+            {
+                "key": "${setting.key}",
+                "value": "${setting.value}"
+            }
         </#list>
     ]
 }

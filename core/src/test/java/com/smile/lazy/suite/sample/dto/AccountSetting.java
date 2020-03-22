@@ -1,8 +1,5 @@
 package com.smile.lazy.suite.sample.dto;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 public class AccountSetting {
 
     private String key;

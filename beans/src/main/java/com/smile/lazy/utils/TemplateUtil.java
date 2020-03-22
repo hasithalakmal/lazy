@@ -28,7 +28,6 @@ public class TemplateUtil {
         try (StringWriter out = new StringWriter()) {
             template.process(templateData, out);
             responseString = out.getBuffer().toString();
-            System.out.println(responseString);
             out.flush();
         } catch (TemplateException e) {
             e.printStackTrace();
