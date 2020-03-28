@@ -3,6 +3,7 @@ package com.smile.lazy.beans.suite.actions;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.smile.lazy.beans.enums.ActionTypeEnum;
+import com.smile.lazy.beans.enums.DataTypeEnum;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -12,20 +13,21 @@ import java.io.Serializable;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class VariableCleanAction extends Action implements Serializable {
 
-    private int environmentId;
+    private String environmentDisplayId;
     private String variableKey;
+    private DataTypeEnum dataType;
 
     public VariableCleanAction(ActionTypeEnum actionType, String variableKey) {
         super(actionType);
         this.variableKey = variableKey;
     }
 
-    public int getEnvironmentId() {
-        return environmentId;
+    public String getEnvironmentDisplayId() {
+        return environmentDisplayId;
     }
 
-    public void setEnvironmentId(int environmentId) {
-        this.environmentId = environmentId;
+    public void setEnvironmentDisplayId(String environmentId) {
+        this.environmentDisplayId = environmentId;
     }
 
     public String getVariableKey() {
@@ -34,6 +36,14 @@ public class VariableCleanAction extends Action implements Serializable {
 
     public void setVariableKey(String variableKey) {
         this.variableKey = variableKey;
+    }
+
+    public DataTypeEnum getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(DataTypeEnum dataType) {
+        this.dataType = dataType;
     }
 
     @Override
@@ -50,8 +60,9 @@ public class VariableCleanAction extends Action implements Serializable {
 
         return new EqualsBuilder()
               .appendSuper(super.equals(o))
-              .append(environmentId, that.environmentId)
+              .append(environmentDisplayId, that.environmentDisplayId)
               .append(variableKey, that.variableKey)
+              .append(dataType, that.dataType)
               .isEquals();
     }
 
@@ -59,8 +70,9 @@ public class VariableCleanAction extends Action implements Serializable {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
               .appendSuper(super.hashCode())
-              .append(environmentId)
+              .append(environmentDisplayId)
               .append(variableKey)
+              .append(dataType)
               .toHashCode();
     }
 
@@ -68,8 +80,9 @@ public class VariableCleanAction extends Action implements Serializable {
     public String
     toString() {
         return "VariableCleanAction{" +
-              "environmentId=" + environmentId +
+              "environmentDisplayId=" + environmentDisplayId +
               ", variableKey='" + variableKey + '\'' +
+              ", dataType='" + dataType + '\'' +
               "} " + super.toString();
     }
 }

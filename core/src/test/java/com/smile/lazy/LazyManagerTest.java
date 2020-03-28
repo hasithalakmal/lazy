@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.Assert;
 
+import java.math.BigDecimal;
+
+import static java.text.MessageFormat.format;
+
 
 @SpringBootTest(classes = LazyApplication.class)
 public class LazyManagerTest {
@@ -22,7 +26,7 @@ public class LazyManagerTest {
     private LazyManager lazyManager;
 
     @Test
-    public void testEmployee() {
+    public void testSampleLazySuite() {
         try {
             LazySuite sampleLazySuite = SampleLazySuite1.populateSampleTestSuite();
             LazyExecutionData results = lazyManager.executeLazySuite(sampleLazySuite);
@@ -38,9 +42,13 @@ public class LazyManagerTest {
 
     @Test
     public void simple() {
-        System.out.println("{\"status\":\"ACTIVE\",\"createdBy\":\"12345\",\"parentId\":\"1\",\"enterpriseId\":\"1\","
-              + "\"accountName\":\"Sathara-1577641690\",\"ownerName\":\"Hasitha-1577641690\",\"versionId\":\"1.0.0\","
-              + "\"settings\":[{\"key\":\"setting1\",\"value\":\"1577641690\"},{\"key\":\"setting2\",\"value\":\"1577641690\"}]}");
+        String text = format("username={0}&password={1}&grant_type={2}", "hanzhenl+tbs@gmail.com","1234567","password");
+        System.out.println(text);
+
+        BigDecimal x = new BigDecimal("5.70");
+        BigDecimal y = new BigDecimal("5");
+        System.out.println(x.toPlainString());
+        System.out.println(y.toPlainString());
     }
 
 }

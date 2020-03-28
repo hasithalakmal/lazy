@@ -39,6 +39,9 @@ public class Global implements Serializable {
     }
 
     public Map<String, Environment> getEnvironments() {
+        if (environments == null) {
+            environments = new HashMap<>();
+        }
         return environments;
     }
 

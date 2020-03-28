@@ -18,8 +18,10 @@ public class ErrorCodes {
     public static final String INVALID_LAZY_TEST_CASE = "Lazy-50000";
 
     public static final String INVALID_LAZY_TEST_API_CALL = "Lazy-60000";
-
-    public static final String INVALID_LAZY_ASSERTION_RULE = "Lazy-65000";
+    public static final String INVALID_LAZY_ASSERTION_RULE = "Lazy-61000";
+    public static final String INVALID_LAZY_ACTION = "Lazy-62000";
+    public static final String INVALID_LAZY_ACTION_TYPE = "Lazy-62010";
+    public static final String INVALID_LAZY_ACTION_DATA_SOURCE = "Lazy-62020";
 
     //Lazy Core related error codes
     public static final String INVALID_TABLE = "Lazy-70000";
