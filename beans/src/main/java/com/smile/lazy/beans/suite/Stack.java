@@ -13,6 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +63,9 @@ public class Stack implements Serializable {
     }
 
     public Map<String, EnvironmentVariable> getGlobalEnvironment() {
+        if (globalEnvironment == null) {
+            globalEnvironment = new HashMap<>();
+        }
         return globalEnvironment;
     }
 
@@ -85,7 +89,6 @@ public class Stack implements Serializable {
         this.attributes = attributes;
     }
 
-    //TODO - think how to remove these logics from the beans
     public void addDefaultAssertionRule(AssertionRule assertionRule) {
         if (this.defaultAssertions == null || this.defaultAssertions.isEmpty()) {
             this.defaultAssertions = new ArrayList<>();

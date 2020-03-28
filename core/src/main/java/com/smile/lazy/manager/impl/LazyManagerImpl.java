@@ -5,6 +5,7 @@ import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.dto.ResultRecodeTo;
 import com.smile.lazy.beans.dto.ResultSummeryTo;
+import com.smile.lazy.beans.enums.HttpMethodEnum;
 import com.smile.lazy.beans.executor.ApiCallExecutionData;
 import com.smile.lazy.beans.executor.AssertionExecutionData;
 import com.smile.lazy.beans.executor.AssertionResult;
@@ -21,6 +22,7 @@ import com.smile.lazy.manager.LazyManager;
 import com.smile.lazy.manager.TestSuiteManager;
 import com.smile.lazy.manager.handlers.AssertionHandlerImpl;
 import com.smile.lazy.utils.JsonUtil;
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,7 +145,12 @@ public class LazyManagerImpl implements LazyManager {
             LOGGER.error(error);
             throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
         }
-        //TODO - validate http method by using ENUM
+
+        if (!EnumUtils.isValidEnum(HttpMethodEnum.class, defaultValues.getHttpMethod())) {
+            String error = "Invalid http method values found";
+            LOGGER.error(error);
+            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
+        }
 
         for (Header header : defaultValues.getHeaderGroup().getHeaders()) {
             if (header == null || StringUtils.isBlank(header.getKey()) || StringUtils.isBlank(header.getValue())) {

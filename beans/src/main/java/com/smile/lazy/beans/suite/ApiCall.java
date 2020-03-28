@@ -262,7 +262,6 @@ public class ApiCall implements Serializable {
         this.disabledAssertions = disabledAssertions;
     }
 
-    //TODO - think how to remove these logics from the beans
     public void addAssertionRule(AssertionRule assertionRule) {
         if (this.assertionRules == null || this.assertionRules.isEmpty()) {
             this.assertionRules = new ArrayList<>();
