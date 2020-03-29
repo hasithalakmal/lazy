@@ -40,7 +40,7 @@ public class TestCaseManagerImpl extends LazyBaseManager implements com.smile.la
     @Override
     public void executeTestCases(LazySuite lazySuite, TestScenarioExecutionData testScenarioExecutionData, IdDto idDto, TestScenario testScenario) throws LazyException,
           LazyCoreException {
-        executeTestCases(lazySuite, testScenarioExecutionData, idDto, testScenario);
+        executeTestCases(lazySuite, testScenarioExecutionData, idDto, testScenario, null);
     }
 
     @Override

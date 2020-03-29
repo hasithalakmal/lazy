@@ -60,8 +60,7 @@ public class ApiCall implements Serializable {
     private List<String> disabledAssertions;
     private Stack stack;
 
-    public ApiCall(Integer apiCallId, String apiCallName) {
-        this.apiCallId = apiCallId;
+    public ApiCall(String apiCallName) {
         this.apiCallName = apiCallName;
     }
 

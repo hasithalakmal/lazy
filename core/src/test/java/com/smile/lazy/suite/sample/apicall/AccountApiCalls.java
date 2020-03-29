@@ -17,7 +17,7 @@ import java.util.Map;
 public class AccountApiCalls {
 
     public static ApiCall createAccountApiCall() {
-        ApiCall apiCall1 = new ApiCall(1, "Create Account - String");
+        ApiCall apiCall1 = new ApiCall("Create Account - String");
         apiCall1.getStack().addDefaultAssertionGroup(createDefaultAssertionRuleGroup());
         apiCall1.setUri("service/accounts");
         apiCall1.setHttpMethod("POST");
@@ -41,7 +41,7 @@ public class AccountApiCalls {
     }
 
     public static ApiCall createAccountApiCallWithJsonFile() throws LazyCoreException {
-        ApiCall apiCall1 = new ApiCall(1, "Create Account - JSON file");
+        ApiCall apiCall1 = new ApiCall("Create Account - JSON file");
         apiCall1.setUri("service/accounts");
         apiCall1.setHttpMethod("POST");
         apiCall1.setRequestBodyFromJson("request-body/account-api/create-account/create-simple-account.json");
@@ -53,7 +53,7 @@ public class AccountApiCalls {
     }
 
     public static ApiCall createAccountApiCallWithTemplateFile() throws LazyCoreException {
-        ApiCall apiCall1 = new ApiCall(1, "Create Account - Template");
+        ApiCall apiCall1 = new ApiCall("Create Account - Template");
         apiCall1.setUri("service/accounts");
         apiCall1.setHttpMethod("POST");
 
@@ -81,7 +81,7 @@ public class AccountApiCalls {
     }
 
     public static ApiCall createAccountApiCallWithTemplateFileComplex() throws LazyCoreException {
-        ApiCall apiCall1 = new ApiCall(1, "Create Account - Logical template");
+        ApiCall apiCall1 = new ApiCall( "Create Account - Logical template");
         apiCall1.setUri("service/accounts");
         apiCall1.setHttpMethod("POST");
 
@@ -110,7 +110,7 @@ public class AccountApiCalls {
     }
 
     public static ApiCall getAccountApiCall() {
-        ApiCall apiCall2 = new ApiCall(2, "Get Account by Id");
+        ApiCall apiCall2 = new ApiCall("Get Account by Id");
         apiCall2.disableAssertion("created.http.status.assertion");
         apiCall2.setUri("service/accounts/{{lazy.global.created.account.id}}");
         apiCall2.addAssertionGroup(accountAssertionGroup1("{{lazy.global.created.account.name}}"));
@@ -125,7 +125,7 @@ public class AccountApiCalls {
      * @return
      */
     public static ApiCall getAccountApiCall2() {
-        ApiCall apiCall2 = new ApiCall(2, "Get Account by Id");
+        ApiCall apiCall2 = new ApiCall( "Get Account by Id");
         apiCall2.enableAssertion("created.http.status.assertion");
         apiCall2.setUri("service/accounts/{{lazy.global.created.account.id}}");
         apiCall2.addAssertionGroup(accountAssertionGroup1("{{lazy.global.created.account.name}}"));
