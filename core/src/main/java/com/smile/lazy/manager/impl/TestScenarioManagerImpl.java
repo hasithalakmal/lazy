@@ -52,7 +52,7 @@ public class TestScenarioManagerImpl extends LazyBaseManager implements com.smil
 
             LOGGER.info("Executing test scenario - [{}] - [{}]", testScenarioId, testScenarioName);
             TestScenarioExecutionData testScenarioExecutionData = new TestScenarioExecutionData(testScenarioId, testScenarioName);
-            if (isFoundInAcceptedList){
+            if (isFoundInAcceptedList) {
                 testCaseManager.executeTestCases(lazySuite, testScenarioExecutionData, idDto, testScenario);
             } else {
                 testCaseManager.executeTestCases(lazySuite, testScenarioExecutionData, idDto, testScenario, lazyExecutionGroup);

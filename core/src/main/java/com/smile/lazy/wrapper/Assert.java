@@ -54,7 +54,7 @@ public class Assert {
     }
 
     public static AssertionRule responseCodeAssertion(String code) {
-        return responseCodeAssertion(format( "Response code assertion for - [{0}]", code), code);
+        return responseCodeAssertion(format("Response code assertion for - [{0}]", code), code);
     }
 
     public static AssertionRule responseCodeAssertion(String assertionName, String code) {

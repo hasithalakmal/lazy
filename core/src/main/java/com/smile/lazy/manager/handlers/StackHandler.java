@@ -43,10 +43,10 @@ public class StackHandler {
         if (!childStackDefaultAssertions.isEmpty()) {
             List<AssertionRule> parentDefaultAssertions = parentStack.getDefaultAssertions();
             List<AssertionRule> mergedAssertions = new ArrayList<>();
-            for(AssertionRule parentAssertionRule: parentDefaultAssertions) {
+            for (AssertionRule parentAssertionRule : parentDefaultAssertions) {
                 if (StringUtils.isNotBlank(parentAssertionRule.getAssertionRuleKey())) {
                     boolean isParentOnlyAssertion = true;
-                    for(AssertionRule childAssertionRule: childStackDefaultAssertions) {
+                    for (AssertionRule childAssertionRule : childStackDefaultAssertions) {
                         if (StringUtils.isNotBlank(childAssertionRule.getAssertionRuleKey())
                               && childAssertionRule.getAssertionRuleKey().equals(parentAssertionRule.getAssertionRuleKey())) {
                             isParentOnlyAssertion = false;

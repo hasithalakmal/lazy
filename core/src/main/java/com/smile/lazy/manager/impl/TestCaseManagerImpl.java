@@ -58,7 +58,7 @@ public class TestCaseManagerImpl extends LazyBaseManager implements com.smile.la
 
             LOGGER.info("Executing test case - [{}] - [{}]", testCaseId, testCaseName);
             TestCaseExecutionData testCaseExecutionData = new TestCaseExecutionData(testCaseId, testCaseName);
-            if(isFoundInAcceptedList) {
+            if (isFoundInAcceptedList) {
                 apiCallManager.executeApiCalls(lazySuite, testCaseExecutionData, idDto, testCase);
             } else {
                 apiCallManager.executeApiCalls(lazySuite, testCaseExecutionData, idDto, testCase, lazyExecutionGroup);

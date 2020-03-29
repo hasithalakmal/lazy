@@ -4,7 +4,6 @@ import com.smile.lazy.beans.suite.TestScenario;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionRuleGroup;
 import com.smile.lazy.exception.LazyCoreException;
-import com.smile.lazy.suite.sample.testcase.CreateAccountSuccessTestCase;
 import com.smile.lazy.wrapper.Assert;
 
 import java.util.Arrays;
