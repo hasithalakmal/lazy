@@ -173,4 +173,22 @@ public class LazyManagerTest {
         }
     }
 
+    @Test
+    public void executeTestSuiteCombination() {
+        try {
+            LazySuite sampleLazySuite = SampleLazySuite1.populateSampleLazySuite();
+            LazyExecutionGroup lazyExecutionGroup = new LazyExecutionGroup();
+            lazyExecutionGroup.setTestCaseExecutionGroupNames(Arrays.asList("BVT_TC"));
+            lazyExecutionGroup.setApiCallExecutionGroupNames(Arrays.asList("BVT"));
+            LazyExecutionData results = lazyManager.executeLazySuite(sampleLazySuite, lazyExecutionGroup);
+            Assert.assertNotNull(results);
+            Assert.assertNotNull(results.getTestSuiteExecutionData());
+            String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
+            LOGGER.debug(EXECUTION_RESULTS_LOG, resultString);
+
+        } catch (Exception ex) {
+            Assert.fail(SUCCESS_SCENARIOS_SHOULD_NOT_BE_FAILED, ex);
+        }
+    }
+
 }
