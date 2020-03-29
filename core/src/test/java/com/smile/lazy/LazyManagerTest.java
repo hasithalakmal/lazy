@@ -12,11 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.Assert;
 
-import java.math.BigDecimal;
-
-import static java.text.MessageFormat.format;
-
-
 @SpringBootTest(classes = LazyApplication.class)
 public class LazyManagerTest {
 
@@ -38,17 +33,6 @@ public class LazyManagerTest {
         } catch (Exception ex) {
             Assert.fail("Success scenarios should not be failed", ex);
         }
-    }
-
-    @Test
-    public void simple() {
-        String text = format("username={0}&password={1}&grant_type={2}", "hanzhenl+tbs@gmail.com","1234567","password");
-        System.out.println(text);
-
-        BigDecimal x = new BigDecimal("5.70");
-        BigDecimal y = new BigDecimal("5");
-        System.out.println(x.toPlainString());
-        System.out.println(y.toPlainString());
     }
 
 }
