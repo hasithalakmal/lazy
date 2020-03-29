@@ -3,6 +3,7 @@ package com.smile.lazy.manager.impl;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.LazyExecutionGroup;
 import com.smile.lazy.beans.executor.TestScenarioExecutionData;
 import com.smile.lazy.beans.executor.TestSuiteExecutionData;
 import com.smile.lazy.beans.suite.Global;
@@ -20,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class TestScenarioManagerImpl extends LazyBaseManager implements com.smile.lazy.manager.TestScenarioManager {
@@ -32,17 +34,29 @@ public class TestScenarioManagerImpl extends LazyBaseManager implements com.smil
     @Override
     public void executeTestScenarios(LazySuite lazySuite, TestSuiteExecutionData testSuiteExecutionData, IdDto idDto, TestSuite testSuite)
           throws LazyException, LazyCoreException {
+        executeTestScenarios(lazySuite, testSuiteExecutionData, idDto, testSuite, null);
+    }
+
+    @Override
+    public void executeTestScenarios(LazySuite lazySuite, TestSuiteExecutionData testSuiteExecutionData, IdDto idDto, TestSuite testSuite, LazyExecutionGroup lazyExecutionGroup) throws LazyException, LazyCoreException {
         LOGGER.debug("Ready to executing all test scenarios...");
         for (TestScenario testScenario : testSuite.getTestScenarios()) {
             validateTestScenario(testScenario);
             String testScenarioName = testScenario.getTestScenarioName();
+
+            boolean isFoundInAcceptedList = isFoundInAcceptedList(lazyExecutionGroup, testScenario);
+
             LOGGER.debug("Preparing to execute test scenario - [{}]", testScenarioName);
             mergeStack(testSuite, testScenario, testScenarioName);
             Integer testScenarioId = populateTestScenarioId(idDto, testScenario, testScenarioName);
 
             LOGGER.info("Executing test scenario - [{}] - [{}]", testScenarioId, testScenarioName);
             TestScenarioExecutionData testScenarioExecutionData = new TestScenarioExecutionData(testScenarioId, testScenarioName);
-            testCaseManager.executeTestCases(lazySuite, testScenarioExecutionData, idDto, testScenario);
+            if (isFoundInAcceptedList){
+                testCaseManager.executeTestCases(lazySuite, testScenarioExecutionData, idDto, testScenario);
+            } else {
+                testCaseManager.executeTestCases(lazySuite, testScenarioExecutionData, idDto, testScenario, lazyExecutionGroup);
+            }
             LOGGER.info("Executed test scenario - [{}] - [{}]", testScenarioId, testScenarioName);
 
             testSuiteExecutionData.getTestScenarioExecutionData().add(testScenarioExecutionData);
@@ -50,6 +64,19 @@ public class TestScenarioManagerImpl extends LazyBaseManager implements com.smil
             idDto.setTestScenarioId(testScenarioId + 1);
         }
         LOGGER.debug("Executed all test scenarios...");
+    }
+
+    private boolean isFoundInAcceptedList(LazyExecutionGroup lazyExecutionGroup, TestScenario testScenario) {
+        boolean isFoundInAcceptedList = false;
+        if (lazyExecutionGroup != null && !CollectionUtils.isEmpty(lazyExecutionGroup.getTestScenarioExecutionGroupNames()) && !CollectionUtils.isEmpty(testScenario.getAssignGroups())) {
+            for (String acceptedTestSuiteName : lazyExecutionGroup.getTestScenarioExecutionGroupNames()) {
+                if (testScenario.getAssignGroups().contains(acceptedTestSuiteName)) {
+                    LOGGER.info("Find assigned test suite - [{}] to execute", acceptedTestSuiteName);
+                    isFoundInAcceptedList = true;
+                }
+            }
+        }
+        return isFoundInAcceptedList;
     }
 
     @Override

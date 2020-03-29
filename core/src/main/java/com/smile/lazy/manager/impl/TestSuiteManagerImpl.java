@@ -3,6 +3,7 @@ package com.smile.lazy.manager.impl;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.LazyExecutionGroup;
 import com.smile.lazy.beans.executor.TestSuiteExecutionData;
 import com.smile.lazy.beans.suite.Global;
 import com.smile.lazy.beans.suite.Stack;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class TestSuiteManagerImpl extends LazyBaseManager implements com.smile.lazy.manager.TestSuiteManager {
@@ -37,15 +39,13 @@ public class TestSuiteManagerImpl extends LazyBaseManager implements com.smile.l
     }
 
     @Override
-    public void executeTestSuites(LazySuite lazySuite, LazyExecutionData lazyExecutionData, IdDto idDto, String providedTestSuiteName) throws LazyException, LazyCoreException {
+    public void executeTestSuites(LazySuite lazySuite, LazyExecutionData lazyExecutionData, IdDto idDto, LazyExecutionGroup lazyExecutionGroup) throws LazyException, LazyCoreException {
         LOGGER.debug("Ready to executing all test suites of lazy suite [{}]...", lazySuite.getLazySuiteName());
         for (TestSuite testSuite : lazySuite.getTestSuites()) {
             validateTestSuite(testSuite);
             String testSuiteName = testSuite.getTestSuiteName();
 
-            if (providedTestSuiteName != null && !testSuiteName.equals(providedTestSuiteName)) {
-                continue;
-            }
+            boolean isFoundInAcceptedList = isFoundInAcceptedList(lazyExecutionGroup, testSuite);
 
             LOGGER.debug("Preparing to execute test suite - [{}]", testSuiteName);
             mergeStack(lazySuite, testSuite, testSuiteName);
@@ -53,13 +53,30 @@ public class TestSuiteManagerImpl extends LazyBaseManager implements com.smile.l
 
             LOGGER.info("Ready to execute test suite - [{}] - [{}]", testSuiteId, testSuiteName);
             TestSuiteExecutionData testSuiteExecutionData = new TestSuiteExecutionData(testSuiteId, testSuiteName);
-            testScenarioManager.executeTestScenarios(lazySuite, testSuiteExecutionData, idDto, testSuite);
+            if (isFoundInAcceptedList) {
+                testScenarioManager.executeTestScenarios(lazySuite, testSuiteExecutionData, idDto, testSuite);
+            } else {
+                testScenarioManager.executeTestScenarios(lazySuite, testSuiteExecutionData, idDto, testSuite, lazyExecutionGroup);
+            }
             LOGGER.info("Executed test suite - [{}] - [{}]", testSuiteId, testSuiteName);
 
             lazyExecutionData.getTestSuiteExecutionData().add(testSuiteExecutionData);
             idDto.setTestSuiteId(testSuiteId + 1);
         }
         LOGGER.debug("Executed all test suites...");
+    }
+
+    private boolean isFoundInAcceptedList(LazyExecutionGroup lazyExecutionGroup, TestSuite testSuite) {
+        boolean isFoundInAcceptedList = false;
+        if (lazyExecutionGroup != null && !CollectionUtils.isEmpty(lazyExecutionGroup.getTestSuiteExecutionGroupNames()) && !CollectionUtils.isEmpty(testSuite.getAssignGroups())) {
+            for (String acceptedTestSuiteName : lazyExecutionGroup.getTestSuiteExecutionGroupNames()) {
+                if (testSuite.getAssignGroups().contains(acceptedTestSuiteName)) {
+                    LOGGER.info("Find assigned test suite - [{}] to execute", acceptedTestSuiteName);
+                    isFoundInAcceptedList = true;
+                }
+            }
+        }
+        return isFoundInAcceptedList;
     }
 
     @Override

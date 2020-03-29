@@ -5,6 +5,7 @@ import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.executor.ApiCallExecutionData;
 import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.LazyExecutionGroup;
 import com.smile.lazy.beans.executor.TestCaseExecutionData;
 import com.smile.lazy.beans.executor.TestScenarioExecutionData;
 import com.smile.lazy.beans.executor.TestSuiteExecutionData;
@@ -30,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -50,10 +52,22 @@ public class ApiCallManagerImpl extends LazyBaseManager implements com.smile.laz
     @Override
     public void executeApiCalls(LazySuite lazySuite, TestCaseExecutionData testCaseExecutionData, IdDto idDto, TestCase testCase) throws LazyException,
           LazyCoreException {
+        executeApiCalls(lazySuite, testCaseExecutionData, idDto, testCase, null);
+    }
+
+    @Override
+    public void executeApiCalls(LazySuite lazySuite, TestCaseExecutionData testCaseExecutionData, IdDto idDto, TestCase testCase, LazyExecutionGroup lazyExecutionGroup) throws LazyException, LazyCoreException {
         LOGGER.debug("Ready to executing all api calls...");
         for (ApiCall apiCall : testCase.getApiCalls()) {
             validateApiCall(apiCall);
             String apiCallName = apiCall.getApiCallName();
+
+            boolean isFoundInAcceptedList = isFoundInAcceptedList(lazyExecutionGroup, apiCall);
+
+            if (!isFoundInAcceptedList) {
+                continue;
+            }
+
             LOGGER.debug("Preparing to execute api call - [{}]", apiCallName);
             mergeStack(testCase, apiCall, apiCallName);
             Integer apiCallId = populateApiCallId(idDto, apiCall, apiCallName);
@@ -84,6 +98,24 @@ public class ApiCallManagerImpl extends LazyBaseManager implements com.smile.laz
             idDto.setApiCallId(apiCallId + 1);
         }
         LOGGER.debug("Executed all api cases...");
+    }
+
+    private boolean isFoundInAcceptedList(LazyExecutionGroup lazyExecutionGroup, ApiCall apiCall) {
+        boolean isFoundInAcceptedList = false;
+        if (lazyExecutionGroup != null && !CollectionUtils.isEmpty(lazyExecutionGroup.getApiCallExecutionGroupNames())) {
+            for (String acceptedTestSuiteName : lazyExecutionGroup.getApiCallExecutionGroupNames()) {
+                if (!CollectionUtils.isEmpty(apiCall.getAssignGroups()) && apiCall.getAssignGroups().contains(acceptedTestSuiteName)) {
+                    LOGGER.info("Find assigned api call - [{}] to execute", acceptedTestSuiteName);
+                    isFoundInAcceptedList = true;
+                }
+            }
+
+        }
+
+        if (lazyExecutionGroup == null) {
+            isFoundInAcceptedList = true;
+        }
+        return isFoundInAcceptedList;
     }
 
     @Override

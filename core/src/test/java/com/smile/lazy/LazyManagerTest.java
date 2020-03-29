@@ -4,6 +4,7 @@ import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.executor.ApiCallExecutionData;
 import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.LazyExecutionGroup;
 import com.smile.lazy.beans.executor.TestCaseExecutionData;
 import com.smile.lazy.beans.executor.TestScenarioExecutionData;
 import com.smile.lazy.beans.executor.TestSuiteExecutionData;
@@ -26,6 +27,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.Assert;
+
+import java.util.Arrays;
 
 import static com.smile.lazy.suite.sample.apicall.AccountApiCalls.createAccountApiCall;
 import static com.smile.lazy.suite.sample.scenarios.CreateAccountTestScenario.getAccountCreationTestScenario;
@@ -128,6 +131,40 @@ public class LazyManagerTest {
             ApiCallExecutionData results = apiCallManager.executeApiCall(sampleApiCall, stack);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getAssertionExecutionDataList());
+            String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
+            LOGGER.debug(EXECUTION_RESULTS_LOG, resultString);
+
+        } catch (Exception ex) {
+            Assert.fail(SUCCESS_SCENARIOS_SHOULD_NOT_BE_FAILED, ex);
+        }
+    }
+
+    @Test
+    public void executeTestSuiteByApiCallGroupName() {
+        try {
+            LazySuite sampleLazySuite = SampleLazySuite1.populateSampleLazySuite();
+            LazyExecutionGroup lazyExecutionGroup = new LazyExecutionGroup();
+            lazyExecutionGroup.setApiCallExecutionGroupNames(Arrays.asList("BVT"));
+            LazyExecutionData results = lazyManager.executeLazySuite(sampleLazySuite, lazyExecutionGroup);
+            Assert.assertNotNull(results);
+            Assert.assertNotNull(results.getTestSuiteExecutionData());
+            String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
+            LOGGER.debug(EXECUTION_RESULTS_LOG, resultString);
+
+        } catch (Exception ex) {
+            Assert.fail(SUCCESS_SCENARIOS_SHOULD_NOT_BE_FAILED, ex);
+        }
+    }
+
+    @Test
+    public void executeTestSuiteByApiCaseGroupName() {
+        try {
+            LazySuite sampleLazySuite = SampleLazySuite1.populateSampleLazySuite();
+            LazyExecutionGroup lazyExecutionGroup = new LazyExecutionGroup();
+            lazyExecutionGroup.setTestCaseExecutionGroupNames(Arrays.asList("BVT_TC"));
+            LazyExecutionData results = lazyManager.executeLazySuite(sampleLazySuite, lazyExecutionGroup);
+            Assert.assertNotNull(results);
+            Assert.assertNotNull(results.getTestSuiteExecutionData());
             String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
             LOGGER.debug(EXECUTION_RESULTS_LOG, resultString);
 

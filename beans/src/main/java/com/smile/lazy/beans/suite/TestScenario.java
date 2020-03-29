@@ -18,6 +18,7 @@ public class TestScenario implements Serializable {
     private Integer testScenarioId;
     private String testScenarioDisplayId;
     private String testScenarioName;
+    private List<String> assignGroups;
     private String testScenarioDescription;
     private Boolean active;
     private List<TestCase> testCases;
@@ -51,6 +52,14 @@ public class TestScenario implements Serializable {
 
     public void setTestScenarioName(String testScenarioName) {
         this.testScenarioName = testScenarioName;
+    }
+
+    public List<String> getAssignGroups() {
+        return assignGroups;
+    }
+
+    public void setAssignGroups(List<String> assignGroups) {
+        this.assignGroups = assignGroups;
     }
 
     public String getTestScenarioDescription() {
@@ -123,6 +132,7 @@ public class TestScenario implements Serializable {
               .append(testScenarioId, that.testScenarioId)
               .append(testScenarioDisplayId, that.testScenarioDisplayId)
               .append(testScenarioName, that.testScenarioName)
+              .append(assignGroups, that.assignGroups)
               .append(testScenarioDescription, that.testScenarioDescription)
               .append(active, that.active)
               .append(testCases, that.testCases)
@@ -138,6 +148,7 @@ public class TestScenario implements Serializable {
               .append(testScenarioId)
               .append(testScenarioDisplayId)
               .append(testScenarioName)
+              .append(assignGroups)
               .append(testScenarioDescription)
               .append(active)
               .append(testCases)
@@ -153,6 +164,7 @@ public class TestScenario implements Serializable {
               "testScenarioId=" + testScenarioId +
               ", testScenarioDisplayId='" + testScenarioDisplayId + '\'' +
               ", testScenarioName='" + testScenarioName + '\'' +
+              ", assignGroups='" + assignGroups + '\'' +
               ", testScenarioDescription='" + testScenarioDescription + '\'' +
               ", active=" + active +
               ", testCases=" + testCases +

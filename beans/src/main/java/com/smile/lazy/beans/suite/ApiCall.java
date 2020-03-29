@@ -42,6 +42,7 @@ public class ApiCall implements Serializable {
     private Integer apiCallId;
     private String apiCallDisplayId;
     private String apiCallName;
+    private List<String> assignGroups;
     private String apiCallDescription;
     private Boolean active;
     private List<Action> preActions;
@@ -86,6 +87,14 @@ public class ApiCall implements Serializable {
 
     public void setApiCallName(String apiCallName) {
         this.apiCallName = apiCallName;
+    }
+
+    public List<String> getAssignGroups() {
+        return assignGroups;
+    }
+
+    public void setAssignGroups(List<String> assignGroups) {
+        this.assignGroups = assignGroups;
     }
 
     public String getApiCallDescription() {
@@ -373,6 +382,7 @@ public class ApiCall implements Serializable {
               .append(apiCallId, apiCall.apiCallId)
               .append(apiCallDisplayId, apiCall.apiCallDisplayId)
               .append(apiCallName, apiCall.apiCallName)
+              .append(assignGroups, apiCall.assignGroups)
               .append(apiCallDescription, apiCall.apiCallDescription)
               .append(active, apiCall.active)
               .append(preActions, apiCall.preActions)
@@ -396,6 +406,7 @@ public class ApiCall implements Serializable {
               .append(apiCallId)
               .append(apiCallDisplayId)
               .append(apiCallName)
+              .append(assignGroups)
               .append(apiCallDescription)
               .append(active)
               .append(preActions)
@@ -419,6 +430,7 @@ public class ApiCall implements Serializable {
               "apiCallId=" + apiCallId +
               ", apiCallDisplayId='" + apiCallDisplayId + '\'' +
               ", apiCallName='" + apiCallName + '\'' +
+              ", assignGroups='" + assignGroups + '\'' +
               ", apiCallDescription='" + apiCallDescription + '\'' +
               ", active=" + active +
               ", preActions=" + preActions +

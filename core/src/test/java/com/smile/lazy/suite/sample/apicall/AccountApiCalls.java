@@ -9,6 +9,7 @@ import com.smile.lazy.wrapper.Actions;
 import com.smile.lazy.wrapper.Assert;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,7 @@ public class AccountApiCalls {
         apiCall1.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
         apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id", "$['accountId']"));
         apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name", "$['accountName']"));
+        apiCall1.setAssignGroups(Arrays.asList("BVT", "Group2"));
         return apiCall1;
     }
 
@@ -73,6 +75,8 @@ public class AccountApiCalls {
         apiCall1.addAssertionGroup(accountAssertionGroup1("My Account"));
         apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id", "$['accountId']"));
         apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name", "$['accountName']"));
+
+        apiCall1.setAssignGroups(Arrays.asList("BVT"));
         return apiCall1;
     }
 
@@ -99,6 +103,9 @@ public class AccountApiCalls {
         apiCall1.addAssertionGroup(accountAssertionGroup1("My Account"));
         apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id", "$['accountId']"));
         apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name", "$['accountName']"));
+
+        apiCall1.setAssignGroups(Arrays.asList("Group2"));
+
         return apiCall1;
     }
 

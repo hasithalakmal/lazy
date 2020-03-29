@@ -18,6 +18,7 @@ public class TestSuite implements Serializable {
     private Integer testSuiteId;
     private String testSuiteDisplayId;
     private String testSuiteName;
+    private List<String> assignGroups;
     private String testSuiteDescription;
     private Boolean active;
     private List<TestScenario> testScenarios;
@@ -51,6 +52,14 @@ public class TestSuite implements Serializable {
 
     public void setTestSuiteName(String testSuiteName) {
         this.testSuiteName = testSuiteName;
+    }
+
+    public List<String> getAssignGroups() {
+        return assignGroups;
+    }
+
+    public void setAssignGroups(List<String> assignGroups) {
+        this.assignGroups = assignGroups;
     }
 
     public String getTestSuiteDescription() {
@@ -123,6 +132,7 @@ public class TestSuite implements Serializable {
               .append(testSuiteId, testSuite.testSuiteId)
               .append(testSuiteDisplayId, testSuite.testSuiteDisplayId)
               .append(testSuiteName, testSuite.testSuiteName)
+              .append(assignGroups, testSuite.assignGroups)
               .append(testSuiteDescription, testSuite.testSuiteDescription)
               .append(active, testSuite.active)
               .append(testScenarios, testSuite.testScenarios)
@@ -138,6 +148,7 @@ public class TestSuite implements Serializable {
               .append(testSuiteId)
               .append(testSuiteDisplayId)
               .append(testSuiteName)
+              .append(assignGroups)
               .append(testSuiteDescription)
               .append(active)
               .append(testScenarios)
@@ -153,6 +164,7 @@ public class TestSuite implements Serializable {
               "testSuiteId=" + testSuiteId +
               ", testSuiteDisplayId='" + testSuiteDisplayId + '\'' +
               ", testSuiteName='" + testSuiteName + '\'' +
+              ", assignGroups='" + assignGroups + '\'' +
               ", testSuiteDescription='" + testSuiteDescription + '\'' +
               ", active=" + active +
               ", testScenarios=" + testScenarios +

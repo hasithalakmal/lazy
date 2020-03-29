@@ -18,6 +18,7 @@ public class TestCase implements Serializable {
     private Integer testCaseId;
     private String testCaseDisplayId;
     private String testCaseName;
+    private List<String> assignGroups;
     private String testCaseDescription;
     private Boolean active;
     private List<ApiCall> apiCalls;
@@ -51,6 +52,14 @@ public class TestCase implements Serializable {
 
     public void setTestCaseName(String testCaseName) {
         this.testCaseName = testCaseName;
+    }
+
+    public List<String> getAssignGroups() {
+        return assignGroups;
+    }
+
+    public void setAssignGroups(List<String> assignGroups) {
+        this.assignGroups = assignGroups;
     }
 
     public String getTestCaseDescription() {
@@ -123,6 +132,7 @@ public class TestCase implements Serializable {
               .append(testCaseId, testCase.testCaseId)
               .append(testCaseDisplayId, testCase.testCaseDisplayId)
               .append(testCaseName, testCase.testCaseName)
+              .append(assignGroups, testCase.assignGroups)
               .append(testCaseDescription, testCase.testCaseDescription)
               .append(active, testCase.active)
               .append(apiCalls, testCase.apiCalls)
@@ -138,6 +148,7 @@ public class TestCase implements Serializable {
               .append(testCaseId)
               .append(testCaseDisplayId)
               .append(testCaseName)
+              .append(assignGroups)
               .append(testCaseDescription)
               .append(active)
               .append(apiCalls)
@@ -153,6 +164,7 @@ public class TestCase implements Serializable {
               "testCaseId=" + testCaseId +
               ", testCaseDisplayId='" + testCaseDisplayId + '\'' +
               ", testCaseName='" + testCaseName + '\'' +
+              ", assignGroups='" + assignGroups + '\'' +
               ", testCaseDescription='" + testCaseDescription + '\'' +
               ", active=" + active +
               ", apiCalls=" + apiCalls +

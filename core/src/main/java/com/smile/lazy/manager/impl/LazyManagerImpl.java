@@ -4,6 +4,7 @@ import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.LazyExecutionGroup;
 import com.smile.lazy.beans.suite.Global;
 import com.smile.lazy.common.ErrorCodes;
 import com.smile.lazy.exception.LazyCoreException;
@@ -36,7 +37,7 @@ public class LazyManagerImpl extends LazyBaseManager implements LazyManager {
     }
 
     @Override
-    public LazyExecutionData executeLazySuite(LazySuite lazySuite, String testSuiteName) throws LazyException, LazyCoreException {
+    public LazyExecutionData executeLazySuite(LazySuite lazySuite, LazyExecutionGroup lazyExecutionGroup) throws LazyException, LazyCoreException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Ready to execute lazy suite - [{}]", JsonUtil.getJsonStringFromObject(lazySuite));
         }
@@ -74,7 +75,7 @@ public class LazyManagerImpl extends LazyBaseManager implements LazyManager {
 
         LazyExecutionData lazyExecutionData = new LazyExecutionData();
         LOGGER.info("Ready to execute lazy suite - [{}]", lazySuiteName);
-        testSuiteManager.executeTestSuites(lazySuite, lazyExecutionData, new IdDto());
+        testSuiteManager.executeTestSuites(lazySuite, lazyExecutionData, new IdDto(), lazyExecutionGroup);
         LOGGER.info("Executed lazy suite - [{}]", lazySuiteName);
 
         printResultTable(lazyExecutionData);

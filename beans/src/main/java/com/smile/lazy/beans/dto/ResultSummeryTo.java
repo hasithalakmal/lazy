@@ -83,21 +83,23 @@ public class ResultSummeryTo {
         LazyTable lazyTable = withActualResults ?
               new LazyTable(Arrays.asList("Result Id", "API Call Name", "Assertion Name", "Expected Results", "Actual Result", "Execution Status", "Is Pass")) :
               new LazyTable(Arrays.asList("Result Id", "API Call Name", "Assertion Name", "Execution Status", "Is Pass"));
-        for (ResultRecodeTo result : resultRecodeToList) {
-            if (withActualResults) {
-                lazyTable.addRow(Arrays.asList(result.getResultId(),
-                      result.getApiCallName(),
-                      result.getAssertionName(),
-                      result.getExpectedResult(),
-                      result.getActualResult(),
-                      result.getStatus(),
-                      result.getIsPass()));
-            } else {
-                lazyTable.addRow(Arrays.asList(result.getResultId(),
-                      result.getApiCallName(),
-                      result.getAssertionName(),
-                      result.getStatus(),
-                      result.getIsPass()));
+        if (resultRecodeToList != null) {
+            for (ResultRecodeTo result : resultRecodeToList) {
+                if (withActualResults) {
+                    lazyTable.addRow(Arrays.asList(result.getResultId(),
+                          result.getApiCallName(),
+                          result.getAssertionName(),
+                          result.getExpectedResult(),
+                          result.getActualResult(),
+                          result.getStatus(),
+                          result.getIsPass()));
+                } else {
+                    lazyTable.addRow(Arrays.asList(result.getResultId(),
+                          result.getApiCallName(),
+                          result.getAssertionName(),
+                          result.getStatus(),
+                          result.getIsPass()));
+                }
             }
         }
         String formatString = lazyTable.getFormatterString();
@@ -109,26 +111,28 @@ public class ResultSummeryTo {
               String.format(formatString, "Result Id", "API Call Name", "Assertion Name", "Execution Status", "Is Pass");
         table += headersString;
         table += breakerString;
-        for (ResultRecodeTo result : resultRecodeToList) {
-            String rowString = "";
-            if (withActualResults) {
-                String.format(formatString,
-                      result.getResultId(),
-                      result.getApiCallName(),
-                      result.getAssertionName(),
-                      result.getExpectedResult(),
-                      result.getActualResult(),
-                      result.getStatus(),
-                      result.getIsPass());
-            } else {
-                rowString = String.format(formatString,
-                      result.getResultId(),
-                      result.getApiCallName(),
-                      result.getAssertionName(),
-                      result.getStatus(),
-                      result.getIsPass());
+        if (resultRecodeToList != null) {
+            for (ResultRecodeTo result : resultRecodeToList) {
+                String rowString = "";
+                if (withActualResults) {
+                    String.format(formatString,
+                          result.getResultId(),
+                          result.getApiCallName(),
+                          result.getAssertionName(),
+                          result.getExpectedResult(),
+                          result.getActualResult(),
+                          result.getStatus(),
+                          result.getIsPass());
+                } else {
+                    rowString = String.format(formatString,
+                          result.getResultId(),
+                          result.getApiCallName(),
+                          result.getAssertionName(),
+                          result.getStatus(),
+                          result.getIsPass());
+                }
+                table += rowString;
             }
-            table += rowString;
         }
         table += breakerString;
         return table;

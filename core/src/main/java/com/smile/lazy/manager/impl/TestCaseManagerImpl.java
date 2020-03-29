@@ -3,6 +3,7 @@ package com.smile.lazy.manager.impl;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.LazyExecutionGroup;
 import com.smile.lazy.beans.executor.TestCaseExecutionData;
 import com.smile.lazy.beans.executor.TestScenarioExecutionData;
 import com.smile.lazy.beans.executor.TestSuiteExecutionData;
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class TestCaseManagerImpl extends LazyBaseManager implements com.smile.lazy.manager.TestCaseManager {
@@ -38,17 +40,29 @@ public class TestCaseManagerImpl extends LazyBaseManager implements com.smile.la
     @Override
     public void executeTestCases(LazySuite lazySuite, TestScenarioExecutionData testScenarioExecutionData, IdDto idDto, TestScenario testScenario) throws LazyException,
           LazyCoreException {
+        executeTestCases(lazySuite, testScenarioExecutionData, idDto, testScenario);
+    }
+
+    @Override
+    public void executeTestCases(LazySuite lazySuite, TestScenarioExecutionData testScenarioExecutionData, IdDto idDto, TestScenario testScenario, LazyExecutionGroup lazyExecutionGroup) throws LazyException, LazyCoreException {
         LOGGER.debug("Ready to executing all test cases...");
         for (TestCase testCase : testScenario.getTestCases()) {
             validateTestCase(testCase);
             String testCaseName = testCase.getTestCaseName();
+
+            boolean isFoundInAcceptedList = isFoundInAcceptedList(lazyExecutionGroup, testCase);
+
             LOGGER.debug("Preparing to execute test case - [{}]", testCaseName);
             mergeStack(testScenario, testCase, testCaseName);
             Integer testCaseId = populateTestCaseId(idDto, testCase, testCaseName);
 
             LOGGER.info("Executing test case - [{}] - [{}]", testCaseId, testCaseName);
             TestCaseExecutionData testCaseExecutionData = new TestCaseExecutionData(testCaseId, testCaseName);
-            apiCallManager.executeApiCalls(lazySuite, testCaseExecutionData, idDto, testCase);
+            if(isFoundInAcceptedList) {
+                apiCallManager.executeApiCalls(lazySuite, testCaseExecutionData, idDto, testCase);
+            } else {
+                apiCallManager.executeApiCalls(lazySuite, testCaseExecutionData, idDto, testCase, lazyExecutionGroup);
+            }
             LOGGER.info("Executed test case - [{}] - [{}]", testCaseId, testCaseName);
 
             testScenarioExecutionData.getTestCaseExecutionDataList().add(testCaseExecutionData);
@@ -56,6 +70,19 @@ public class TestCaseManagerImpl extends LazyBaseManager implements com.smile.la
             idDto.setTestCaseId(testCaseId + 1);
         }
         LOGGER.info("Executed all test cases...");
+    }
+
+    private boolean isFoundInAcceptedList(LazyExecutionGroup lazyExecutionGroup, TestCase testCase) {
+        boolean isFoundInAcceptedList = false;
+        if (lazyExecutionGroup != null && !CollectionUtils.isEmpty(lazyExecutionGroup.getTestCaseExecutionGroupNames()) && !CollectionUtils.isEmpty(testCase.getAssignGroups())) {
+            for (String acceptedTestSuiteName : lazyExecutionGroup.getTestCaseExecutionGroupNames()) {
+                if (testCase.getAssignGroups().contains(acceptedTestSuiteName)) {
+                    LOGGER.info("Find assigned test case - [{}] to execute", acceptedTestSuiteName);
+                    isFoundInAcceptedList = true;
+                }
+            }
+        }
+        return isFoundInAcceptedList;
     }
 
     @Override

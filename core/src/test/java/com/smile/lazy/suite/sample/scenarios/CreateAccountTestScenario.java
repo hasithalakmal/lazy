@@ -7,14 +7,20 @@ import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.suite.sample.testcase.CreateAccountSuccessTestCase;
 import com.smile.lazy.wrapper.Assert;
 
+import java.util.Arrays;
 import java.util.List;
+
+import static com.smile.lazy.suite.sample.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase;
+import static com.smile.lazy.suite.sample.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase2;
 
 public class CreateAccountTestScenario {
 
     public static TestScenario getAccountCreationTestScenario() throws LazyCoreException {
         TestScenario testScenario1 = new TestScenario("Create Account");
         testScenario1.getStack().addDefaultAssertionGroup(createDefaultAssertionRuleGroup());
-        testScenario1.getTestCases().add(CreateAccountSuccessTestCase.getCreateAccountTestCase());
+        testScenario1.getTestCases().add(getCreateAccountTestCase());
+        testScenario1.getTestCases().add(getCreateAccountTestCase2());
+        testScenario1.setAssignGroups(Arrays.asList("create-accounts"));
         return testScenario1;
     }
 

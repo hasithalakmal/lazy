@@ -2,6 +2,7 @@ package com.smile.lazy.manager;
 
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.executor.LazyExecutionData;
+import com.smile.lazy.beans.executor.LazyExecutionGroup;
 import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.exception.LazyException;
 
@@ -26,5 +27,5 @@ public interface LazyManager {
      * @return
      * @throws LazyException
      */
-    LazyExecutionData executeLazySuite(LazySuite lazySuite, String testSuiteName) throws LazyException, LazyCoreException;
+    LazyExecutionData executeLazySuite(LazySuite lazySuite, LazyExecutionGroup lazyExecutionGroup) throws LazyException, LazyCoreException;
 }

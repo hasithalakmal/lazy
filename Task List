@@ -6,7 +6,7 @@
 6) [DONE] enable/disable assertions
 7) [DONE] Overrite assertions
 8) [DONE] Print results
-9) Get Results CSV and JSON
+9) [DONE] Get Results as JSON
 10) [Not required] Response print flag
 11) [DONE] move code as a library and use it in a separate project
 12) [DONE] Code reformat
@@ -18,3 +18,4 @@
 18) improve log for failed APIs
 19) Group execution
 20) [DONE] Single execution
+21) Execution result HTML
