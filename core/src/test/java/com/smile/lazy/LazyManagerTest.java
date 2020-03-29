@@ -35,10 +35,9 @@ import static com.smile.lazy.utils.SampleDefaultValues.createDefaultValues;
 @SpringBootTest(classes = LazyApplication.class)
 public class LazyManagerTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LazyManagerTest.class);
     public static final String EXECUTION_RESULTS_LOG = "Execution results \n [{}]";
     public static final String SUCCESS_SCENARIOS_SHOULD_NOT_BE_FAILED = "Success scenarios should not be failed";
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(LazyManagerTest.class);
     @Autowired
     private LazyManager lazyManager;
 

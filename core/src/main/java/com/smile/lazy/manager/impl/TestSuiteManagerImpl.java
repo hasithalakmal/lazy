@@ -92,7 +92,7 @@ public class TestSuiteManagerImpl extends LazyBaseManager implements com.smile.l
         testScenarioManager.executeTestScenarios(lazySuite, testSuiteExecutionData, idDto, testSuite);
         LOGGER.info("Executed test suite - [{}] - [{}]", testSuiteId, testSuiteName);
 
-        LazyExecutionData  lazyExecutionData = new LazyExecutionData();
+        LazyExecutionData lazyExecutionData = new LazyExecutionData();
         lazyExecutionData.getTestSuiteExecutionData().add(testSuiteExecutionData);
         printResultTable(lazyExecutionData);
 

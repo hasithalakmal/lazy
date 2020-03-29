@@ -3,18 +3,8 @@ package com.smile.lazy.manager.impl;
 import com.smile.lazy.beans.DefaultValues;
 import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
-import com.smile.lazy.beans.dto.ResultRecodeTo;
-import com.smile.lazy.beans.dto.ResultSummeryTo;
-import com.smile.lazy.beans.enums.HttpMethodEnum;
-import com.smile.lazy.beans.executor.ApiCallExecutionData;
-import com.smile.lazy.beans.executor.AssertionExecutionData;
-import com.smile.lazy.beans.executor.AssertionResult;
 import com.smile.lazy.beans.executor.LazyExecutionData;
-import com.smile.lazy.beans.executor.TestCaseExecutionData;
-import com.smile.lazy.beans.executor.TestScenarioExecutionData;
-import com.smile.lazy.beans.executor.TestSuiteExecutionData;
 import com.smile.lazy.beans.suite.Global;
-import com.smile.lazy.beans.suite.Header;
 import com.smile.lazy.common.ErrorCodes;
 import com.smile.lazy.exception.LazyCoreException;
 import com.smile.lazy.exception.LazyException;
@@ -22,14 +12,12 @@ import com.smile.lazy.manager.LazyManager;
 import com.smile.lazy.manager.TestSuiteManager;
 import com.smile.lazy.manager.handlers.AssertionHandlerImpl;
 import com.smile.lazy.utils.JsonUtil;
-import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 @Service
 public class LazyManagerImpl extends LazyBaseManager implements LazyManager {
@@ -44,7 +32,7 @@ public class LazyManagerImpl extends LazyBaseManager implements LazyManager {
 
     @Override
     public LazyExecutionData executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException {
-       return executeLazySuite(lazySuite, null);
+        return executeLazySuite(lazySuite, null);
     }
 
     @Override
@@ -92,8 +80,6 @@ public class LazyManagerImpl extends LazyBaseManager implements LazyManager {
         printResultTable(lazyExecutionData);
         return lazyExecutionData;
     }
-
-
 
 
 }

@@ -129,7 +129,7 @@ public class ActionHandlerImpl {
     private void defineEnvironmentVariable(LazySuite lazySuite, ActionTypeEnum actionType, VariableDeclarationAction variableDeclarationAction, String variableValue) throws LazyException {
         if (variableDeclarationAction.getActionType() == ActionTypeEnum.SET_GLOBAL_VARIABLE) {
             setGlobalEnvironmentVariable(lazySuite, variableDeclarationAction, variableValue);
-        }  else if (ActionTypeEnum.SET_ENVIRONMENT_VARIABLE == actionType) {
+        } else if (ActionTypeEnum.SET_ENVIRONMENT_VARIABLE == actionType) {
             setEnvironmentVariable(lazySuite, variableDeclarationAction, variableValue);
         } else {
             String error = format("Given action type has not supported for define environment variable [{0}]", actionType);

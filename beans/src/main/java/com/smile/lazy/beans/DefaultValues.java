@@ -2,7 +2,6 @@ package com.smile.lazy.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.smile.lazy.beans.enums.HttpMethodEnum;
 import com.smile.lazy.beans.suite.HeaderGroup;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;

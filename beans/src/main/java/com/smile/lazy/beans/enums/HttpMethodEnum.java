@@ -1,6 +1,6 @@
 package com.smile.lazy.beans.enums;
 
-public enum  HttpMethodEnum {
+public enum HttpMethodEnum {
 
     POST("POST"),
     GET("GET"),

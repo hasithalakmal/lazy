@@ -1,7 +1,6 @@
 package com.smile.lazy.utils;
 
 import com.smile.lazy.beans.DefaultValues;
-import com.smile.lazy.beans.enums.HttpMethodEnum;
 import com.smile.lazy.beans.suite.Header;
 import com.smile.lazy.beans.suite.HeaderGroup;
 
