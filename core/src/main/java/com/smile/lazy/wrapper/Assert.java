@@ -8,6 +8,8 @@ import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import com.smile.lazy.beans.suite.assertions.AssertionValue;
 import com.smile.lazy.beans.suite.assertions.BodyValueAssertion;
 
+import static java.text.MessageFormat.format;
+
 public class Assert {
 
     private Assert() {
@@ -33,7 +35,7 @@ public class Assert {
     }
 
     public static AssertionRule equalBodyValueAssertion(String jsonPath, String value) {
-        return equalBodyValueAssertion("Body value equal assertion", jsonPath, value);
+        return equalBodyValueAssertion(format("Response body value assertion {0} = {1}", jsonPath, value), jsonPath, value);
     }
 
     public static AssertionRule equalBodyValueAssertion(String assertionName, String jsonPath, String value) {
@@ -42,7 +44,7 @@ public class Assert {
     }
 
     public static AssertionRule responseTimeAssertionGreaterThanGivenMilliSeconds(String time) {
-        return responseTimeAssertionGreaterThanGivenMilliSeconds("Response time assertion - milli seconds - less than", time);
+        return responseTimeAssertionGreaterThanGivenMilliSeconds(format("Response time assertion - less than {0}ms", time), time);
     }
 
     public static AssertionRule responseTimeAssertionGreaterThanGivenMilliSeconds(String assertionName, String time) {
@@ -52,7 +54,7 @@ public class Assert {
     }
 
     public static AssertionRule responseCodeAssertion(String code) {
-        return responseCodeAssertion("Response code assertion", code);
+        return responseCodeAssertion(format( "Response code assertion for - [{0}]", code), code);
     }
 
     public static AssertionRule responseCodeAssertion(String assertionName, String code) {

@@ -50,7 +50,8 @@ public class AssertionHandlerImpl {
 
             validateAssertionRule(assertionRule);
 
-            String assertionRuleName = assertionRule.getAssertionRuleName();
+            String assertionRuleName = VariableManipulationUtil.getVariableValue(assertionRule.getAssertionRuleName(), apiCall.getStack());
+            assertionRule.setAssertionRuleName(assertionRuleName);
             LOGGER.debug("Preparing to execute assertion rule - [{}]", assertionRuleName);
 
             if (validateAssertionEnablement(apiCall, assertionRule)) {
@@ -85,7 +86,8 @@ public class AssertionHandlerImpl {
 
                 validateAssertionRule(assertionRule);
 
-                String assertionRuleName = assertionRule.getAssertionRuleName();
+                String assertionRuleName = VariableManipulationUtil.getVariableValue(assertionRule.getAssertionRuleName(), apiCall.getStack());
+                assertionRule.setAssertionRuleName(assertionRuleName);
                 LOGGER.debug("Preparing to execute assertion rule - [{}]", assertionRuleName);
 
                 if (validateAssertionEnablement(apiCall, assertionRule)) {

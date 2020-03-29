@@ -296,6 +296,13 @@ public class ApiCall implements Serializable {
         this.disabledAssertions.add(assertionKey);
     }
 
+    public void enableAssertion(String assertionKey) {
+        if (this.disabledAssertions == null || this.disabledAssertions.isEmpty()) {
+            this.disabledAssertions = new ArrayList<>();
+        }
+        this.disabledAssertions.remove(assertionKey);
+    }
+
     public void setRequestBodyFromJson(String filePath) throws LazyCoreException {
         if (StringUtils.isBlank(filePath)) {
             String error = "File path should not be blank";

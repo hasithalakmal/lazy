@@ -6,8 +6,10 @@ import com.smile.lazy.beans.suite.HeaderGroup;
 import com.smile.lazy.beans.suite.Stack;
 import com.smile.lazy.beans.suite.assertions.AssertionRule;
 import org.apache.commons.lang3.SerializationUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,9 +39,30 @@ public class StackHandler {
             mergedStack.setAttributes(attributes);
         }
 
-        List<AssertionRule> defaultAssertions = childStack.getDefaultAssertions();
-        if (!defaultAssertions.isEmpty()) {
-            mergedStack.setDefaultAssertions(defaultAssertions);
+        List<AssertionRule> childStackDefaultAssertions = childStack.getDefaultAssertions();
+        if (!childStackDefaultAssertions.isEmpty()) {
+            List<AssertionRule> parentDefaultAssertions = parentStack.getDefaultAssertions();
+            List<AssertionRule> mergedAssertions = new ArrayList<>();
+            for(AssertionRule parentAssertionRule: parentDefaultAssertions) {
+                if (StringUtils.isNotBlank(parentAssertionRule.getAssertionRuleKey())) {
+                    boolean isParentOnlyAssertion = true;
+                    for(AssertionRule childAssertionRule: childStackDefaultAssertions) {
+                        if (StringUtils.isNotBlank(childAssertionRule.getAssertionRuleKey())
+                              && childAssertionRule.getAssertionRuleKey().equals(parentAssertionRule.getAssertionRuleKey())) {
+                            isParentOnlyAssertion = false;
+                        }
+                    }
+
+                    if (isParentOnlyAssertion) {
+                        mergedAssertions.add(parentAssertionRule);
+                    }
+                } else {
+                    mergedAssertions.add(parentAssertionRule);
+                }
+            }
+
+            mergedAssertions.addAll(childStackDefaultAssertions);
+            mergedStack.setDefaultAssertions(mergedAssertions);
         }
 
         HeaderGroup headerGroup = childStack.getHeaderGroup();

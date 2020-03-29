@@ -19,13 +19,18 @@ public class CreateAccountTestScenario {
     }
 
     private static AssertionRuleGroup createDefaultAssertionRuleGroup() {
-        AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup(1, "Default create assertion group");
+        AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup(1, "Test scenario assertion group");
         List<AssertionRule> assertionRules = defaultCreateAssertionGroup.getAssertionRules();
         assertionRules.add(Assert.responseTimeAssertionGreaterThanGivenMilliSeconds("2000"));
         AssertionRule responseCodeAssertion = Assert.responseCodeAssertion("201");
         responseCodeAssertion.setAssertionRuleKey("created.http.status.assertion");
         assertionRules.add(responseCodeAssertion);
         assertionRules.add(Assert.responseBodyNotNull());
+
+        //Performance impacted assertion
+        AssertionRule responseTimeAssertion = Assert.responseTimeAssertionGreaterThanGivenMilliSeconds("1000");
+        responseTimeAssertion.setAssertionRuleKey("high.performance.response.time.assertion");
+        assertionRules.add(responseTimeAssertion);
         return defaultCreateAssertionGroup;
     }
 }

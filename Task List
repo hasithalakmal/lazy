@@ -1,20 +1,20 @@
 1) [DONE] Lazy execution detail object
 2) New DSL implementation
 3) Multiple Environment
-4) [done] Assertion implementation
+4) [DONE] Assertion implementation
 5) [DONE] Action Implementation
-6) enable/disable assertions
-7) overrite assertions
-8) [done] Print results
+6) [DONE] enable/disable assertions
+7) [DONE] Overrite assertions
+8) [DONE] Print results
 9) Get Results CSV and JSON
-10) Response print flag
-11) [done] move code as a library and use it in a separate project
-12) [done] Code reformat
-13) Direct API execution
+10) [Not required] Response print flag
+11) [DONE] move code as a library and use it in a separate project
+12) [DONE] Code reformat
+13) [DONE] Direct API execution
 14) Unit test implementation
-15) [done] Request body template
+15) [DONE] Request body template
 16) Auto test value generator
 17) [DEV]enable/disable assertions
 18) improve log for failed APIs
 19) Group execution
-20) Single execution
+20) [DONE] Single execution
