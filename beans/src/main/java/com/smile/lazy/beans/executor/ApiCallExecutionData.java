@@ -32,6 +32,7 @@ public class ApiCallExecutionData {
     private URI url;
     private LazyApiCallResponse response;
     private List<AssertionExecutionData> assertionExecutionDataList;
+    private Exception exception;
 
     public Integer getApiCallId() {
         return apiCallId;
@@ -164,6 +165,14 @@ public class ApiCallExecutionData {
         this.assertionExecutionDataList = assertionExecutionDataList;
     }
 
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -189,6 +198,7 @@ public class ApiCallExecutionData {
               .append(url, apiCall.url)
               .append(response, apiCall.response)
               .append(assertionExecutionDataList, apiCall.assertionExecutionDataList)
+              .append(exception, apiCall.exception)
               .isEquals();
     }
 
@@ -211,6 +221,7 @@ public class ApiCallExecutionData {
               .append(url)
               .append(response)
               .append(assertionExecutionDataList)
+              .append(exception)
               .toHashCode();
     }
 
@@ -233,6 +244,7 @@ public class ApiCallExecutionData {
               ", url='" + url + '\'' +
               ", response=" + response +
               ", assertionExecutionDataList=" + assertionExecutionDataList +
+              ", exception=" + exception +
               '}';
     }
 }

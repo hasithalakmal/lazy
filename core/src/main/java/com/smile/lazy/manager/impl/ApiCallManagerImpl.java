@@ -90,6 +90,7 @@ public class ApiCallManagerImpl extends LazyBaseManager implements com.smile.laz
                 executePostActions(lazySuite, apiCall, apiCallName, apiCallId, response);
             } catch (Exception ex) {
                 LOGGER.warn("API call execution failed since skipping the assertion execution");
+                apiCallHandler.printExecutionDataInError(apiCallExecutionData, ex);
                 executeAssertions(idDto, apiCall, null, apiCallExecutionData);
                 executePostActionsOnFailed(lazySuite, apiCall, apiCallName, apiCallId);
             }
