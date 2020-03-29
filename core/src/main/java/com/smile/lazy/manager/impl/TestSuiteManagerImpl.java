@@ -4,6 +4,8 @@ import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.executor.LazyExecutionData;
 import com.smile.lazy.beans.executor.TestSuiteExecutionData;
+import com.smile.lazy.beans.suite.Global;
+import com.smile.lazy.beans.suite.Stack;
 import com.smile.lazy.beans.suite.TestSuite;
 import com.smile.lazy.common.ErrorCodes;
 import com.smile.lazy.exception.LazyCoreException;
@@ -19,7 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TestSuiteManagerImpl implements com.smile.lazy.manager.TestSuiteManager {
+public class TestSuiteManagerImpl extends LazyBaseManager implements com.smile.lazy.manager.TestSuiteManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestSuiteManagerImpl.class);
 
@@ -31,10 +33,20 @@ public class TestSuiteManagerImpl implements com.smile.lazy.manager.TestSuiteMan
 
     @Override
     public void executeTestSuites(LazySuite lazySuite, LazyExecutionData lazyExecutionData, IdDto idDto) throws LazyException, LazyCoreException {
+        executeTestSuites(lazySuite, lazyExecutionData, idDto, null);
+    }
+
+    @Override
+    public void executeTestSuites(LazySuite lazySuite, LazyExecutionData lazyExecutionData, IdDto idDto, String providedTestSuiteName) throws LazyException, LazyCoreException {
         LOGGER.debug("Ready to executing all test suites of lazy suite [{}]...", lazySuite.getLazySuiteName());
         for (TestSuite testSuite : lazySuite.getTestSuites()) {
             validateTestSuite(testSuite);
             String testSuiteName = testSuite.getTestSuiteName();
+
+            if (providedTestSuiteName != null && !testSuiteName.equals(providedTestSuiteName)) {
+                continue;
+            }
+
             LOGGER.debug("Preparing to execute test suite - [{}]", testSuiteName);
             mergeStack(lazySuite, testSuite, testSuiteName);
             Integer testSuiteId = populateTestSuiteId(idDto, testSuite, testSuiteName);
@@ -50,6 +62,43 @@ public class TestSuiteManagerImpl implements com.smile.lazy.manager.TestSuiteMan
         LOGGER.debug("Executed all test suites...");
     }
 
+    @Override
+    public TestSuiteExecutionData executeTestSuite(TestSuite testSuite, Stack stack) throws LazyCoreException, LazyException {
+
+        validateTestSuite(testSuite);
+        String testSuiteName = testSuite.getTestSuiteName();
+
+        LOGGER.debug("Preparing to execute test suite - [{}]", testSuiteName);
+
+        if (stack == null) {
+            String error = "Test suite stack should not be null";
+            LOGGER.error(error);
+            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_TEST_SUITE, error);
+        }
+        validateDefaultValues(stack.getDefaultValues());
+
+        LazySuite lazySuite = new LazySuite("Default Lazy suite", stack);
+        lazySuite.setGlobal(new Global());
+        lazySuite.setStack(stack);
+        lazySuite.getTestSuites().add(testSuite);
+        mergeStack(lazySuite, testSuite, testSuiteName);
+        LOGGER.debug("Populated lazy suite to execute test suite - [{}]", testSuiteName);
+
+        IdDto idDto = new IdDto();
+        Integer testSuiteId = populateTestSuiteId(idDto, testSuite, testSuiteName);
+
+        LOGGER.info("Ready to execute test suite - [{}] - [{}]", testSuiteId, testSuiteName);
+        TestSuiteExecutionData testSuiteExecutionData = new TestSuiteExecutionData(testSuiteId, testSuiteName);
+        testScenarioManager.executeTestScenarios(lazySuite, testSuiteExecutionData, idDto, testSuite);
+        LOGGER.info("Executed test suite - [{}] - [{}]", testSuiteId, testSuiteName);
+
+        LazyExecutionData  lazyExecutionData = new LazyExecutionData();
+        lazyExecutionData.getTestSuiteExecutionData().add(testSuiteExecutionData);
+        printResultTable(lazyExecutionData);
+
+        return testSuiteExecutionData;
+    }
+
     private void validateTestSuite(TestSuite testSuite) throws LazyCoreException, LazyException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Ready to execute test suite - [{}]", JsonUtil.getJsonStringFromObject(testSuite));
@@ -58,13 +107,13 @@ public class TestSuiteManagerImpl implements com.smile.lazy.manager.TestSuiteMan
         if (testSuite == null) {
             String error = "Test suite should not be null";
             LOGGER.error(error);
-            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
+            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_TEST_SUITE, error);
         }
 
         if (StringUtils.isBlank(testSuite.getTestSuiteName())) {
             String error = "Test suite name should not be empty";
             LOGGER.error(error);
-            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
+            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_TEST_SUITE, error);
         }
     }
 
@@ -77,16 +126,5 @@ public class TestSuiteManagerImpl implements com.smile.lazy.manager.TestSuiteMan
             }
         }
         return testSuiteId;
-    }
-
-    private void mergeStack(LazySuite lazySuite, TestSuite testSuite, String testSuiteName) throws LazyCoreException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Merging two stacks for [{}] test suite : parent stack [{}] - child stack [{}]", testSuiteName,
-                  JsonUtil.getJsonStringFromObject(lazySuite.getStack()), JsonUtil.getJsonStringFromObject(testSuite.getStack()));
-        }
-        testSuite.setStack(stackManager.mergeTwoStacks(lazySuite.getStack(), testSuite.getStack()));
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Merged stacks on test suite level for [{}] : merged [{}]", testSuiteName, JsonUtil.getJsonStringFromObject(testSuite.getStack()));
-        }
     }
 }

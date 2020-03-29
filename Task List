@@ -2,7 +2,7 @@
 2) New DSL implementation
 3) Multiple Environment
 4) [done] Assertion implementation
-5) Action Implementation
+5) [DONE] Action Implementation
 6) enable/disable assertions
 7) overrite assertions
 8) [done] Print results
@@ -16,3 +16,5 @@
 16) Auto test value generator
 17) [DEV]enable/disable assertions
 18) improve log for failed APIs
+19) Group execution
+20) Single execution

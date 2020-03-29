@@ -12,7 +12,7 @@ import java.util.List;
 public class CreateAccountTestScenario {
 
     public static TestScenario getAccountCreationTestScenario() throws LazyCoreException {
-        TestScenario testScenario1 = new TestScenario("Smile-Test-Scenario-1", "Create Account");
+        TestScenario testScenario1 = new TestScenario( "Create Account");
         testScenario1.getStack().addDefaultAssertionGroup(createDefaultAssertionRuleGroup());
         testScenario1.getTestCases().add(CreateAccountSuccessTestCase.getCreateAccountTestCase());
         return testScenario1;

@@ -25,8 +25,7 @@ public class TestScenario implements Serializable {
     private List<Action> postActions;
     private Stack stack;
 
-    public TestScenario(String testScenarioDisplayId, String testScenarioName) {
-        this.testScenarioDisplayId = testScenarioDisplayId;
+    public TestScenario(String testScenarioName) {
         this.testScenarioName = testScenarioName;
     }
 

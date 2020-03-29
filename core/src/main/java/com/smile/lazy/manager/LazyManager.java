@@ -18,4 +18,13 @@ public interface LazyManager {
      * @throws LazyException
      */
     LazyExecutionData executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException;
+
+    /**
+     * The lazy manger method to execute defined lazy suite
+     *
+     * @param lazySuite
+     * @return
+     * @throws LazyException
+     */
+    LazyExecutionData executeLazySuite(LazySuite lazySuite, String testSuiteName) throws LazyException, LazyCoreException;
 }

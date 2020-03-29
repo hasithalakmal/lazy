@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 @Service
-public class LazyManagerImpl implements LazyManager {
+public class LazyManagerImpl extends LazyBaseManager implements LazyManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LazyManagerImpl.class);
 
@@ -44,7 +44,11 @@ public class LazyManagerImpl implements LazyManager {
 
     @Override
     public LazyExecutionData executeLazySuite(LazySuite lazySuite) throws LazyException, LazyCoreException {
+       return executeLazySuite(lazySuite, null);
+    }
 
+    @Override
+    public LazyExecutionData executeLazySuite(LazySuite lazySuite, String testSuiteName) throws LazyException, LazyCoreException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Ready to execute lazy suite - [{}]", JsonUtil.getJsonStringFromObject(lazySuite));
         }
@@ -89,77 +93,7 @@ public class LazyManagerImpl implements LazyManager {
         return lazyExecutionData;
     }
 
-    private void printResultTable(LazyExecutionData lazyExecutionData) throws LazyException {
-        ResultSummeryTo assertionResultTo = getResultSummery(lazyExecutionData);
-        try {
-            String table = assertionResultTo.prettyPrintString();
-            LOGGER.info(table);
-        } catch (LazyCoreException e) {
-            String error = "Invalid results table generated";
-            LOGGER.error(error);
-            throw new LazyException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCodes.INVALID_TABLE, error);
-        }
-    }
 
-    private ResultSummeryTo getResultSummery(LazyExecutionData lazyExecutionData) {
-        ResultSummeryTo resultSummeryTo = new ResultSummeryTo();
-        for (TestSuiteExecutionData testSuiteExecutionData : lazyExecutionData.getTestSuiteExecutionData()) {
-            for (TestScenarioExecutionData testScenarioExecutionData : testSuiteExecutionData.getTestScenarioExecutionData()) {
-                for (TestCaseExecutionData testCaseExecutionData : testScenarioExecutionData.getTestCaseExecutionDataList()) {
-                    for (ApiCallExecutionData apiCallExecutionData : testCaseExecutionData.getApiCallExecutionDataList()) {
-                        for (AssertionExecutionData assertionExecutionData : apiCallExecutionData.getAssertionExecutionDataList()) {
-                            AssertionResult assertionResult = assertionExecutionData.getAssertionResult();
-                            ResultRecodeTo resultRecodeTo = new ResultRecodeTo();
-                            resultRecodeTo.setResultId(Integer.toString(assertionResult.getResultId()));
-                            resultRecodeTo.setApiCallName(apiCallExecutionData.getApiCallName());
-                            resultRecodeTo.setAssertionName(assertionResult.getAssertionRule().getAssertionRuleName());
-                            resultRecodeTo.setActualResult(assertionResult.getActualValue());
-                            resultRecodeTo.setExpectedResult(assertionResult.getAssertionRule().getAssertionValue() == null ? null :
-                                  assertionResult.getAssertionRule().getAssertionValue().getExpectedValue1());
-                            resultRecodeTo.setStatus(assertionResult.getAssertionStatus());
-                            resultRecodeTo.setIsPass(assertionResult.getPass().toString());
-                            resultSummeryTo.getResultRecodeToList().add(resultRecodeTo);
-                        }
-                    }
-                }
-            }
-        }
-        return resultSummeryTo;
-    }
-
-    private void validateDefaultValues(DefaultValues defaultValues) throws LazyException {
-        if (defaultValues == null) {
-            String error = "Lazy suite default values should not be null";
-            LOGGER.error(error);
-            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
-        }
-
-        if (StringUtils.isBlank(defaultValues.getProtocol())
-              || StringUtils.isBlank(defaultValues.getHostName())
-              || StringUtils.isBlank(defaultValues.getContextPath())
-              || StringUtils.isBlank(defaultValues.getHttpMethod())
-              || defaultValues.getPort() == null
-              || defaultValues.getHeaderGroup() == null
-              || CollectionUtils.isEmpty(defaultValues.getHeaderGroup().getHeaders())) {
-            String error = "Invalid default values found";
-            LOGGER.error(error);
-            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
-        }
-
-        if (!EnumUtils.isValidEnum(HttpMethodEnum.class, defaultValues.getHttpMethod())) {
-            String error = "Invalid http method values found";
-            LOGGER.error(error);
-            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
-        }
-
-        for (Header header : defaultValues.getHeaderGroup().getHeaders()) {
-            if (header == null || StringUtils.isBlank(header.getKey()) || StringUtils.isBlank(header.getValue())) {
-                String error = "Invalid default header values found";
-                LOGGER.error(error);
-                throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_LAZY_SUITE, error);
-            }
-        }
-    }
 
 
 }

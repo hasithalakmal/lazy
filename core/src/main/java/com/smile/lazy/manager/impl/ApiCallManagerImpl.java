@@ -4,10 +4,17 @@ import com.smile.lazy.beans.LazySuite;
 import com.smile.lazy.beans.dto.IdDto;
 import com.smile.lazy.beans.environment.EnvironmentVariable;
 import com.smile.lazy.beans.executor.ApiCallExecutionData;
+import com.smile.lazy.beans.executor.LazyExecutionData;
 import com.smile.lazy.beans.executor.TestCaseExecutionData;
+import com.smile.lazy.beans.executor.TestScenarioExecutionData;
+import com.smile.lazy.beans.executor.TestSuiteExecutionData;
 import com.smile.lazy.beans.response.LazyApiCallResponse;
 import com.smile.lazy.beans.suite.ApiCall;
+import com.smile.lazy.beans.suite.Global;
+import com.smile.lazy.beans.suite.Stack;
 import com.smile.lazy.beans.suite.TestCase;
+import com.smile.lazy.beans.suite.TestScenario;
+import com.smile.lazy.beans.suite.TestSuite;
 import com.smile.lazy.beans.suite.actions.Action;
 import com.smile.lazy.common.ErrorCodes;
 import com.smile.lazy.exception.LazyCoreException;
@@ -28,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ApiCallManagerImpl implements com.smile.lazy.manager.ApiCallManager {
+public class ApiCallManagerImpl extends LazyBaseManager implements com.smile.lazy.manager.ApiCallManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiCallManagerImpl.class);
     @Autowired
@@ -45,7 +52,7 @@ public class ApiCallManagerImpl implements com.smile.lazy.manager.ApiCallManager
           LazyCoreException {
         LOGGER.debug("Ready to executing all api calls...");
         for (ApiCall apiCall : testCase.getApiCalls()) {
-            validateApiCall(testCase, apiCall);
+            validateApiCall(apiCall);
             String apiCallName = apiCall.getApiCallName();
             LOGGER.debug("Preparing to execute api call - [{}]", apiCallName);
             mergeStack(testCase, apiCall, apiCallName);
@@ -77,6 +84,80 @@ public class ApiCallManagerImpl implements com.smile.lazy.manager.ApiCallManager
             idDto.setApiCallId(apiCallId + 1);
         }
         LOGGER.debug("Executed all api cases...");
+    }
+
+    @Override
+    public ApiCallExecutionData executeApiCall(ApiCall apiCall, Stack stack) throws LazyCoreException, LazyException {
+        validateApiCall(apiCall);
+        String apiCallName = apiCall.getApiCallName();
+        LOGGER.debug("Preparing to execute api call - [{}]", apiCallName);
+
+        if (stack == null) {
+            String error = "Test case stack should not be null";
+            LOGGER.error(error);
+            throw new LazyException(HttpStatus.BAD_REQUEST, ErrorCodes.INVALID_TEST_SUITE, error);
+        }
+        validateDefaultValues(stack.getDefaultValues());
+
+        TestCase testCase = new TestCase("Default test case");
+        testCase.setStack(stack);
+        testCase.getApiCalls().add(apiCall);
+
+        TestScenario testScenario = new TestScenario("Default test scenario");
+        testScenario.setStack(stack);
+        testScenario.getTestCases().add(testCase);
+
+        TestSuite testSuite = new TestSuite("Default test suite");
+        testSuite.setStack(stack);
+        testSuite.getTestScenarios().add(testScenario);
+
+        LazySuite lazySuite = new LazySuite("Default Lazy suite", stack);
+        lazySuite.setGlobal(new Global());
+        lazySuite.setStack(stack);
+        lazySuite.getTestSuites().add(testSuite);
+
+        mergeStack(lazySuite, testSuite, testSuite.getTestSuiteName());
+        mergeStack(testSuite, testScenario, testScenario.getTestScenarioName());
+        mergeStack(testScenario, testCase, testCase.getTestCaseName());
+        mergeStack(testCase, apiCall, apiCallName);
+        LOGGER.debug("Populated lazy suite to execute api call - [{}]", apiCallName);
+
+        IdDto idDto = new IdDto();
+        Integer apiCallId = populateApiCallId(idDto, apiCall, apiCallName);
+
+        executePreActions(lazySuite, apiCall, apiCallName, apiCallId);
+
+        //TODO - re-structure global and stack
+        Map<String, EnvironmentVariable> globalEnvironment = lazySuite.getGlobal().getGlobalEnvironment();
+        apiCall.getStack().setGlobalEnvironment(globalEnvironment);
+
+        ApiCallExecutionData apiCallExecutionData = null;
+        try {
+            LOGGER.info("Executing api call - [{}] - [{}]", apiCallId, apiCallName);
+            apiCallExecutionData = new ApiCallExecutionData();
+            LazyApiCallResponse response = apiCallHandler.executeApiCall(apiCall, apiCallExecutionData);
+            apiCallHandler.printExecutionData(apiCallExecutionData);
+            LOGGER.info("Executed api call - [{}] - [{}]", apiCallId, apiCallName);
+
+            executeAssertions(idDto, apiCall, response, apiCallExecutionData);
+            executePostActions(lazySuite, apiCall, apiCallName, apiCallId, response);
+        } catch (Exception ex) {
+            LOGGER.warn("API call execution failed since skipping the assertion execution");
+            executeAssertions(idDto, apiCall, null, apiCallExecutionData);
+            executePostActionsOnFailed(lazySuite, apiCall, apiCallName, apiCallId);
+        }
+
+        TestCaseExecutionData testCaseExecutionData = new TestCaseExecutionData(idDto.getTestCaseId(), testCase.getTestCaseName());
+        testCaseExecutionData.getApiCallExecutionDataList().add(apiCallExecutionData);
+        TestScenarioExecutionData testScenarioExecutionData = new TestScenarioExecutionData(idDto.getTestScenarioId(), testScenario.getTestScenarioName());
+        testScenarioExecutionData.getTestCaseExecutionDataList().add(testCaseExecutionData);
+        TestSuiteExecutionData testSuiteExecutionData = new TestSuiteExecutionData(idDto.getTestSuiteId(), testSuite.getTestSuiteName());
+        testSuiteExecutionData.getTestScenarioExecutionData().add(testScenarioExecutionData);
+        LazyExecutionData lazyExecutionData = new LazyExecutionData();
+        lazyExecutionData.getTestSuiteExecutionData().add(testSuiteExecutionData);
+        printResultTable(lazyExecutionData);
+
+        return apiCallExecutionData;
     }
 
     private void executeAssertions(IdDto idDto, ApiCall apiCall, LazyApiCallResponse response, ApiCallExecutionData apiCallExecutionData) throws LazyException, LazyCoreException {
@@ -136,20 +217,9 @@ public class ApiCallManagerImpl implements com.smile.lazy.manager.ApiCallManager
         return apiCallId;
     }
 
-    private void mergeStack(TestCase testCase, ApiCall apiCall, String apiCallName) throws LazyCoreException {
+    private void validateApiCall(ApiCall apiCall) throws LazyCoreException, LazyException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Merging two stacks for [{}] api call: parent stack [{}] - child stack [{}]", apiCallName,
-                  JsonUtil.getJsonStringFromObject(testCase.getStack()), JsonUtil.getJsonStringFromObject(apiCall.getStack()));
-        }
-        apiCall.setStack(stackManager.mergeTwoStacks(testCase.getStack(), apiCall.getStack()));
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Merged stacks on test case level for [{}] : merged [{}]", apiCallName, JsonUtil.getJsonStringFromObject(apiCall.getStack()));
-        }
-    }
-
-    private void validateApiCall(TestCase testCase, ApiCall apiCall) throws LazyCoreException, LazyException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Ready to execute api call - [{}]", JsonUtil.getJsonStringFromObject(testCase));
+            LOGGER.debug("Ready to execute api call - [{}]", JsonUtil.getJsonStringFromObject(apiCall));
         }
 
         if (apiCall == null) {

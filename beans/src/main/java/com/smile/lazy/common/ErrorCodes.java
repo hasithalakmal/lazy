@@ -12,6 +12,7 @@ public class ErrorCodes {
 
     //Test suite errors
     public static final String INVALID_LAZY_SUITE = "Lazy-30000";
+    public static final String INVALID_TEST_SUITE = "Lazy-35000";
 
     public static final String INVALID_LAZY_TEST_SCENARIO = "Lazy-40000";
 
