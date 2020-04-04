@@ -22,7 +22,7 @@ This is a main feature that Lazy framework has facilitated. We can create a Lazy
     that API call. Like wise it executes top to bottom manner. 
 The impotency of the above hierarchical manner is we can define anything at any level and it will apply for it's sub tree. Please refer the
  following diagram for the explanation.
- ![](docs/images/sample.jpeg)  
+ <img src="docs/images/sample.jpeg" width="100%"  alt="Hierarchy"/>
  
 
 # Up coming features
