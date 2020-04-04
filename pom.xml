@@ -2,23 +2,27 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <description>API Management framework</description>
+    <groupId>com.smile</groupId>
     <artifactId>lazy</artifactId>
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
-                <groupId>org.apache.maven.plugins</groupId>
-            </plugin>
-            <plugin>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <groupId>org.springframework.boot</groupId>
-            </plugin>
-        </plugins>
-    </build>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <name>lazy</name>
+    <packaging>pom</packaging>
+
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <relativePath/>
+        <version>2.2.2.RELEASE</version>
+    </parent>
+
+    <modules>
+        <module>beans</module>
+        <module>core</module>
+    </modules>
+
     <dependencies>
         <dependency>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -49,22 +53,22 @@
             <groupId>com.jayway.jsonpath</groupId>
             <version>2.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.23</version>
+        </dependency>
     </dependencies>
-    <description>API Management framework</description>
-    <groupId>com.smile24</groupId>
-    <modelVersion>4.0.0</modelVersion>
-    <name>lazy</name>
-
-    <parent>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <groupId>org.springframework.boot</groupId>
-        <relativePath/>
-        <version>2.2.2.RELEASE</version> <!-- lookup parent from repository -->
-    </parent>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
-    <version>0.0.1-SNAPSHOT</version>
 
 </project>
