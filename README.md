@@ -77,7 +77,7 @@ You can configure lot of things with this hierarchical approach. Please refer to
 7. Highly extendable with meta-model based design
 
 
-#How you can start with Lazy?
+# How you can start with Lazy?
 It's only two steps
 1. You have to start spring-boot application with java11 or above. 
 2. Then add lazy dependency.
