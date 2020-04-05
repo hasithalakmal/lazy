@@ -11,7 +11,7 @@ public class SampleDefaultValues {
     }
 
     public static DefaultValues createDefaultValues() {
-        return new com.smile24es.lazy.beans.DefaultValues("http", "localhost", 8080, "account-api", createDefaultHeaderGroup(), "GET");
+        return new com.smile24es.lazy.beans.DefaultValues("http", "localhost", 8080, "lazy-api", createDefaultHeaderGroup(), "GET");
     }
 
     public static HeaderGroup createDefaultHeaderGroup() {

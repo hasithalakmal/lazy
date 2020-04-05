@@ -13,6 +13,8 @@ Lazy is a tool based on meta-modeling to implement API testing. In version 1.0.0
 8. Powerful environment and global variable defining
 9. Enable/disable/override assertion executions within the hierarchical approach
 10. Comprehensive result analysis
+11. Execute any sub tree of the lazy tree. In other words, you can execute test suite, test scenario, test cases, api call independently 
+12. Test case grouping and group execution
 
 # Hierarchical approach
 This is a main feature that Lazy framework has facilitated. We can create a Lazy suite and we can add multiple test suites to the lazy suite. Then
@@ -39,19 +41,37 @@ Let's assume we need to implement a test scenario for assign student to class. T
  we have to use different context path to create class. On that scenario can we define student-api context path on the student API test suite level
  ? Yes. **Lazy provide facility to override values at any point.** Then you can change create class API call context path on the API call level. 
  
+To provide above functionality lazy framework facilitate something called **stack**. If you configure a value on stack on some level that value will be
+ used only to it's sub tree. That value will be removed after complete the execution of that sub tree. Above mentioned values should be configured
+  on that stack.
+ 
 ## What can define using hierarchical approach
+You can configure lot of things with this hierarchical approach. Please refer to the following list to get idea about that. Also please note that
+ bold values are provide as default values of those attributes.
+1. Protocol - (**http**/Https)
+2. Host - (**localhost**/smile24es.com)
+3. Port - (**8080**)
+4. Context-path - (**lazy-api**/student-api)
+5. HTTP method - (**GET**/POST)
+6. Header group - (**"accept:application/json"/"content-type:application/json"**)
+7. Environment variables as key value pare - (username:lazy-user)
+8. 
+
+# Ready to use these Features
+1. Lazy Language - DSL implementation to improve user friendliness
+2. Web UI to create your test suite visually. 
+3. Improve test scenario coverage by auto generated test values  
 
 
-# Up coming features
-1. Architectural documentation
-1. Application skeleton modeler
-1. Swagger annotation modeler
-1. Unit test generation framework
-
-# Standards
+# Why you should trust us?
 1. Using cutting edge technologies
-1. Java Doc
-1. Modularized implementation with suitable design patterns
-1. Well designed extensible and pluggable architecture 
-1. Unit tests
-1. Standard static code analysis
+2. Comprehensive Java Documentation
+3. Modularized implementation with suitable design patterns
+4. Well designed extensible and pluggable architecture 
+5. More than 80% unit test coverage
+6. Standardized with static code analysis
+7. Highly extendable with meta-model based design
+
+
+#How you can start with Lazy?
+
