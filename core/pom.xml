@@ -14,7 +14,7 @@
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>lazy-beans</artifactId>
-            <version> 0.0.3-SNAPSHOT</version>
+            <version> 0.0.3</version>
         </dependency>
     </dependencies>
 
@@ -109,7 +109,7 @@
         <connection>scm:git:git://github.com/hasithalakmal/lazy.git</connection>
         <developerConnection>scm:git:git@github.com:hasithalakmal/lazy.git</developerConnection>
         <url>https://github.com/hasithalakmal/lazy</url>
-        <tag>lazy-0.0.1</tag>
+        <tag>lazy-0.0.3</tag>
     </scm>
 
     <profiles>
