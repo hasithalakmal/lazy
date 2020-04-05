@@ -89,3 +89,15 @@ It's only two steps
     <version>{version-number}</version>
 </dependency>
 ```
+
+# How to define a lazy suite?
+```$xslt
+public static LazySuite populateSampleLazySuite() throws LazyCoreException {
+        DefaultValues defaultValues = createDefaultValues();
+        defaultValues.setContextPath("account-api");
+        Stack lazySuiteStack = new Stack(defaultValues);
+        LazySuite lazySuite = new LazySuite("Sample lazy suite 1", lazySuiteStack);
+        lazySuite.getTestSuites().add(AccountApiTestSuite.getAccountApiTestSuite());
+        return lazySuite;
+    }
+```
