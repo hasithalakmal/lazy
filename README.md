@@ -76,6 +76,7 @@ You can configure lot of things with this hierarchical approach. Please refer to
 6. Standardized with static code analysis
 7. Highly extendable with meta-model based design
 
+<Hr>
 
 # How you can start with Lazy?
 It's only two steps
