@@ -161,7 +161,7 @@
         <developerConnection>scm:git:git@github.com:hasithalakmal/lazy.git</developerConnection>
         <url>https://github.com/hasithalakmal/lazy</url>
         <tag>HEAD</tag>
-      <tag>com.smile24es:lazy:pom:0.0.12-SNAPSHOT-v0.0.12</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <profiles>
