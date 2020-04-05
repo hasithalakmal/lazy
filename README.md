@@ -82,7 +82,7 @@ You can configure lot of things with this hierarchical approach. Please refer to
 It's only two steps
 1. You have to start spring-boot application with java11 or above. 
 2. Then add lazy dependency.
-```
+```$xslt
 <dependency>
     <groupId>com.smile24es</groupId>
     <artifactId>lazy-core</artifactId>
