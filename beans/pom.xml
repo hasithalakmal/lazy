@@ -3,11 +3,11 @@
     <parent>
         <artifactId>lazy</artifactId>
         <groupId>com.smile24es</groupId>
-        <version>0.0.14-SNAPSHOT</version>
+        <version>0.0.14</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>lazy-beans</artifactId>
-    <version> 0.0.14-SNAPSHOT</version>
+    <version> 0.0.14</version>
     <packaging>jar</packaging>
     <name>Lazy API - Beans</name>
 
@@ -100,7 +100,7 @@
         <connection>scm:git:git://github.com/hasithalakmal/lazy.git</connection>
         <developerConnection>scm:git:git@github.com:hasithalakmal/lazy.git</developerConnection>
         <url>https://github.com/hasithalakmal/lazy</url>
-        <tag>lazy-beans-0.0.14</tag>
+        <tag>lazy-0.0.14</tag>
     </scm>
 
     <profiles>
