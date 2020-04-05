@@ -4,7 +4,7 @@
     <description>API Management framework</description>
     <groupId>com.smile24es</groupId>
     <artifactId>lazy</artifactId>
-    <version>0.0.8</version>
+    <version>0.0.8-SNAPSHOTS</version>
 
     <name>lazy</name>
     <packaging>pom</packaging>
