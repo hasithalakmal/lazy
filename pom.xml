@@ -4,7 +4,7 @@
     <description>API Management framework</description>
     <groupId>com.smile24es</groupId>
     <artifactId>lazy</artifactId>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>0.0.7</version>
 
     <name>lazy</name>
     <packaging>pom</packaging>
@@ -158,7 +158,7 @@
         <connection>scm:git:git://github.com/hasithalakmal/lazy.git</connection>
         <developerConnection>scm:git:git@github.com:hasithalakmal/lazy.git</developerConnection>
         <url>https://github.com/hasithalakmal/lazy</url>
-        <tag>lazy-0.0.4</tag>
+        <tag>lazy-0.0.7</tag>
     </scm>
 
     <profiles>
