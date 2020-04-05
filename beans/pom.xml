@@ -100,7 +100,7 @@
         <connection>scm:git:git://github.com/hasithalakmal/lazy.git</connection>
         <developerConnection>scm:git:git@github.com:hasithalakmal/lazy.git</developerConnection>
         <url>https://github.com/hasithalakmal/lazy</url>
-        <tag>HEAD</tag>
+        <tag>lazy-beans-0.0.14</tag>
     </scm>
 
     <profiles>
