@@ -38,6 +38,9 @@ Let's assume all APIs are working with HTTPS and host is smile24es.com. Then we 
 Let's assume we need to implement a test scenario for assign student to class. Then inside the student API we need to create a class as well. Then
  we have to use different context path to create class. On that scenario can we define student-api context path on the student API test suite level
  ? Yes. **Lazy provide facility to override values at any point.** Then you can change create class API call context path on the API call level. 
+ 
+## What can define using hierarchical approach
+
 
 # Up coming features
 1. Architectural documentation
