@@ -1,4 +1,4 @@
-package com.smile24es.lazy.utils;
+package com.smile24es.lazy.common;
 
 import com.smile24es.lazy.beans.DefaultValues;
 import com.smile24es.lazy.beans.suite.Header;

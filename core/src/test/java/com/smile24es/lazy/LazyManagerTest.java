@@ -33,7 +33,7 @@ import java.util.Arrays;
 import static com.smile24es.lazy.suite.sample.apicall.AccountApiCalls.createAccountApiCall;
 import static com.smile24es.lazy.suite.sample.scenarios.CreateAccountTestScenario.getAccountCreationTestScenario;
 import static com.smile24es.lazy.suite.sample.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase;
-import static com.smile24es.lazy.utils.SampleDefaultValues.createDefaultValues;
+import static com.smile24es.lazy.common.SampleDefaultValues.createDefaultValues;
 
 @SpringBootTest(classes = LazyApplication.class)
 public class LazyManagerTest {
@@ -93,6 +93,7 @@ public class LazyManagerTest {
         try {
             TestScenario sampleTestScenario = getAccountCreationTestScenario();
             DefaultValues defaultValues = createDefaultValues();
+            defaultValues.setContextPath("account-api");
             Stack stack = new Stack(defaultValues);
             TestScenarioExecutionData results = testScenarioManager.executeTestScenario(sampleTestScenario, stack);
             Assert.assertNotNull(results);
@@ -110,6 +111,7 @@ public class LazyManagerTest {
         try {
             TestCase sampleTestCase = getCreateAccountTestCase();
             DefaultValues defaultValues = createDefaultValues();
+            defaultValues.setContextPath("account-api");
             Stack stack = new Stack(defaultValues);
             TestCaseExecutionData results = testCaseManager.executeTestCase(sampleTestCase, stack);
             Assert.assertNotNull(results);
@@ -127,6 +129,7 @@ public class LazyManagerTest {
         try {
             ApiCall sampleApiCall = createAccountApiCall();
             DefaultValues defaultValues = createDefaultValues();
+            defaultValues.setContextPath("account-api");
             Stack stack = new Stack(defaultValues);
             ApiCallExecutionData results = apiCallManager.executeApiCall(sampleApiCall, stack);
             Assert.assertNotNull(results);

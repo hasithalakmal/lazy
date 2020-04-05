@@ -12,6 +12,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.smile24es.lazy.common.SampleDefaultValues.createDefaultValues;
+
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LazySuite implements Serializable {
@@ -25,6 +27,13 @@ public class LazySuite implements Serializable {
     private Stack stack;
     private Global global;
 
+
+    public LazySuite(String lazySuiteName) {
+        DefaultValues defaultValues = createDefaultValues();
+        Stack lazySuiteStack = new Stack(defaultValues);
+        this.lazySuiteName = lazySuiteName;
+        this.stack = lazySuiteStack;
+    }
 
     public LazySuite(String lazySuiteName, Stack stack) {
         this.lazySuiteName = lazySuiteName;

@@ -92,52 +92,20 @@ It's only two steps
 
 # How to define a lazy suite?
 ```$xslt
-public static LazySuite populateSampleLazySuite() throws LazyCoreException {
-        DefaultValues defaultValues = createDefaultValues();
-        Stack lazySuiteStack = new Stack(defaultValues);
-        LazySuite lazySuite = new LazySuite("Sample lazy suite 1", lazySuiteStack);
-        lazySuite.getTestSuites().add(AccountApiTestSuite.getAccountApiTestSuite());
-        return lazySuite;
-    }
+LazySuite lazySuite = new LazySuite("Lazy Test Suite", lazySuiteStack);
 ```
 
 # How to define a test suite?
 ```$xslt
-public static TestSuite getAccountApiTestSuite() throws LazyCoreException {
-        TestSuite testSuite1 = new TestSuite("Account Test Suite");
-        testSuite1.getStack().getDefaultValues().setContextPath("account-api");
-        testSuite1.getTestScenarios().add(getAccountCreationTestScenario());
-        testSuite1.setAssignGroups(Arrays.asList("account-bvt"));
-        return testSuite1;
-    }
+TestSuite testSuite1 = new TestSuite("Student-API test suite");
 ```
 
 # How to define a test scenario
 ```$xslt
-public static TestScenario getAccountCreationTestScenario() throws LazyCoreException {
-        TestScenario testScenario1 = new TestScenario("Create Account");
-        testScenario1.getStack().addDefaultAssertionGroup(createDefaultAssertionRuleGroup());
-        testScenario1.getTestCases().add(CreateAccountSuccessTestCase.getCreateAccountTestCase());
-        testScenario1.getTestCases().add(CreateAccountSuccessTestCase.getCreateAccountTestCase2());
-        testScenario1.setAssignGroups(Arrays.asList("create-accounts"));
-        return testScenario1;
-    }
+TestScenario testScenario1 = new TestScenario("Create student with minimum data");
 ```
 
 # How to define a test case
 ```$xslt
-public static TestCase getCreateAccountTestCase() throws LazyCoreException {
-        TestCase testCase1 = new TestCase("Create Account successfully - 1");
-        testCase1.getStack().addDefaultAssertionGroup(createDefaultAssertionRuleGroup());
-        testCase1.getApiCalls().add(AccountApiCalls.createAccountApiCall());
-        testCase1.getApiCalls().add(AccountApiCalls.getAccountApiCall());
-        testCase1.getApiCalls().add(AccountApiCalls.createAccountApiCallWithJsonFile());
-        testCase1.getApiCalls().add(AccountApiCalls.getAccountApiCall());
-        testCase1.getApiCalls().add(AccountApiCalls.createAccountApiCallWithTemplateFile());
-        testCase1.getApiCalls().add(AccountApiCalls.getAccountApiCall());
-        testCase1.getApiCalls().add(AccountApiCalls.createAccountApiCallWithTemplateFileComplex());
-        testCase1.getApiCalls().add(AccountApiCalls.getAccountApiCall());
-        testCase1.getApiCalls().add(AccountApiCalls.getAccountApiCall2());
-        return testCase1;
-    }
+TestCase testCase1 = new TestCase("Create Account successfully - 1");
 ```

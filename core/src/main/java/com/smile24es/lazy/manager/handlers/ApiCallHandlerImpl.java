@@ -112,9 +112,11 @@ public class ApiCallHandlerImpl {
             }
         }
         requestData += "-----------------------------------------------------------------\n";
-        requestData += format(getPrintKey("Exception") + ": {0}\n", ex.toString());
-        requestData += format(getPrintKey("Lazy message") + ": {0}\n", ex.getMessage());
-        requestData += format(getPrintKey("Cause") + ": {0}\n", ex.getCause().toString());
+        if (ex != null) {
+            requestData += format(getPrintKey("Exception") + ": {0}\n", ex.toString());
+            requestData += format(getPrintKey("Lazy message") + ": {0}\n", ex.getMessage());
+            requestData += format(getPrintKey("Cause") + ": {0}\n", ex.getCause() == null ? null : ex.getCause().toString());
+        }
         requestData += "-----------------------------------------------------------------\n\n";
         LOGGER.info(requestData);
 

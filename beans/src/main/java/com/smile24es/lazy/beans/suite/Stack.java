@@ -36,6 +36,9 @@ public class Stack implements Serializable {
     }
 
     public DefaultValues getDefaultValues() {
+        if (defaultValues == null) {
+            defaultValues = new DefaultValues();
+        }
         return defaultValues;
     }
 

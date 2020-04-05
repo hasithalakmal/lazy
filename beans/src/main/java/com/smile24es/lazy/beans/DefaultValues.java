@@ -19,6 +19,9 @@ public class DefaultValues implements Serializable {
     private HeaderGroup headerGroup;
     private String httpMethod;
 
+    public DefaultValues() {
+    }
+
     public DefaultValues(String protocol, String hostName, Integer port, String contextPath, HeaderGroup headerGroup,
                          String httpMethod) {
         this.protocol = protocol;

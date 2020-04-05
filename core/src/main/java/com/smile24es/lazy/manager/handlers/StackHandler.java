@@ -24,9 +24,33 @@ public class StackHandler {
             return mergedStack;
         }
 
-        DefaultValues defaultValues = childStack.getDefaultValues();
-        if (defaultValues != null) {
-            mergedStack.setDefaultValues(defaultValues);
+        DefaultValues childDefaultValues = childStack.getDefaultValues();
+        if (childDefaultValues != null) {
+            DefaultValues mergedDefaultValues = mergedStack.getDefaultValues();
+            if (StringUtils.isNotBlank(childDefaultValues.getProtocol())) {
+                mergedDefaultValues.setProtocol(childDefaultValues.getProtocol());
+            }
+
+            if (StringUtils.isNotBlank(childDefaultValues.getHostName())) {
+                mergedDefaultValues.setHostName(childDefaultValues.getHostName());
+            }
+
+            if (StringUtils.isNotBlank(childDefaultValues.getContextPath())) {
+                mergedDefaultValues.setContextPath(childDefaultValues.getContextPath());
+            }
+
+            if (StringUtils.isNotBlank(childDefaultValues.getHttpMethod())) {
+                mergedDefaultValues.setHttpMethod(childDefaultValues.getHttpMethod());
+            }
+
+            if (childDefaultValues.getPort() != null) {
+                mergedDefaultValues.setPort(childDefaultValues.getPort());
+            }
+
+            if (childDefaultValues.getHeaderGroup() != null) {
+                mergedDefaultValues.setHeaderGroup(childDefaultValues.getHeaderGroup());
+            }
+            mergedStack.setDefaultValues(mergedDefaultValues);
         }
 
         Map<String, Environment> environments = childStack.getEnvironments();
