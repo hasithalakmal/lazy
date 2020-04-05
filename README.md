@@ -6,7 +6,7 @@ Lazy is a tool based on meta-modeling to implement API testing. In version 1.0.0
 1. Hierarchical approach
 2. Motivates for code reusability and modularization
 3. Empower with template engine facility
-4. Simple configurations
+4. Simple configurations and high user friendliness
 5. Improve test case implementation efficiency
 6. Powerful assertion methods
 7. Empower with pre-actions and post-action
@@ -55,7 +55,11 @@ You can configure lot of things with this hierarchical approach. Please refer to
 5. HTTP method - (**GET**/POST)
 6. Header group - (**"accept:application/json"/"content-type:application/json"**)
 7. Environment variables as key value pare - (username:lazy-user)
-8. 
+8. Default assertion group (You can configure any assertion with this. Ex: you can assert response time as a default assertion group and identify
+ performance issues from the beginning. If you can configure this on top levels your applications will monitor automatically).
+ 
+ Any of above value can be override any of above configured value at any level. Additionally Lazy provides enable/disable facility for default
+  assertions. As a example if you need to skip response time assertion for one API call you can configure it very easily.
 
 # Ready to use these Features
 1. Lazy Language - DSL implementation to improve user friendliness
