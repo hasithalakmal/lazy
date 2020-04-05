@@ -89,11 +89,6 @@ public class StackHandler {
             mergedStack.setDefaultAssertions(mergedAssertions);
         }
 
-        HeaderGroup headerGroup = childStack.getHeaderGroup();
-        if (headerGroup != null) {
-            mergedStack.setHeaderGroup(headerGroup);
-        }
-
         return mergedStack;
     }
 }

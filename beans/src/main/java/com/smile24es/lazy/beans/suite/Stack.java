@@ -23,7 +23,6 @@ public class Stack implements Serializable {
 
     private List<AssertionRule> defaultAssertions;
     private DefaultValues defaultValues;
-    private HeaderGroup headerGroup;
     private Map<String, EnvironmentVariable> globalEnvironment; //key, value
     private Map<String, Environment> environments; //environmentDisplayId, environment
     private Map<String, String> attributes; //attribute key, value
@@ -44,14 +43,6 @@ public class Stack implements Serializable {
 
     public void setDefaultValues(DefaultValues defaultValues) {
         this.defaultValues = defaultValues;
-    }
-
-    public HeaderGroup getHeaderGroup() {
-        return headerGroup;
-    }
-
-    public void setHeaderGroup(HeaderGroup headerGroup) {
-        this.headerGroup = headerGroup;
     }
 
     public List<AssertionRule> getDefaultAssertions() {
@@ -129,7 +120,7 @@ public class Stack implements Serializable {
 
         return new EqualsBuilder()
               .append(defaultValues, stack.defaultValues)
-              .append(headerGroup, stack.headerGroup)
+//              .append(headerGroup, stack.headerGroup)
               .append(defaultAssertions, stack.defaultAssertions)
               .append(globalEnvironment, stack.globalEnvironment)
               .append(environments, stack.environments)
@@ -141,7 +132,7 @@ public class Stack implements Serializable {
     public int hashCode() {
         return new HashCodeBuilder(17, 37)
               .append(defaultValues)
-              .append(headerGroup)
+//              .append(headerGroup)
               .append(defaultAssertions)
               .append(globalEnvironment)
               .append(environments)
@@ -153,7 +144,6 @@ public class Stack implements Serializable {
     public String toString() {
         return "Stack{" +
               "defaultValues=" + defaultValues +
-              ", defaultHeaderGroup=" + headerGroup +
               ", defaultCreateAssertionGroup=" + defaultAssertions +
               ", globalEnvironment=" + globalEnvironment +
               ", environments=" + environments +

@@ -92,26 +92,6 @@ It's only two steps
 </dependency>
 ```
 
-# How to define a lazy suite?
-```$xslt
-LazySuite lazySuite = new LazySuite("Lazy Test Suite", lazySuiteStack);
-```
-
-# How to define a test suite?
-```$xslt
-TestSuite testSuite1 = new TestSuite("Student-API test suite");
-```
-
-# How to define a test scenario
-```$xslt
-TestScenario testScenario1 = new TestScenario("Create student with minimum data");
-```
-
-# How to define a test case
-```$xslt
-TestCase testCase1 = new TestCase("Create Account successfully - 1");
-```
-
 # Proposed Project structure
 ```$xslt
 ├── pom.xml
@@ -154,4 +134,43 @@ TestCase testCase1 = new TestCase("Create Account successfully - 1");
 
 ```
 We are suggested to create separate packages for each level of the hierarchy. That modularization will help to manage your project. Also please
- note that this structure has not mandatory. 
+ note that this structure has not mandatory.  
+ 
+# How to define a lazy suite?
+```$xslt
+LazySuite lazySuite = new LazySuite("Lazy Test Suite", lazySuiteStack);
+```
+
+# How to define a test suite?
+```$xslt
+TestSuite testSuite1 = new TestSuite("Student-API test suite");
+```
+
+# How to define a test scenario
+```$xslt
+TestScenario testScenario1 = new TestScenario("Create student with minimum data");
+```
+
+# How to define a test case
+```$xslt
+TestCase testCase1 = new TestCase("Create Account successfully - 1");
+```
+
+# How to change stack values
+As mentioned under the hierarchical approach explanation, you can configure different attribute values using stack. Let's see how we can configure
+ the values using stack. Stack contains three main attributes; those are
+    1. Default values
+    2. Default Assertion rule list
+    3. Global environment
+    
+Let's consider how to change stack default values. Stack default values contains protocol, hostName, port, contextPath, httpMethod, default
+ headerGroup values. Each hierarchy object (Test suite/ Scenario/ Case/ API call) contains stack. We have to get it's stack and it's default value
+  object and change whatever value as we wish. As a example let's see how we can change context-path.
+ 
+```$xslt
+lazySuite.getStack().getDefaultValues().setContextPath("student-api"); //On lazy suite (root) level
+testSuite.getStack().getDefaultValues().setContextPath("student-api"); //On Test suite level
+testScenario.getStack().getDefaultValues().setContextPath("student-api"); //On Test scenario level
+testCase.getStack().getDefaultValues().setContextPath("student-api"); //On Test case level
+apiCall.getStack().getDefaultValues().setContextPath("student-api"); //On Api call level
+```
