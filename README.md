@@ -82,6 +82,8 @@ You can configure lot of things with this hierarchical approach. Please refer to
 It's only two steps
 1. You have to start spring-boot application with java11 or above. 
 2. Then add lazy dependency.
+
+
 ```$xslt
 <dependency>
     <groupId>com.smile24es</groupId>
@@ -109,3 +111,47 @@ TestScenario testScenario1 = new TestScenario("Create student with minimum data"
 ```$xslt
 TestCase testCase1 = new TestCase("Create Account successfully - 1");
 ```
+
+# Proposed Project structure
+```$xslt
+├── pom.xml
+├── README.md
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── smile24es
+    │   │           └── lazy
+    │   │               └── sample
+    │   │                   ├── SampleLazySuite1.java
+    │   │                   ├── suites
+    │   │                   │   └── AccountApiTestSuite.java
+    │   │                   ├── scenarios
+    │   │                   │   └── CreateAccountTestScenario.java
+    │   │                   ├── testcase
+    │   │                   │   └── CreateAccountSuccessTestCase.java
+    │   │                   ├── apicall
+    │   │                   │   └── AccountApiCalls.java
+    │   │                   └── dto 
+    │   │                       └── AccountSetting.java
+    │   └── resources
+    │       ├── application.properties
+    │       ├── logback.xml
+    │       └── request-body
+    │           └── account-api
+    │               ├── create-account
+    │               │   └── create-simple-account.json
+    │               └── templates
+    │                   └── create-account-request-body-template.ftl
+    └── test
+        ├── java
+        │   └── com
+        │       └── smile24es
+        │           └── lazy
+        │               └── sample
+        │                   └── LazyManagerTest.java
+        └── resources
+
+```
+We are suggested to create separate packages for each level of the hierarchy. That modularization will help to manage your project. Also please
+ note that this structure has not mandatory. 
