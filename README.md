@@ -346,3 +346,21 @@ Response            : [{"status":"ACTIVE","createdBy":"12345","createdTimestamp"
 +-----------+-------------------+---------------------------------------------------------------+------------------+---------+
 
 ```
+
+# Assert API
+Lazy Assert provides a rich set of assertion methods that you can use for your assertions. This is about It's main assertion methods
+
+Assertion Method     | Description
+--- | ---
+Assert.responseBodyNotNull() | Response body null assertion 
+Assert.responseBodyNotNull(String assertionName) | Response body null assertion with assertion name
+notNullBodyValueAssertion(String jsonPath)  | Check the response body value is not null for the provided json path
+notNullBodyValueAssertion(String assertionName, String jsonPath) | Check the response body value is not null for the provided json path with name
+equalBodyValueAssertion(String jsonPath, String value) | Check the response body value is equal to provided value for the provided json path
+equalBodyValueAssertion(String assertionName, String jsonPath, String value) | Check the response body value is equal to provided value for the provided json path with assertion name
+responseTimeAssertionGreaterThanGivenMilliSeconds(String time) | Validate response time against to the provided milliseconds
+responseTimeAssertionGreaterThanGivenMilliSeconds(String assertionName, String time)  | Validate response time against to the provided milliseconds with assertion name
+responseCodeAssertion(String code) | HTTP response code value assertion
+responseCodeAssertion(String assertionName, String code) | HTTP response code value assertion with assertion name
+
+
