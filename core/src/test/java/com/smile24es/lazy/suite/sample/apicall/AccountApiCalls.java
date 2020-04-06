@@ -31,7 +31,7 @@ public class AccountApiCalls {
     }
 
     private static AssertionRuleGroup createDefaultAssertionRuleGroup() {
-        AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup(1, "Test case assertion group");
+        AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup("Test case assertion group");
         List<AssertionRule> assertionRules = defaultCreateAssertionGroup.getAssertionRules();
         //Performance impacted assertion
         AssertionRule responseTimeAssertion = Assert.responseTimeAssertionGreaterThanGivenMilliSeconds("100");
@@ -135,7 +135,7 @@ public class AccountApiCalls {
     }
 
     private static AssertionRuleGroup accountAssertionGroup1(String expectedAccountName) {
-        AssertionRuleGroup assertionRuleGroup1 = new AssertionRuleGroup(1000, "Create Account success assertions");
+        AssertionRuleGroup assertionRuleGroup1 = new AssertionRuleGroup("Create Account success assertions");
         List<AssertionRule> assertionRules = assertionRuleGroup1.getAssertionRules();
         assertionRules.add(Assert.notNullBodyValueAssertion("$['accountName']"));
         assertionRules.add(Assert.equalBodyValueAssertion("$['accountName']", expectedAccountName));

@@ -174,3 +174,43 @@ testScenario.getStack().getDefaultValues().setContextPath("student-api"); //On T
 testCase.getStack().getDefaultValues().setContextPath("student-api"); //On Test case level
 apiCall.getStack().getDefaultValues().setContextPath("student-api"); //On Api call level
 ```
+
+Like that **you can configure values on any level by using that level stack.** 
+
+## 1. configure stack default values
+Following example shows how you can change different values for stack default values
+
+```java
+DefaultValues defaultValues = testSuite1.getStack().getDefaultValues();
+defaultValues.setHttpMethod("https");
+defaultValues.setHostName("localhost");
+defaultValues.setPort(8080);
+defaultValues.setContextPath("student-api");
+defaultValues.setHttpMethod("POST");
+
+HeaderGroup headerGroup = new HeaderGroup("Sample header group");
+Header header1 = new Header("Accept Header", "accept", "application/json");
+Header header2 = new Header("Content type Header", "content-type", "application/json");
+headerGroup.getHeaders().add(header1);
+headerGroup.getHeaders().add(header2);
+defaultValues.setHeaderGroup(headerGroup);
+
+```
+
+## 2. configure stack default assertion rule list
+Following example shows how you can define default  assertion rule list in the stack
+
+```java
+AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup("Test scenario assertion group");
+List<AssertionRule> assertionRules = defaultCreateAssertionGroup.getAssertionRules();
+assertionRules.add(Assert.responseTimeAssertionGreaterThanGivenMilliSeconds("2000"));
+assertionRules.add(Assert.responseCodeAssertion("201"));
+assertionRules.add(Assert.responseBodyNotNull());
+testScenario1.getStack().addDefaultAssertionGroup(defaultCreateAssertionGroup);
+```
+
+
+## 3. configure stack global values
+This feature is still under development
+
+

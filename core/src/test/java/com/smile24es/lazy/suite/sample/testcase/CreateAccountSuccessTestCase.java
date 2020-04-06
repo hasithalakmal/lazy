@@ -47,7 +47,7 @@ public class CreateAccountSuccessTestCase {
 
 
     private static AssertionRuleGroup createDefaultAssertionRuleGroup() {
-        AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup(1, "Test case assertion group");
+        AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup("Test case assertion group");
         List<AssertionRule> assertionRules = defaultCreateAssertionGroup.getAssertionRules();
         //Performance impacted assertion
         AssertionRule responseTimeAssertion = Assert.responseTimeAssertionGreaterThanGivenMilliSeconds("500");

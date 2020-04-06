@@ -18,8 +18,7 @@ public class Header implements Serializable {
     private String key;
     private String value;
 
-    public Header(int headerId, String headerName, String key, String value) {
-        this.headerId = headerId;
+    public Header(String headerName, String key, String value) {
         this.headerName = headerName;
         this.key = key;
         this.value = value;

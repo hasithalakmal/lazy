@@ -101,8 +101,9 @@ public class ApiCallHandlerImpl {
         String requestData = format("\n\n----------------------------------------------------------------- \nExecuting api call [{0}] - [{1}] \n----------------------------------------------------------------- \n",
               apiCallExecutionData.getApiCallId(), apiCallExecutionData.getApiCallName());
         requestData += format(getPrintKey("Http Method") + ": [{0}]\n", apiCallExecutionData.getHttpMethod());
-        requestData += format(getPrintKey("Request URL") + ": [{0}]\n", apiCallExecutionData.getUrl().toString());
-        if (!apiCallExecutionData.getHttpMethod().equals("GET")) {
+        requestData += format(getPrintKey("Request URL") + ": [{0}]\n", apiCallExecutionData.getUrl() == null ? null :
+              apiCallExecutionData.getUrl().toString());
+        if (!"GET".equals(apiCallExecutionData.getHttpMethod())) {
             requestData += format(getPrintKey("Request Body") + ": [{0}]\n", apiCallExecutionData.getRequestBody());
         }
         if (apiCallExecutionData.getHeaderGroup() != null && !CollectionUtils.isEmpty(apiCallExecutionData.getHeaderGroup().getHeaders())) {

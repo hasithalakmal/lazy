@@ -24,7 +24,7 @@ public class CreateAccountTestScenario {
     }
 
     private static AssertionRuleGroup createDefaultAssertionRuleGroup() {
-        AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup(1, "Test scenario assertion group");
+        AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup("Test scenario assertion group");
         List<AssertionRule> assertionRules = defaultCreateAssertionGroup.getAssertionRules();
         assertionRules.add(Assert.responseTimeAssertionGreaterThanGivenMilliSeconds("2000"));
         AssertionRule responseCodeAssertion = Assert.responseCodeAssertion("201");

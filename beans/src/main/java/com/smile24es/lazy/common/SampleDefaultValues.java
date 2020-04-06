@@ -15,9 +15,9 @@ public class SampleDefaultValues {
     }
 
     public static HeaderGroup createDefaultHeaderGroup() {
-        HeaderGroup defaultHeaderGroup = new HeaderGroup(1, "Simple Header Group");
-        Header header1 = new Header(1, "Accept Header", "accept", "application/json");
-        Header header2 = new Header(2, "Content type Header", "content-type", "application/json");
+        HeaderGroup defaultHeaderGroup = new HeaderGroup("Simple Header Group");
+        Header header1 = new Header( "Accept Header", "accept", "application/json");
+        Header header2 = new Header("Content type Header", "content-type", "application/json");
         defaultHeaderGroup.getHeaders().add(header1);
         defaultHeaderGroup.getHeaders().add(header2);
         return defaultHeaderGroup;

@@ -1,5 +1,8 @@
 package com.smile24es.lazy.suite.sample.suites;
 
+import com.smile24es.lazy.beans.DefaultValues;
+import com.smile24es.lazy.beans.suite.Header;
+import com.smile24es.lazy.beans.suite.HeaderGroup;
 import com.smile24es.lazy.beans.suite.TestSuite;
 import com.smile24es.lazy.exception.LazyCoreException;
 
