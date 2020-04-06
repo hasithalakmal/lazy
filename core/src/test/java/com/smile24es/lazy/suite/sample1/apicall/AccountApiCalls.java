@@ -1,10 +1,10 @@
-package com.smile24es.lazy.suite.sample.apicall;
+package com.smile24es.lazy.suite.sample1.apicall;
 
 import com.smile24es.lazy.beans.suite.ApiCall;
 import com.smile24es.lazy.beans.suite.assertions.AssertionRule;
 import com.smile24es.lazy.beans.suite.assertions.AssertionRuleGroup;
 import com.smile24es.lazy.exception.LazyCoreException;
-import com.smile24es.lazy.suite.sample.dto.AccountSetting;
+import com.smile24es.lazy.suite.sample1.dto.AccountSetting;
 import com.smile24es.lazy.wrapper.Actions;
 import com.smile24es.lazy.wrapper.Assert;
 

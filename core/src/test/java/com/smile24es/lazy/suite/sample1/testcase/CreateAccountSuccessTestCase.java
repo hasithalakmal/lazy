@@ -1,10 +1,10 @@
-package com.smile24es.lazy.suite.sample.testcase;
+package com.smile24es.lazy.suite.sample1.testcase;
 
 import com.smile24es.lazy.beans.suite.TestCase;
 import com.smile24es.lazy.beans.suite.assertions.AssertionRule;
 import com.smile24es.lazy.beans.suite.assertions.AssertionRuleGroup;
 import com.smile24es.lazy.exception.LazyCoreException;
-import com.smile24es.lazy.suite.sample.apicall.AccountApiCalls;
+import com.smile24es.lazy.suite.sample1.apicall.AccountApiCalls;
 import com.smile24es.lazy.wrapper.Assert;
 
 import java.util.Arrays;

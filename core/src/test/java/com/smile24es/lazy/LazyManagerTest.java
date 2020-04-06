@@ -18,8 +18,8 @@ import com.smile24es.lazy.manager.LazyManager;
 import com.smile24es.lazy.manager.TestCaseManager;
 import com.smile24es.lazy.manager.TestScenarioManager;
 import com.smile24es.lazy.manager.TestSuiteManager;
-import com.smile24es.lazy.suite.sample.SampleLazySuite1;
-import com.smile24es.lazy.suite.sample.suites.AccountApiTestSuite;
+import com.smile24es.lazy.suite.sample1.SampleLazySuite1;
+import com.smile24es.lazy.suite.sample1.suites.AccountApiTestSuite;
 import com.smile24es.lazy.utils.JsonUtil;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -30,9 +30,9 @@ import org.testng.Assert;
 
 import java.util.Arrays;
 
-import static com.smile24es.lazy.suite.sample.apicall.AccountApiCalls.createAccountApiCall;
-import static com.smile24es.lazy.suite.sample.scenarios.CreateAccountTestScenario.getAccountCreationTestScenario;
-import static com.smile24es.lazy.suite.sample.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase;
+import static com.smile24es.lazy.suite.sample1.apicall.AccountApiCalls.createAccountApiCall;
+import static com.smile24es.lazy.suite.sample1.scenarios.CreateAccountTestScenario.getAccountCreationTestScenario;
+import static com.smile24es.lazy.suite.sample1.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase;
 import static com.smile24es.lazy.common.SampleDefaultValues.createDefaultValues;
 
 @SpringBootTest(classes = LazyApplication.class)

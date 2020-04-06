@@ -1,12 +1,8 @@
-package com.smile24es.lazy.suite.sample;
+package com.smile24es.lazy.suite.sample1;
 
-import com.smile24es.lazy.beans.DefaultValues;
 import com.smile24es.lazy.beans.LazySuite;
-import com.smile24es.lazy.beans.suite.Stack;
 import com.smile24es.lazy.exception.LazyCoreException;
-import com.smile24es.lazy.suite.sample.suites.AccountApiTestSuite;
-
-import static com.smile24es.lazy.common.SampleDefaultValues.createDefaultValues;
+import com.smile24es.lazy.suite.sample1.suites.AccountApiTestSuite;
 
 public class SampleLazySuite1 {
 

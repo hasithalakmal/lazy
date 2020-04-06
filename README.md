@@ -84,7 +84,7 @@ It's only two steps
 2. Then add lazy dependency.
 
 
-```$xslt
+```java
 <dependency>
     <groupId>com.smile24es</groupId>
     <artifactId>lazy-core</artifactId>
@@ -167,7 +167,7 @@ Let's consider how to change stack default values. Stack default values contains
  headerGroup values. Each hierarchy object (Test suite/ Scenario/ Case/ API call) contains stack. We have to get it's stack and it's default value
   object and change whatever value as we wish. As a example let's see how we can change context-path.
  
-```$xslt
+```java
 lazySuite.getStack().getDefaultValues().setContextPath("student-api"); //On lazy suite (root) level
 testSuite.getStack().getDefaultValues().setContextPath("student-api"); //On Test suite level
 testScenario.getStack().getDefaultValues().setContextPath("student-api"); //On Test scenario level
@@ -213,4 +213,136 @@ testScenario1.getStack().addDefaultAssertionGroup(defaultCreateAssertionGroup);
 ## 3. configure stack global values
 This feature is still under development
 
+# Link the Dots (How to build a lazy test suite)
+## Define API Call
+```java
+public class AccountApiCall {
 
+    public static ApiCall getAccountApiCall() {
+        ApiCall apiCall2 = new ApiCall("Get Account by Id");
+        apiCall2.setUri("service/accounts/1000");
+        apiCall2.addAssertionRule(Assert.responseCodeAssertion("200"));
+        apiCall2.addAssertionRule(Assert.notNullBodyValueAssertion("$['accountName']"));
+        apiCall2.addAssertionRule(Assert.equalBodyValueAssertion("$['accountId']", "1000"));
+        apiCall2.addAssertionRule(Assert.equalBodyValueAssertion("$['accountName']", "Lazy Account"));
+        return apiCall2;
+    }
+}
+```
+## Define Test case and attach api call to test case
+```java
+public class GetAccountTestCases {
+
+    public static TestCase getCreateAccountTestCase() throws LazyCoreException {
+        TestCase testCase1 = new TestCase("Create Account successfully - 1");
+        testCase1.getApiCalls().add(AccountApiCall.getAccountApiCall());
+        return testCase1;
+    }
+}
+```
+
+## Define Test scenario and attach test case to test scenario
+````java
+public class GetAccountTestScenarios {
+
+    public static TestScenario getAccountTestScenario() throws LazyCoreException {
+        TestScenario testScenario1 = new TestScenario("get Account");
+        testScenario1.getTestCases().add(GetAccountTestCases.getCreateAccountTestCase());
+        return testScenario1;
+    }
+}
+````
+
+## Define Test suite and attach test scenario to test suite
+```java
+public class AccountTestSuite {
+
+    public static com.smile24es.lazy.beans.suite.TestSuite getAccountApiTestSuite() throws LazyCoreException {
+        TestSuite testSuite1 = new TestSuite("Account Test Suite");
+        testSuite1.getStack().getDefaultValues().setContextPath("account-api"); //We are configuring context path
+        testSuite1.getTestScenarios().add(GetAccountTestScenarios.getAccountTestScenario());
+        return testSuite1;
+    }
+}
+```
+
+## Define Lazy suite and attach test suites to lazy suite
+```java
+public class SmileLazySuite {
+    public static LazySuite populateSampleLazySuite() throws LazyCoreException {
+        LazySuite lazySuite = new LazySuite("Sample lazy suite");
+        lazySuite.getTestSuites().add(AccountTestSuite.getAccountApiTestSuite());
+        return lazySuite;
+    }
+}
+```
+
+**Recommend to do all above implementations under the src directory and enable logs.**
+
+#Execute test suite
+**Define Test class to execute under the test directory**
+```java
+@SpringBootTest(classes = LazyApplication.class)
+public class Sample0Executor {
+
+    @Autowired
+    private LazyManager lazyManager;
+
+    @Test
+    public void executeSampleLazySuite() {
+        try {
+            LazyExecutionData results = lazyManager.executeLazySuite(SmileLazySuite0.populateSampleLazySuite());
+            Assert.assertNotNull(results);
+        } catch (Exception ex) {
+            Assert.fail("Success scenarios should not be failed", ex);
+        }
+    }
+}
+```
+
+#Execute and view log file
+When you execute your lazy suite, you can get a comprehensive log about the test execution. 
+```less
+2020-04-07 01:30:49,970 INFO com.smile24es.lazy.suite.sample0.Sample0Executor [main] Starting Sample0Executor on Sysco with PID 29443 (started by hasithag in /home/hasithag/Hasitha/Personal/GIT/lazy/core)
+2020-04-07 01:30:49,982 INFO com.smile24es.lazy.suite.sample0.Sample0Executor [main] No active profile set, falling back to default profiles: default
+2020-04-07 01:30:51,926 INFO com.smile24es.lazy.suite.sample0.Sample0Executor [main] Started Sample0Executor in 2.746 seconds (JVM running for 4.432)
+2020-04-07 01:30:52,210 INFO com.smile24es.lazy.manager.impl.LazyManagerImpl [main] Ready to execute lazy suite - [Sample lazy suite]
+2020-04-07 01:30:52,240 INFO com.smile24es.lazy.manager.impl.TestSuiteManagerImpl [main] Ready to execute test suite - [1] - [Account Test Suite]
+2020-04-07 01:30:52,245 INFO com.smile24es.lazy.manager.impl.TestScenarioManagerImpl [main] Executing test scenario - [1] - [get Account]
+2020-04-07 01:30:52,248 INFO com.smile24es.lazy.manager.impl.TestCaseManagerImpl [main] Executing test case - [1] - [Create Account successfully - 1]
+2020-04-07 01:30:52,251 INFO com.smile24es.lazy.manager.impl.ApiCallManagerImpl [main] Executing api call - [1] - [Get Account by Id]
+2020-04-07 01:30:52,495 INFO com.smile24es.lazy.manager.handlers.ApiCallHandlerImpl [main] 
+
+----------------------------------------------------------------- 
+Executing api call [1] - [Get Account by Id] 
+----------------------------------------------------------------- 
+Http Method         : [GET]
+Request URL         : [http://localhost:8080/account-api/service/accounts/1000]
+Header List         :
+                     - [accept:application/json]
+                     - [content-type:application/json]
+-----------------------------------------------------------------
+Execution time      : [33] milli seconds
+HTTP status code    : [200]
+Response            : [{"status":"ACTIVE","createdBy":"12345","createdTimestamp":1586112248464,"updatedTimestamp":0,"accountId":"1000","parentId":"1","enterpriseId":"1","accountName":"Sathara-1577641690","ownerName":"Hasitha-1577641690","versionId":"1.0.0","addresses":[],"settings":[]}]
+-----------------------------------------------------------------
+
+
+2020-04-07 01:30:52,495 INFO com.smile24es.lazy.manager.impl.ApiCallManagerImpl [main] Executed api call - [1] - [Get Account by Id]
+2020-04-07 01:30:52,531 INFO com.smile24es.lazy.manager.impl.ApiCallManagerImpl [main] Completed execution of api call - [1] - [Get Account by Id]
+2020-04-07 01:30:52,531 INFO com.smile24es.lazy.manager.impl.TestCaseManagerImpl [main] Executed test case - [1] - [Create Account successfully - 1]
+2020-04-07 01:30:52,531 INFO com.smile24es.lazy.manager.impl.TestCaseManagerImpl [main] Executed all test cases...
+2020-04-07 01:30:52,531 INFO com.smile24es.lazy.manager.impl.TestScenarioManagerImpl [main] Executed test scenario - [1] - [get Account]
+2020-04-07 01:30:52,531 INFO com.smile24es.lazy.manager.impl.TestSuiteManagerImpl [main] Executed test suite - [1] - [Account Test Suite]
+2020-04-07 01:30:52,531 INFO com.smile24es.lazy.manager.impl.LazyManagerImpl [main] Executed lazy suite - [Sample lazy suite]
+2020-04-07 01:30:52,538 INFO com.smile24es.lazy.manager.impl.LazyBaseManager [main] 
++-----------+-------------------+---------------------------------------------------------------+------------------+---------+
+| Result Id | API Call Name     | Assertion Name                                                | Execution Status | Is Pass |
++-----------+-------------------+---------------------------------------------------------------+------------------+---------+
+| 1         | Get Account by Id | Response code assertion for - [200]                           | EXECUTED         | true    |
+| 2         | Get Account by Id | Body value not null assertion                                 | EXECUTED         | true    |
+| 3         | Get Account by Id | Response body value assertion $['accountId'] = 100001         | EXECUTED         | false   |
+| 4         | Get Account by Id | Response body value assertion $['accountName'] = Lazy Account | EXECUTED         | false   |
++-----------+-------------------+---------------------------------------------------------------+------------------+---------+
+
+```

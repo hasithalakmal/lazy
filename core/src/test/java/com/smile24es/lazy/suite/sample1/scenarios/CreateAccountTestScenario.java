@@ -1,4 +1,4 @@
-package com.smile24es.lazy.suite.sample.scenarios;
+package com.smile24es.lazy.suite.sample1.scenarios;
 
 import com.smile24es.lazy.beans.suite.TestScenario;
 import com.smile24es.lazy.beans.suite.assertions.AssertionRule;
@@ -9,8 +9,8 @@ import com.smile24es.lazy.wrapper.Assert;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.smile24es.lazy.suite.sample.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase;
-import static com.smile24es.lazy.suite.sample.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase2;
+import static com.smile24es.lazy.suite.sample1.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase;
+import static com.smile24es.lazy.suite.sample1.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase2;
 
 public class CreateAccountTestScenario {
 
