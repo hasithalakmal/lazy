@@ -88,7 +88,7 @@ The apache freemarker has supported for logic based templates also. Since you ca
     studentClassList attribute based on provided values. It's that simple. you can use conditions loops etc. inside the template. That's why we
      have used apache freemarker to empower lazy framework. 
 
-For references - [https://freemarker.apache.org/] (https://freemarker.apache.org/)
+For references - [https://freemarker.apache.org/]
 
 # Simple configurations and high user friendliness
 To start lazy suite you have to create simple spring-boot application with java11 or higher version and need to add just a one maven dependency
@@ -108,24 +108,62 @@ Also lazy framework has provided lot of wrapper methods to do your task with one
       those factors lazy will provide high implementation efficiency. 
 
 # Powerful assertion methods
-
+We have provided a separate assertion API. Usually assertion API will contains null/notnull/equals and condition assertions only. Then developer
+ has to implement the rest of the things. But with Lazy assertion API we have supported for the large scale of assertion methods. Even for the initial
+  release we have provided a set of assertions which exceeds usual assertion API.
 
 # Empower with pre-actions and post-action
+There are some actions that we need to execute on before or after the api-call. Then we can define actions and we can assign that actions to a api
+ call pre action or post action scopes. 
+
+Currently we are improving this feature. For now we are providing action to set global environment variable.
 
 # Powerful environment and global variable defining
+User can define global variables and use those variable on other locations. We are working on a new feature to define separate environments
+, define environment variables on that defined environment and use those environment variables.
 
 # Enable/disable/override assertion executions within the hierarchical approach
+Lazy provide facility to define assertions at any level of the hierarchy as mentioned above. You can define a key for any assertion. Then using
+ that key you can enable/disable or override the assertion  on sub tree. Then it will helpful to define more generic assertion set on parent level
+  only ones, and you can disable/override if some assertion need to disable/override at lower level. 
 
 # Comprehensive result analysis
+We are providing comprehensive result analysis in few ways.
+1. Application log file -  We are providing comprehensive user friendly result analysis in the log file even. 
+2. HTML report - We are providing result report as HTML based Lazy dashboard
+3. JSON file - You can get the result as a JSON file and build your own custom dahsboards 
+4. CSV file - you can generate a CSV file with execution results
 
 # Independent executions
-You can execute you suite from any level. It has three main ways you can execute your test suite. 
+Lazy provides a separate execution API to execute your test suite. It has three main levels/ways you can execute your test suite. 
 1. Execute complete suite
 2. Execute your suite from a given point (From a given test suite, From a given test scenario,  from a given test case, from a given test case)
 3. Define execution groups and execute given group
 
-# Test case grouping and group execution
+**If you need to execute just a api-call. we are support for it as well (end option)**. You can execute any unit of test. Let's assume we need to
+ execute only a student-creation success test case, then lazy execution api provides facility to execute only that API. In that scenario, please
+  note that lazy not using inherited attributes from the parent. As an example if you define some assertion on create student test scenario level
+   and if you execute create student test case that test scenario assertion will not be executed. 
 
+# Test case grouping and group execution
+We can keep all our test suites in one project. But some times (If we need to do a build verification test) we need not no execute whole thousands of
+ tests. we need actually execute only happy paths. To achieve that lazy provides grouping feature. You can add single unit of tests to a one or
+  more groups. Then you can execute one or more groups at once using lazy suite executor. It's also follow the hierarchical manner. You have to
+   populate LazyExecutionGroup object and pass it to lazy executor to filter test cases. That object structure is like this. 
+   
+```java
+private List<String> testSuiteExecutionGroupNames;
+private List<String> testScenarioExecutionGroupNames;
+private List<String> testCaseExecutionGroupNames;
+private List<String> apiCallExecutionGroupNames;
+```
+  
+You can define a set of test groups to execute on a particular test level. As a example let's assume you need to execute whole class-api test suite
+ and need to execute student-class assignment test case. Then you can white list class-api test suite group name at the suite level of executor and
+  white list student-class assignment test case group name at the test case level. Then It will execute all tests under the class-api test suite
+  . If parent level has white listed it execute all child level tests. Then it start executing student-api test suite. But it executes only student
+  -class assignment test case and it's api calls. **Like that lazy provide a simple approach to create your custom executions for different
+   requirements.** 
 
 
 # Ready to use these Features
