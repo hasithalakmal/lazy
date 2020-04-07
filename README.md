@@ -279,7 +279,7 @@ public class SmileLazySuite {
 
 **Recommend to do all above implementations under the src directory and enable logs.**
 
-#Execute test suite
+## Execute test suite
 **Define Test class to execute under the test directory**
 ```java
 @SpringBootTest(classes = LazyApplication.class)
@@ -300,7 +300,7 @@ public class Sample0Executor {
 }
 ```
 
-#Execute and view log file
+## Execute and view log file
 When you execute your lazy suite, you can get a comprehensive log about the test execution. 
 ```less
 2020-04-07 01:30:49,970 INFO com.smile24es.lazy.suite.sample0.Sample0Executor [main] Starting Sample0Executor on Sysco with PID 29443 (started by hasithag in /home/hasithag/Hasitha/Personal/GIT/lazy/core)
@@ -348,7 +348,7 @@ Response            : [{"status":"ACTIVE","createdBy":"12345","createdTimestamp"
 ```
 
 # Assert API
-Lazy Assert provides a rich set of assertion methods that you can use for your assertions. This is about It's main assertion methods
+Lazy Assert API provides a rich set of assertion methods that you can use for your assertions. This is about It's main assertion methods
 
 Assertion Method     | Description
 --- | ---
@@ -363,4 +363,16 @@ responseTimeAssertionGreaterThanGivenMilliSeconds(String assertionName, String t
 responseCodeAssertion(String code) | HTTP response code value assertion
 responseCodeAssertion(String assertionName, String code) | HTTP response code value assertion with assertion name
 
+# Action API
+Lazy Action API provides some pre define actions you can execute before or after API call execution. API call supports for pre and post actions
+. However the action method is common. But action API is common. You can define whatever action from Action API and you can assign that action to
+ API call's pre-action attribute or post action attribute. 
+ 
+ Action     | Support for | Description
+ --- | --- | ---
+createGlobalVariableFromResponseBody(String key, String jsonPath) | Post actions |You can define a global variable and set value from response body. You can use JSON path to select value
 
+These are the only existing Actions for now. We will be improving this section with the next releases. 
+
+
+#

@@ -11,7 +11,7 @@ public class Actions {
         //This is a private constructor
     }
 
-    public static Action createGlobalVariableFromBody(String key, String jsonPath) {
+    public static Action createGlobalVariableFromResponseBody(String key, String jsonPath) {
         return new VariableDeclarationAction(ActionTypeEnum.SET_GLOBAL_VARIABLE, DataSourceEnum.BODY, key, jsonPath);
     }
 }

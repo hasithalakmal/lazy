@@ -25,8 +25,8 @@ public class AccountApiCalls {
               + "\"accountName\":\"Sathara-1577641690\",\"ownerName\":\"Hasitha-1577641690\",\"versionId\":\"1.0.0\","
               + "\"settings\":[{\"key\":\"setting1\",\"value\":\"1577641690\"},{\"key\":\"setting2\",\"value\":\"1577641690\"}]}");
         apiCall1.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
-        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id", "$['accountId']"));
-        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name", "$['accountName']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromResponseBody("created.account.id", "$['accountId']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromResponseBody("created.account.name", "$['accountName']"));
         return apiCall1;
     }
 
@@ -46,8 +46,8 @@ public class AccountApiCalls {
         apiCall1.setHttpMethod("POST");
         apiCall1.setRequestBodyFromJson("request-body/account-api/create-account/create-simple-account.json");
         apiCall1.addAssertionGroup(accountAssertionGroup1("Sathara-1577641690"));
-        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id", "$['accountId']"));
-        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name", "$['accountName']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromResponseBody("created.account.id", "$['accountId']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromResponseBody("created.account.name", "$['accountName']"));
         apiCall1.setAssignGroups(Arrays.asList("BVT", "Group2"));
         return apiCall1;
     }
@@ -73,8 +73,8 @@ public class AccountApiCalls {
 
         apiCall1.setRequestBodyFromJsonTemplate("request-body/account-api/templates/create-account.ftl", templateData);
         apiCall1.addAssertionGroup(accountAssertionGroup1("My Account"));
-        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id", "$['accountId']"));
-        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name", "$['accountName']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromResponseBody("created.account.id", "$['accountId']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromResponseBody("created.account.name", "$['accountName']"));
 
         apiCall1.setAssignGroups(Arrays.asList("BVT"));
         return apiCall1;
@@ -101,8 +101,8 @@ public class AccountApiCalls {
 
         apiCall1.setRequestBodyFromJsonTemplate("request-body/account-api/templates/create-account-2.ftl", templateData);
         apiCall1.addAssertionGroup(accountAssertionGroup1("My Account"));
-        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.id", "$['accountId']"));
-        apiCall1.getPostActions().add(Actions.createGlobalVariableFromBody("created.account.name", "$['accountName']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromResponseBody("created.account.id", "$['accountId']"));
+        apiCall1.getPostActions().add(Actions.createGlobalVariableFromResponseBody("created.account.name", "$['accountName']"));
 
         apiCall1.setAssignGroups(Arrays.asList("Group2"));
 
