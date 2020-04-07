@@ -62,14 +62,53 @@ You can configure lot of things with this hierarchical approach. Please refer to
   assertions. As a example if you need to skip response time assertion for one API call you can configure it very easily.
   
 # Motivates for code reusability and modularization
+Lazy has based on a hierarchical approach and it contains few layers like lazy suite, test suite, test scenarios, test cases and api calls. We are
+ motivate quality engineers to use different packages/modules for each and every layer. Then you can easily manage your test units and you can use
+  test units again and again. 
+  
+As an example, let's assume you have a student-api test suite and class-api test suite. Student api test has contained create student api call and
+ create student test case. Like that class api test has contained create class api call and create class test case. Now new feature has introduce
+  to your echo system to assign student to a given class. To execute test for the success scenario of that feature, you have to create a class
+  , create a student and then assign student to a class. If you adhere to lazy recommendations, you can get the advantage of modularization and
+   reusability. Then what you have to do is. You have to create only one api call to assign student to a class. You can re-use create class api-call and create student api-call which are used by create class test
+     case and create student test case. To build a test case for that scenario you have to define your test case to assign student to a class. Then
+      call create class api call, create student api call and assign student to a class api call accordingly. Now your new test case implementation
+       has completed. Now you can assign your new test case to a suitable test scenario. 
 
 # Empower with template engine facility
+You have use different different payloads to test different scenarios for a single API call. We have embedded apache freemarker template engine to
+ our lazy framework. Then you can use apache freemarker templates to build your request bodies. In simple words you can build only one request body
+  template and you can pass different different values for as a map to build different different scenarios. 
+  
+The apache freemarker has supported for logic based templates also. Since you can build different payloads with one single template. As a example
+ let's assume your student api request payload has student basic details and list of classes he/she studies. But that class list is optional
+ , then you have to test the same api with class list and without class list. Then we have two types of payloads, one is create student payload
+  with class list and create student payload without class list(event without studentClassList key on the request body). To handle that scenario we
+   can implement only one apache freemarker template with class list and we can add a very simple if condition on the template to add or remove
+    studentClassList attribute based on provided values. It's that simple. you can use conditions loops etc. inside the template. That's why we
+     have used apache freemarker to empower lazy framework. 
+
+For references - [https://freemarker.apache.org/] (https://freemarker.apache.org/)
 
 # Simple configurations and high user friendliness
+To start lazy suite you have to create simple spring-boot application with java11 or higher version and need to add just a one maven dependency
+. That's how simple lazy is. No big deal to start your work. Also you can enable disable debug logs by single property and you can investigate what
+ ever execution details. 
+ 
+Also lazy framework has provided lot of wrapper methods to do your task with one single method. It will gives you a very friendly feeling. 
 
 # Improve test case implementation efficiency
+**Lazy has facilitate to define any thing at only one location and use it from anywhere.** You can define api call details (hots, port ect.) at a
+ higher level of the hierarchy and you don't need to define those per API call. Also you can define common assertions in the higher level also.  It
+  will save a significant time for you to write api call. Also we are supporting for different payload building methods. You can define payload as a
+   string, json file and even a template. Then you can write one template for api call and you can pass whatever values you want for different
+    scenarios. Then Lazy generates a different payloads based on provided values. Also each unit (API call, test case, test scenario, test suite
+    ) are independent components. Then you can assign same unit to multiple parent units. As a example you can use create student api call for any
+     number of test cases. even in a class-api test suite. Because of that independent behavior you don't need to repeat any thing. Because of
+      those factors lazy will provide high implementation efficiency. 
 
 # Powerful assertion methods
+
 
 # Empower with pre-actions and post-action
 
@@ -404,6 +443,8 @@ This is the only existing Actions for now. We will be improving this section wit
 
 
 # Executor API
+Lazy Action API provides an interface to execute your test suite
+
  Executor | Description
  --- | --- 
  executeLazySuite(LazySuite lazySuite) | Execute complete lazy suite
@@ -412,3 +453,4 @@ This is the only existing Actions for now. We will be improving this section wit
 executeTestScenario(TestScenario testScenario, Stack stack) | Execute given test scenario. In here it not inheriting any attribute from the parent. since you have to define stack.
 executeTestCase(TestCase testCase, Stack stack) | Execute given test case. In here it not inheriting any attribute from the parent. since you have to define stack.
 executeApiCall(ApiCall apiCall, Stack stack) | Execute given api call. In here it not inheriting any attribute from the parent. since you have to define stack.
+
