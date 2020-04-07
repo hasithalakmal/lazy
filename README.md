@@ -400,10 +400,15 @@ Lazy Action API provides some pre define actions you can execute before or after
  --- | --- | ---
 createGlobalVariableFromResponseBody(String key, String jsonPath) | Post actions |You can define a global variable and set value from response body. You can use JSON path to select value
 
-These are the only existing Actions for now. We will be improving this section with the next releases. 
+This is the only existing Actions for now. We will be improving this section with the next releases. 
 
 
 # Executor API
- Executor     | Description
+ Executor | Description
  --- | --- 
- 
+ executeLazySuite(LazySuite lazySuite) | Execute complete lazy suite
+ executeLazySuite(LazySuite lazySuite, LazyExecutionGroup lazyExecutionGroup) | Execute pre defined group of tests. You have to define test groups in LazyExecutionGroup. Then it will execute the suite by considering the hierarchical approach
+ executeTestSuite(TestSuite testSuite, Stack stack) | Execute given test suite. In here it not inheriting any attribute from the parent. since you have to define stack.
+executeTestScenario(TestScenario testScenario, Stack stack) | Execute given test scenario. In here it not inheriting any attribute from the parent. since you have to define stack.
+executeTestCase(TestCase testCase, Stack stack) | Execute given test case. In here it not inheriting any attribute from the parent. since you have to define stack.
+executeApiCall(ApiCall apiCall, Stack stack) | Execute given api call. In here it not inheriting any attribute from the parent. since you have to define stack.
