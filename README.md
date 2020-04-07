@@ -13,7 +13,7 @@ Lazy is a tool based on meta-modeling to implement API testing. In version 1.0.0
 8. Powerful environment and global variable defining
 9. Enable/disable/override assertion executions within the hierarchical approach
 10. Comprehensive result analysis
-11. Execute any sub tree of the lazy tree. In other words, you can execute test suite, test scenario, test cases, api call independently 
+11. Independent executions
 12. Test case grouping and group execution
 
 # Hierarchical approach
@@ -60,6 +60,34 @@ You can configure lot of things with this hierarchical approach. Please refer to
  
  Any of above value can be override any of above configured value at any level. Additionally Lazy provides enable/disable facility for default
   assertions. As a example if you need to skip response time assertion for one API call you can configure it very easily.
+  
+# Motivates for code reusability and modularization
+
+# Empower with template engine facility
+
+# Simple configurations and high user friendliness
+
+# Improve test case implementation efficiency
+
+# Powerful assertion methods
+
+# Empower with pre-actions and post-action
+
+# Powerful environment and global variable defining
+
+# Enable/disable/override assertion executions within the hierarchical approach
+
+# Comprehensive result analysis
+
+# Independent executions
+You can execute you suite from any level. It has three main ways you can execute your test suite. 
+1. Execute complete suite
+2. Execute your suite from a given point (From a given test suite, From a given test scenario,  from a given test case, from a given test case)
+3. Define execution groups and execute given group
+
+# Test case grouping and group execution
+
+
 
 # Ready to use these Features
 1. Lazy Language - DSL implementation to improve user friendliness
@@ -286,12 +314,12 @@ public class SmileLazySuite {
 public class Sample0Executor {
 
     @Autowired
-    private LazyManager lazyManager;
+    private Executor executor;
 
     @Test
     public void executeSampleLazySuite() {
         try {
-            LazyExecutionData results = lazyManager.executeLazySuite(SmileLazySuite0.populateSampleLazySuite());
+            LazyExecutionData results = executor.executeLazySuite(SmileLazySuite0.populateSampleLazySuite());
             Assert.assertNotNull(results);
         } catch (Exception ex) {
             Assert.fail("Success scenarios should not be failed", ex);
@@ -375,4 +403,7 @@ createGlobalVariableFromResponseBody(String key, String jsonPath) | Post actions
 These are the only existing Actions for now. We will be improving this section with the next releases. 
 
 
-#
+# Executor API
+ Executor     | Description
+ --- | --- 
+ 

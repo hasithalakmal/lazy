@@ -21,6 +21,7 @@ import com.smile24es.lazy.manager.TestSuiteManager;
 import com.smile24es.lazy.suite.sample1.SampleLazySuite1;
 import com.smile24es.lazy.suite.sample1.suites.AccountApiTestSuite;
 import com.smile24es.lazy.utils.JsonUtil;
+import com.smile24es.lazy.wrapper.Executor;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,25 +43,13 @@ public class LazyManagerTest {
     public static final String SUCCESS_SCENARIOS_SHOULD_NOT_BE_FAILED = "Success scenarios should not be failed";
     private static final Logger LOGGER = LoggerFactory.getLogger(LazyManagerTest.class);
     @Autowired
-    private LazyManager lazyManager;
-
-    @Autowired
-    private TestSuiteManager testSuiteManager;
-
-    @Autowired
-    private TestScenarioManager testScenarioManager;
-
-    @Autowired
-    private TestCaseManager testCaseManager;
-
-    @Autowired
-    private ApiCallManager apiCallManager;
+    private Executor executor;
 
     @Test
     public void executeSampleLazySuite() {
         try {
             LazySuite sampleLazySuite = SampleLazySuite1.populateSampleLazySuite();
-            LazyExecutionData results = lazyManager.executeLazySuite(sampleLazySuite);
+            LazyExecutionData results = executor.executeLazySuite(sampleLazySuite);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getTestSuiteExecutionData());
             String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
@@ -77,7 +66,7 @@ public class LazyManagerTest {
             TestSuite sampleTestSuite = AccountApiTestSuite.getAccountApiTestSuite();
             DefaultValues defaultValues = createDefaultValues();
             Stack stack = new Stack(defaultValues);
-            TestSuiteExecutionData results = testSuiteManager.executeTestSuite(sampleTestSuite, stack);
+            TestSuiteExecutionData results = executor.executeTestSuite(sampleTestSuite, stack);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getTestScenarioExecutionData());
             String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
@@ -95,7 +84,7 @@ public class LazyManagerTest {
             DefaultValues defaultValues = createDefaultValues();
             defaultValues.setContextPath("account-api");
             Stack stack = new Stack(defaultValues);
-            TestScenarioExecutionData results = testScenarioManager.executeTestScenario(sampleTestScenario, stack);
+            TestScenarioExecutionData results = executor.executeTestScenario(sampleTestScenario, stack);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getTestCaseExecutionDataList());
             String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
@@ -113,7 +102,7 @@ public class LazyManagerTest {
             DefaultValues defaultValues = createDefaultValues();
             defaultValues.setContextPath("account-api");
             Stack stack = new Stack(defaultValues);
-            TestCaseExecutionData results = testCaseManager.executeTestCase(sampleTestCase, stack);
+            TestCaseExecutionData results = executor.executeTestCase(sampleTestCase, stack);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getApiCallExecutionDataList());
             String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
@@ -131,7 +120,7 @@ public class LazyManagerTest {
             DefaultValues defaultValues = createDefaultValues();
             defaultValues.setContextPath("account-api");
             Stack stack = new Stack(defaultValues);
-            ApiCallExecutionData results = apiCallManager.executeApiCall(sampleApiCall, stack);
+            ApiCallExecutionData results = executor.executeApiCall(sampleApiCall, stack);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getAssertionExecutionDataList());
             String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
@@ -148,7 +137,7 @@ public class LazyManagerTest {
             LazySuite sampleLazySuite = SampleLazySuite1.populateSampleLazySuite();
             LazyExecutionGroup lazyExecutionGroup = new LazyExecutionGroup();
             lazyExecutionGroup.setApiCallExecutionGroupNames(Arrays.asList("BVT"));
-            LazyExecutionData results = lazyManager.executeLazySuite(sampleLazySuite, lazyExecutionGroup);
+            LazyExecutionData results = executor.executeLazySuite(sampleLazySuite, lazyExecutionGroup);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getTestSuiteExecutionData());
             String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
@@ -165,7 +154,7 @@ public class LazyManagerTest {
             LazySuite sampleLazySuite = SampleLazySuite1.populateSampleLazySuite();
             LazyExecutionGroup lazyExecutionGroup = new LazyExecutionGroup();
             lazyExecutionGroup.setTestCaseExecutionGroupNames(Arrays.asList("BVT_TC"));
-            LazyExecutionData results = lazyManager.executeLazySuite(sampleLazySuite, lazyExecutionGroup);
+            LazyExecutionData results = executor.executeLazySuite(sampleLazySuite, lazyExecutionGroup);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getTestSuiteExecutionData());
             String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
@@ -183,7 +172,7 @@ public class LazyManagerTest {
             LazyExecutionGroup lazyExecutionGroup = new LazyExecutionGroup();
             lazyExecutionGroup.setTestCaseExecutionGroupNames(Arrays.asList("BVT_TC"));
             lazyExecutionGroup.setApiCallExecutionGroupNames(Arrays.asList("BVT"));
-            LazyExecutionData results = lazyManager.executeLazySuite(sampleLazySuite, lazyExecutionGroup);
+            LazyExecutionData results = executor.executeLazySuite(sampleLazySuite, lazyExecutionGroup);
             Assert.assertNotNull(results);
             Assert.assertNotNull(results.getTestSuiteExecutionData());
             String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);

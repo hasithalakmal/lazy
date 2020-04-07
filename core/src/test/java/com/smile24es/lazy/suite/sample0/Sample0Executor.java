@@ -7,6 +7,7 @@ import com.smile24es.lazy.beans.executor.LazyExecutionData;
 import com.smile24es.lazy.manager.LazyManager;
 import com.smile24es.lazy.suite.sample1.SampleLazySuite1;
 import com.smile24es.lazy.utils.JsonUtil;
+import com.smile24es.lazy.wrapper.Executor;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +19,12 @@ import org.testng.Assert;
 public class Sample0Executor {
 
     @Autowired
-    private LazyManager lazyManager;
+    private Executor executor;
 
     @Test
     public void executeSampleLazySuite() {
         try {
-            LazyExecutionData results = lazyManager.executeLazySuite(SmileLazySuite0.populateSampleLazySuite());
+            LazyExecutionData results = executor.executeLazySuite(SmileLazySuite0.populateSampleLazySuite());
             Assert.assertNotNull(results);
         } catch (Exception ex) {
             Assert.fail("Success scenarios should not be failed", ex);
