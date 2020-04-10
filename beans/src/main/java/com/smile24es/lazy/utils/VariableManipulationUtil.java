@@ -43,4 +43,8 @@ public class VariableManipulationUtil {
 
         return givenValue;
     }
+
+    public static boolean isEnvironmentVariable(String givenValue, Stack stack){
+        return StringUtils.isNotBlank(givenValue) && givenValue.contains(LAZY_START_PLACEHOLDER) && givenValue.contains(LAZY_END_PLACEHOLDER);
+    }
 }

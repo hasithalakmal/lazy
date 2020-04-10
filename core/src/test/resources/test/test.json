@@ -1,0 +1,38 @@
+{
+  "accountId": 1,
+  "accountName": "Smile24",
+  "isActive": true,
+  "monthlyCharge": 10.75,
+  "phone":{
+    "number":"12345678"
+  },
+  "settings": [
+    {
+      "id": 840,
+      "key": "payment.period",
+      "value": "monthly",
+      "isActive": true,
+      "chargeForFeature": 11.9
+    },
+    {
+      "id": 841,
+      "key": "payment.method",
+      "value": "direct",
+      "isActive": true,
+      "chargeForFeature": 12.86,
+      "supportedMethods": [
+        {
+          "type": "Card",
+          "minValue": 1
+        },
+        {
+          "type": "Cash",
+          "allowd": [
+            "SLR",
+            "USD"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -6,6 +6,7 @@ public enum DataTypeEnum {
     INTEGER("INTEGER"),
     DOUBLE("DOUBLE"),
     BOOLEAN("BOOLEAN"),
+    ARRAY("ARRAY"),
     OBJECT("OBJECT");
 
     private String value;

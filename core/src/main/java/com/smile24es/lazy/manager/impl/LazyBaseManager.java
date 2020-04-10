@@ -96,9 +96,9 @@ public class LazyBaseManager {
                             resultRecodeTo.setAssertionName(assertionResult.getAssertionRule().getAssertionRuleName());
                             resultRecodeTo.setActualResult(assertionResult.getActualValue());
                             resultRecodeTo.setExpectedResult(assertionResult.getAssertionRule().getAssertionValue() == null ? null :
-                                  assertionResult.getAssertionRule().getAssertionValue().getExpectedValue1());
+                                  assertionResult.getAssertionRule().getAssertionValue().getExpectedStringValue1());
                             resultRecodeTo.setStatus(assertionResult.getAssertionStatus());
-                            resultRecodeTo.setIsPass(assertionResult.getPass().toString());
+                            resultRecodeTo.setIsPass(assertionResult.getPass() == null ? "UNKNOWN" : assertionResult.getPass().toString());
                             resultSummeryTo.getResultRecodeToList().add(resultRecodeTo);
                         }
                     }

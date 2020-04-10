@@ -4,7 +4,6 @@ public class ErrorCodes {
 
     public static final String UNKNOWN_SERVER_ERROR = "Lazy-10000";
     public static final String NOT_IMPLEMENTED = "Lazy-10010";
-    public static final String JSON_HANDLING_EXCEPTION = "Lazy-10020";
 
     //HTTP method call related exceptions
     public static final String URI_SYNTAX_ERROR = "Lazy-20000";
@@ -32,6 +31,12 @@ public class ErrorCodes {
     public static final String INVALID_TEMPLATE = "Lazy-70030";
     public static final String TEMPLATE_PROCESSING_ERROR = "Lazy-70040";
     public static final String INVALID_TEMPLATE_DATA_OBJECT = "Lazy-70050";
+
+    //JSON Related Exception
+    public static final String JSON_HANDLING_EXCEPTION = "Lazy-80010";
+    public static final String INVALID_VALUE_TYPE = "Lazy-80020";
+
+
 
     private ErrorCodes() {
         //This is a private constructor

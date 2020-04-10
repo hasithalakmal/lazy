@@ -3,6 +3,7 @@ package com.smile24es.lazy.beans.enums;
 public enum AssertionResultStatus {
 
     EXECUTED("EXECUTED"),
+    FAILED("FAILED"),
     SKIPPED("SKIPPED"),
     INVALID_RULE("INVALID_RULE"),
     NOT_IMPLEMENTED("NOT_IMPLEMENTED");

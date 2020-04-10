@@ -22,6 +22,7 @@ public class AssertionResult implements Serializable {
     private String actualValue;
     private Boolean pass;
     private String assertionStatus;
+    private String assertionNotes;
 
     public AssertionResult(int resultId, String actualValue) {
         this.resultId = resultId;
@@ -90,13 +91,13 @@ public class AssertionResult implements Serializable {
     }
 
     public Boolean getPass() {
+        if (pass == null) {
+            pass = Boolean.FALSE;
+        }
         return pass;
     }
 
     public void setPass(Boolean pass) {
-        if (pass == null) {
-            pass = Boolean.FALSE;
-        }
         this.pass = pass;
     }
 
@@ -117,6 +118,14 @@ public class AssertionResult implements Serializable {
 
     public void setAssertionStatus(String assertionStatus) {
         this.assertionStatus = assertionStatus;
+    }
+
+    public String getAssertionNotes() {
+        return assertionNotes;
+    }
+
+    public void setAssertionNotes(String assertionNotes) {
+        this.assertionNotes = assertionNotes;
     }
 
     @Override
@@ -141,6 +150,7 @@ public class AssertionResult implements Serializable {
               .append(pass, that.pass)
               .append(assertionRule, that.assertionRule)
               .append(assertionStatus, that.assertionStatus)
+              .append(assertionNotes, that.assertionNotes)
               .isEquals();
     }
 
@@ -156,6 +166,7 @@ public class AssertionResult implements Serializable {
               .append(pass)
               .append(assertionRule)
               .append(assertionStatus)
+              .append(assertionNotes)
               .toHashCode();
     }
 
@@ -171,6 +182,7 @@ public class AssertionResult implements Serializable {
               ", pass=" + pass +
               ", assertionRule=" + assertionRule +
               ", assertionStatus=" + assertionStatus +
+              ", assertionNotes=" + assertionNotes +
               '}';
     }
 }

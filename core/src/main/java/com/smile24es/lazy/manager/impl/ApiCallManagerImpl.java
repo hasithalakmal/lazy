@@ -79,21 +79,21 @@ public class ApiCallManagerImpl extends LazyBaseManager implements com.smile24es
             apiCall.getStack().setGlobalEnvironment(globalEnvironment);
 
             ApiCallExecutionData apiCallExecutionData = null;
+            LazyApiCallResponse response = null;
             try {
                 LOGGER.info("Executing api call - [{}] - [{}]", apiCallId, apiCallName);
                 apiCallExecutionData = new ApiCallExecutionData();
-                LazyApiCallResponse response = apiCallHandler.executeApiCall(apiCall, apiCallExecutionData);
+                response = apiCallHandler.executeApiCall(apiCall, apiCallExecutionData);
                 apiCallHandler.printExecutionData(apiCallExecutionData);
                 LOGGER.info("Executed api call - [{}] - [{}]", apiCallId, apiCallName);
-
-                executeAssertions(idDto, apiCall, response, apiCallExecutionData);
-                executePostActions(lazySuite, apiCall, apiCallName, apiCallId, response);
             } catch (Exception ex) {
                 LOGGER.warn("API call execution failed since skipping the assertion execution");
                 apiCallHandler.printExecutionDataInError(apiCallExecutionData, ex);
-                executeAssertions(idDto, apiCall, null, apiCallExecutionData);
-                executePostActionsOnFailed(lazySuite, apiCall, apiCallName, apiCallId);
             }
+
+            executeAssertions(idDto, apiCall, response, apiCallExecutionData);
+            executePostActions(lazySuite, apiCall, apiCallName, apiCallId, response);
+
             testCaseExecutionData.getApiCallExecutionDataList().add(apiCallExecutionData);
             LOGGER.info("Completed execution of api call - [{}] - [{}]", apiCallId, apiCallName);
             idDto.setApiCallId(apiCallId + 1);

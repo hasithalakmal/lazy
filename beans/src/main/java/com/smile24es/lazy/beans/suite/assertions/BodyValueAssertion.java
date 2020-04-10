@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.io.Serializable;
+import java.util.List;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -21,6 +22,42 @@ public class BodyValueAssertion extends AssertionValue implements Serializable {
         super(expectedValue);
         this.jsonPath = jsonPath;
     }
+
+    public BodyValueAssertion(String jsonPath, Integer expectedValue) {
+        super(expectedValue);
+        this.jsonPath = jsonPath;
+    }
+
+    public BodyValueAssertion(String jsonPath, Double expectedValue) {
+        super(expectedValue);
+        this.jsonPath = jsonPath;
+    }
+
+    public BodyValueAssertion(String jsonPath, Boolean expectedValue) {
+        super(expectedValue);
+        this.jsonPath = jsonPath;
+    }
+
+    public BodyValueAssertion(String jsonPath, String expectedValue1, String expectedValue2) {
+        super(expectedValue1, expectedValue2);
+        this.jsonPath = jsonPath;
+    }
+
+    public BodyValueAssertion(String jsonPath, Integer expectedValue1, Integer expectedValue2) {
+        super(expectedValue1, expectedValue2);
+        this.jsonPath = jsonPath;
+    }
+
+    public BodyValueAssertion(String jsonPath, Double expectedValue1, Double expectedValue2) {
+        super(expectedValue1, expectedValue2);
+        this.jsonPath = jsonPath;
+    }
+
+    public BodyValueAssertion(String jsonPath, List expectedValues) {
+        super(expectedValues);
+        this.jsonPath = jsonPath;
+    }
+
 
     public String getJsonPath() {
         return jsonPath;

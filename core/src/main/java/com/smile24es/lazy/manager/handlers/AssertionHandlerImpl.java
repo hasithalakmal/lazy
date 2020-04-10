@@ -1,11 +1,10 @@
 package com.smile24es.lazy.manager.handlers;
 
-import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.JsonPath;
 import com.smile24es.lazy.beans.dto.IdDto;
 import com.smile24es.lazy.beans.enums.AssertionOperationEnum;
 import com.smile24es.lazy.beans.enums.AssertionResultStatus;
 import com.smile24es.lazy.beans.enums.DataSourceEnum;
+import com.smile24es.lazy.beans.enums.DataTypeEnum;
 import com.smile24es.lazy.beans.executor.ApiCallExecutionData;
 import com.smile24es.lazy.beans.executor.AssertionExecutionData;
 import com.smile24es.lazy.beans.executor.AssertionResult;
@@ -17,13 +16,17 @@ import com.smile24es.lazy.beans.suite.assertions.BodyValueAssertion;
 import com.smile24es.lazy.common.ErrorCodes;
 import com.smile24es.lazy.exception.LazyCoreException;
 import com.smile24es.lazy.exception.LazyException;
+import com.smile24es.lazy.utils.JsonPathReaderUtil;
 import com.smile24es.lazy.utils.JsonUtil;
 import com.smile24es.lazy.utils.VariableManipulationUtil;
+import net.minidev.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import static java.lang.Boolean.FALSE;
 import static java.text.MessageFormat.format;
@@ -173,8 +176,7 @@ public class AssertionHandlerImpl {
         Integer assertionResultId = idDto.getAssertionResultId();
 
         if (lazyApiCallResponse == null) {
-            assertionResult = new AssertionResult(assertionResultId, null, false,
-                  AssertionResultStatus.SKIPPED.getValue());
+            assertionResult = new AssertionResult(assertionResultId, null, false, AssertionResultStatus.SKIPPED.getValue());
         } else if (dataSource == DataSourceEnum.RESPONSE_CODE) {
             assertionResult = responseCodeAssertion(assertionResultId, lazyApiCallResponse, assertionRule, operation);
         } else if (dataSource == DataSourceEnum.RESPONSE_TIME) {
@@ -209,58 +211,496 @@ public class AssertionHandlerImpl {
         return assertionResult;
     }
 
+    /**
+     * The method to handle response body assertion
+     *
+     * @param assertionResultId
+     * @param apiCall
+     * @param lazyApiCallResponse
+     * @param assertionRule
+     * @param operation
+     * @return
+     */
     private AssertionResult requestBodyAssertion(Integer assertionResultId, ApiCall apiCall, LazyApiCallResponse lazyApiCallResponse,
                                                  AssertionRule assertionRule, AssertionOperationEnum operation) {
         String responseBody = lazyApiCallResponse.getResponseBody();
         AssertionResult assertionResult = new AssertionResult(assertionResultId, responseBody);
         AssertionValue expectedValue = assertionRule.getAssertionValue();
         if (expectedValue == null) {
-            if (operation == AssertionOperationEnum.NULL) {
-                assertionResult.setPass(StringUtils.isBlank(responseBody));
-            } else if (operation == AssertionOperationEnum.NOT_NULL) {
-                assertionResult.setPass(StringUtils.isNotBlank(responseBody));
-            } else {
-                assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
-            }
+            hanldeEntireBodyValueAssertions(assertionRule, operation, responseBody, assertionResult);
         } else {
-            requestBodyValueAssertion(assertionRule, apiCall, operation, assertionResult, responseBody, expectedValue);
+            if (expectedValue instanceof BodyValueAssertion) {
+                BodyValueAssertion bodyValueAssertion = (BodyValueAssertion) expectedValue;
+                String jsonPath = bodyValueAssertion.getJsonPath();
+                //Validate provided JSON path
+                try {
+                    JsonPathReaderUtil.getValue(responseBody, jsonPath);
+                    requestBodyValueAssertion(assertionRule, apiCall, operation, assertionResult, responseBody, bodyValueAssertion);
+                } catch (Exception ex) {
+                    String error = format("Cannot read provided path [{0}]", jsonPath);
+                    LOGGER.error(error);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Exception occurred while reading JSON path.", ex);
+                    }
+                    assertionResult.setPass(FALSE);
+                    assertionResult.setAssertionStatus(AssertionResultStatus.INVALID_RULE.getValue());
+                    assertionResult.setAssertionNotes(error);
+                }
+            } else {
+                assertionResultForInvalidAssertionValue(assertionRule, expectedValue, assertionResult);
+            }
         }
         return assertionResult;
     }
 
-    private void requestBodyValueAssertion(AssertionRule assertionRule, ApiCall apiCall, AssertionOperationEnum operation,
-                                           AssertionResult assertionResult, String responseBody, AssertionValue assertionValue) {
-        if (assertionValue instanceof BodyValueAssertion) {
-            BodyValueAssertion bodyValueAssertion = (BodyValueAssertion) assertionValue;
-            Object document = Configuration.defaultConfiguration().jsonProvider().parse(responseBody);
-            String actualValue = JsonPath.read(document, bodyValueAssertion.getJsonPath());
-            String expectedValue = VariableManipulationUtil.getVariableValue(bodyValueAssertion.getExpectedValue1(), apiCall.getStack());
+    private void hanldeEntireBodyValueAssertions(AssertionRule assertionRule, AssertionOperationEnum operation, String responseBody, AssertionResult assertionResult) {
+        //This is the assertion for entire response body value
+        if (operation == AssertionOperationEnum.NULL) {
+            assertionResult.setPass(StringUtils.isBlank(responseBody));
+        } else if (operation == AssertionOperationEnum.NOT_NULL) {
+            assertionResult.setPass(StringUtils.isNotBlank(responseBody));
+        } else {
+            assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
+        }
+    }
 
-            if (operation == AssertionOperationEnum.NULL) {
-                assertionResult.setPass(StringUtils.isBlank(actualValue));
-            } else if (operation == AssertionOperationEnum.NOT_NULL) {
-                assertionResult.setPass(StringUtils.isNotBlank(actualValue));
-            } else if (operation == AssertionOperationEnum.EQUAL) {
-                assertionResult.setPass(actualValue.equals(expectedValue));
-            } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
-                assertionResult.setPass(!actualValue.equals(expectedValue));
-            } else if (operation == AssertionOperationEnum.CONTAINS) {
-                assertionResult.setPass(actualValue.contains(expectedValue));
-            } else if (operation == AssertionOperationEnum.NOT_CONTAINS) {
-                assertionResult.setPass(!actualValue.contains(expectedValue));
+    /**
+     * This method handles response body value related assertions
+     *
+     * @param assertionRule
+     * @param apiCall
+     * @param operation
+     * @param assertionResult
+     * @param responseBody
+     * @param bodyValueAssertion
+     */
+    private void requestBodyValueAssertion(AssertionRule assertionRule, ApiCall apiCall, AssertionOperationEnum operation,
+                                           AssertionResult assertionResult, String responseBody, BodyValueAssertion bodyValueAssertion) {
+        String jsonPath = bodyValueAssertion.getJsonPath();
+        boolean isEnvironmentVariable = VariableManipulationUtil.isEnvironmentVariable(bodyValueAssertion.getExpectedStringValue1(), apiCall.getStack());
+        DataTypeEnum dataType = bodyValueAssertion.getDataType();
+
+        if (dataType == null) {
+            handleAssertionsInDefaultImplementation(assertionRule, apiCall, operation, assertionResult, responseBody, bodyValueAssertion, jsonPath, isEnvironmentVariable);
+        } else {
+            if (dataType == DataTypeEnum.STRING) {
+                handleStringValueAssertion(assertionRule, apiCall, operation, assertionResult, responseBody, bodyValueAssertion, jsonPath, isEnvironmentVariable);
+            } else if (dataType == DataTypeEnum.INTEGER) {
+                handleIntegerValueAssertion(assertionRule, apiCall, operation, assertionResult, responseBody, bodyValueAssertion, jsonPath, isEnvironmentVariable);
+            } else if (dataType == DataTypeEnum.DOUBLE) {
+                handleDoubleValueAssertions(assertionRule, apiCall, operation, assertionResult, responseBody, bodyValueAssertion, jsonPath, isEnvironmentVariable);
+            } else if (dataType == DataTypeEnum.BOOLEAN) {
+                handleBooleanValueAssertion(assertionRule, apiCall, operation, assertionResult, responseBody, bodyValueAssertion, jsonPath, isEnvironmentVariable);
+            } else if (dataType == DataTypeEnum.ARRAY) {
+                handleArrayValueAssertion(assertionRule, operation, assertionResult, responseBody, bodyValueAssertion, jsonPath);
             } else {
-                assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
+                assertionResult.setPass(FALSE);
+                assertionResult.setAssertionStatus(AssertionResultStatus.INVALID_RULE.getValue());
+                assertionResult.setAssertionNotes("Provided assertion data type has invalid");
+            }
+        }
+    }
+
+    private void handleArrayValueAssertion(AssertionRule assertionRule, AssertionOperationEnum operation, AssertionResult assertionResult, String responseBody, BodyValueAssertion bodyValueAssertion, String jsonPath) {
+        JSONArray actualValues;
+        try {
+            actualValues = JsonPathReaderUtil.getJSONArray(responseBody, jsonPath);
+        } catch (Exception ex) {
+            String error = format("Provided JSON path [{0}] not contains a JSONArray value", jsonPath);
+            LOGGER.error(error);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(error , ex);
+            }
+            assertionResult.setPass(FALSE);
+            assertionResult.setAssertionStatus(AssertionResultStatus.FAILED.getValue());
+            assertionResult.setAssertionNotes(error);
+            return;
+        }
+
+        List<Object> expectedValues = bodyValueAssertion.getExpectedValueList();
+        if (operation == AssertionOperationEnum.NULL) {
+            assertionResult.setPass(actualValues == null);
+        } else if (operation == AssertionOperationEnum.NOT_NULL) {
+            assertionResult.setPass(actualValues != null);
+        } else if (actualValues == null) {
+            assertionResult.setPass(false);
+        } else if (operation == AssertionOperationEnum.CONTAINS_EXACTLY) {
+            handleContainsExactly(assertionResult, actualValues, expectedValues);
+        } else if (operation == AssertionOperationEnum.CONTAINS_ANY) {
+            handleContainsAny(assertionResult, actualValues, expectedValues);
+        } else if (operation == AssertionOperationEnum.CONTAINS_ALL) {
+            containsAll(assertionResult, actualValues, expectedValues);
+        }  else {
+            assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
+        }
+    }
+
+    private void containsAll(AssertionResult assertionResult, JSONArray actualValues, List<Object> expectedValues) {
+        boolean isPass = true;
+        if (actualValues.size() < expectedValues.size()) {
+            isPass = false;
+        }
+        if (isPass) {
+            for(Object expectedValue: expectedValues){
+                boolean isExist = false;
+                for (Object actualValue: actualValues) {
+                    if (expectedValue.equals(actualValue)) {
+                        isExist = true;
+                        break;
+                    }
+                }
+                if (!isExist) {
+                    isPass = false;
+                    break;
+                }
+            }
+        }
+        assertionResult.setPass(isPass);
+    }
+
+    private void handleContainsAny(AssertionResult assertionResult, JSONArray actualValues, List<Object> expectedValues) {
+        boolean isPass = false;
+        for(Object expectedValue: expectedValues){
+            boolean isExist = false;
+            for (Object actualValue: actualValues) {
+                if (expectedValue.equals(actualValue)) {
+                    isExist = true;
+                    break;
+                }
+            }
+            if (isExist) {
+                isPass = true;
+                break;
+            }
+        }
+        assertionResult.setPass(isPass);
+    }
+
+    private void handleContainsExactly(AssertionResult assertionResult, JSONArray actualValues, List<Object> expectedValues) {
+        boolean isPass = true;
+        if (actualValues.size() != expectedValues.size()) {
+            isPass = false;
+        }
+        if (isPass) {
+            for (Object expectedValue : expectedValues) {
+                boolean isExist = false;
+                for (Object actualValue : actualValues) {
+                    if (expectedValue.equals(actualValue)) {
+                        isExist = true;
+                        break;
+                    }
+                }
+                if (!isExist) {
+                    isPass = false;
+                    break;
+                }
+            }
+        }
+        assertionResult.setPass(isPass);
+    }
+
+    private void handleBooleanValueAssertion(AssertionRule assertionRule, ApiCall apiCall, AssertionOperationEnum operation, AssertionResult assertionResult, String responseBody, BodyValueAssertion bodyValueAssertion, String jsonPath, boolean isEnvironmentVariable) {
+        Boolean expectedValue;
+        if (isEnvironmentVariable) {
+            String actualStringValue = VariableManipulationUtil.getVariableValue(bodyValueAssertion.getExpectedStringValue1(), apiCall.getStack());
+            try {
+                expectedValue =  Boolean.parseBoolean(actualStringValue);
+            } catch (Exception ex) {
+                String error = format("Environment variable [{0}] not contains a BOOLEAN value [{1}]",
+                      bodyValueAssertion.getExpectedStringValue1(), actualStringValue);
+                LOGGER.error(error);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(error , ex);
+                }
+                assertionResult.setPass(FALSE);
+                assertionResult.setAssertionStatus(AssertionResultStatus.INVALID_RULE.getValue());
+                assertionResult.setAssertionNotes(error);
+                return;
+            }
+        } else {
+            expectedValue = bodyValueAssertion.getExpectedBooleanValue();
+        }
+        Boolean actualValue;
+        try {
+            actualValue = JsonPathReaderUtil.getBoolean(responseBody, jsonPath);
+        } catch (Exception ex) {
+            String error = format("Provided JSON path [{0}] not contains a BOOLEAN value", jsonPath);
+            LOGGER.error(error);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(error , ex);
+            }
+            assertionResult.setPass(FALSE);
+            assertionResult.setAssertionStatus(AssertionResultStatus.FAILED.getValue());
+            assertionResult.setAssertionNotes(error);
+            return;
+        }
+        if (operation == AssertionOperationEnum.NULL) {
+            assertionResult.setPass(actualValue == null);
+        } else if (operation == AssertionOperationEnum.NOT_NULL) {
+            assertionResult.setPass(actualValue != null);
+        } else if (actualValue == null) {
+            assertionResult.setPass(false);
+        } else if (operation == AssertionOperationEnum.EQUAL) {
+            assertionResult.setPass(expectedValue.equals(actualValue));
+        } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
+            assertionResult.setPass(!expectedValue.equals(actualValue));
+        }  else {
+            assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
+        }
+    }
+
+    private void handleDoubleValueAssertions(AssertionRule assertionRule, ApiCall apiCall, AssertionOperationEnum operation, AssertionResult assertionResult, String responseBody, BodyValueAssertion bodyValueAssertion, String jsonPath, boolean isEnvironmentVariable) {
+        Double expectedValue;
+        if (isEnvironmentVariable) {
+            String actualStringValue = VariableManipulationUtil.getVariableValue(bodyValueAssertion.getExpectedStringValue1(), apiCall.getStack());
+            try {
+                expectedValue =  Double.parseDouble(actualStringValue);
+            } catch (Exception ex) {
+                String error = format("Environment variable [{0}] not contains a DOUBLE value [{1}]",
+                      bodyValueAssertion.getExpectedStringValue1(), actualStringValue);
+                LOGGER.error(error);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(error , ex);
+                }
+                assertionResult.setPass(FALSE);
+                assertionResult.setAssertionStatus(AssertionResultStatus.INVALID_RULE.getValue());
+                assertionResult.setAssertionNotes(error);
+                return;
+            }
+        } else {
+            expectedValue = bodyValueAssertion.getExpectedDoubleValue1();
+        }
+        Double actualValue;
+        try {
+            actualValue = JsonPathReaderUtil.getDouble(responseBody, jsonPath);
+        } catch (Exception ex) {
+            String error = format("Provided JSON path [{0}] not contains a DOUBLE value", jsonPath);
+            LOGGER.error(error);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(error , ex);
+            }
+            assertionResult.setPass(FALSE);
+            assertionResult.setAssertionStatus(AssertionResultStatus.FAILED.getValue());
+            assertionResult.setAssertionNotes(error);
+            return;
+        }
+        if (operation == AssertionOperationEnum.NULL) {
+            assertionResult.setPass(actualValue == null);
+        } else if (operation == AssertionOperationEnum.NOT_NULL) {
+            assertionResult.setPass(actualValue != null);
+        } else if (actualValue == null) {
+            assertionResult.setPass(false);
+        } else if (operation == AssertionOperationEnum.EQUAL) {
+            assertionResult.setPass(expectedValue.equals(actualValue));
+        } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
+            assertionResult.setPass(!expectedValue.equals(actualValue));
+        } else if (operation == AssertionOperationEnum.LESS_THAN) {
+            assertionResult.setPass(actualValue < expectedValue);
+        } else if (operation == AssertionOperationEnum.LESS_THAN_OR_EQUAL) {
+            assertionResult.setPass(actualValue <= expectedValue);
+        } else if (operation == AssertionOperationEnum.GREATER_THAN) {
+            assertionResult.setPass(actualValue > expectedValue);
+        } else if (operation == AssertionOperationEnum.GREATER_THAN_OR_EQUAL) {
+            assertionResult.setPass(actualValue >= expectedValue);
+        }  else if (operation == AssertionOperationEnum.BETWEEN) {
+            Double expectedValue2;
+            boolean isEnvironmentVariable2 = VariableManipulationUtil.isEnvironmentVariable(bodyValueAssertion.getExpectedStringValue2(), apiCall.getStack());
+            if (isEnvironmentVariable2) {
+                String actualStringValue2 = VariableManipulationUtil.getVariableValue(bodyValueAssertion.getExpectedStringValue2(), apiCall.getStack());
+                try {
+                    expectedValue2 =  Double.parseDouble(actualStringValue2);
+                } catch (Exception ex) {
+                    String error = format("Environment variable [{0}] not contains a DOUBLE value [{1}]",
+                          bodyValueAssertion.getExpectedStringValue1(), actualStringValue2);
+                    LOGGER.error(error);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug(error , ex);
+                    }
+                    assertionResult.setPass(FALSE);
+                    assertionResult.setAssertionStatus(AssertionResultStatus.INVALID_RULE.getValue());
+                    assertionResult.setAssertionNotes(error);
+                    return;
+                }
+            } else {
+                expectedValue2 = bodyValueAssertion.getExpectedDoubleValue2();
             }
 
+            if (expectedValue2 == null) {
+                assertionResult.setPass(false);
+            } else {
+                assertionResult.setPass(actualValue >= expectedValue && actualValue <= expectedValue2);
+            }
         } else {
-            assertionResultForInvalidAssertionValue(assertionRule, assertionValue, assertionResult);
+            assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
+        }
+    }
+
+    private void handleIntegerValueAssertion(AssertionRule assertionRule, ApiCall apiCall, AssertionOperationEnum operation, AssertionResult assertionResult, String responseBody, BodyValueAssertion bodyValueAssertion, String jsonPath, boolean isEnvironmentVariable) {
+        Integer expectedValue;
+        if (isEnvironmentVariable) {
+            String actualStringValue = VariableManipulationUtil.getVariableValue(bodyValueAssertion.getExpectedStringValue1(), apiCall.getStack());
+            try {
+                expectedValue =  Integer.parseInt(actualStringValue);
+            } catch (Exception ex) {
+                String error = format("Environment variable [{0}] not contains a INTEGER value [{1}]",
+                      bodyValueAssertion.getExpectedStringValue1(), actualStringValue);
+                LOGGER.error(error);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(error , ex);
+                }
+                assertionResult.setPass(FALSE);
+                assertionResult.setAssertionStatus(AssertionResultStatus.INVALID_RULE.getValue());
+                assertionResult.setAssertionNotes(error);
+                return;
+            }
+        } else {
+            expectedValue = bodyValueAssertion.getExpectedIntegerValue1();
+        }
+        Integer actualValue;
+        try {
+            actualValue = JsonPathReaderUtil.getInteger(responseBody, jsonPath);
+        } catch (Exception ex) {
+            String error = format("Provided JSON path [{0}] not contains a INTEGER value", jsonPath);
+            LOGGER.error(error);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(error , ex);
+            }
+            assertionResult.setPass(FALSE);
+            assertionResult.setAssertionStatus(AssertionResultStatus.FAILED.getValue());
+            assertionResult.setAssertionNotes(error);
+            return;
+        }
+        if (operation == AssertionOperationEnum.NULL) {
+            assertionResult.setPass(actualValue == null);
+        } else if (operation == AssertionOperationEnum.NOT_NULL) {
+            assertionResult.setPass(actualValue != null);
+        } else if (actualValue == null) {
+            assertionResult.setPass(false);
+        } else if (operation == AssertionOperationEnum.EQUAL) {
+            assertionResult.setPass(expectedValue.equals(actualValue));
+        } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
+            assertionResult.setPass(!expectedValue.equals(actualValue));
+        } else if (operation == AssertionOperationEnum.LESS_THAN) {
+            assertionResult.setPass(actualValue < expectedValue);
+        } else if (operation == AssertionOperationEnum.LESS_THAN_OR_EQUAL) {
+            assertionResult.setPass(actualValue <= expectedValue);
+        } else if (operation == AssertionOperationEnum.GREATER_THAN) {
+            assertionResult.setPass(actualValue > expectedValue);
+        } else if (operation == AssertionOperationEnum.GREATER_THAN_OR_EQUAL) {
+            assertionResult.setPass(actualValue >= expectedValue);
+        }  else if (operation == AssertionOperationEnum.BETWEEN) {
+            Integer expectedValue2;
+            boolean isEnvironmentVariable2 = VariableManipulationUtil.isEnvironmentVariable(bodyValueAssertion.getExpectedStringValue2(), apiCall.getStack());
+            if (isEnvironmentVariable2) {
+                String actualStringValue2 = VariableManipulationUtil.getVariableValue(bodyValueAssertion.getExpectedStringValue2(), apiCall.getStack());
+                try {
+                    expectedValue2 =  Integer.parseInt(actualStringValue2);
+                } catch (Exception ex) {
+                    String error = format("Environment variable [{0}] not contains a INTEGER value [{1}]",
+                          bodyValueAssertion.getExpectedStringValue1(), actualStringValue2);
+                    LOGGER.error(error);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug(error , ex);
+                    }
+                    assertionResult.setPass(FALSE);
+                    assertionResult.setAssertionStatus(AssertionResultStatus.INVALID_RULE.getValue());
+                    assertionResult.setAssertionNotes(error);
+                    return;
+                }
+            } else {
+                expectedValue2 = bodyValueAssertion.getExpectedIntegerValue2();
+            }
+
+            if (expectedValue2 == null) {
+                assertionResult.setPass(false);
+            } else {
+                assertionResult.setPass(actualValue >= expectedValue && actualValue <= expectedValue2);
+            }
+        } else {
+            assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
+        }
+    }
+
+    private void handleStringValueAssertion(AssertionRule assertionRule, ApiCall apiCall, AssertionOperationEnum operation, AssertionResult assertionResult, String responseBody, BodyValueAssertion bodyValueAssertion, String jsonPath, boolean isEnvironmentVariable) {
+        String expectedValue;
+        if (isEnvironmentVariable) {
+            expectedValue = VariableManipulationUtil.getVariableValue(bodyValueAssertion.getExpectedStringValue1(), apiCall.getStack());
+        } else {
+            expectedValue = bodyValueAssertion.getExpectedStringValue1();
+        }
+        String actualValue;
+        try {
+            actualValue = JsonPathReaderUtil.getString(responseBody, jsonPath);
+        } catch (Exception ex) {
+            String error = format("Provided JSON path [{0}] not contains a STRING value", jsonPath);
+            LOGGER.error(error);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(error , ex);
+            }
+            assertionResult.setPass(FALSE);
+            assertionResult.setAssertionStatus(AssertionResultStatus.FAILED.getValue());
+            assertionResult.setAssertionNotes(error);
+            return;
+        }
+        if (operation == AssertionOperationEnum.NULL) {
+            assertionResult.setPass(StringUtils.isBlank(actualValue));
+        } else if (operation == AssertionOperationEnum.NOT_NULL) {
+            assertionResult.setPass(StringUtils.isNotBlank(actualValue));
+        } else if (operation == AssertionOperationEnum.EQUAL) {
+            assertionResult.setPass(actualValue.equals(expectedValue));
+        } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
+            assertionResult.setPass(!actualValue.equals(expectedValue));
+        } else if (operation == AssertionOperationEnum.CONTAINS) {
+            assertionResult.setPass(actualValue.contains(expectedValue));
+        } else if (operation == AssertionOperationEnum.NOT_CONTAINS) {
+            assertionResult.setPass(!actualValue.contains(expectedValue));
+        } else {
+            assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
+        }
+    }
+
+    private void handleAssertionsInDefaultImplementation(AssertionRule assertionRule, ApiCall apiCall, AssertionOperationEnum operation, AssertionResult assertionResult, String responseBody, BodyValueAssertion bodyValueAssertion, String jsonPath, boolean isEnvironmentVariable) {
+        String expectedValue;
+        if (isEnvironmentVariable) {
+            expectedValue = VariableManipulationUtil.getVariableValue(bodyValueAssertion.getExpectedStringValue1(), apiCall.getStack());
+        } else {
+            expectedValue = bodyValueAssertion.getExpectedStringValue1();
+        }
+        String actualValue;
+        try {
+            actualValue = JsonPathReaderUtil.getAnyValueAsString(responseBody, jsonPath);
+        } catch (Exception ex) {
+            String error = format("Provided JSON path [{0}] not contains a STRING value", jsonPath);
+            LOGGER.error(error);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(error , ex);
+            }
+            assertionResult.setPass(FALSE);
+            assertionResult.setAssertionStatus(AssertionResultStatus.FAILED.getValue());
+            assertionResult.setAssertionNotes(error);
+            return;
+        }
+        if (operation == AssertionOperationEnum.NULL) {
+            assertionResult.setPass(StringUtils.isBlank(actualValue));
+        } else if (operation == AssertionOperationEnum.NOT_NULL) {
+            assertionResult.setPass(StringUtils.isNotBlank(actualValue));
+        } else if (operation == AssertionOperationEnum.EQUAL) {
+            assertionResult.setPass(actualValue.equals(expectedValue));
+        } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
+            assertionResult.setPass(!actualValue.equals(expectedValue));
+        } else if (operation == AssertionOperationEnum.CONTAINS) {
+            assertionResult.setPass(actualValue.contains(expectedValue));
+        } else if (operation == AssertionOperationEnum.NOT_CONTAINS) {
+            assertionResult.setPass(!actualValue.contains(expectedValue));
+        } else {
+            assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
         }
     }
 
     private AssertionResult responseTimeAssertion(Integer assertionResultId, LazyApiCallResponse lazyApiCallResponse,
                                                   AssertionRule assertionRule, AssertionOperationEnum operation) {
         AssertionValue assertionValue = assertionRule.getAssertionValue();
-        String expectedValue = assertionValue.getExpectedValue1();
+        String expectedValue = assertionValue.getExpectedStringValue1();
 
         long actualResponseTime = lazyApiCallResponse.getResponseTime();
 
@@ -278,7 +718,7 @@ public class AssertionHandlerImpl {
         } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
             assertionResult.setPass(actualResponseTime != Integer.parseInt(expectedValue));
         } else if (operation == AssertionOperationEnum.BETWEEN) {
-            String expectedValue2 = assertionValue.getExpectedValue2();
+            String expectedValue2 = assertionValue.getExpectedStringValue2();
             assertionResult.setPass(actualResponseTime > Long.parseLong(expectedValue) && actualResponseTime < Long.parseLong(expectedValue2));
         } else {
             assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
@@ -290,18 +730,18 @@ public class AssertionHandlerImpl {
                                                   AssertionRule assertionRule, AssertionOperationEnum operation) {
         AssertionResult assertionResult;
         AssertionValue assertionValue = assertionRule.getAssertionValue();
-        String expectedValue = assertionValue.getExpectedValue1();
+        Integer expectedValue = assertionValue.getExpectedIntegerValue1();
 
         int actualResponseCode = lazyApiCallResponse.getCloseableHttpResponse().getStatusLine().getStatusCode();
         assertionResult = new AssertionResult(assertionResultId, Integer.toString(actualResponseCode));
 
         if (operation == AssertionOperationEnum.EQUAL) {
-            assertionResult.setPass(actualResponseCode == Integer.parseInt(expectedValue));
+            assertionResult.setPass(actualResponseCode == expectedValue);
         } else if (operation == AssertionOperationEnum.NOT_EQUAL) {
-            assertionResult.setPass(actualResponseCode != Integer.parseInt(expectedValue));
+            assertionResult.setPass(actualResponseCode != expectedValue);
         } else if (operation == AssertionOperationEnum.BETWEEN) {
-            String expectedValue2 = assertionValue.getExpectedValue2();
-            assertionResult.setPass(actualResponseCode > Integer.parseInt(expectedValue) && actualResponseCode < Integer.parseInt(expectedValue2));
+            Integer expectedValue2 = assertionValue.getExpectedIntegerValue2();
+            assertionResult.setPass(actualResponseCode > expectedValue && actualResponseCode < expectedValue2);
         } else {
             assertionResultForInvalidOperation(assertionRule, operation, assertionResult);
         }

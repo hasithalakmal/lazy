@@ -1,5 +1,6 @@
 package com.smile24es.lazy;
 
+import com.smile24es.BaseTest;
 import com.smile24es.lazy.beans.DefaultValues;
 import com.smile24es.lazy.beans.LazySuite;
 import com.smile24es.lazy.beans.executor.ApiCallExecutionData;
@@ -18,6 +19,7 @@ import com.smile24es.lazy.manager.LazyManager;
 import com.smile24es.lazy.manager.TestCaseManager;
 import com.smile24es.lazy.manager.TestScenarioManager;
 import com.smile24es.lazy.manager.TestSuiteManager;
+import com.smile24es.lazy.suite.sample0.SmileLazySuite0;
 import com.smile24es.lazy.suite.sample1.SampleLazySuite1;
 import com.smile24es.lazy.suite.sample1.suites.AccountApiTestSuite;
 import com.smile24es.lazy.utils.JsonUtil;
@@ -36,14 +38,25 @@ import static com.smile24es.lazy.suite.sample1.scenarios.CreateAccountTestScenar
 import static com.smile24es.lazy.suite.sample1.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase;
 import static com.smile24es.lazy.common.SampleDefaultValues.createDefaultValues;
 
-@SpringBootTest(classes = LazyApplication.class)
-public class LazyManagerTest {
+public class LazyManagerTest extends BaseTest {
 
-    public static final String EXECUTION_RESULTS_LOG = "Execution results \n [{}]";
-    public static final String SUCCESS_SCENARIOS_SHOULD_NOT_BE_FAILED = "Success scenarios should not be failed";
     private static final Logger LOGGER = LoggerFactory.getLogger(LazyManagerTest.class);
     @Autowired
     private Executor executor;
+
+    @Test
+    public void accountApiSample0(){
+        try {
+            LazySuite sampleLazySuite = SmileLazySuite0.populateSampleLazySuite();
+            LazyExecutionData results = executor.executeLazySuite(sampleLazySuite);
+            Assert.assertNotNull(results);
+            Assert.assertNotNull(results.getTestSuiteExecutionData());
+//            String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
+//            LOGGER.debug(EXECUTION_RESULTS_LOG, resultString);
+        } catch (Exception ex) {
+            Assert.fail(SUCCESS_SCENARIOS_SHOULD_NOT_BE_FAILED, ex);
+        }
+    }
 
     @Test
     public void executeSampleLazySuite() {

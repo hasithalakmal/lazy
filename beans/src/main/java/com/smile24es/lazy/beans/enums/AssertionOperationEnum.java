@@ -13,6 +13,9 @@ public enum AssertionOperationEnum {
     CONTAINS("CONTAINS"), //key and value
     NOT_CONTAINS("NOT_CONTAINS"), //key and value
     BETWEEN("BETWEEN"), //key and value
+    CONTAINS_EXACTLY("CONTAINS_EXACTLY"), //For List
+    CONTAINS_ALL("CONTAINS_ALL"), //For List
+    CONTAINS_ANY("CONTAINS_ANY"), //For List
     TRUE("TRUE"); //condition
 
     private String value;

@@ -34,7 +34,7 @@ public class AccountApiCalls {
         AssertionRuleGroup defaultCreateAssertionGroup = new AssertionRuleGroup("Test case assertion group");
         List<AssertionRule> assertionRules = defaultCreateAssertionGroup.getAssertionRules();
         //Performance impacted assertion
-        AssertionRule responseTimeAssertion = Assert.responseTimeAssertionGreaterThanGivenMilliSeconds("100");
+        AssertionRule responseTimeAssertion = Assert.responseTimeLessThan("100");
         responseTimeAssertion.setAssertionRuleKey("high.performance.response.time.assertion");
         assertionRules.add(responseTimeAssertion);
         return defaultCreateAssertionGroup;
@@ -114,8 +114,8 @@ public class AccountApiCalls {
         apiCall2.disableAssertion("created.http.status.assertion");
         apiCall2.setUri("service/accounts/{{lazy.global.created.account.id}}");
         apiCall2.addAssertionGroup(accountAssertionGroup1("{{lazy.global.created.account.name}}"));
-        apiCall2.addAssertionRule(Assert.equalBodyValueAssertion("$['accountId']", "{{lazy.global.created.account.id}}"));
-        apiCall2.addAssertionRule(Assert.responseCodeAssertion("200"));
+        apiCall2.addAssertionRule(Assert.equal("$['accountId']", "{{lazy.global.created.account.id}}"));
+        apiCall2.addAssertionRule(Assert.responseCodeEqual(200));
         return apiCall2;
     }
 
@@ -129,16 +129,16 @@ public class AccountApiCalls {
         apiCall2.enableAssertion("created.http.status.assertion");
         apiCall2.setUri("service/accounts/{{lazy.global.created.account.id}}");
         apiCall2.addAssertionGroup(accountAssertionGroup1("{{lazy.global.created.account.name}}"));
-        apiCall2.addAssertionRule(Assert.equalBodyValueAssertion("$['accountId']", "{{lazy.global.created.account.id}}"));
-        apiCall2.addAssertionRule(Assert.responseCodeAssertion("200"));
+        apiCall2.addAssertionRule(Assert.equal("$['accountId']", "{{lazy.global.created.account.id}}"));
+        apiCall2.addAssertionRule(Assert.responseCodeEqual(200));
         return apiCall2;
     }
 
     private static AssertionRuleGroup accountAssertionGroup1(String expectedAccountName) {
         AssertionRuleGroup assertionRuleGroup1 = new AssertionRuleGroup("Create Account success assertions");
         List<AssertionRule> assertionRules = assertionRuleGroup1.getAssertionRules();
-        assertionRules.add(Assert.notNullBodyValueAssertion("$['accountName']"));
-        assertionRules.add(Assert.equalBodyValueAssertion("$['accountName']", expectedAccountName));
+        assertionRules.add(Assert.notNull("$['accountName']"));
+        assertionRules.add(Assert.equal("$['accountName']", expectedAccountName));
         return assertionRuleGroup1;
     }
 }
