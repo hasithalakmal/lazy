@@ -49,7 +49,7 @@ public class Assert {
     //              Response Body value Assertion                  //
     /////////////////////////////////////////////////////////////////
     public static AssertionRule nullValue(String jsonPath) {
-        return notNull(format("Body value not null assertion - {0} ", jsonPath), jsonPath);
+        return notNull(format("{0} == NULL", jsonPath), jsonPath);
     }
 
     public static AssertionRule nullValue(String assertionName, String jsonPath) {
@@ -57,11 +57,27 @@ public class Assert {
     }
 
     public static AssertionRule notNull(String jsonPath) {
-        return notNull(format("Body value not null assertion - {0} ", jsonPath), jsonPath);
+        return notNull(format("{0} != NULL", jsonPath), jsonPath);
     }
 
     public static AssertionRule notNull(String assertionName, String jsonPath) {
         return new AssertionRule(assertionName, DataSourceEnum.BODY, AssertionOperationEnum.NOT_NULL, new BodyValueAssertion(jsonPath));
+    }
+
+    public static AssertionRule isKeyAvailable(String jsonPath) {
+        return isKeyAvailable(format("{0} IS EXIST", jsonPath), jsonPath);
+    }
+
+    public static AssertionRule isKeyAvailable(String assertionName, String jsonPath) {
+        return new AssertionRule(assertionName, DataSourceEnum.BODY, AssertionOperationEnum.IS_KEY_AVAILABLE, new BodyValueAssertion(jsonPath));
+    }
+
+    public static AssertionRule isKeyUnavailable(String jsonPath) {
+        return isKeyUnavailable(format("{0} IS NOT EXIST", jsonPath), jsonPath);
+    }
+
+    public static AssertionRule isKeyUnavailable(String assertionName, String jsonPath) {
+        return new AssertionRule(assertionName, DataSourceEnum.BODY, AssertionOperationEnum.IS_KEY_NOT_AVAILABLE, new BodyValueAssertion(jsonPath));
     }
 
 

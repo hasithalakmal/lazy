@@ -16,6 +16,8 @@ public enum AssertionOperationEnum {
     CONTAINS_EXACTLY("CONTAINS_EXACTLY"), //For List
     CONTAINS_ALL("CONTAINS_ALL"), //For List
     CONTAINS_ANY("CONTAINS_ANY"), //For List
+    IS_KEY_AVAILABLE("IS_KEY_AVAILABLE"),
+    IS_KEY_NOT_AVAILABLE("IS_KEY_NOT_AVAILABLE"),
     TRUE("TRUE"); //condition
 
     private String value;

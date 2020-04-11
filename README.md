@@ -110,7 +110,8 @@ Also lazy framework has provided lot of wrapper methods to do your task with one
 # Powerful assertion methods
 We have provided a separate assertion API. Usually assertion API will contains null/notnull/equals and condition assertions only. Then developer
  has to implement the rest of the things. But with Lazy assertion API we have supported for the large scale of assertion methods. Even for the initial
-  release we have provided a set of assertions which exceeds usual assertion API.
+  release we have provided a set of assertions which exceeds usual assertion API. Assertion API has empowered with JSON path integration. We have
+   used this JSON path implementation to provide high usability. [https://github.com/json-path/JsonPath]. 
 
 # Empower with pre-actions and post-action
 There are some actions that we need to execute on before or after the api-call. Then we can define actions and we can assign that actions to a api
@@ -467,6 +468,55 @@ responseTimeAssertionGreaterThanGivenMilliSeconds(String time) | Validate respon
 responseTimeAssertionGreaterThanGivenMilliSeconds(String assertionName, String time)  | Validate response time against to the provided milliseconds with assertion name
 responseCodeAssertion(String code) | HTTP response code value assertion
 responseCodeAssertion(String assertionName, String code) | HTTP response code value assertion with assertion name
+
+We have use JSON path to provide very powerful and easy way to write assertions. Please refer JSON path documentation [https://github.com/json-path
+/JsonPath]. You can validate your JSON path with this [http://jsonpath.herokuapp.com/]. 
+
+This is the sample JSON response and valid JSON path based assertions for your references. 
+```json
+{
+  "accountId": 1,
+  "accountName": "Smile24",
+  "isActive": true,
+  "monthlyCharge": 10.75,
+  "phone": {
+    "number": "12345678"
+  },
+  "settings": [
+    {
+      "id": 840,
+      "key": "payment.period",
+      "value": "monthly",
+      "isActive": true,
+      "chargeForFeature": 11.9
+    },
+    {
+      "id": 841,
+      "key": "payment.method",
+      "value": "direct",
+      "isActive": true,
+      "chargeForFeature": 12.86,
+      "supportedMethods": [
+        {
+          "type": "Card",
+          "minValue": 1
+        },
+        {
+          "type": "Cash",
+          "allowd": [
+            "SLR",
+            "USD"
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+Please refer to the assertion rules
+
+
 
 # Action API
 Lazy Action API provides some pre define actions you can execute before or after API call execution. API call supports for pre and post actions

@@ -33,8 +33,6 @@ public class AccountApiCall {
         getAccountApiCall.addAssertionRule(Assert.notNull("$.settings[0].value"));
         getAccountApiCall.addAssertionRule(Assert.notNull("$.settings[0].isActive"));
         getAccountApiCall.addAssertionRule(Assert.notNull("$.settings[0].chargeForFeature"));
-        //TODO - Key availability on json
-//        getAccountApiCall.addAssertionRule(Assert.nullBodyValueAssertion("$.settings[0].chargeForFeature"));
         getAccountApiCall.addAssertionRule(Assert.notNull("$.settings[1].id"));
         getAccountApiCall.addAssertionRule(Assert.notNull("$.settings[1].key"));
         getAccountApiCall.addAssertionRule(Assert.notNull("$.settings[1].value"));
@@ -45,6 +43,9 @@ public class AccountApiCall {
         getAccountApiCall.addAssertionRule(Assert.notNull("$.settings[1].supportedMethods[0].minValue"));
         getAccountApiCall.addAssertionRule(Assert.notNull("$.settings[1].supportedMethods[1].type"));
         getAccountApiCall.addAssertionRule(Assert.notNull("$.settings[1].supportedMethods[1].allowed"));
+
+        getAccountApiCall.addAssertionRule(Assert.isKeyAvailable("$.accountName"));
+        getAccountApiCall.addAssertionRule(Assert.isKeyUnavailable("$.invalidKey"));
 
         //Equal assertions
         getAccountApiCall.addAssertionRule(Assert.equal("$.accountId", 1));
@@ -98,8 +99,7 @@ public class AccountApiCall {
         getAccountApiCall.addAssertionRule(Assert.containsExactly("$.settings[?(@.key=='payment.period')].value", Arrays.asList("monthly")));
         getAccountApiCall.addAssertionRule(Assert.containsExactly("$.settings[?(@.supportedMethods)].id", Arrays.asList(841)));
         getAccountApiCall.addAssertionRule(Assert.containsExactly("$.settings[?(@.supportedMethods)].supportedMethods.[?(@.type == 'Card')].minValue", Arrays.asList(1)));
-        getAccountApiCall.addAssertionRule(Assert.containsExactly("$.settings[?(@.supportedMethods)].supportedMethods.[?(@.type == 'Cash')].allowed[*]",
-              Arrays.asList("SLR", "USD")));
+        getAccountApiCall.addAssertionRule(Assert.containsExactly("$.settings[?(@.supportedMethods)].supportedMethods.[?(@.type == 'Cash')].allowed[*]", Arrays.asList("SLR", "USD")));
 
         return getAccountApiCall;
     }
@@ -122,6 +122,7 @@ public class AccountApiCall {
         getAccountApiCall.setUri("service/accounts/{{lazy.global.created.account.id}}");
         getAccountApiCall.addAssertionRule(Assert.responseCodeEqual(200));
         accountDetailAssertion(accountTo, getAccountApiCall);
+        getAccountApiCall.addAssertionRule(Assert.equal("custom","$.accountName","{{lazy.global.created.account.accountName}}"));
         return getAccountApiCall;
     }
 
@@ -145,6 +146,7 @@ public class AccountApiCall {
         createAccountApiCall.addAssertionRule(Assert.responseTimeLessThan("300"));
 
         createAccountApiCall.getPostActions().add(Actions.createGlobalVariableFromResponseBody("created.account.id", "$.accountId"));
+        createAccountApiCall.getPostActions().add(Actions.createGlobalVariableFromResponseBody("created.account.accountName", "$.accountName"));
 
         return createAccountApiCall;
     }
