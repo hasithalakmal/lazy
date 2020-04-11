@@ -15,7 +15,7 @@ import static java.text.MessageFormat.format;
 
 public class AccountApiCall {
 
-    public static ApiCall mockApiCall(){
+    public static ApiCall mockApiCall() {
         ApiCall getAccountApiCall = new ApiCall("Mock API Call");
         getAccountApiCall.setUri("service/lazy/test");
         getAccountApiCall.addAssertionRule(Assert.responseCodeEqual(200));
@@ -122,7 +122,7 @@ public class AccountApiCall {
         getAccountApiCall.setUri("service/accounts/{{lazy.global.created.account.id}}");
         getAccountApiCall.addAssertionRule(Assert.responseCodeEqual(200));
         accountDetailAssertion(accountTo, getAccountApiCall);
-        getAccountApiCall.addAssertionRule(Assert.equal("custom","$.accountName","{{lazy.global.created.account.accountName}}"));
+        getAccountApiCall.addAssertionRule(Assert.equal("custom", "$.accountName", "{{lazy.global.created.account.accountName}}"));
         return getAccountApiCall;
     }
 
@@ -134,7 +134,7 @@ public class AccountApiCall {
 
         Map<String, Object> templateData = new HashMap<>();
         templateData.put("accountName", accountTo.getAccountName());
-        templateData.put("accountStatus",accountTo.getAccountStatus());
+        templateData.put("accountStatus", accountTo.getAccountStatus());
         templateData.put("enterpriseId", accountTo.getEnterpriseId());
         templateData.put("versionId", accountTo.getVersionId());
         templateData.put("settings", accountTo.getAccountSettings());
@@ -159,12 +159,12 @@ public class AccountApiCall {
         accountApiCall.addAssertionRule(Assert.equal("$.enterpriseId", accountTo.getEnterpriseId()));
         accountApiCall.addAssertionRule(Assert.equal("$.versionId", accountTo.getVersionId()));
 
-        accountApiCall.addAssertionRule(Assert.notNull("Settings not null assertion","$.settings"));
+        accountApiCall.addAssertionRule(Assert.notNull("Settings not null assertion", "$.settings"));
         accountApiCall.addAssertionRule(Assert.equal("Account setting length assertion", "$.settings.length()", accountTo.getAccountSettings().size()));
 
-        accountApiCall.addAssertionRule(Assert.equal("setting - 1 - key","$.settings[0].key", accountTo.getAccountSettings().get(0).getKey()));
-        accountApiCall.addAssertionRule(Assert.equal("setting - 1 - value","$.settings[0].value", accountTo.getAccountSettings().get(0).getValue()));
-        accountApiCall.addAssertionRule(Assert.notNull("setting - 1 - id","$.settings[0].id"));
+        accountApiCall.addAssertionRule(Assert.equal("setting - 1 - key", "$.settings[0].key", accountTo.getAccountSettings().get(0).getKey()));
+        accountApiCall.addAssertionRule(Assert.equal("setting - 1 - value", "$.settings[0].value", accountTo.getAccountSettings().get(0).getValue()));
+        accountApiCall.addAssertionRule(Assert.notNull("setting - 1 - id", "$.settings[0].id"));
         accountApiCall.addAssertionRule(Assert.equal("setting - 1 - status", "$.settings[0].settingStatus", "ACTIVE"));
         accountApiCall.addAssertionRule(Assert.equal("setting - 2 - key", "$.settings[1].key", accountTo.getAccountSettings().get(1).getKey()));
         accountApiCall.addAssertionRule(Assert.equal("setting - 2 - value", "$.settings[1].value", accountTo.getAccountSettings().get(1).getValue()));

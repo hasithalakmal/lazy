@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
-public class JsonPathReaderUtilTest  extends BaseTest {
+public class JsonPathReaderUtilTest extends BaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonPathReaderUtilTest.class);
 
@@ -63,7 +63,7 @@ public class JsonPathReaderUtilTest  extends BaseTest {
     }
 
     @Test
-    public void getStringValueFromJsonErrorScenarios(){
+    public void getStringValueFromJsonErrorScenarios() {
         try {
             String jsonString = JsonUtil.readJsonFromFile("test/test.json");
             JsonPathReaderUtil.getString(jsonString, "$.isActive");

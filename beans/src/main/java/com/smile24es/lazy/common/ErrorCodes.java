@@ -37,7 +37,6 @@ public class ErrorCodes {
     public static final String INVALID_VALUE_TYPE = "Lazy-80020";
 
 
-
     private ErrorCodes() {
         //This is a private constructor
     }

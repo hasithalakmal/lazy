@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import static java.text.MessageFormat.format;
 
@@ -21,7 +20,7 @@ public class JsonPathReaderUtil {
         //This is a private constructor
     }
 
-    public static String getAnyValueAsString(String json, String path){
+    public static String getAnyValueAsString(String json, String path) {
         Object value = getValue(json, path);
         return value.toString();
     }
@@ -35,7 +34,7 @@ public class JsonPathReaderUtil {
         } else {
             String error = format("JSON value is not a string, selected value [{0}] is a [{1}]", value.toString(), value.getClass());
             LOGGER.error(error);
-            throw  new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
+            throw new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
         }
     }
 
@@ -48,7 +47,7 @@ public class JsonPathReaderUtil {
         } else {
             String error = format("JSON value is not a Integer, selected value [{0}] is a [{1}]", value, value.getClass());
             LOGGER.error(error);
-            throw  new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
+            throw new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
         }
     }
 
@@ -61,7 +60,7 @@ public class JsonPathReaderUtil {
         } else {
             String error = format("JSON value is not a Double, selected value [{0}] is a [{1}]", value.toString(), value.getClass());
             LOGGER.error(error);
-            throw  new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
+            throw new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
         }
     }
 
@@ -74,7 +73,7 @@ public class JsonPathReaderUtil {
         } else {
             String error = format("JSON value is not a Boolean, selected value [{0}] is a [{1}]", value.toString(), value.getClass());
             LOGGER.error(error);
-            throw  new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
+            throw new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
         }
     }
 
@@ -87,7 +86,7 @@ public class JsonPathReaderUtil {
         } else {
             String error = format("JSON value is not a JSONArray, selected value [{0}] is a [{1}]", value.toString(), value.getClass());
             LOGGER.error(error);
-            throw  new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
+            throw new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
         }
     }
 
@@ -100,14 +99,14 @@ public class JsonPathReaderUtil {
         } else {
             String error = format("JSON value is not a JSONArray, selected value [{0}] is a [{1}]", value.toString(), value.getClass());
             LOGGER.error(error);
-            throw  new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
+            throw new LazyCoreException(ErrorCodes.INVALID_VALUE_TYPE, error);
         }
     }
 
     public static Object getValue(String json, String path) {
         Object document = Configuration.defaultConfiguration().jsonProvider().parse(json);
         Object value = JsonPath.read(document, path);
-        LOGGER.debug("Found JSON path [{}] value [{}] with type [{}]", json, value, value == null ? null :value.getClass());
+        LOGGER.debug("Found JSON path [{}] value [{}] with type [{}]", json, value, value == null ? null : value.getClass());
         return value;
     }
 }

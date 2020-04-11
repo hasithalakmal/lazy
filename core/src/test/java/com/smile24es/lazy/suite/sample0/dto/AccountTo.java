@@ -4,11 +4,11 @@ import java.util.List;
 
 public class AccountTo {
 
+    List<AccountSetting> accountSettings;
     private String accountName;
     private String accountStatus;
     private String enterpriseId;
     private String versionId;
-    List<AccountSetting> accountSettings;
 
     public AccountTo(String accountName, String accountStatus, String enterpriseId, String versionId, List<AccountSetting> accountSettings) {
         this.accountName = accountName;

@@ -3,8 +3,8 @@
   "accountName": "Smile24",
   "isActive": true,
   "monthlyCharge": 10.75,
-  "phone":{
-    "number":"12345678"
+  "phone": {
+    "number": "12345678"
   },
   "settings": [
     {

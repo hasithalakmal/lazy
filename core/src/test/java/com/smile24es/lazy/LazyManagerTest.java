@@ -14,11 +14,6 @@ import com.smile24es.lazy.beans.suite.Stack;
 import com.smile24es.lazy.beans.suite.TestCase;
 import com.smile24es.lazy.beans.suite.TestScenario;
 import com.smile24es.lazy.beans.suite.TestSuite;
-import com.smile24es.lazy.manager.ApiCallManager;
-import com.smile24es.lazy.manager.LazyManager;
-import com.smile24es.lazy.manager.TestCaseManager;
-import com.smile24es.lazy.manager.TestScenarioManager;
-import com.smile24es.lazy.manager.TestSuiteManager;
 import com.smile24es.lazy.suite.sample0.SmileLazySuite0;
 import com.smile24es.lazy.suite.sample1.SampleLazySuite1;
 import com.smile24es.lazy.suite.sample1.suites.AccountApiTestSuite;
@@ -28,15 +23,14 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.testng.Assert;
 
 import java.util.Arrays;
 
+import static com.smile24es.lazy.common.SampleDefaultValues.createDefaultValues;
 import static com.smile24es.lazy.suite.sample1.apicall.AccountApiCalls.createAccountApiCall;
 import static com.smile24es.lazy.suite.sample1.scenarios.CreateAccountTestScenario.getAccountCreationTestScenario;
 import static com.smile24es.lazy.suite.sample1.testcase.CreateAccountSuccessTestCase.getCreateAccountTestCase;
-import static com.smile24es.lazy.common.SampleDefaultValues.createDefaultValues;
 
 public class LazyManagerTest extends BaseTest {
 
@@ -45,7 +39,7 @@ public class LazyManagerTest extends BaseTest {
     private Executor executor;
 
     @Test
-    public void accountApiSample0(){
+    public void accountApiSample0() {
         try {
             LazySuite sampleLazySuite = SmileLazySuite0.populateSampleLazySuite();
             LazyExecutionData results = executor.executeLazySuite(sampleLazySuite);

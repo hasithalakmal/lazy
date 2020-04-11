@@ -101,7 +101,7 @@ public class Assert {
     }
 
     public static AssertionRule equal(String jsonPath, Double value) {
-        return equal(format(EQUAL_LOG_PATTERN, DOUBLE,  jsonPath, value), jsonPath, value);
+        return equal(format(EQUAL_LOG_PATTERN, DOUBLE, jsonPath, value), jsonPath, value);
     }
 
     public static AssertionRule equal(String assertionName, String jsonPath, Double value) {
@@ -117,7 +117,6 @@ public class Assert {
         return new AssertionRule(assertionName, DataSourceEnum.BODY, AssertionOperationEnum.EQUAL,
               new BodyValueAssertion(jsonPath, value));
     }
-
 
 
     //Not Equal
@@ -140,7 +139,7 @@ public class Assert {
     }
 
     public static AssertionRule notEqual(String jsonPath, Double value) {
-        return notEqual(format(EQUAL_LOG_PATTERN, DOUBLE,  jsonPath, value), jsonPath, value);
+        return notEqual(format(EQUAL_LOG_PATTERN, DOUBLE, jsonPath, value), jsonPath, value);
     }
 
     public static AssertionRule notEqual(String assertionName, String jsonPath, Double value) {
@@ -212,7 +211,6 @@ public class Assert {
     }
 
 
-
     //Less Than
     public static AssertionRule lessThan(String jsonPath, String value) {
         return lessThan(format(LESS_THAN_LOG_PATTERN, STRING, jsonPath, value), jsonPath, value);
@@ -237,7 +235,6 @@ public class Assert {
     public static AssertionRule lessThan(String assertionName, String jsonPath, Double value) {
         return new AssertionRule(assertionName, DataSourceEnum.BODY, AssertionOperationEnum.LESS_THAN, new BodyValueAssertion(jsonPath, value));
     }
-
 
 
     //Less Than or equal

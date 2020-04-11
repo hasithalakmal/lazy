@@ -37,7 +37,7 @@ public class GetAccountTestCases {
     public static TestCase getInvalidAccount() throws LazyCoreException {
         TestCase invalidAccountGetTC = new TestCase("Get Invalid Account");
 
-        String invalidAccountId="10000-invalid";
+        String invalidAccountId = "10000-invalid";
         ErrorTo errorTo = new ErrorTo("ACC_10100", format("No account found for the given account id [{0}]", invalidAccountId), "404 NOT_FOUND");
 
         invalidAccountGetTC.getApiCalls().add(AccountApiCall.getInvalidAccountApiCall(invalidAccountId, errorTo));

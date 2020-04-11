@@ -2,7 +2,6 @@ package com.smile24es.lazy.manager.handlers;
 
 import com.smile24es.lazy.beans.DefaultValues;
 import com.smile24es.lazy.beans.environment.Environment;
-import com.smile24es.lazy.beans.suite.HeaderGroup;
 import com.smile24es.lazy.beans.suite.Stack;
 import com.smile24es.lazy.beans.suite.assertions.AssertionRule;
 import org.apache.commons.lang3.SerializationUtils;

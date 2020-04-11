@@ -15,6 +15,7 @@ import com.smile24es.lazy.beans.suite.actions.VariableCleanAction;
 import com.smile24es.lazy.beans.suite.actions.VariableDeclarationAction;
 import com.smile24es.lazy.common.ErrorCodes;
 import com.smile24es.lazy.exception.LazyException;
+import com.smile24es.lazy.utils.JsonPathReaderUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,8 +155,7 @@ public class ActionHandlerImpl {
         String jsonPath = variableDeclarationAction.getJsonPath();
         String actualValue;
         if (StringUtils.isNotBlank(jsonPath)) {
-            Object document = Configuration.defaultConfiguration().jsonProvider().parse(lazyApiCallResponse.getResponseBody());
-            actualValue = JsonPath.read(document, jsonPath);
+            actualValue = JsonPathReaderUtil.getAnyValueAsString(lazyApiCallResponse.getResponseBody(), jsonPath);
         } else {
             LOGGER.warn("JSON path is empty for key [{}], since complete response body assigned to variable",
                   variableDeclarationAction.getVariableKey());

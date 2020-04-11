@@ -81,7 +81,7 @@ public class AccountApiCalls {
     }
 
     public static ApiCall createAccountApiCallWithTemplateFileComplex() throws LazyCoreException {
-        ApiCall apiCall1 = new ApiCall( "Create Account - Logical template");
+        ApiCall apiCall1 = new ApiCall("Create Account - Logical template");
         apiCall1.setUri("service/accounts");
         apiCall1.setHttpMethod("POST");
 
@@ -125,7 +125,7 @@ public class AccountApiCalls {
      * @return
      */
     public static ApiCall getAccountApiCall2() {
-        ApiCall apiCall2 = new ApiCall( "Get Account by Id");
+        ApiCall apiCall2 = new ApiCall("Get Account by Id");
         apiCall2.enableAssertion("created.http.status.assertion");
         apiCall2.setUri("service/accounts/{{lazy.global.created.account.id}}");
         apiCall2.addAssertionGroup(accountAssertionGroup1("{{lazy.global.created.account.name}}"));
