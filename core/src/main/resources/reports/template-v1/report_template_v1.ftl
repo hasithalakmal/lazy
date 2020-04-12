@@ -92,7 +92,7 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [14, 3, 2, 1]
+                        data: [${report.totalExecutedTestSuitesCount}, ${report.totalSkippedTestSuitesCount}, ${report.totalFailedTestSuitesCount}, ${report.totalInvalidTestSuitesCount}]
                     }
                 ]
             };
@@ -111,7 +111,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [70, 30]
+                        data: [${report.passTestSuitesCount}, ${report.notPassTestSuitesCount}]
                     }
                 ]
             };
@@ -149,7 +149,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [70, 30]
+                        data: [${report.totalTestScenariosCount}, ${report.passTestScenariosCount}]
                     }
                 ]
             };
@@ -171,7 +171,7 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [14, 3, 2, 1]
+                        data: [${report.totalExecutedTestCasesCount}, ${report.totalSkippedTestCasesCount}, ${report.totalFailedTestCasesCount}, ${report.totalInvalidTestCasesCount}]
                     }
                 ]
             };
@@ -190,7 +190,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [70, 30]
+                        data: [${report.totalTestCasesCount}, ${report.passTestCasesCount}]
                     }
                 ]
             };
@@ -213,7 +213,7 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [14, 3, 2, 1]
+                        data: [${report.totalExecutedApiCallCount}, ${report.totalSkippedApiCallCount}, ${report.totalFailedApiCallCount}, ${report.totalInvalidApiCallCount}]
                     }
                 ]
             };
@@ -232,7 +232,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [70, 30]
+                        data: [${report.passApiCallCount}, ${report.notPassApiCallCount}]
                     }
                 ]
             };
@@ -545,17 +545,17 @@
             <div class="row">
                 <div class="col-sm-4 ">
                     <div class="alert alert-info">
-                        <strong>Total Test Suites</strong> 20
+                        <strong>Total Test Suites ${report.totalTestSuitesCount}</strong>
                     </div>
                 </div>
                 <div class="col-sm-4 ">
                     <div class="alert alert-success">
-                        <strong>Pass Test Suites</strong> 14
+                        <strong>Pass Test Suites ${report.passTestSuitesCount}</strong>
                     </div>
                 </div>
                 <div class="col-sm-4 ">
                     <div class="alert alert-danger">
-                        <strong>Failed Test Suites</strong> 6
+                        <strong>Failed Test Suites ${report.notPassTestSuitesCount}</strong>
                     </div>
                 </div>
             </div>
@@ -573,23 +573,23 @@
                         <tbody>
                         <tr>
                             <td>Executed</td>
-                            <td>14</td>
-                            <td>70%</td>
+                            <td>${report.totalExecutedTestSuitesCount}</td>
+                            <td>${report.executedTestSuitesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Skipped</td>
-                            <td>3</td>
-                            <td>15%</td>
+                            <td>${report.totalSkippedTestSuitesCount}</td>
+                            <td>${report.skippedTestSuitesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>2</td>
-                            <td>10%</td>
+                            <td>${report.totalFailedTestSuitesCount}</td>
+                            <td>${report.failedTestSuitesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Invalid</td>
-                            <td>1</td>
-                            <td>5%</td>
+                            <td>${report.totalInvalidTestSuitesCount}</td>
+                            <td>${report.invalidTestSuitesPercentage}%</td>
                         </tr>
                         </tbody>
                     </table>
@@ -616,13 +616,13 @@
                         <tbody>
                         <tr>
                             <td>Pass</td>
-                            <td>14</td>
-                            <td>70%</td>
+                            <td>${report.passTestSuitesCount}</td>
+                            <td>${report.passTestSuitesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>6</td>
-                            <td>30%</td>
+                            <td>${report.notPassTestSuitesCount}</td>
+                            <td>${report.notPassTestSuitesPercentage}%</td>
                         </tr>
                         </tbody>
                     </table>
@@ -652,23 +652,23 @@
                         <tbody>
                         <tr>
                             <td>Executed</td>
-                            <td>14</td>
-                            <td>70%</td>
+                            <td>${report.totalExecutedTestScenariosCount}</td>
+                            <td>${report.executedTestScenariosPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Skipped</td>
-                            <td>3</td>
-                            <td>15%</td>
+                            <td>${report.totalSkippedTestScenariosCount}</td>
+                            <td>${report.skippedTestScenariosPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>2</td>
-                            <td>10%</td>
+                            <td>${report.totalFailedTestScenariosCount}</td>
+                            <td>${report.failedTestScenariosPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Invalid</td>
-                            <td>1</td>
-                            <td>5%</td>
+                            <td>${report.totalInvalidTestScenariosCount}</td>
+                            <td>${report.invalidTestScenariosPercentage}%</td>
                         </tr>
                         </tbody>
                     </table>
@@ -695,13 +695,13 @@
                         <tbody>
                         <tr>
                             <td>Pass</td>
-                            <td>14</td>
-                            <td>70%</td>
+                            <td>${report.passTestScenariosCount}</td>
+                            <td>${report.passTestScenariosPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>6</td>
-                            <td>30%</td>
+                            <td>${report.notPassTestScenariosCount}</td>
+                            <td>${report.notPassTestScenariosPercentage}%</td>
                         </tr>
                         </tbody>
                     </table>
@@ -731,23 +731,23 @@
                         <tbody>
                         <tr>
                             <td>Executed</td>
-                            <td>14</td>
-                            <td>70%</td>
+                            <td>>${report.totalExecutedTestCasesCount}</td>
+                            <td>>${report.executedTestCasesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Skipped</td>
-                            <td>3</td>
-                            <td>15%</td>
+                            <td>>${report.totalSkippedTestCasesCount}</td>
+                            <td>>${report.skippedTestCasesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>2</td>
-                            <td>10%</td>
+                            <td>>${report.totalFailedTestCasesCount}</td>
+                            <td>>${report.failedTestCasesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Invalid</td>
-                            <td>1</td>
-                            <td>5%</td>
+                            <td>>${report.totalInvalidTestCasesCount}</td>
+                            <td>>${report.invalidTestCasesPercentage}%</td>
                         </tr>
                         </tbody>
                     </table>
@@ -774,13 +774,13 @@
                         <tbody>
                         <tr>
                             <td>Pass</td>
-                            <td>14</td>
-                            <td>70%</td>
+                            <td>${report.passTestCasesCount}</td>
+                            <td>${report.passTestCasesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>6</td>
-                            <td>30%</td>
+                            <td>${report.notPassTestCasesCount}</td>
+                            <td>${report.notPassTestCasesPercentage}%</td>
                         </tr>
                         </tbody>
                     </table>
@@ -810,23 +810,23 @@
                         <tbody>
                         <tr>
                             <td>Executed</td>
-                            <td>14</td>
-                            <td>70%</td>
+                            <td>${report.totalExecutedApiCallCount}</td>
+                            <td>${report.executedApiCallPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Skipped</td>
-                            <td>3</td>
-                            <td>15%</td>
+                            <td>${report.totalSkippedApiCallCount}</td>
+                            <td>${report.skippedApiCallPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>2</td>
-                            <td>10%</td>
+                            <td>${report.totalFailedApiCallCount}</td>
+                            <td>${report.failedApiCallPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Invalid</td>
-                            <td>1</td>
-                            <td>5%</td>
+                            <td>${report.totalInvalidApiCallCount}</td>
+                            <td>${report.invalidApiCallPercentage}%</td>
                         </tr>
                         </tbody>
                     </table>
@@ -853,13 +853,13 @@
                         <tbody>
                         <tr>
                             <td>Pass</td>
-                            <td>14</td>
-                            <td>70%</td>
+                            <td>${report.passApiCallCount}</td>
+                            <td>${report.passApiCallPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>6</td>
-                            <td>30%</td>
+                            <td>${report.notPassApiCallCount}</td>
+                            <td>${report.notPassApiCallPercentage}%</td>
                         </tr>
                         </tbody>
                     </table>

@@ -246,10 +246,10 @@ public class ReportDataHandler {
                     }
 
                     testCaseReport.setTotalApiCallCount(totalApiCalls);
-                    testCaseReport.setPassApiCallCount(totalApiCalls);
-                    testCaseReport.setNotPassApiCallCount(totalApiCalls);
-                    testCaseReport.setPassApiCallPercentage(getPercentage(totalApiCalls, totalApiCalls));
-                    testCaseReport.setNotPassApiCallPercentage(getPercentage(totalApiCalls, totalApiCalls));
+                    testCaseReport.setPassApiCallCount(passApiCalls);
+                    testCaseReport.setNotPassApiCallCount(notPassApiCalls);
+                    testCaseReport.setPassApiCallPercentage(getPercentage(totalApiCalls, passApiCalls));
+                    testCaseReport.setNotPassApiCallPercentage(getPercentage(totalApiCalls, notPassApiCalls));
 
                     testCaseReport.setTotalExecutedApiCallCount(executedApiCalls);
                     testCaseReport.setTotalSkippedApiCallCount(skippedApiCalls);
@@ -300,10 +300,10 @@ public class ReportDataHandler {
                 }
 
                 testScenarioReport.setTotalTestCasesCount(totalTestCase);
-                testScenarioReport.setPassTestCasesCount(totalTestCase);
-                testScenarioReport.setNotPassTestCasesCount(totalTestCase);
-                testScenarioReport.setPassTestCasesPercentage(getPercentage(totalTestCase, totalTestCase));
-                testScenarioReport.setNotPassTestCasesPercentage(getPercentage(totalTestCase, totalTestCase));
+                testScenarioReport.setPassTestCasesCount(passTestCase);
+                testScenarioReport.setNotPassTestCasesCount(notPassTestCase);
+                testScenarioReport.setPassTestCasesPercentage(getPercentage(totalTestCase, passTestCase));
+                testScenarioReport.setNotPassTestCasesPercentage(getPercentage(totalTestCase, notPassTestCase));
 
                 testScenarioReport.setTotalExecutedTestCasesCount(executedTestCase);
                 testScenarioReport.setTotalSkippedTestCasesCount(skippedTestCase);
@@ -317,10 +317,10 @@ public class ReportDataHandler {
 
                 //Populate test scenario API call data
                 testScenarioReport.setTotalApiCallCount(tsu_totalApiCalls);
-                testScenarioReport.setPassApiCallCount(tsu_totalApiCalls);
-                testScenarioReport.setNotPassApiCallCount(tsu_totalApiCalls);
-                testScenarioReport.setPassApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_totalApiCalls));
-                testScenarioReport.setNotPassApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_totalApiCalls));
+                testScenarioReport.setPassApiCallCount(tsu_passApiCalls);
+                testScenarioReport.setNotPassApiCallCount(tsu_notPassApiCalls);
+                testScenarioReport.setPassApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_passApiCalls));
+                testScenarioReport.setNotPassApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_notPassApiCalls));
 
                 testScenarioReport.setTotalExecutedApiCallCount(tsu_executedApiCalls);
                 testScenarioReport.setTotalSkippedApiCallCount(tsu_skippedApiCalls);
@@ -364,10 +364,10 @@ public class ReportDataHandler {
 
             //Test Scenario Data
             testSuiteReport.setTotalTestScenariosCount(totalTestScenario);
-            testSuiteReport.setPassTestScenariosCount(totalTestScenario);
-            testSuiteReport.setNotPassTestScenariosCount(totalTestScenario);
-            testSuiteReport.setPassTestScenariosPercentage(getPercentage(totalTestScenario, totalTestScenario));
-            testSuiteReport.setNotPassTestScenariosPercentage(getPercentage(totalTestScenario, totalTestScenario));
+            testSuiteReport.setPassTestScenariosCount(passTestScenario);
+            testSuiteReport.setNotPassTestScenariosCount(notPassTestScenario);
+            testSuiteReport.setPassTestScenariosPercentage(getPercentage(totalTestScenario, passTestScenario));
+            testSuiteReport.setNotPassTestScenariosPercentage(getPercentage(totalTestScenario, notPassTestScenario));
 
             testSuiteReport.setTotalExecutedTestScenariosCount(executedTestScenario);
             testSuiteReport.setTotalSkippedTestScenariosCount(skippedTestScenario);
@@ -439,10 +439,10 @@ public class ReportDataHandler {
 
         //Populate test suite data
         lazyReport.setTotalTestSuitesCount(totalTestSuite);
-        lazyReport.setPassTestSuitesCount(totalTestSuite);
-        lazyReport.setNotPassTestSuitesCount(totalTestSuite);
-        lazyReport.setPassTestSuitesPercentage(getPercentage(totalTestSuite, totalTestSuite));
-        lazyReport.setNotPassTestSuitesPercentage(getPercentage(totalTestSuite, totalTestSuite));
+        lazyReport.setPassTestSuitesCount(passTestSuite);
+        lazyReport.setNotPassTestSuitesCount(notPassTestSuite);
+        lazyReport.setPassTestSuitesPercentage(getPercentage(totalTestSuite, passTestSuite));
+        lazyReport.setNotPassTestSuitesPercentage(getPercentage(totalTestSuite, notPassTestSuite));
 
         lazyReport.setTotalExecutedTestSuitesCount(executedTestSuite);
         lazyReport.setTotalSkippedTestSuitesCount(skippedTestSuite);
@@ -456,10 +456,10 @@ public class ReportDataHandler {
 
         //Populate Test Scenario Data
         lazyReport.setTotalTestScenariosCount(lazy_totalTestScenario);
-        lazyReport.setPassTestScenariosCount(lazy_totalTestScenario);
-        lazyReport.setNotPassTestScenariosCount(lazy_totalTestScenario);
-        lazyReport.setPassTestScenariosPercentage(getPercentage(lazy_totalTestScenario, lazy_totalTestScenario));
-        lazyReport.setNotPassTestScenariosPercentage(getPercentage(lazy_totalTestScenario, lazy_totalTestScenario));
+        lazyReport.setPassTestScenariosCount(lazy_passTestScenario);
+        lazyReport.setNotPassTestScenariosCount(lazy_notPassTestScenario);
+        lazyReport.setPassTestScenariosPercentage(getPercentage(lazy_totalTestScenario, lazy_passTestScenario));
+        lazyReport.setNotPassTestScenariosPercentage(getPercentage(lazy_totalTestScenario, lazy_notPassTestScenario));
 
         lazyReport.setTotalExecutedTestScenariosCount(lazy_executedTestScenario);
         lazyReport.setTotalSkippedTestScenariosCount(lazy_skippedTestScenario);
@@ -475,11 +475,10 @@ public class ReportDataHandler {
 
         //Populate Test Case
         lazyReport.setTotalTestCasesCount(lazy_totalTestCases);
-        lazyReport.setTotalTestCasesCount(lazy_totalTestCases);
-        lazyReport.setPassTestCasesCount(lazy_totalTestCases);
-        lazyReport.setNotPassTestCasesCount(lazy_totalTestCases);
-        lazyReport.setPassTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_totalTestCases));
-        lazyReport.setNotPassTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_totalTestCases));
+        lazyReport.setPassTestCasesCount(lazy_passTestCases);
+        lazyReport.setNotPassTestCasesCount(lazy_notPassTestCases);
+        lazyReport.setPassTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_passTestCases));
+        lazyReport.setNotPassTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_notPassTestCases));
 
         lazyReport.setTotalExecutedTestCasesCount(lazy_executedTestCases);
         lazyReport.setTotalSkippedTestCasesCount(lazy_skippedTestCases);
@@ -493,11 +492,10 @@ public class ReportDataHandler {
 
         //Populate API calls
         lazyReport.setTotalApiCallCount(lazy_totalApiCalls);
-        lazyReport.setTotalApiCallCount(lazy_totalApiCalls);
-        lazyReport.setPassApiCallCount(lazy_totalApiCalls);
-        lazyReport.setNotPassApiCallCount(lazy_totalApiCalls);
-        lazyReport.setPassApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_totalApiCalls));
-        lazyReport.setNotPassApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_totalApiCalls));
+        lazyReport.setPassApiCallCount(lazy_passApiCalls);
+        lazyReport.setNotPassApiCallCount(lazy_notPassApiCalls);
+        lazyReport.setPassApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_passApiCalls));
+        lazyReport.setNotPassApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_notPassApiCalls));
 
         lazyReport.setTotalExecutedApiCallCount(lazy_executedApiCalls);
         lazyReport.setTotalSkippedApiCallCount(lazy_skippedApiCalls);
