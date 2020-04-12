@@ -63,6 +63,9 @@ public class AssertionResultObject {
     }
 
     public String getNotes() {
+        if (notes == null) {
+            notes = "";
+        }
         return notes;
     }
 

@@ -163,8 +163,6 @@
             }
 
 
-
-
             var lazy_tc_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
@@ -202,9 +200,6 @@
                     options: chartOptions
                 });
             }
-
-
-
 
 
             var lazy_ac_executionStatusData = {
@@ -246,11 +241,8 @@
             }
 
 
-
-
-
             //Inside Test Scenario
-<#list report.testSuiteReportList as testSuiteReport>
+            <#list report.testSuiteReportList as testSuiteReport>
             var tsu${testSuiteReport.id}_ts_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
@@ -367,7 +359,7 @@
             }
 
 
-  <#list testSuiteReport.testScenarioReports as testScenarioReport>
+            <#list testSuiteReport.testScenarioReports as testScenarioReport>
             //Charts Inside Test Scenario1
             var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
@@ -445,7 +437,7 @@
                 });
             }
 
-      <#list testScenarioReport.testCaseReports as testCaseReport>
+            <#list testScenarioReport.testCaseReports as testCaseReport>
             //Inside test case
             var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
@@ -526,9 +518,9 @@
                 });
             }
             </#list>
-        </#list>
-   </#list>
-</#list>
+            </#list>
+            </#list>
+            </#list>
         });
 
 
@@ -888,810 +880,868 @@
     <div class="panel-group" id="testSuiteData" role="tablist" aria-multiselectable="true">
         <#list report.testSuiteReportList as testSuiteReport>
             <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="testSuiteHeading${testSuiteReport.id}" style="background-color: #64B5F6">
-                <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testSuiteData" href="#testSuiteCollapse${testSuiteReport.id}"
-                       aria-expanded="false" aria-controls="testSuiteCollapse${testSuiteReport.id}">
-                        [Test Suite] ${testSuiteReport.testSuiteName} (${testSuiteReport.passTestScenariosCount}/${testSuiteReport
-                        .totalTestScenariosCount})
-                    </a>
-                </h4>
-            </div>
-            <div id="testSuiteCollapse${testSuiteReport.id}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testSuiteHeading${testSuiteReport.id}">
-                <div class="panel-body">
-                    <div class="container">
-                        <!--Test Scenario Report-->
+                <div class="panel-heading" role="tab" id="testSuiteHeading${testSuiteReport.id}" style="background-color: #64B5F6">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testSuiteData"
+                           href="#testSuiteCollapse${testSuiteReport.id}"
+                           aria-expanded="false" aria-controls="testSuiteCollapse${testSuiteReport.id}">
+                            [Test Suite] ${testSuiteReport.testSuiteName} (${testSuiteReport.passTestScenariosCount}/${testSuiteReport
+                            .totalTestScenariosCount})
+                        </a>
+                    </h4>
+                </div>
+                <div id="testSuiteCollapse${testSuiteReport.id}" class="panel-collapse collapse" role="tabpanel"
+                     aria-labelledby="testSuiteHeading${testSuiteReport.id}">
+                    <div class="panel-body">
                         <div class="container">
-                            <div class="row">
-                                <div class="col-sm-4 ">
-                                    <div class="alert alert-info">
-                                        <strong>Total Test Scenarios ${testSuiteReport.totalTestScenariosCount}</strong>
+                            <!--Test Scenario Report-->
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4 ">
+                                        <div class="alert alert-info">
+                                            <strong>Total Test Scenarios ${testSuiteReport.totalTestScenariosCount}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 ">
+                                        <div class="alert alert-success">
+                                            <strong>Pass Test Scenarios ${testSuiteReport.passTestScenariosCount}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 ">
+                                        <div class="alert alert-danger">
+                                            <strong>Failed Test Scenarios ${testSuiteReport.notPassTestScenariosCount}</strong>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 ">
-                                    <div class="alert alert-success">
-                                        <strong>Pass Test Scenarios ${testSuiteReport.passTestScenariosCount}</strong>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h3 style="color: #3E2723">Test Scenario Execution Status Summery</h3>
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Execution Status</th>
+                                                <th>Count</th>
+                                                <th>Percentage</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Executed</td>
+                                                <td>${testSuiteReport.totalExecutedTestScenariosCount}</td>
+                                                <td>${testSuiteReport.executedTestScenariosPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Skipped</td>
+                                                <td>${testSuiteReport.totalSkippedTestScenariosCount}</td>
+                                                <td>${testSuiteReport.skippedTestScenariosPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Failed</td>
+                                                <td>${testSuiteReport.totalFailedTestScenariosCount}</td>
+                                                <td>${testSuiteReport.failedTestScenariosPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Invalid</td>
+                                                <td>${testSuiteReport.totalInvalidTestScenariosCount}</td>
+                                                <td>${testSuiteReport.invalidTestScenariosPercentage}%</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body" style="width: 70%; alignment: center">
+                                                <canvas id="tsu${testSuiteReport.id}_ts_executionStatusChart" style="alignment: center"></canvas>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 ">
-                                    <div class="alert alert-danger">
-                                        <strong>Failed Test Scenarios ${testSuiteReport.notPassTestScenariosCount}</strong>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h3 style="color: #3E2723">Test Scenario Execution Result Summery</h3>
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Result</th>
+                                                <th>Count</th>
+                                                <th>Percentage</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Pass</td>
+                                                <td>${testSuiteReport.passTestScenariosCount}</td>
+                                                <td>${testSuiteReport.passTestScenariosPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Failed</td>
+                                                <td>${testSuiteReport.notPassTestScenariosCount}</td>
+                                                <td>${testSuiteReport.notPassTestScenariosPercentage}%</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <h3 style="color: #3E2723">Test Scenario Execution Status Summery</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Execution Status</th>
-                                            <th>Count</th>
-                                            <th>Percentage</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Executed</td>
-                                            <td>${testSuiteReport.totalExecutedTestScenariosCount}</td>
-                                            <td>${testSuiteReport.executedTestScenariosPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Skipped</td>
-                                            <td>${testSuiteReport.totalSkippedTestScenariosCount}</td>
-                                            <td>${testSuiteReport.skippedTestScenariosPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Failed</td>
-                                            <td>${testSuiteReport.totalFailedTestScenariosCount}</td>
-                                            <td>${testSuiteReport.failedTestScenariosPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Invalid</td>
-                                            <td>${testSuiteReport.totalInvalidTestScenariosCount}</td>
-                                            <td>${testSuiteReport.invalidTestScenariosPercentage}%</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="card">
-                                        <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu${testSuiteReport.id}_ts_executionStatusChart" style="alignment: center"></canvas>
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body" style="width: 70%; alignment: center">
+                                                <canvas id="tsu${testSuiteReport.id}_ts_executionResultChart" style="alignment: center"></canvas>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <h3 style="color: #3E2723">Test Scenario Execution Result Summery</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Result</th>
-                                            <th>Count</th>
-                                            <th>Percentage</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Pass</td>
-                                            <td>${testSuiteReport.passTestScenariosCount}</td>
-                                            <td>${testSuiteReport.passTestScenariosPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Failed</td>
-                                            <td>${testSuiteReport.notPassTestScenariosCount}</td>
-                                            <td>${testSuiteReport.notPassTestScenariosPercentage}%</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="row-space">
+                                <hr/>
+                            </div>
+                            <!--Test Case Report-->
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h3 style="color: #6D4C41">Test Case Execution Status Summery</h3>
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Execution Status</th>
+                                                <th>Count</th>
+                                                <th>Percentage</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Executed</td>
+                                                <td>${testSuiteReport.totalExecutedTestCasesCount}</td>
+                                                <td>${testSuiteReport.executedTestCasesPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Skipped</td>
+                                                <td>${testSuiteReport.totalSkippedTestCasesCount}</td>
+                                                <td>${testSuiteReport.skippedTestCasesPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Failed</td>
+                                                <td>${testSuiteReport.totalFailedTestCasesCount}</td>
+                                                <td>${testSuiteReport.failedTestCasesPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Invalid</td>
+                                                <td>${testSuiteReport.totalInvalidTestCasesCount}</td>
+                                                <td>${testSuiteReport.invalidTestCasesPercentage}%</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body" style="width: 70%; alignment: center">
+                                                <canvas id="tsu${testSuiteReport.id}_tc_executionStatusChart" style="alignment: center"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="card">
-                                        <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu${testSuiteReport.id}_ts_executionResultChart" style="alignment: center"></canvas>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h3 style="color: #6D4C41">Test Case Execution Result Summery</h3>
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Result</th>
+                                                <th>Count</th>
+                                                <th>Percentage</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Pass</td>
+                                                <td>${testSuiteReport.passTestCasesCount}</td>
+                                                <td>${testSuiteReport.passTestCasesPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Failed</td>
+                                                <td>${testSuiteReport.notPassTestCasesCount}</td>
+                                                <td>${testSuiteReport.notPassTestCasesPercentage}%</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body" style="width: 70%; alignment: center">
+                                                <canvas id="tsu${testSuiteReport.id}_tc_executionResultChart" style="alignment: center"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row-space">
+                                <hr/>
+                            </div>
+
+
+                            <!--Api Call Report-->
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h3 style="color: #A1887F">Api Call Execution Status Summery</h3>
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Execution Status</th>
+                                                <th>Count</th>
+                                                <th>Percentage</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Executed</td>
+                                                <td>${testSuiteReport.totalExecutedApiCallCount}</td>
+                                                <td>${testSuiteReport.executedApiCallPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Skipped</td>
+                                                <td>${testSuiteReport.totalSkippedApiCallCount}</td>
+                                                <td>${testSuiteReport.skippedApiCallPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Failed</td>
+                                                <td>${testSuiteReport.totalFailedApiCallCount}</td>
+                                                <td>${testSuiteReport.failedApiCallPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Invalid</td>
+                                                <td>${testSuiteReport.totalInvalidApiCallCount}</td>
+                                                <td>${testSuiteReport.invalidApiCallPercentage}%</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body" style="width: 70%; alignment: center">
+                                                <canvas id="tsu${testSuiteReport.id}_ac_executionStatusChart" style="alignment: center"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h3 style="color: #A1887F">Api Call Execution Result Summery</h3>
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Result</th>
+                                                <th>Count</th>
+                                                <th>Percentage</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Pass</td>
+                                                <td>${testSuiteReport.passApiCallCount}</td>
+                                                <td>${testSuiteReport.passApiCallPercentage}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Failed</td>
+                                                <td>${testSuiteReport.notPassApiCallCount}</td>
+                                                <td>${testSuiteReport.notPassApiCallPercentage}%</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="card">
+                                            <div class="card-body" style="width: 70%; alignment: center">
+                                                <canvas id="tsu${testSuiteReport.id}_ac_executionResultChart" style="alignment: center"></canvas>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="row-space">
-                            <hr/>
-                        </div>
-                        <!--Test Case Report-->
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <h3 style="color: #6D4C41">Test Case Execution Status Summery</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Execution Status</th>
-                                            <th>Count</th>
-                                            <th>Percentage</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Executed</td>
-                                            <td>${testSuiteReport.totalExecutedTestCasesCount}</td>
-                                            <td>${testSuiteReport.executedTestCasesPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Skipped</td>
-                                            <td>${testSuiteReport.totalSkippedTestCasesCount}</td>
-                                            <td>${testSuiteReport.skippedTestCasesPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Failed</td>
-                                            <td>${testSuiteReport.totalFailedTestCasesCount}</td>
-                                            <td>${testSuiteReport.failedTestCasesPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Invalid</td>
-                                            <td>${testSuiteReport.totalInvalidTestCasesCount}</td>
-                                            <td>${testSuiteReport.invalidTestCasesPercentage}%</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="card">
-                                        <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu${testSuiteReport.id}_tc_executionStatusChart" style="alignment: center"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <h3 style="color: #6D4C41">Test Case Execution Result Summery</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Result</th>
-                                            <th>Count</th>
-                                            <th>Percentage</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Pass</td>
-                                            <td>${testSuiteReport.passTestCasesCount}</td>
-                                            <td>${testSuiteReport.passTestCasesPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Failed</td>
-                                            <td>${testSuiteReport.notPassTestCasesCount}</td>
-                                            <td>${testSuiteReport.notPassTestCasesPercentage}%</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="card">
-                                        <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu${testSuiteReport.id}_tc_executionResultChart" style="alignment: center"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
-                        <div class="row-space">
-                            <hr/>
-                        </div>
+                        <!-- Test Scenario Panel-->
+                        <div class="panel-group" id="testScenarioData${testSuiteReport.id}" role="tablist" aria-multiselectable="true">
 
-
-                        <!--Api Call Report-->
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <h3 style="color: #A1887F">Api Call Execution Status Summery</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Execution Status</th>
-                                            <th>Count</th>
-                                            <th>Percentage</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Executed</td>
-                                            <td>${testSuiteReport.totalExecutedApiCallCount}</td>
-                                            <td>${testSuiteReport.executedApiCallPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Skipped</td>
-                                            <td>${testSuiteReport.totalSkippedApiCallCount}</td>
-                                            <td>${testSuiteReport.skippedApiCallPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Failed</td>
-                                            <td>${testSuiteReport.totalFailedApiCallCount}</td>
-                                            <td>${testSuiteReport.failedApiCallPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Invalid</td>
-                                            <td>${testSuiteReport.totalInvalidApiCallCount}</td>
-                                            <td>${testSuiteReport.invalidApiCallPercentage}%</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="card">
-                                        <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu${testSuiteReport.id}_ac_executionStatusChart" style="alignment: center"></canvas>
-                                        </div>
+                            <#list testSuiteReport.testScenarioReports as testScenarioReport>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="testScenarioHeading${testScenarioReport.id}"
+                                         style="background-color: #90CAF9">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" role="button" data-toggle="collapse"
+                                               data-parent="#testScenarioData${testSuiteReport.id}"
+                                               href="#testScenarioCollapse${testScenarioReport.id}" aria-expanded="false"
+                                               aria-controls="testSuiteCollapse${testScenarioReport.id}">
+                                                [Test Scenario] ${testScenarioReport.testScenarioName} (${testScenarioReport.passTestCasesCount}
+                                                /${testScenarioReport.totalTestCasesCount})
+                                            </a>
+                                        </h4>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <h3 style="color: #A1887F">Api Call Execution Result Summery</h3>
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Result</th>
-                                            <th>Count</th>
-                                            <th>Percentage</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>Pass</td>
-                                            <td>${testSuiteReport.passApiCallCount}</td>
-                                            <td>${testSuiteReport.passApiCallPercentage}%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Failed</td>
-                                            <td>${testSuiteReport.notPassApiCallCount}</td>
-                                            <td>${testSuiteReport.notPassApiCallPercentage}%</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="card">
-                                        <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu${testSuiteReport.id}_ac_executionResultChart" style="alignment: center"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row-space">
-                    </div>
-
-                    <!-- Test Scenario Panel-->
-                    <div class="panel-group" id="testScenarioData${testSuiteReport.id}" role="tablist" aria-multiselectable="true">
-
-            <#list testSuiteReport.testScenarioReports as testScenarioReport>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="testScenarioHeading${testScenarioReport.id}" style="background-color: #90CAF9">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testScenarioData${testSuiteReport.id}"
-                                       href="#testScenarioCollapse${testScenarioReport.id}" aria-expanded="false"
-                                       aria-controls="testSuiteCollapse${testScenarioReport.id}">
-                                        [Test Scenario] ${testScenarioReport.testScenarioName} (${testScenarioReport.passTestCasesCount}/${testScenarioReport.totalTestCasesCount})
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="testScenarioCollapse${testScenarioReport.id}" class="panel-collapse collapse" role="tabpanel"
-                                 aria-labelledby="testScenarioHeading${testScenarioReport.id}">
-                                <div class="panel-body">
-                                    <div class="container">
-                                        <!--Test Case Report-->
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-sm-4 ">
-                                                    <div class="alert alert-info">
-                                                        <strong>Total Test Case ${testScenarioReport.totalTestCasesCount}</strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4 ">
-                                                    <div class="alert alert-success">
-                                                        <strong>Pass Test Case ${testScenarioReport.passTestCasesCount}</strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-4 ">
-                                                    <div class="alert alert-danger">
-                                                        <strong>Failed Test Case ${testScenarioReport.notPassTestCasesCount}</strong>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-8">
-                                                    <h3 style="color: #3E2723">Test Case Execution Status Summery</h3>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Execution Status</th>
-                                                            <th>Count</th>
-                                                            <th>Percentage</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>Executed</td>
-                                                            <td>${testScenarioReport.totalExecutedTestCasesCount}</td>
-                                                            <td>${testScenarioReport.executedTestCasesPercentage}%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Skipped</td>
-                                                            <td>${testScenarioReport.totalSkippedTestCasesCount}</td>
-                                                            <td>${testScenarioReport.skippedTestCasesPercentage}%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Failed</td>
-                                                            <td>${testScenarioReport.totalFailedTestCasesCount}</td>
-                                                            <td>${testScenarioReport.failedTestCasesPercentage}%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Invalid</td>
-                                                            <td>${testScenarioReport.totalInvalidTestCasesCount}</td>
-                                                            <td>${testScenarioReport.invalidTestCasesPercentage}%</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="card">
-                                                        <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionStatusChart" style="alignment: center"></canvas>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-8">
-                                                    <h3 style="color: #3E2723">Test Case Execution Result Summery</h3>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Result</th>
-                                                            <th>Count</th>
-                                                            <th>Percentage</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>Pass</td>
-                                                            <td>${testScenarioReport.passTestCasesCount}</td>
-                                                            <td>${testScenarioReport.notPassTestCasesCount}%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Failed</td>
-                                                            <td>${testScenarioReport.passTestCasesPercentage}</td>
-                                                            <td>${testScenarioReport.notPassTestCasesPercentage}%</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="card">
-                                                        <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionResultChart" style="alignment: center"></canvas>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row-space">
-                                            <hr/>
-                                        </div>
-                                        <!--Api Call Report-->
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-sm-8">
-                                                    <h3 style="color: #A1887F">Api Call Execution Status Summery</h3>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Execution Status</th>
-                                                            <th>Count</th>
-                                                            <th>Percentage</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>Executed</td>
-                                                            <td>${testScenarioReport.totalExecutedApiCallCount}</td>
-                                                            <td>${testScenarioReport.executedApiCallPercentage}%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Skipped</td>
-                                                            <td>${testScenarioReport.totalSkippedApiCallCount}</td>
-                                                            <td>${testScenarioReport.skippedApiCallPercentage}%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Failed</td>
-                                                            <td>${testScenarioReport.totalFailedApiCallCount}</td>
-                                                            <td>${testScenarioReport.failedApiCallPercentage}%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Invalid</td>
-                                                            <td>${testScenarioReport.totalInvalidApiCallCount}</td>
-                                                            <td>${testScenarioReport.invalidApiCallPercentage}%</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="card">
-                                                        <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionStatusChart" style="alignment: center"></canvas>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-8">
-                                                    <h3 style="color: #A1887F">Api Call Execution Result Summery</h3>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Result</th>
-                                                            <th>Count</th>
-                                                            <th>Percentage</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>Pass</td>
-                                                            <td>${testScenarioReport.passApiCallCount}</td>
-                                                            <td>${testScenarioReport.passApiCallPercentage}%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Failed</td>
-                                                            <td>${testScenarioReport.notPassApiCallCount}</td>
-                                                            <td>${testScenarioReport.notPassApiCallPercentage}%</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-sm-4">
-                                                    <div class="card">
-                                                        <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionResultChart" style="alignment: center"></canvas>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row-space">
-                                    </div>
-
-
-                                    <!-- Test Case Panel-->
-                                    <div class="panel-group" id="testcaseData_${testSuiteReport.id}_${testScenarioReport.id}" role="tablist"
-                                         aria-multiselectable="true">
-
-                        <#list testScenarioReport.testCaseReports as testCaseReport>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading" role="tab" id="testcaseHeading${testCaseReport.id}"
-                                                 style="background-color: #BBDEFB">
-                                                <h4 class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse"
-                                                       data-parent="#testcaseData_${testSuiteReport.id}_${testScenarioReport.id}"
-                                                       href="#testcaseCollapse${testCaseReport.id}" aria-expanded="false"
-                                                       aria-controls="testSuiteCollapse${testCaseReport.id}">
-                                                        [Test Case] ${testCaseReport.testCaseName} (${testCaseReport.passApiCallCount}/${testCaseReport.totalApiCallCount})
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="testcaseCollapse${testCaseReport.id}" class="panel-collapse collapse" role="tabpanel"
-                                                 aria-labelledby="testcaseHeading${testCaseReport.id}">
-                                                <div class="panel-body">
-                                                    <div class="container">
-                                                        <!--Api call Report-->
-                                                        <div class="container">
-                                                            <div class="row">
-                                                                <div class="col-sm-4 ">
-                                                                    <div class="alert alert-info">
-                                                                        <strong>Total Api Call ${testCaseReport.totalApiCallCount}</strong>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4 ">
-                                                                    <div class="alert alert-success">
-                                                                        <strong>Pass Api Call ${testCaseReport.passApiCallCount}</strong>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4 ">
-                                                                    <div class="alert alert-danger">
-                                                                        <strong>Failed Api Call ${testCaseReport.notPassApiCallCount}</strong>
-                                                                    </div>
-                                                                </div>
+                                    <div id="testScenarioCollapse${testScenarioReport.id}" class="panel-collapse collapse" role="tabpanel"
+                                         aria-labelledby="testScenarioHeading${testScenarioReport.id}">
+                                        <div class="panel-body">
+                                            <div class="container">
+                                                <!--Test Case Report-->
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-4 ">
+                                                            <div class="alert alert-info">
+                                                                <strong>Total Test Case ${testScenarioReport.totalTestCasesCount}</strong>
                                                             </div>
-                                                            <div class="row">
-                                                                <div class="col-sm-8">
-                                                                    <h3 style="color: #3E2723">Api Call Execution Status Summery</h3>
-                                                                    <table class="table table-striped">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th>Execution Status</th>
-                                                                            <th>Count</th>
-                                                                            <th>Percentage</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td>Executed</td>
-                                                                            <td>${testCaseReport.totalExecutedApiCallCount}</td>
-                                                                            <td>${testCaseReport.executedApiCallPercentage}%</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Skipped</td>
-                                                                            <td>${testCaseReport.totalSkippedApiCallCount}</td>
-                                                                            <td>${testCaseReport.skippedApiCallPercentage}%</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Failed</td>
-                                                                            <td>${testCaseReport.totalFailedApiCallCount}</td>
-                                                                            <td>${testCaseReport.failedApiCallPercentage}%</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Invalid</td>
-                                                                            <td>${testCaseReport.totalInvalidApiCallCount}</td>
-                                                                            <td>${testCaseReport.invalidApiCallPercentage}%</td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="card">
-                                                                        <div class="card-body" style="width: 70%; alignment: center">
-                                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionStatusChart"
-                                                                                    style="alignment: center"></canvas>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                        </div>
+                                                        <div class="col-sm-4 ">
+                                                            <div class="alert alert-success">
+                                                                <strong>Pass Test Case ${testScenarioReport.passTestCasesCount}</strong>
                                                             </div>
-                                                            <div class="row">
-                                                                <div class="col-sm-8">
-                                                                    <h3 style="color: #3E2723">Api Call Execution Result Summery</h3>
-                                                                    <table class="table table-striped">
-                                                                        <thead>
-                                                                        <tr>
-                                                                            <th>Result</th>
-                                                                            <th>Count</th>
-                                                                            <th>Percentage</th>
-                                                                        </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td>Pass</td>
-                                                                            <td>${testCaseReport.passApiCallCount}</td>
-                                                                            <td>${testCaseReport.passApiCallPercentage}%</td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Failed</td>
-                                                                            <td>${testCaseReport.notPassApiCallCount}</td>
-                                                                            <td>${testCaseReport.notPassApiCallPercentage}%</td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="card">
-                                                                        <div class="card-body" style="width: 70%; alignment: center">
-                                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionResultChart"
-                                                                                    style="alignment: center"></canvas>
-                                                                        </div>
-                                                                    </div>
+                                                        </div>
+                                                        <div class="col-sm-4 ">
+                                                            <div class="alert alert-danger">
+                                                                <strong>Failed Test Case ${testScenarioReport.notPassTestCasesCount}</strong>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <h3 style="color: #3E2723">Test Case Execution Status Summery</h3>
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Execution Status</th>
+                                                                    <th>Count</th>
+                                                                    <th>Percentage</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>Executed</td>
+                                                                    <td>${testScenarioReport.totalExecutedTestCasesCount}</td>
+                                                                    <td>${testScenarioReport.executedTestCasesPercentage}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Skipped</td>
+                                                                    <td>${testScenarioReport.totalSkippedTestCasesCount}</td>
+                                                                    <td>${testScenarioReport.skippedTestCasesPercentage}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Failed</td>
+                                                                    <td>${testScenarioReport.totalFailedTestCasesCount}</td>
+                                                                    <td>${testScenarioReport.failedTestCasesPercentage}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Invalid</td>
+                                                                    <td>${testScenarioReport.totalInvalidTestCasesCount}</td>
+                                                                    <td>${testScenarioReport.invalidTestCasesPercentage}%</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="card">
+                                                                <div class="card-body" style="width: 70%; alignment: center">
+                                                                    <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionStatusChart"
+                                                                            style="alignment: center"></canvas>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="row-space">
-                                                    </div>
-
-                                                    <!-- Api Call Panel-->
-                                                    <div class="panel-group" id="apiCallData_${testSuiteReport.id}_${testScenarioReport
-                                                    .id}_${testCaseReport.id}" role="tablist" aria-multiselectable="true">
-
-                                             <#list testCaseReport.apiCallReports as apiCallReport>
-
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading" role="tab" id="apiCallHeading${apiCallReport.id}"
-                                                                 style="background-color: #E3F2FD">
-                                                                <h4 class="panel-title">
-                                                                    <a class="collapsed" role="button" data-toggle="collapse"
-                                                                       data-parent="#apiCallData_${testSuiteReport.id}_${testScenarioReport
-                                                                       .id}_${testCaseReport.id}"
-                                                                       href="#apiCallCollapse${apiCallReport.id}" aria-expanded="false"
-                                                                       aria-controls="testSuiteCollapse${apiCallReport.id}">
-                                                                        [Api Call] ${apiCallReport.name} (${apiCallReport.passAssertionsCount}/${apiCallReport.totalAssertionsCount})
-                                                                    </a>
-                                                                </h4>
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <h3 style="color: #3E2723">Test Case Execution Result Summery</h3>
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Result</th>
+                                                                    <th>Count</th>
+                                                                    <th>Percentage</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>Pass</td>
+                                                                    <td>${testScenarioReport.passTestCasesCount}</td>
+                                                                    <td>${testScenarioReport.notPassTestCasesCount}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Failed</td>
+                                                                    <td>${testScenarioReport.passTestCasesPercentage}</td>
+                                                                    <td>${testScenarioReport.notPassTestCasesPercentage}%</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="card">
+                                                                <div class="card-body" style="width: 70%; alignment: center">
+                                                                    <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionResultChart"
+                                                                            style="alignment: center"></canvas>
+                                                                </div>
                                                             </div>
-                                                            <div id="apiCallCollapse${apiCallReport.id}" class="panel-collapse collapse" role="tabpanel"
-                                                                 aria-labelledby="apiCallHeading${apiCallReport.id}">
-                                                                <div class="panel-body">
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                                                    <div class="row">
-                                                                        <div class="col-sm-4 ">
-                                                                            <div class="alert alert-info">
-                                                                                <strong>Total Assertions ${apiCallReport.totalAssertionsCount}</strong>
+                                                <div class="row-space">
+                                                    <hr/>
+                                                </div>
+                                                <!--Api Call Report-->
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <h3 style="color: #A1887F">Api Call Execution Status Summery</h3>
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Execution Status</th>
+                                                                    <th>Count</th>
+                                                                    <th>Percentage</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>Executed</td>
+                                                                    <td>${testScenarioReport.totalExecutedApiCallCount}</td>
+                                                                    <td>${testScenarioReport.executedApiCallPercentage}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Skipped</td>
+                                                                    <td>${testScenarioReport.totalSkippedApiCallCount}</td>
+                                                                    <td>${testScenarioReport.skippedApiCallPercentage}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Failed</td>
+                                                                    <td>${testScenarioReport.totalFailedApiCallCount}</td>
+                                                                    <td>${testScenarioReport.failedApiCallPercentage}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Invalid</td>
+                                                                    <td>${testScenarioReport.totalInvalidApiCallCount}</td>
+                                                                    <td>${testScenarioReport.invalidApiCallPercentage}%</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="card">
+                                                                <div class="card-body" style="width: 70%; alignment: center">
+                                                                    <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionStatusChart"
+                                                                            style="alignment: center"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-8">
+                                                            <h3 style="color: #A1887F">Api Call Execution Result Summery</h3>
+                                                            <table class="table table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Result</th>
+                                                                    <th>Count</th>
+                                                                    <th>Percentage</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>Pass</td>
+                                                                    <td>${testScenarioReport.passApiCallCount}</td>
+                                                                    <td>${testScenarioReport.passApiCallPercentage}%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Failed</td>
+                                                                    <td>${testScenarioReport.notPassApiCallCount}</td>
+                                                                    <td>${testScenarioReport.notPassApiCallPercentage}%</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="card">
+                                                                <div class="card-body" style="width: 70%; alignment: center">
+                                                                    <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionResultChart"
+                                                                            style="alignment: center"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row-space">
+                                            </div>
+
+
+                                            <!-- Test Case Panel-->
+                                            <div class="panel-group" id="testcaseData_${testSuiteReport.id}_${testScenarioReport.id}" role="tablist"
+                                                 aria-multiselectable="true">
+
+                                                <#list testScenarioReport.testCaseReports as testCaseReport>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading" role="tab" id="testcaseHeading${testCaseReport.id}"
+                                                             style="background-color: #BBDEFB">
+                                                            <h4 class="panel-title">
+                                                                <a class="collapsed" role="button" data-toggle="collapse"
+                                                                   data-parent="#testcaseData_${testSuiteReport.id}_${testScenarioReport.id}"
+                                                                   href="#testcaseCollapse${testCaseReport.id}" aria-expanded="false"
+                                                                   aria-controls="testSuiteCollapse${testCaseReport.id}">
+                                                                    [Test Case] ${testCaseReport.testCaseName} (${testCaseReport.passApiCallCount}
+                                                                    /${testCaseReport.totalApiCallCount})
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="testcaseCollapse${testCaseReport.id}" class="panel-collapse collapse" role="tabpanel"
+                                                             aria-labelledby="testcaseHeading${testCaseReport.id}">
+                                                            <div class="panel-body">
+                                                                <div class="container">
+                                                                    <!--Api call Report-->
+                                                                    <div class="container">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-4 ">
+                                                                                <div class="alert alert-info">
+                                                                                    <strong>Total Api
+                                                                                        Call ${testCaseReport.totalApiCallCount}</strong>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-4 ">
+                                                                                <div class="alert alert-success">
+                                                                                    <strong>Pass Api Call ${testCaseReport.passApiCallCount}</strong>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-sm-4 ">
+                                                                                <div class="alert alert-danger">
+                                                                                    <strong>Failed Api
+                                                                                        Call ${testCaseReport.notPassApiCallCount}</strong>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-4 ">
-                                                                            <div class="alert alert-success">
-                                                                                <strong>Pass Assertions ${apiCallReport.passAssertionsCount}</strong>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-8">
+                                                                                <h3 style="color: #3E2723">Api Call Execution Status Summery</h3>
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th>Execution Status</th>
+                                                                                        <th>Count</th>
+                                                                                        <th>Percentage</th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td>Executed</td>
+                                                                                        <td>${testCaseReport.totalExecutedApiCallCount}</td>
+                                                                                        <td>${testCaseReport.executedApiCallPercentage}%</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Skipped</td>
+                                                                                        <td>${testCaseReport.totalSkippedApiCallCount}</td>
+                                                                                        <td>${testCaseReport.skippedApiCallPercentage}%</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Failed</td>
+                                                                                        <td>${testCaseReport.totalFailedApiCallCount}</td>
+                                                                                        <td>${testCaseReport.failedApiCallPercentage}%</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Invalid</td>
+                                                                                        <td>${testCaseReport.totalInvalidApiCallCount}</td>
+                                                                                        <td>${testCaseReport.invalidApiCallPercentage}%</td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class="col-sm-4">
+                                                                                <div class="card">
+                                                                                    <div class="card-body" style="width: 70%; alignment: center">
+                                                                                        <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionStatusChart"
+                                                                                                style="alignment: center"></canvas>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-sm-4 ">
-                                                                            <div class="alert alert-danger">
-                                                                                <strong>Failed Assertions ${apiCallReport.notPassAssertionsCount}</strong>
+                                                                        <div class="row">
+                                                                            <div class="col-sm-8">
+                                                                                <h3 style="color: #3E2723">Api Call Execution Result Summery</h3>
+                                                                                <table class="table table-striped">
+                                                                                    <thead>
+                                                                                    <tr>
+                                                                                        <th>Result</th>
+                                                                                        <th>Count</th>
+                                                                                        <th>Percentage</th>
+                                                                                    </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                    <tr>
+                                                                                        <td>Pass</td>
+                                                                                        <td>${testCaseReport.passApiCallCount}</td>
+                                                                                        <td>${testCaseReport.passApiCallPercentage}%</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Failed</td>
+                                                                                        <td>${testCaseReport.notPassApiCallCount}</td>
+                                                                                        <td>${testCaseReport.notPassApiCallPercentage}%</td>
+                                                                                    </tr>
+                                                                                    </tbody>
+                                                                                </table>
                                                                             </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <h3 style="color: #3E2723">Assertions Execution Status
-                                                                                Summery</h3>
-                                                                            <table class="table table-striped">
-                                                                                <thead>
-                                                                                <tr>
-                                                                                    <th>Execution Status</th>
-                                                                                    <th>Count</th>
-                                                                                    <th>Percentage</th>
-                                                                                </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                <tr>
-                                                                                    <td>Executed</td>
-                                                                                    <td>${apiCallReport.totalExecutedAssertionsCount}</td>
-                                                                                    <td>${apiCallReport.executedAssertionsPercentage}%</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>Skipped</td>
-                                                                                    <td>${apiCallReport.totalSkippedAssertionsCount}</td>
-                                                                                    <td>${apiCallReport.skippedAssertionsPercentage}%</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>Failed</td>
-                                                                                    <td>${apiCallReport.totalFailedAssertionsCount}</td>
-                                                                                    <td>${apiCallReport.failedAssertionsPercentage}%</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>Invalid</td>
-                                                                                    <td>${apiCallReport.totalInvalidAssertionsCount}</td>
-                                                                                    <td>${apiCallReport.invalidAssertionsPercentage}%</td>
-                                                                                </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                        <div class="col-sm-4">
-                                                                            <div class="card">
-                                                                                <div class="card-body" style="width: 70%; alignment: center">
-                                                                                    <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionStatusChart"
-                                                                                            style="alignment: center"></canvas>
+                                                                            <div class="col-sm-4">
+                                                                                <div class="card">
+                                                                                    <div class="card-body" style="width: 70%; alignment: center">
+                                                                                        <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionResultChart"
+                                                                                                style="alignment: center"></canvas>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <h3 style="color: #3E2723">Assertions Execution Result
-                                                                                Summery</h3>
-                                                                            <table class="table table-striped">
-                                                                                <thead>
-                                                                                <tr>
-                                                                                    <th>Result</th>
-                                                                                    <th>Count</th>
-                                                                                    <th>Percentage</th>
-                                                                                </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                <tr>
-                                                                                    <td>Pass</td>
-                                                                                    <td>${apiCallReport.passAssertionsCount}</td>
-                                                                                    <td>${apiCallReport.passAssertionsPercentage}%</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>Failed</td>
-                                                                                    <td>${apiCallReport.notPassAssertionsCount}</td>
-                                                                                    <td>${apiCallReport.notPassAssertionsPercentage}%</td>
-                                                                                </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                        <div class="col-sm-4">
-                                                                            <div class="card">
-                                                                                <div class="card-body" style="width: 70%; alignment: center">
-                                                                                    <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionResultChart"
-                                                                                            style="alignment: center"></canvas>
+                                                                </div>
+
+                                                                <div class="row-space">
+                                                                </div>
+
+                                                                <!-- Api Call Panel-->
+                                                                <div class="panel-group" id="apiCallData_${testSuiteReport.id}_${testScenarioReport
+                                                                .id}_${testCaseReport.id}" role="tablist" aria-multiselectable="true">
+
+                                                                    <#list testCaseReport.apiCallReports as apiCallReport>
+
+                                                                        <div class="panel panel-default">
+                                                                            <div class="panel-heading" role="tab"
+                                                                                 id="apiCallHeading${apiCallReport.id}"
+                                                                                 style="background-color: #E3F2FD">
+                                                                                <h4 class="panel-title">
+                                                                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                                                                       data-parent="#apiCallData_${testSuiteReport.id}_${testScenarioReport
+                                                                                       .id}_${testCaseReport.id}"
+                                                                                       href="#apiCallCollapse${apiCallReport.id}"
+                                                                                       aria-expanded="false"
+                                                                                       aria-controls="testSuiteCollapse${apiCallReport.id}">
+                                                                                        [Api Call] ${apiCallReport.name}
+                                                                                        (${apiCallReport.passAssertionsCount}
+                                                                                        /${apiCallReport.totalAssertionsCount})
+                                                                                    </a>
+                                                                                </h4>
+                                                                            </div>
+                                                                            <div id="apiCallCollapse${apiCallReport.id}"
+                                                                                 class="panel-collapse collapse" role="tabpanel"
+                                                                                 aria-labelledby="apiCallHeading${apiCallReport.id}">
+                                                                                <div class="panel-body">
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-4 ">
+                                                                                            <div class="alert alert-info">
+                                                                                                <strong>Total
+                                                                                                    Assertions ${apiCallReport.totalAssertionsCount}</strong>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-4 ">
+                                                                                            <div class="alert alert-success">
+                                                                                                <strong>Pass
+                                                                                                    Assertions ${apiCallReport.passAssertionsCount}</strong>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-sm-4 ">
+                                                                                            <div class="alert alert-danger">
+                                                                                                <strong>Failed
+                                                                                                    Assertions ${apiCallReport.notPassAssertionsCount}</strong>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-8">
+                                                                                            <h3 style="color: #3E2723">Assertions Execution Status
+                                                                                                Summery</h3>
+                                                                                            <table class="table table-striped">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th>Execution Status</th>
+                                                                                                    <th>Count</th>
+                                                                                                    <th>Percentage</th>
+                                                                                                </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                <tr>
+                                                                                                    <td>Executed</td>
+                                                                                                    <td>${apiCallReport.totalExecutedAssertionsCount}</td>
+                                                                                                    <td>${apiCallReport.executedAssertionsPercentage}
+                                                                                                        %
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>Skipped</td>
+                                                                                                    <td>${apiCallReport.totalSkippedAssertionsCount}</td>
+                                                                                                    <td>${apiCallReport.skippedAssertionsPercentage}
+                                                                                                        %
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>Failed</td>
+                                                                                                    <td>${apiCallReport.totalFailedAssertionsCount}</td>
+                                                                                                    <td>${apiCallReport.failedAssertionsPercentage}%
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>Invalid</td>
+                                                                                                    <td>${apiCallReport.totalInvalidAssertionsCount}</td>
+                                                                                                    <td>${apiCallReport.invalidAssertionsPercentage}
+                                                                                                        %
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                        <div class="col-sm-4">
+                                                                                            <div class="card">
+                                                                                                <div class="card-body"
+                                                                                                     style="width: 70%; alignment: center">
+                                                                                                    <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionStatusChart"
+                                                                                                            style="alignment: center"></canvas>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-8">
+                                                                                            <h3 style="color: #3E2723">Assertions Execution Result
+                                                                                                Summery</h3>
+                                                                                            <table class="table table-striped">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th>Result</th>
+                                                                                                    <th>Count</th>
+                                                                                                    <th>Percentage</th>
+                                                                                                </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                <tr>
+                                                                                                    <td>Pass</td>
+                                                                                                    <td>${apiCallReport.passAssertionsCount}</td>
+                                                                                                    <td>${apiCallReport.passAssertionsPercentage}%
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>Failed</td>
+                                                                                                    <td>${apiCallReport.notPassAssertionsCount}</td>
+                                                                                                    <td>${apiCallReport.notPassAssertionsPercentage}
+                                                                                                        %
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                        <div class="col-sm-4">
+                                                                                            <div class="card">
+                                                                                                <div class="card-body"
+                                                                                                     style="width: 70%; alignment: center">
+                                                                                                    <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionResultChart"
+                                                                                                            style="alignment: center"></canvas>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row-space">
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-12">
+                                                                                            <h3 style="color: #3E2723">Request/Response Details</h3>
+                                                                                            <table class="table table-striped">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th>Key</th>
+                                                                                                    <th>Value</th>
+                                                                                                </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                <tr>
+                                                                                                    <td>HTTP Metod</td>
+                                                                                                    <td>${apiCallReport.httpMethod}</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>URL</td>
+                                                                                                    <td>${apiCallReport.url}</td>
+                                                                                                </tr>
+                                                                                                <#if apiCallReport.requestBody?has_content>
+                                                                                                    <tr>
+                                                                                                        <td>Request Body</td>
+                                                                                                        <td>
+                                                                                                            ${apiCallReport.requestBody}
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </#if>
+                                                                                                <tr>
+                                                                                                    <td>Header List</td>
+                                                                                                    <td>
+                                                                                                        ${apiCallReport.headers}
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>Execution time</td>
+                                                                                                    <td>${apiCallReport.executionTime}</td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>HTTP status code</td>
+                                                                                                    <td>${apiCallReport.httpStatusCode}</td>
+                                                                                                </tr>
+                                                                                                <#if apiCallReport.response?has_content>
+                                                                                                    <tr>
+                                                                                                        <td>Response</td>
+                                                                                                        <td>
+                                                                                                            ${apiCallReport.response}
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </#if>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-12">
+                                                                                            <h3 style="color: #3E2723">Assertion Results</h3>
+                                                                                            <table class="table table-striped">
+                                                                                                <thead>
+                                                                                                <tr>
+                                                                                                    <th>Id</th>
+                                                                                                    <th>Name</th>
+                                                                                                    <th>Pass</th>
+                                                                                                    <th>Status</th>
+                                                                                                </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                <#list apiCallReport.assertions as assertion>
+                                                                                                    <tr>
+                                                                                                        <td>${assertion.id}</td>
+                                                                                                        <td>${assertion.name}</td>
+                                                                                                        <td>${assertion.isPass}</td>
+                                                                                                        <td>${assertion.status}</td>
+                                                                                                        <td>${assertion.notes}</td>
+                                                                                                    </tr>
+                                                                                                </#list>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div>
+
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-
-                                                                    <div class="row-space">
-                                                                    </div>
-
-                                                                    <div class="row">
-                                                                        <div class="col-sm-8">
-                                                                            <h3 style="color: #3E2723">Assertions Execution Status
-                                                                                Summery</h3>
-                                                                            <table class="table table-striped">
-                                                                                <thead>
-                                                                                <tr>
-                                                                                    <th>Key</th>
-                                                                                    <th>Value</th>
-                                                                                </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                <tr>
-                                                                                    <td>HTTP Metod</td>
-                                                                                    <td>${apiCallReport.httpMethod}</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>URL</td>
-                                                                                    <td>${apiCallReport.url}</td>
-                                                                                </tr>
-                                                                                 <#if apiCallReport.requestBody?has_content>
-                                                                                    <tr>
-                                                                                        <td>Request Body</td>
-                                                                                        <td>
-                                                                                            ${apiCallReport.requestBody}
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                 </#if>
-                                                                                <tr>
-                                                                                    <td>Header List</td>
-                                                                                    <td>
-                                                                                        ${apiCallReport.headers}
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>Execution time</td>
-                                                                                    <td>${apiCallReport.executionTime}</td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td>HTTP status code</td>
-                                                                                    <td>${apiCallReport.httpStatusCode}</td>
-                                                                                </tr>
-                                                                                 <#if apiCallReport.response?has_content>
-                                                                                    <tr>
-                                                                                        <td>Response</td>
-                                                                                        <td>
-                                                                                            ${apiCallReport.response}
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                 </#if>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-
+                                                                    </#list>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                             </#list>
                                                     </div>
-                                                </div>
+                                                </#list>
                                             </div>
                                         </div>
-                        </#list>
                                     </div>
                                 </div>
-                            </div>
+                            </#list>
                         </div>
-            </#list>
                     </div>
                 </div>
             </div>
-        </div>
         </#list>
     </div>
 </div>
