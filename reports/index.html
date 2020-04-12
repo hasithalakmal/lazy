@@ -85,7 +85,7 @@
                 }
             };
 
-            var tsu1_ts1_executionStatusData = {
+            var tsu1_ts_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
                     {
@@ -95,16 +95,16 @@
                     }
                 ]
             };
-            var tsu1_ts1_executionStatusChart = document.getElementById("tsu1_ts1_executionStatusChart");
-            if (tsu1_ts1_executionStatusChart) {
-                new Chart(tsu1_ts1_executionStatusChart, {
+            var tsu1_ts_executionStatusChart = document.getElementById("tsu1_ts_executionStatusChart");
+            if (tsu1_ts_executionStatusChart) {
+                new Chart(tsu1_ts_executionStatusChart, {
                     type: 'pie',
-                    data: tsu1_ts1_executionStatusData,
+                    data: tsu1_ts_executionStatusData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_ts1_executionResultData = {
+            var tsu1_ts_executionResultData = {
                 labels: ['Pass', 'Fail'],
                 datasets: [
                     {
@@ -114,22 +114,100 @@
                     }
                 ]
             };
-            var tsu1_ts1_executionResultChart = document.getElementById("tsu1_ts1_executionResultChart");
-            if (tsu1_ts1_executionResultChart) {
-                new Chart(tsu1_ts1_executionResultChart, {
+            var tsu1_ts_executionResultChart = document.getElementById("tsu1_ts_executionResultChart");
+            if (tsu1_ts_executionResultChart) {
+                new Chart(tsu1_ts_executionResultChart, {
                     type: 'pie',
-                    data: tsu1_ts1_executionResultData,
+                    data: tsu1_ts_executionResultData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_ts1_tc_executionStatusData = {
+            var tsu1_tc_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
                         data: [90, 5, 5, 0]
+                    }
+                ]
+            };
+            var tsu1_tc_executionStatusChart = document.getElementById("tsu1_tc_executionStatusChart");
+            if (tsu1_tc_executionStatusChart) {
+                new Chart(tsu1_tc_executionStatusChart, {
+                    type: 'pie',
+                    data: tsu1_tc_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_tc_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [75, 25]
+                    }
+                ]
+            };
+            var tsu1_tc_executionResultChart = document.getElementById("tsu1_tc_executionResultChart");
+            if (tsu1_tc_executionResultChart) {
+                new Chart(tsu1_tc_executionResultChart, {
+                    type: 'pie',
+                    data: tsu1_tc_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ac_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [95, 0, 5, 0]
+                    }
+                ]
+            };
+
+            var tsu1_ac_executionStatusChart = document.getElementById("tsu1_ac_executionStatusChart");
+            if (tsu1_ac_executionStatusChart) {
+                new Chart(tsu1_ac_executionStatusChart, {
+                    type: 'pie',
+                    data: tsu1_ac_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ac_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [90, 10]
+                    }
+                ]
+            };
+            var tsu1_ac_executionResultChart = document.getElementById("tsu1_ac_executionResultChart");
+            if (tsu1_ac_executionResultChart) {
+                new Chart(tsu1_ac_executionResultChart, {
+                    type: 'pie',
+                    data: tsu1_ac_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+            //Charts Inside Test Scenario1
+            var tsu1_ts1_tc_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
                     }
                 ]
             };
@@ -148,7 +226,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [75, 25]
+                        data: [70, 30]
                     }
                 ]
             };
@@ -167,11 +245,10 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [95, 0, 5, 0]
+                        data: [14, 3, 2, 1]
                     }
                 ]
             };
-
             var tsu1_ts1_ac_executionStatusChart = document.getElementById("tsu1_ts1_ac_executionStatusChart");
             if (tsu1_ts1_ac_executionStatusChart) {
                 new Chart(tsu1_ts1_ac_executionStatusChart, {
@@ -187,7 +264,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [90, 10]
+                        data: [70, 30]
                     }
                 ]
             };
@@ -196,45 +273,6 @@
                 new Chart(tsu1_ts1_ac_executionResultChart, {
                     type: 'pie',
                     data: tsu1_ts1_ac_executionResultData,
-                    options: chartOptions
-                });
-            }
-
-            //Charts Inside Test Scenario1
-            var tsu1_ts1_tc1_executionStatusData = {
-                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
-                datasets: [
-                    {
-                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
-                        borderWidth: 0,
-                        data: [14, 3, 2, 1]
-                    }
-                ]
-            };
-            var tsu1_ts1_tc1_executionStatusChart = document.getElementById("tsu1_ts1_tc1_executionStatusChart");
-            if (tsu1_ts1_tc1_executionStatusChart) {
-                new Chart(tsu1_ts1_tc1_executionStatusChart, {
-                    type: 'pie',
-                    data: tsu1_ts1_tc1_executionStatusData,
-                    options: chartOptions
-                });
-            }
-
-            var tsu1_ts1_tc1_ac_executionResultData = {
-                labels: ['Pass', 'Fail'],
-                datasets: [
-                    {
-                        backgroundColor: ["#28a745", "#dc3545"],
-                        borderWidth: 0,
-                        data: [70, 30]
-                    }
-                ]
-            };
-            var tsu1_ts1_tc1_ac_executionResultChart = document.getElementById("tsu1_ts1_tc1_ac_executionResultChart");
-            if (tsu1_ts1_tc1_ac_executionResultChart) {
-                new Chart(tsu1_ts1_tc1_ac_executionResultChart, {
-                    type: 'pie',
-                    data: tsu1_ts1_tc1_ac_executionResultData,
                     options: chartOptions
                 });
             }
@@ -317,7 +355,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_ts1_executionStatusChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu1_ts_executionStatusChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -350,7 +388,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_ts1_executionResultChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu1_ts_executionResultChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -399,7 +437,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_ts1_tc_executionStatusChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu1_tc_executionStatusChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -432,7 +470,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_ts1_tc_executionResultChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu1_tc_executionResultChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -482,7 +520,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_ts1_ac_executionStatusChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu1_ac_executionStatusChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -515,7 +553,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_ts1_ac_executionResultChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu1_ac_executionResultChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -598,7 +636,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="card">
                                                         <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu1_ts1_tc1_executionStatusChart" style="alignment: center"></canvas>
+                                                            <canvas id="tsu1_ts1_tc_executionStatusChart" style="alignment: center"></canvas>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -631,7 +669,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="card">
                                                         <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu1_ts1_tc1_executionResultChart" style="alignment: center"></canvas>
+                                                            <canvas id="tsu1_ts1_tc_executionResultChart" style="alignment: center"></canvas>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -681,7 +719,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="card">
                                                         <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu1_ts1_tc1_ac_executionStatusChart" style="alignment: center"></canvas>
+                                                            <canvas id="tsu1_ts1_ac_executionStatusChart" style="alignment: center"></canvas>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -714,7 +752,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="card">
                                                         <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu1_ts1_tc1_ac_executionResultChart" style="alignment: center"></canvas>
+                                                            <canvas id="tsu1_ts1_ac_executionResultChart" style="alignment: center"></canvas>
                                                         </div>
                                                     </div>
                                                 </div>
