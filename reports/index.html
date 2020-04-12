@@ -58,6 +58,10 @@
             -moz-transform: rotate(180deg);
             transform: rotate(180deg);
         }
+
+        .row-space {
+            height: 10px;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -121,6 +125,83 @@
                 });
             }
 
+            var testCaseExecutionStatus1Data = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [90, 5, 5, 0]
+                    }
+                ]
+            };
+            var testCaseExecutionStatus1 = document.getElementById("testCaseExecutionStatus1");
+            if (testCaseExecutionStatus1) {
+                new Chart(testCaseExecutionStatus1, {
+                    type: 'pie',
+                    data: testCaseExecutionStatus1Data,
+                    options: chartOptions
+                });
+            }
+
+            var testCaseExecution1ResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [75, 25]
+                    }
+                ]
+            };
+            var testCaseExecution1Result = document.getElementById("testCaseExecution1Result");
+            if (testCaseExecution1Result) {
+                new Chart(testCaseExecution1Result, {
+                    type: 'pie',
+                    data: testCaseExecution1ResultData,
+                    options: chartOptions
+                });
+            }
+
+            var apiCallExecutionStatus1Data = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [95, 0, 5, 0]
+                    }
+                ]
+            };
+
+            var apiCallExecutionStatus1 = document.getElementById("apiCallExecutionStatus1");
+            if (apiCallExecutionStatus1) {
+                new Chart(apiCallExecutionStatus1, {
+                    type: 'pie',
+                    data: apiCallExecutionStatus1Data,
+                    options: chartOptions
+                });
+            }
+
+            var apiCallExecution1ResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [90, 10]
+                    }
+                ]
+            };
+            var apiCallExecution1Result = document.getElementById("apiCallExecution1Result");
+            if (apiCallExecution1Result) {
+                new Chart(apiCallExecution1Result, {
+                    type: 'pie',
+                    data: apiCallExecution1ResultData,
+                    options: chartOptions
+                });
+            }
+
         });
 
 
@@ -140,6 +221,7 @@
             </div>
             <div id="testSuiteCollapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testSuiteHeading1">
                 <div class="panel-body">
+                    <!--Test Scenario Report-->
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-4 ">
@@ -160,7 +242,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-8">
-                                <h3>Test Scenario Execution Status Summery</h3>
+                                <h3 style="color: #3E2723">Test Scenario Execution Status Summery</h3>
                                 <table class="table table-striped">
                                     <thead>
                                     <tr>
@@ -203,7 +285,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-8">
-                                <h3>Test Scenario Execution Result Summery</h3>
+                                <h3 style="color: #3E2723">Test Scenario Execution Result Summery</h3>
                                 <table class="table table-striped">
                                     <thead>
                                     <tr>
@@ -230,6 +312,175 @@
                                 <div class="card">
                                     <div class="card-body" style="width: 70%; alignment: center">
                                         <canvas id="testScenarioExecution1Result" style="alignment: center"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row-space">
+                            <hr/>
+                        </div>
+                    </div>
+                    <!--Test Case Report-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h3 style="color: #6D4C41">Test Case Execution Status Summery</h3>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Execution Status</th>
+                                        <th>Count</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Executed</td>
+                                        <td>90</td>
+                                        <td>90%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Skipped</td>
+                                        <td>5</td>
+                                        <td>5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failed</td>
+                                        <td>5</td>
+                                        <td>5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Invalid</td>
+                                        <td>0</td>
+                                        <td>0%</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-body" style="width: 70%; alignment: center">
+                                        <canvas id="testCaseExecutionStatus1" style="alignment: center"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h3 style="color: #6D4C41">Test Case Execution Result Summery</h3>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Result</th>
+                                        <th>Count</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Pass</td>
+                                        <td>75</td>
+                                        <td>75%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failed</td>
+                                        <td>25</td>
+                                        <td>25%</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-body" style="width: 70%; alignment: center">
+                                        <canvas id="testCaseExecution1Result" style="alignment: center"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row-space">
+                            <hr/>
+                        </div>
+                    </div>
+                    <!--Api Call Report-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h3 style="color: #A1887F">Api Call Execution Status Summery</h3>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Execution Status</th>
+                                        <th>Count</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Executed</td>
+                                        <td>95</td>
+                                        <td>95%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Skipped</td>
+                                        <td>0</td>
+                                        <td>0%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failed</td>
+                                        <td>5</td>
+                                        <td>5%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Invalid</td>
+                                        <td>0</td>
+                                        <td>0%</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-body" style="width: 70%; alignment: center">
+                                        <canvas id="apiCallExecutionStatus1" style="alignment: center"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h3 style="color: #A1887F">Api Call Execution Result Summery</h3>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Result</th>
+                                        <th>Count</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Pass</td>
+                                        <td>80</td>
+                                        <td>80%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failed</td>
+                                        <td>20</td>
+                                        <td>20%</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-body" style="width: 70%; alignment: center">
+                                        <canvas id="apiCallExecution1Result" style="alignment: center"></canvas>
                                     </div>
                                 </div>
                             </div>
