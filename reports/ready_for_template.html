@@ -85,6 +85,171 @@
                 }
             };
 
+            //Root level
+            var lazy_tsu_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var lazy_tsu_executionStatusChart = document.getElementById("lazy_tsu_executionStatusChart");
+            if (lazy_tsu_executionStatusChart) {
+                new Chart(lazy_tsu_executionStatusChart, {
+                    type: 'pie',
+                    data: lazy_tsu_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var lazy_tsu_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var lazy_tsu_executionResultChart = document.getElementById("lazy_tsu_executionResultChart");
+            if (lazy_tsu_executionResultChart) {
+                new Chart(lazy_tsu_executionResultChart, {
+                    type: 'pie',
+                    data: lazy_tsu_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+            var lazy_ts_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var lazy_ts_executionStatusChart = document.getElementById("lazy_ts_executionStatusChart");
+            if (lazy_ts_executionStatusChart) {
+                new Chart(lazy_ts_executionStatusChart, {
+                    type: 'pie',
+                    data: lazy_ts_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var lazy_ts_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var lazy_ts_executionResultChart = document.getElementById("lazy_ts_executionResultChart");
+            if (lazy_ts_executionResultChart) {
+                new Chart(lazy_ts_executionResultChart, {
+                    type: 'pie',
+                    data: lazy_ts_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+
+
+
+            var lazy_tc_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var lazy_tc_executionStatusChart = document.getElementById("lazy_tc_executionStatusChart");
+            if (lazy_tc_executionStatusChart) {
+                new Chart(lazy_tc_executionStatusChart, {
+                    type: 'pie',
+                    data: lazy_tc_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var lazy_tc_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var lazy_tc_executionResultChart = document.getElementById("lazy_tc_executionResultChart");
+            if (lazy_tc_executionResultChart) {
+                new Chart(lazy_tc_executionResultChart, {
+                    type: 'pie',
+                    data: lazy_tc_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+
+
+
+
+            var lazy_ac_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var lazy_ac_executionStatusChart = document.getElementById("lazy_ac_executionStatusChart");
+            if (lazy_ac_executionStatusChart) {
+                new Chart(lazy_ac_executionStatusChart, {
+                    type: 'pie',
+                    data: lazy_ac_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var lazy_ac_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var lazy_ac_executionResultChart = document.getElementById("lazy_ac_executionResultChart");
+            if (lazy_ac_executionResultChart) {
+                new Chart(lazy_ac_executionResultChart, {
+                    type: 'pie',
+                    data: lazy_ac_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+
+
+
+
+            //Inside Test Scenario
             var tsu1_ts_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
@@ -363,6 +528,352 @@
 </head>
 <body>
 <div class="wrapper center-block">
+    <div class="container">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="alert alert-warning">
+                        <div>
+                            <h1 align="center">LAZY Execution Report</h1>
+                            <p align="center">(2020-04-14)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-space">
+            </div>
+            <div class="row">
+                <div class="col-sm-4 ">
+                    <div class="alert alert-info">
+                        <strong>Total Test Suites</strong> 20
+                    </div>
+                </div>
+                <div class="col-sm-4 ">
+                    <div class="alert alert-success">
+                        <strong>Pass Test Suites</strong> 14
+                    </div>
+                </div>
+                <div class="col-sm-4 ">
+                    <div class="alert alert-danger">
+                        <strong>Failed Test Suites</strong> 6
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 style="color: #3E2723">Test Suite Execution Status Summery</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Execution Status</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Executed</td>
+                            <td>14</td>
+                            <td>70%</td>
+                        </tr>
+                        <tr>
+                            <td>Skipped</td>
+                            <td>3</td>
+                            <td>15%</td>
+                        </tr>
+                        <tr>
+                            <td>Failed</td>
+                            <td>2</td>
+                            <td>10%</td>
+                        </tr>
+                        <tr>
+                            <td>Invalid</td>
+                            <td>1</td>
+                            <td>5%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body" style="width: 70%; alignment: center">
+                            <canvas id="lazy_tsu_executionStatusChart" style="alignment: center"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 style="color: #3E2723">Test Suite Execution Result Summery</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Result</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Pass</td>
+                            <td>14</td>
+                            <td>70%</td>
+                        </tr>
+                        <tr>
+                            <td>Failed</td>
+                            <td>6</td>
+                            <td>30%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body" style="width: 70%; alignment: center">
+                            <canvas id="lazy_tsu_executionResultChart" style="alignment: center"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-space">
+                <Hr/>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 style="color: #3E2723">Test Scenario Execution Status Summery</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Execution Status</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Executed</td>
+                            <td>14</td>
+                            <td>70%</td>
+                        </tr>
+                        <tr>
+                            <td>Skipped</td>
+                            <td>3</td>
+                            <td>15%</td>
+                        </tr>
+                        <tr>
+                            <td>Failed</td>
+                            <td>2</td>
+                            <td>10%</td>
+                        </tr>
+                        <tr>
+                            <td>Invalid</td>
+                            <td>1</td>
+                            <td>5%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body" style="width: 70%; alignment: center">
+                            <canvas id="lazy_ts_executionStatusChart" style="alignment: center"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 style="color: #3E2723">Test Scenario Execution Result Summery</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Result</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Pass</td>
+                            <td>14</td>
+                            <td>70%</td>
+                        </tr>
+                        <tr>
+                            <td>Failed</td>
+                            <td>6</td>
+                            <td>30%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body" style="width: 70%; alignment: center">
+                            <canvas id="lazy_ts_executionResultChart" style="alignment: center"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-space">
+                <Hr/>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 style="color: #3E2723">Test Case Execution Status Summery</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Execution Status</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Executed</td>
+                            <td>14</td>
+                            <td>70%</td>
+                        </tr>
+                        <tr>
+                            <td>Skipped</td>
+                            <td>3</td>
+                            <td>15%</td>
+                        </tr>
+                        <tr>
+                            <td>Failed</td>
+                            <td>2</td>
+                            <td>10%</td>
+                        </tr>
+                        <tr>
+                            <td>Invalid</td>
+                            <td>1</td>
+                            <td>5%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body" style="width: 70%; alignment: center">
+                            <canvas id="lazy_tc_executionStatusChart" style="alignment: center"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 style="color: #3E2723">Test Case Execution Result Summery</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Result</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Pass</td>
+                            <td>14</td>
+                            <td>70%</td>
+                        </tr>
+                        <tr>
+                            <td>Failed</td>
+                            <td>6</td>
+                            <td>30%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body" style="width: 70%; alignment: center">
+                            <canvas id="lazy_tc_executionResultChart" style="alignment: center"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-space">
+                <Hr/>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 style="color: #3E2723">Api Call Execution Status Summery</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Execution Status</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Executed</td>
+                            <td>14</td>
+                            <td>70%</td>
+                        </tr>
+                        <tr>
+                            <td>Skipped</td>
+                            <td>3</td>
+                            <td>15%</td>
+                        </tr>
+                        <tr>
+                            <td>Failed</td>
+                            <td>2</td>
+                            <td>10%</td>
+                        </tr>
+                        <tr>
+                            <td>Invalid</td>
+                            <td>1</td>
+                            <td>5%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body" style="width: 70%; alignment: center">
+                            <canvas id="lazy_ac_executionStatusChart" style="alignment: center"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 style="color: #3E2723">Api Call Execution Result Summery</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Result</th>
+                            <th>Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Pass</td>
+                            <td>14</td>
+                            <td>70%</td>
+                        </tr>
+                        <tr>
+                            <td>Failed</td>
+                            <td>6</td>
+                            <td>30%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-body" style="width: 70%; alignment: center">
+                            <canvas id="lazy_ac_executionResultChart" style="alignment: center"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel-group" id="testSuiteData" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="testSuiteHeading1" style="background-color: #64B5F6">
