@@ -32,6 +32,10 @@ public class ErrorCodes {
     public static final String TEMPLATE_PROCESSING_ERROR = "Lazy-70040";
     public static final String INVALID_TEMPLATE_DATA_OBJECT = "Lazy-70050";
 
+    //Reporting
+    public static final String HTML_REPORT_GENERATION_ERROR = "Lazy-75000";
+
+
     //JSON Related Exception
     public static final String JSON_HANDLING_EXCEPTION = "Lazy-80010";
     public static final String INVALID_VALUE_TYPE = "Lazy-80020";

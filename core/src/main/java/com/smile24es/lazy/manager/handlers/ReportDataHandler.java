@@ -30,7 +30,7 @@ import static java.text.MessageFormat.format;
 @Repository
 public class ReportDataHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LazyManagerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportDataHandler.class);
 
     public LazyReport populateReportData(LazyExecutionData lazyExecutionData) {
         //Populate lazy Report object
