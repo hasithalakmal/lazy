@@ -13,6 +13,7 @@ import com.smile24es.lazy.manager.LazyManager;
 import com.smile24es.lazy.manager.TestSuiteManager;
 import com.smile24es.lazy.manager.handlers.AssertionHandlerImpl;
 import com.smile24es.lazy.manager.handlers.ReportDataHandler;
+import com.smile24es.lazy.reports.LazyReport;
 import com.smile24es.lazy.utils.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -83,8 +84,8 @@ public class LazyManagerImpl extends LazyBaseManager implements LazyManager {
         LOGGER.info("Executed lazy suite - [{}]", lazySuiteName);
 
         printResultTable(lazyExecutionData);
-        reportDataHandler.populateReportData(lazyExecutionData);
-
+        LazyReport report = reportDataHandler.populateReportData(lazyExecutionData);
+        System.out.println(report);
         return lazyExecutionData;
     }
 

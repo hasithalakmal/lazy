@@ -21,6 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static com.smile24es.lazy.utils.MathsUtil.getPercentage;
 import static java.text.MessageFormat.format;
 
@@ -41,29 +44,29 @@ public class ReportDataHandler {
         int failedTestSuite = 0;
         int invalidTestSuite = 0;
 
-        int tsu_totalTestScenario = 0;
-        int tsu_passTestScenario = 0;
-        int tsu_notPassTestScenario = 0;
-        int tsu_executedTestScenario = 0;
-        int tsu_skippedTestScenario = 0;
-        int tsu_failedTestScenario = 0;
-        int tsu_invalidTestScenario = 0;
+        int lazy_totalTestScenario = 0;
+        int lazy_passTestScenario = 0;
+        int lazy_notPassTestScenario = 0;
+        int lazy_executedTestScenario = 0;
+        int lazy_skippedTestScenario = 0;
+        int lazy_failedTestScenario = 0;
+        int lazy_invalidTestScenario = 0;
 
-        int tsu_totalTestCases = 0;
-        int tsu_passTestCases = 0;
-        int tsu_notPassTestCases = 0;
-        int tsu_executedTestCases = 0;
-        int tsu_skippedTestCases = 0;
-        int tsu_failedTestCases = 0;
-        int tsu_invalidTestCases = 0;
+        int lazy_totalTestCases = 0;
+        int lazy_passTestCases = 0;
+        int lazy_notPassTestCases = 0;
+        int lazy_executedTestCases = 0;
+        int lazy_skippedTestCases = 0;
+        int lazy_failedTestCases = 0;
+        int lazy_invalidTestCases = 0;
 
-        int tsu_totalApiCalls = 0;
-        int tsu_passApiCalls = 0;
-        int tsu_notPassApiCalls = 0;
-        int tsu_executedApiCalls = 0;
-        int tsu_skippedApiCalls = 0;
-        int tsu_failedApiCalls = 0;
-        int tsu_invalidApiCalls = 0;
+        int lazy_totalApiCalls = 0;
+        int lazy_passApiCalls = 0;
+        int lazy_notPassApiCalls = 0;
+        int lazy_executedApiCalls = 0;
+        int lazy_skippedApiCalls = 0;
+        int lazy_failedApiCalls = 0;
+        int lazy_invalidApiCalls = 0;
         for (TestSuiteExecutionData testSuiteExecutionData : lazyExecutionData.getTestSuiteExecutionData()) {
 
             TestSuiteReport testSuiteReport = new TestSuiteReport(testSuiteExecutionData.getTestSuiteId());
@@ -77,22 +80,22 @@ public class ReportDataHandler {
             int failedTestScenario = 0;
             int invalidTestScenario = 0;
 
-            int ts_totalTestCases = 0;
-            int ts_passTestCases = 0;
-            int ts_notPassTestCases = 0;
-            int ts_executedTestCases = 0;
-            int ts_skippedTestCases = 0;
-            int ts_failedTestCases = 0;
-            int ts_invalidTestCases = 0;
+            int tsu_totalTestCases = 0;
+            int tsu_passTestCases = 0;
+            int tsu_notPassTestCases = 0;
+            int tsu_executedTestCases = 0;
+            int tsu_skippedTestCases = 0;
+            int tsu_failedTestCases = 0;
+            int tsu_invalidTestCases = 0;
 
 
-            int ts_totalApiCalls = 0;
-            int ts_passApiCalls = 0;
-            int ts_notPassApiCalls = 0;
-            int ts_executedApiCalls = 0;
-            int ts_skippedApiCalls = 0;
-            int ts_failedApiCalls = 0;
-            int ts_invalidApiCalls = 0;
+            int tsu_totalApiCalls = 0;
+            int tsu_passApiCalls = 0;
+            int tsu_notPassApiCalls = 0;
+            int tsu_executedApiCalls = 0;
+            int tsu_skippedApiCalls = 0;
+            int tsu_failedApiCalls = 0;
+            int tsu_invalidApiCalls = 0;
             for (TestScenarioExecutionData testScenarioExecutionData : testSuiteExecutionData.getTestScenarioExecutionData()) {
                 TestScenarioReport testScenarioReport = new TestScenarioReport(testScenarioExecutionData.getTestScenarioId());
                 testScenarioReport.setTestScenarioName(testScenarioExecutionData.getTestScenarioName());
@@ -105,13 +108,13 @@ public class ReportDataHandler {
                 int failedTestCase = 0;
                 int invalidTestCase = 0;
 
-                int tc_totalApiCalls = 0;
-                int tc_passApiCalls = 0;
-                int tc_notPassApiCalls = 0;
-                int tc_executedApiCalls = 0;
-                int tc_skippedApiCalls = 0;
-                int tc_failedApiCalls = 0;
-                int tc_invalidApiCalls = 0;
+                int ts_totalApiCalls = 0;
+                int ts_passApiCalls = 0;
+                int ts_notPassApiCalls = 0;
+                int ts_executedApiCalls = 0;
+                int ts_skippedApiCalls = 0;
+                int ts_failedApiCalls = 0;
+                int ts_invalidApiCalls = 0;
                 for (TestCaseExecutionData testCaseExecutionData : testScenarioExecutionData.getTestCaseExecutionDataList()) {
                     TestCaseReport testCaseReport = new TestCaseReport(testCaseExecutionData.getTestCaseId());
                     testCaseReport.setTestCaseName(testCaseExecutionData.getTestCaseName());
@@ -145,7 +148,41 @@ public class ReportDataHandler {
                         int skippedAssertions = 0;
                         int failedAssertions = 0;
                         int invalidAssertions = 0;
-                        populateAssertionDetails(apiCallExecutionData, apiCallReport, totalAssertions, passAssertions, notPassAssertions, executedAssertions, skippedAssertions, failedAssertions, invalidAssertions);
+                        for (AssertionExecutionData assertionExecutionData : apiCallExecutionData.getAssertionExecutionDataList()) {
+                            AssertionResult assertionResult = assertionExecutionData.getAssertionResult();
+                            AssertionResultObject assertionResultObject = new AssertionResultObject(assertionResult.getResultId());
+                            assertionResultObject.setName(assertionResult.getAssertionRule().getAssertionRuleName());
+                            assertionResultObject.setActualValue(assertionResult.getActualValue());
+                            AssertionValue assertionValue = assertionResult.getAssertionRule().getAssertionValue();
+                            assertionResultObject.setExpectedValue(assertionValue == null ? null : assertionValue.getExpectedStringValue1());
+                            String assertionStatus = assertionResult.getAssertionStatus();
+                            assertionResultObject.setStatus(assertionStatus);
+                            boolean isPass = assertionResult.getPass();
+                            assertionResultObject.setIsPass(assertionResult.getPass().toString());
+                            assertionResultObject.setNotes(assertionResult.getAssertionNotes());
+
+                            //handle summery values
+                            totalAssertions++;
+                            if (isPass) {
+                                passAssertions++;
+                            } else {
+                                notPassAssertions++;
+                            }
+
+                            if (assertionStatus.equals(AssertionResultStatus.EXECUTED.getValue())) {
+                                executedAssertions++;
+                            } else if (assertionStatus.equals(AssertionResultStatus.SKIPPED.getValue())){
+                                skippedAssertions++;
+                            } else if (assertionStatus.equals(AssertionResultStatus.FAILED.getValue())){
+                                failedAssertions++;
+                            } else if (assertionStatus.equals(AssertionResultStatus.INVALID_RULE.getValue())){
+                                invalidAssertions++;
+                            } else {
+                                LOGGER.warn("Unexpected assertion execution status found");
+                            }
+                            
+                            apiCallReport.getAssertions().add(assertionResultObject);
+                        }
 
                         apiCallReport.setTotalAssertionsCount(totalAssertions);
                         apiCallReport.setPassAssertionsCount(passAssertions);
@@ -162,58 +199,57 @@ public class ReportDataHandler {
                         apiCallReport.setSkippedAssertionsPercentage(getPercentage(totalAssertions, skippedAssertions));
                         apiCallReport.setFailedAssertionsPercentage(getPercentage(totalAssertions, failedAssertions));
                         apiCallReport.setInvalidAssertionsPercentage(getPercentage(totalAssertions, invalidAssertions));
-
+                        
 
                         totalApiCalls++;
-                        tc_totalApiCalls++;
                         ts_totalApiCalls++;
                         tsu_totalApiCalls++;
+                        lazy_totalApiCalls++;
 
                         if (notPassAssertions == 0) {
                             passApiCalls++;
-                            tc_passApiCalls++;
                             ts_passApiCalls++;
                             tsu_passApiCalls++;
+                            lazy_passApiCalls++;
                         } else {
                             notPassApiCalls++;
-                            tc_notPassApiCalls++;
                             ts_notPassApiCalls++;
                             tsu_notPassApiCalls++;
+                            lazy_notPassApiCalls++;
                         }
 
                         if (invalidAssertions != 0) {
                             invalidApiCalls++;
-                            tc_invalidApiCalls++;
                             ts_invalidApiCalls++;
                             tsu_invalidApiCalls++;
+                            lazy_invalidApiCalls++;
                         } else if (failedAssertions != 0) {
                             failedApiCalls++;
-                            tc_failedApiCalls++;
                             ts_failedApiCalls++;
                             tsu_failedApiCalls++;
+                            lazy_failedApiCalls++;
                         } else if (skippedAssertions != 0) {
                             skippedApiCalls++;
-                            tc_skippedApiCalls++;
                             ts_skippedApiCalls++;
                             tsu_skippedApiCalls++;
+                            lazy_skippedApiCalls++;
                         } else if (totalAssertions == executedAssertions) {
                             executedApiCalls++;
-                            tc_executedApiCalls++;
                             ts_executedApiCalls++;
                             tsu_executedApiCalls++;
+                            lazy_executedApiCalls++;
                         } else {
                             LOGGER.error("Unexpected result counts found");
                         }
+
                         testCaseReport.getApiCallReports().add(apiCallReport);
                     }
-
-
 
                     testCaseReport.setTotalApiCallCount(totalApiCalls);
                     testCaseReport.setPassApiCallCount(totalApiCalls);
                     testCaseReport.setNotPassApiCallCount(totalApiCalls);
-                    testCaseReport.setPassApiCallPercentage(totalApiCalls);
-                    testCaseReport.setNotPassApiCallPercentage(totalApiCalls);
+                    testCaseReport.setPassApiCallPercentage(getPercentage(totalApiCalls, totalApiCalls));
+                    testCaseReport.setNotPassApiCallPercentage(getPercentage(totalApiCalls, totalApiCalls));
 
                     testCaseReport.setTotalExecutedApiCallCount(executedApiCalls);
                     testCaseReport.setTotalSkippedApiCallCount(skippedApiCalls);
@@ -226,46 +262,48 @@ public class ReportDataHandler {
                     testCaseReport.setInvalidApiCallPercentage(getPercentage(totalApiCalls, invalidApiCalls));
 
                     totalTestCase++;
-                    ts_totalTestCases++;
                     tsu_totalTestCases++;
+                    lazy_totalTestCases++;
 
                     if (notPassApiCalls == 0) {
                         passTestCase++;
-                        ts_passTestCases++;
                         tsu_passTestCases++;
+                        lazy_passTestCases++;
                     } else {
                         notPassTestCase++;
-                        ts_notPassTestCases++;
                         tsu_notPassTestCases++;
+                        lazy_notPassTestCases++;
                     }
 
                     if (invalidApiCalls != 0) {
                         invalidTestCase++;
-                        ts_invalidTestCases++;
                         tsu_invalidTestCases++;
+                        lazy_invalidTestCases++;
                     } else if (failedApiCalls != 0) {
                         failedTestCase++;
-                        ts_failedTestCases++;
                         tsu_failedTestCases++;
+                        lazy_failedTestCases++;
                     } else if (skippedApiCalls != 0) {
                         skippedTestCase++;
-                        ts_skippedTestCases++;
                         tsu_skippedTestCases++;
+                        lazy_skippedTestCases++;
                     } else if (totalApiCalls == executedApiCalls) {
                         executedTestCase++;
-                        ts_executedTestCases++;
                         tsu_executedTestCases++;
+                        lazy_executedTestCases++;
                     } else {
                         LOGGER.info("Invalid api call count found");
                     }
+
+
                     testScenarioReport.getTestCaseReports().add(testCaseReport);
                 }
 
                 testScenarioReport.setTotalTestCasesCount(totalTestCase);
                 testScenarioReport.setPassTestCasesCount(totalTestCase);
                 testScenarioReport.setNotPassTestCasesCount(totalTestCase);
-                testScenarioReport.setPassTestCasesPercentage(totalTestCase);
-                testScenarioReport.setNotPassTestCasesPercentage(totalTestCase);
+                testScenarioReport.setPassTestCasesPercentage(getPercentage(totalTestCase, totalTestCase));
+                testScenarioReport.setNotPassTestCasesPercentage(getPercentage(totalTestCase, totalTestCase));
 
                 testScenarioReport.setTotalExecutedTestCasesCount(executedTestCase);
                 testScenarioReport.setTotalSkippedTestCasesCount(skippedTestCase);
@@ -277,40 +315,59 @@ public class ReportDataHandler {
                 testScenarioReport.setFailedTestCasesPercentage(getPercentage(totalTestCase, failedTestCase));
                 testScenarioReport.setInvalidTestCasesPercentage(getPercentage(totalTestCase, invalidTestCase));
 
+                //Populate test scenario API call data
+                testScenarioReport.setTotalApiCallCount(tsu_totalApiCalls);
+                testScenarioReport.setPassApiCallCount(tsu_totalApiCalls);
+                testScenarioReport.setNotPassApiCallCount(tsu_totalApiCalls);
+                testScenarioReport.setPassApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_totalApiCalls));
+                testScenarioReport.setNotPassApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_totalApiCalls));
+
+                testScenarioReport.setTotalExecutedApiCallCount(tsu_executedApiCalls);
+                testScenarioReport.setTotalSkippedApiCallCount(tsu_skippedApiCalls);
+                testScenarioReport.setTotalFailedApiCallCount(tsu_failedApiCalls);
+                testScenarioReport.setTotalInvalidApiCallCount(tsu_invalidApiCalls);
+
+                testScenarioReport.setExecutedApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_executedApiCalls));
+                testScenarioReport.setSkippedApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_skippedApiCalls));
+                testScenarioReport.setFailedApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_failedApiCalls));
+                testScenarioReport.setInvalidApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_invalidApiCalls));
+
                 totalTestScenario++;
-                tsu_totalTestScenario++;
+                lazy_totalTestScenario++;
 
                 if (notPassTestCase == 0) {
                     passTestScenario++;
-                    tsu_passTestScenario++;
+                    lazy_passTestScenario++;
                 } else {
                     notPassTestScenario++;
-                    notPassTestScenario++;
+                    lazy_notPassTestScenario++;
                 }
 
                 if (invalidTestCase != 0) {
                     invalidTestScenario++;
-                    tsu_invalidTestScenario++;
+                    lazy_invalidTestScenario++;
                 } else if (failedTestCase != 0) {
                     failedTestScenario++;
-                    tsu_failedTestScenario++;
+                    lazy_failedTestScenario++;
                 } else if (skippedTestCase != 0) {
                     skippedTestScenario++;
-                    tsu_skippedTestScenario++;
+                    lazy_skippedTestScenario++;
                 } else if (totalTestCase == executedTestCase) {
                     executedTestScenario++;
-                    tsu_executedTestScenario++;
+                    lazy_executedTestScenario++;
                 } else {
                     LOGGER.info("Invalid test case count found");
                 }
+                
                 testSuiteReport.getTestScenarioReports().add(testScenarioReport);
             }
 
+            //Test Scenario Data
             testSuiteReport.setTotalTestScenariosCount(totalTestScenario);
             testSuiteReport.setPassTestScenariosCount(totalTestScenario);
             testSuiteReport.setNotPassTestScenariosCount(totalTestScenario);
-            testSuiteReport.setPassTestScenariosPercentage(totalTestScenario);
-            testSuiteReport.setNotPassTestScenariosPercentage(totalTestScenario);
+            testSuiteReport.setPassTestScenariosPercentage(getPercentage(totalTestScenario, totalTestScenario));
+            testSuiteReport.setNotPassTestScenariosPercentage(getPercentage(totalTestScenario, totalTestScenario));
 
             testSuiteReport.setTotalExecutedTestScenariosCount(executedTestScenario);
             testSuiteReport.setTotalSkippedTestScenariosCount(skippedTestScenario);
@@ -321,6 +378,43 @@ public class ReportDataHandler {
             testSuiteReport.setSkippedTestScenariosPercentage(getPercentage(totalTestScenario, skippedTestScenario));
             testSuiteReport.setFailedTestScenariosPercentage(getPercentage(totalTestScenario, failedTestScenario));
             testSuiteReport.setInvalidTestScenariosPercentage(getPercentage(totalTestScenario, invalidTestScenario));
+
+
+            //Test Case Data
+            testSuiteReport.setTotalTestCasesCount(lazy_totalTestCases);
+            testSuiteReport.setPassTestCasesCount(lazy_passTestCases);
+            testSuiteReport.setNotPassTestCasesCount(lazy_notPassTestCases);
+            testSuiteReport.setPassTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_passTestCases));
+            testSuiteReport.setNotPassTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_notPassTestCases));
+
+            testSuiteReport.setTotalExecutedTestCasesCount(lazy_executedTestCases);
+            testSuiteReport.setTotalSkippedTestCasesCount(lazy_skippedTestCases);
+            testSuiteReport.setTotalFailedTestCasesCount(lazy_failedTestCases);
+            testSuiteReport.setTotalInvalidTestCasesCount(lazy_invalidTestCases);
+
+            testSuiteReport.setExecutedTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_executedTestCases));
+            testSuiteReport.setSkippedTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_skippedTestCases));
+            testSuiteReport.setFailedTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_failedTestCases));
+            testSuiteReport.setInvalidTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_invalidTestCases));
+
+            //Api Call Data
+            testSuiteReport.setTotalApiCallCount(lazy_totalApiCalls);
+            testSuiteReport.setPassApiCallCount(lazy_passApiCalls);
+            testSuiteReport.setNotPassApiCallCount(lazy_notPassApiCalls);
+            testSuiteReport.setPassApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_passApiCalls));
+            testSuiteReport.setNotPassApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_notPassApiCalls));
+
+            testSuiteReport.setTotalExecutedApiCallCount(lazy_executedApiCalls);
+            testSuiteReport.setTotalSkippedApiCallCount(lazy_skippedApiCalls);
+            testSuiteReport.setTotalFailedApiCallCount(lazy_failedApiCalls);
+            testSuiteReport.setTotalInvalidApiCallCount(lazy_invalidApiCalls);
+
+            testSuiteReport.setExecutedApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_executedApiCalls));
+            testSuiteReport.setSkippedApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_skippedApiCalls));
+            testSuiteReport.setFailedApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_failedApiCalls));
+            testSuiteReport.setInvalidApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_invalidApiCalls));
+
+            totalTestSuite++;
 
             if (notPassTestScenario == 0) {
                 passTestSuite++;
@@ -337,49 +431,88 @@ public class ReportDataHandler {
             } else if (totalTestScenario == executedTestScenario) {
                 executedTestSuite++;
             } else {
-                LOGGER.info("Invalid test scenario count found");
+                LOGGER.info("Invalid test case count found");
             }
+
             lazyReport.getTestSuiteReportList().add(testSuiteReport);
         }
 
+        //Populate test suite data
+        lazyReport.setTotalTestSuitesCount(totalTestSuite);
+        lazyReport.setPassTestSuitesCount(totalTestSuite);
+        lazyReport.setNotPassTestSuitesCount(totalTestSuite);
+        lazyReport.setPassTestSuitesPercentage(getPercentage(totalTestSuite, totalTestSuite));
+        lazyReport.setNotPassTestSuitesPercentage(getPercentage(totalTestSuite, totalTestSuite));
+
+        lazyReport.setTotalExecutedTestSuitesCount(executedTestSuite);
+        lazyReport.setTotalSkippedTestSuitesCount(skippedTestSuite);
+        lazyReport.setTotalFailedTestSuitesCount(failedTestSuite);
+        lazyReport.setTotalInvalidTestSuitesCount(invalidTestSuite);
+
+        lazyReport.setExecutedTestSuitesPercentage(getPercentage(totalTestSuite, executedTestSuite));
+        lazyReport.setSkippedTestSuitesPercentage(getPercentage(totalTestSuite, skippedTestSuite));
+        lazyReport.setFailedTestSuitesPercentage(getPercentage(totalTestSuite, failedTestSuite));
+        lazyReport.setInvalidTestSuitesPercentage(getPercentage(totalTestSuite, invalidTestSuite));
+
+        //Populate Test Scenario Data
+        lazyReport.setTotalTestScenariosCount(lazy_totalTestScenario);
+        lazyReport.setPassTestScenariosCount(lazy_totalTestScenario);
+        lazyReport.setNotPassTestScenariosCount(lazy_totalTestScenario);
+        lazyReport.setPassTestScenariosPercentage(getPercentage(lazy_totalTestScenario, lazy_totalTestScenario));
+        lazyReport.setNotPassTestScenariosPercentage(getPercentage(lazy_totalTestScenario, lazy_totalTestScenario));
+
+        lazyReport.setTotalExecutedTestScenariosCount(lazy_executedTestScenario);
+        lazyReport.setTotalSkippedTestScenariosCount(lazy_skippedTestScenario);
+        lazyReport.setTotalFailedTestScenariosCount(lazy_failedTestScenario);
+        lazyReport.setTotalInvalidTestScenariosCount(lazy_invalidTestScenario);
+
+        lazyReport.setExecutedTestScenariosPercentage(getPercentage(lazy_totalTestScenario, lazy_executedTestScenario));
+        lazyReport.setSkippedTestScenariosPercentage(getPercentage(lazy_totalTestScenario, lazy_skippedTestScenario));
+        lazyReport.setFailedTestScenariosPercentage(getPercentage(lazy_totalTestScenario, lazy_failedTestScenario));
+        lazyReport.setInvalidTestScenariosPercentage(getPercentage(lazy_totalTestScenario, lazy_invalidTestScenario));
+
+
+
+        //Populate Test Case
+        lazyReport.setTotalTestCasesCount(lazy_totalTestCases);
+        lazyReport.setTotalTestCasesCount(lazy_totalTestCases);
+        lazyReport.setPassTestCasesCount(lazy_totalTestCases);
+        lazyReport.setNotPassTestCasesCount(lazy_totalTestCases);
+        lazyReport.setPassTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_totalTestCases));
+        lazyReport.setNotPassTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_totalTestCases));
+
+        lazyReport.setTotalExecutedTestCasesCount(lazy_executedTestCases);
+        lazyReport.setTotalSkippedTestCasesCount(lazy_skippedTestCases);
+        lazyReport.setTotalFailedTestCasesCount(lazy_failedTestCases);
+        lazyReport.setTotalInvalidTestCasesCount(lazy_invalidTestCases);
+
+        lazyReport.setExecutedTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_executedTestCases));
+        lazyReport.setSkippedTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_skippedTestCases));
+        lazyReport.setFailedTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_failedTestCases));
+        lazyReport.setInvalidTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_invalidTestCases));
+
+        //Populate API calls
+        lazyReport.setTotalApiCallCount(lazy_totalApiCalls);
+        lazyReport.setTotalApiCallCount(lazy_totalApiCalls);
+        lazyReport.setPassApiCallCount(lazy_totalApiCalls);
+        lazyReport.setNotPassApiCallCount(lazy_totalApiCalls);
+        lazyReport.setPassApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_totalApiCalls));
+        lazyReport.setNotPassApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_totalApiCalls));
+
+        lazyReport.setTotalExecutedApiCallCount(lazy_executedApiCalls);
+        lazyReport.setTotalSkippedApiCallCount(lazy_skippedApiCalls);
+        lazyReport.setTotalFailedApiCallCount(lazy_failedApiCalls);
+        lazyReport.setTotalInvalidApiCallCount(lazy_invalidApiCalls);
+
+        lazyReport.setExecutedApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_executedApiCalls));
+        lazyReport.setSkippedApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_skippedApiCalls));
+        lazyReport.setFailedApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_failedApiCalls));
+        lazyReport.setInvalidApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_invalidApiCalls));
+
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        lazyReport.setDate(formatter.format(date));
         return lazyReport;
-    }
-
-    private void populateAssertionDetails(ApiCallExecutionData apiCallExecutionData, ApiCallReport apiCallReport, int totalAssertions, int passAssertions, int notPassAssertions, int executedAssertions, int skippedAssertions, int failedAssertions, int invalidAssertions) {
-        for (AssertionExecutionData assertionExecutionData : apiCallExecutionData.getAssertionExecutionDataList()) {
-            AssertionResult assertionResult = assertionExecutionData.getAssertionResult();
-            AssertionResultObject assertionResultObject = new AssertionResultObject(assertionResult.getResultId());
-            assertionResultObject.setName(assertionResult.getAssertionRule().getAssertionRuleName());
-            assertionResultObject.setActualValue(assertionResult.getActualValue());
-            AssertionValue assertionValue = assertionResult.getAssertionRule().getAssertionValue();
-            assertionResultObject.setExpectedValue(assertionValue == null ? null : assertionValue.getExpectedStringValue1());
-            String assertionStatus = assertionResult.getAssertionStatus();
-            assertionResultObject.setStatus(assertionStatus);
-            Boolean isPass = assertionResult.getPass();
-            assertionResultObject.setIsPass(isPass.toString());
-            assertionResultObject.setNotes(assertionResult.getAssertionNotes());
-
-            //handle summery values
-            totalAssertions++;
-            if (isPass) {
-                passAssertions++;
-            } else {
-                notPassAssertions++;
-            }
-
-            if (assertionStatus.equals(AssertionResultStatus.EXECUTED.getValue())) {
-                executedAssertions++;
-            } else if (assertionStatus.equals(AssertionResultStatus.SKIPPED.getValue())){
-                skippedAssertions++;
-            } else if (assertionStatus.equals(AssertionResultStatus.FAILED.getValue())){
-                failedAssertions++;
-            } else if (assertionStatus.equals(AssertionResultStatus.INVALID_RULE.getValue())){
-                invalidAssertions++;
-            } else {
-                LOGGER.warn("Unexpected assertion execution status found");
-            }
-
-            apiCallReport.getAssertions().add(assertionResultObject);
-        }
     }
 }

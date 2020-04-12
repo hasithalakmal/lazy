@@ -2,11 +2,16 @@ package com.smile24es.lazy.utils;
 
 public class MathsUtil {
 
-    public static double getPercentage(int total, int value) {
+    private MathsUtil() {
+        //This is a private constructor
+    }
+
+    public static Double getPercentage(int total, int value) {
         if (total == 0) {
-            return 0;
+            return 0.00;
         } else {
-            return value/total;
+            double roundOff = Math.round(((double) value / (double)total)*100*100)/100.00;
+            return  roundOff;
         }
     }
 }
