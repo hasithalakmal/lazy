@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>-->
+<!--    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        body {
+            padding: 10px;
+            background: #fff;
+        }
+
+        .wrapper {
+            width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .wrapper {
+                width: 100%;
+            }
+        }
+
+        .panel-heading {
+            padding: 0;
+            border: 0;
+        }
+
+        .panel-title > a, .panel-title > a:active {
+            display: block;
+            padding: 15px;
+            color: #555;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            word-spacing: 3px;
+            text-decoration: none;
+        }
+
+        .panel-heading a:before {
+            font-family: 'Glyphicons Halflings';
+            content: "\e114";
+            float: right;
+            transition: all 0.5s;
+        }
+
+        .panel-heading.active a:before {
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.panel-collapse').on('show.bs.collapse', function () {
+                $(this).siblings('.panel-heading').addClass('active');
+            });
+
+            $('.panel-collapse').on('hide.bs.collapse', function () {
+                $(this).siblings('.panel-heading').removeClass('active');
+            });
+
+            var chartOptions = {
+                cutoutPercentage: 70,
+                segmentShowStroke : false,
+                animateScale : true,
+                duration:5000,
+                legend: {
+                    labels:{pointStyle:'circle', usePointStyle:true}
+                    // labels: {
+                    //         render: 'label',
+                    //         position: 'outside'
+                    //     },
+                }
+            };
+
+            var testScenarioExecutionStatus1Data = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var testScenarioExecutionStatus1 = document.getElementById("testScenarioExecutionStatus1");
+            if (testScenarioExecutionStatus1) {
+                new Chart(testScenarioExecutionStatus1, {
+                    type: 'pie',
+                    data: testScenarioExecutionStatus1Data,
+                    options: chartOptions
+                });
+            }
+
+            var testScenarioExecution1ResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var testScenarioExecution1Result = document.getElementById("testScenarioExecution1Result");
+            if (testScenarioExecution1Result) {
+                new Chart(testScenarioExecution1Result, {
+                    type: 'pie',
+                    data: testScenarioExecution1ResultData,
+                    options: chartOptions
+                });
+            }
+
+        });
+
+
+    </script>
+</head>
+<body>
+<div class="wrapper center-block">
+    <div class="panel-group" id="testSuiteData" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="testSuiteHeading1" style="background-color: #64B5F6">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testSuiteData" href="#testSuiteCollapse1"
+                       aria-expanded="false" aria-controls="testSuiteCollapse1">
+                        Account API Test Suite
+                    </a>
+                </h4>
+            </div>
+            <div id="testSuiteCollapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testSuiteHeading1">
+                <div class="panel-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4 ">
+                                <div class="alert alert-info">
+                                    <strong>Total Test Scenarios</strong> 20
+                                </div>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <div class="alert alert-success">
+                                    <strong>Pass Test Scenarios</strong> 14
+                                </div>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <div class="alert alert-danger">
+                                    <strong>Failed Test Scenarios</strong> 6
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h3>Test Scenario Execution Status Summery</h3>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Execution Status</th>
+                                        <th>Count</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Executed</td>
+                                        <td>14</td>
+                                        <td>70%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Skipped</td>
+                                        <td>3</td>
+                                        <td>15%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failed</td>
+                                        <td>2</td>
+                                        <td>10%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Invalid</td>
+                                        <td>1</td>
+                                        <td>5%</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-body" style="width: 70%; alignment: center">
+                                        <canvas id="testScenarioExecutionStatus1" style="alignment: center"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h3>Test Scenario Execution Result Summery</h3>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Result</th>
+                                        <th>Count</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Pass</td>
+                                        <td>14</td>
+                                        <td>70%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Failed</td>
+                                        <td>6</td>
+                                        <td>30%</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="card">
+                                    <div class="card-body" style="width: 70%; alignment: center">
+                                        <canvas id="testScenarioExecution1Result" style="alignment: center"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Test Scenario Panel-->
+                    <div class="panel-group" id="testScenarioData" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="testScenarioHeading1" style="background-color: #90CAF9">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testScenarioData"
+                                       href="#testScenarioCollapse1" aria-expanded="false"
+                                       aria-controls="testSuiteCollapse1">
+                                        [Test Scenario] Create Account Successfully
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="testScenarioCollapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testScenarioHeading1">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+                                    officia aute, non
+                                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
+                                    aliqua put a bird
+                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+                                    wes anderson cred
+                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                                    raw denim
+                                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+
+                                    <!-- Test Case Panel-->
+                                    <div class="panel-group" id="testcaseData" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="testcaseHeading1"  style="background-color: #BBDEFB">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testcaseData"
+                                                       href="#testcaseCollapse1" aria-expanded="false"
+                                                       aria-controls="testSuiteCollapse1">
+                                                        [Test Case] Create Simple Account
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="testcaseCollapse1" class="panel-collapse collapse" role="tabpanel"
+                                                 aria-labelledby="testcaseHeading1">
+                                                <div class="panel-body">
+                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                                                    wolf moon
+                                                    officia aute, non
+                                                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+                                                    tempor, sunt
+                                                    aliqua put a bird
+                                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                                    craft beer labore
+                                                    wes anderson cred
+                                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                                    farm-to-table,
+                                                    raw denim
+                                                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+
+                                                    <!-- Api Call Panel-->
+                                                    <div class="panel-group" id="apiCallData" role="tablist" aria-multiselectable="true">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading" role="tab" id="apiCallHeading1"   style="background-color: #E3F2FD">
+                                                                <h4 class="panel-title">
+                                                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                                                       data-parent="#apiCallData"
+                                                                       href="#apiCallCollapse1" aria-expanded="false"
+                                                                       aria-controls="testSuiteCollapse1">
+                                                                        [Api Call] Create Account API Call
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="apiCallCollapse1" class="panel-collapse collapse" role="tabpanel"
+                                                                 aria-labelledby="apiCallHeading1">
+                                                                <div class="panel-body">
+                                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                                                    richardson ad squid. 3 wolf moon
+                                                                    officia aute, non
+                                                                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                                                    Brunch 3 wolf moon tempor, sunt
+                                                                    aliqua put a bird
+                                                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim
+                                                                    keffiyeh helvetica, craft beer labore
+                                                                    wes anderson cred
+                                                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                                                    occaecat craft beer farm-to-table,
+                                                                    raw denim
+                                                                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore
+                                                                    sustainable VHS.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading" role="tab" id="apiCallHeading2" style="background-color: #E3F2FD">
+                                                                <h4 class="panel-title">
+                                                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                                                       data-parent="#apiCallData"
+                                                                       href="#apiCallCollapse2" aria-expanded="false"
+                                                                       aria-controls="apiCallCollapse2">
+                                                                        [Api Call] Get Account API Call
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="apiCallCollapse2" class="panel-collapse collapse" role="tabpanel"
+                                                                 aria-labelledby="apiCallHeading2">
+                                                                <div class="panel-body">
+                                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                                                    richardson ad squid. 3 wolf moon
+                                                                    officia aute, non
+                                                                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                                                    Brunch 3 wolf moon tempor, sunt
+                                                                    aliqua put a bird
+                                                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim
+                                                                    keffiyeh helvetica, craft beer labore
+                                                                    wes anderson cred
+                                                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings
+                                                                    occaecat craft beer farm-to-table,
+                                                                    raw denim
+                                                                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore
+                                                                    sustainable VHS.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="testcaseHeading2"  style="background-color: #BBDEFB">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testcaseData"
+                                                       href="#testcaseCollapse2" aria-expanded="false"
+                                                       aria-controls="testcaseCollapse2">
+                                                        [Test Case] Create Account With Settings
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="testcaseCollapse2" class="panel-collapse collapse" role="tabpanel"
+                                                 aria-labelledby="testcaseHeading2">
+                                                <div class="panel-body">
+                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                                                    wolf moon
+                                                    officia aute, non
+                                                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon
+                                                    tempor, sunt
+                                                    aliqua put a bird
+                                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                                    craft beer labore
+                                                    wes anderson cred
+                                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                                    farm-to-table,
+                                                    raw denim
+                                                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="testScenarioHeading2" style="background-color: #90CAF9">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testScenarioData"
+                                       href="#testScenarioCollapse2" aria-expanded="false"
+                                       aria-controls="testScenarioCollapse2">
+                                        [Test Scenario] Get Account Successfully
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="testScenarioCollapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testScenarioHeading2">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+                                    officia aute, non
+                                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
+                                    aliqua put a bird
+                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+                                    wes anderson cred
+                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                                    raw denim
+                                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="testScenarioHeading3"  style="background-color: #90CAF9" >
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testScenarioData"
+                                       href="#testScenarioCollapse3" aria-expanded="false"
+                                       aria-controls="testScenarioCollapse3">
+                                        [Test Scenario] Get Account by Invalid Id
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="testScenarioCollapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testScenarioHeading3">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+                                    officia aute, non
+                                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
+                                    aliqua put a bird
+                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore
+                                    wes anderson cred
+                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table,
+                                    raw denim
+                                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="testSuiteHeading2" style="background-color: #64B5F6">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testSuiteData" href="#testSuiteCollapse2"
+                       aria-expanded="false"
+                       aria-controls="testSuiteCollapse2">
+                        Student API Test Suite
+                    </a>
+                </h4>
+            </div>
+            <div id="testSuiteCollapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testSuiteHeading2">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
+                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="testSuiteHeading3" style="background-color: #64B5F6">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testSuiteData" href="#testSuiteCollapse3"
+                       aria-expanded="false"
+                       aria-controls="testSuiteCollapse3">
+                        Mock API Test Suite
+                    </a>
+                </h4>
+            </div>
+            <div id="testSuiteCollapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testSuiteHeading3">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
+                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
