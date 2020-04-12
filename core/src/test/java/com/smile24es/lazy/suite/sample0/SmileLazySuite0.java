@@ -8,6 +8,8 @@ public class SmileLazySuite0 {
     public static LazySuite populateSampleLazySuite() throws LazyCoreException {
         LazySuite lazySuite = new LazySuite("Smile API suite");
         lazySuite.getTestSuites().add(AccountTestSuite.getAccountApiTestSuite());
+        lazySuite.getTestSuites().add(AccountTestSuite.getStudentTestSuite());
+        lazySuite.getTestSuites().add(AccountTestSuite.getStudentTestSuite2());
         return lazySuite;
     }
 }

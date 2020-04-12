@@ -56,6 +56,9 @@ public class TestSuiteReport {
     private double failedApiCallPercentage;
     private double invalidApiCallPercentage;
 
+    private List<TestScenarioReport> testScenarioReports;
+
+
     public TestSuiteReport(int id) {
         this.id = id;
     }
@@ -75,8 +78,6 @@ public class TestSuiteReport {
     public void setTestSuiteName(String testSuiteName) {
         this.testSuiteName = testSuiteName;
     }
-
-    private List<TestScenarioReport> testScenarioReports;
 
     public int getTotalTestScenariosCount() {
         return totalTestScenariosCount;

@@ -250,26 +250,27 @@
 
 
             //Inside Test Scenario
-            var tsu1_ts_executionStatusData = {
+<#list report.testSuiteReportList as testSuiteReport>
+            var tsu${testSuiteReport.id}_ts_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [14, 3, 2, 1]
+                        data: [${testSuiteReport.totalExecutedTestScenariosCount}, ${testSuiteReport.totalSkippedTestScenariosCount}, ${testSuiteReport.totalFailedTestScenariosCount}, ${testSuiteReport.totalInvalidTestScenariosCount}]
                     }
                 ]
             };
-            var tsu1_ts_executionStatusChart = document.getElementById("tsu1_ts_executionStatusChart");
-            if (tsu1_ts_executionStatusChart) {
-                new Chart(tsu1_ts_executionStatusChart, {
+            var tsu${testSuiteReport.id}_ts_executionStatusChart = document.getElementById("tsu${testSuiteReport.id}_ts_executionStatusChart");
+            if (tsu${testSuiteReport.id}_ts_executionStatusChart) {
+                new Chart(tsu${testSuiteReport.id}_ts_executionStatusChart, {
                     type: 'pie',
-                    data: tsu1_ts_executionStatusData,
+                    data: tsu${testSuiteReport.id}_ts_executionStatusData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_ts_executionResultData = {
+            var tsu${testSuiteReport.id}_ts_executionResultData = {
                 labels: ['Pass', 'Fail'],
                 datasets: [
                     {
@@ -279,16 +280,16 @@
                     }
                 ]
             };
-            var tsu1_ts_executionResultChart = document.getElementById("tsu1_ts_executionResultChart");
-            if (tsu1_ts_executionResultChart) {
-                new Chart(tsu1_ts_executionResultChart, {
+            var tsu${testSuiteReport.id}_ts_executionResultChart = document.getElementById("tsu${testSuiteReport.id}_ts_executionResultChart");
+            if (tsu${testSuiteReport.id}_ts_executionResultChart) {
+                new Chart(tsu${testSuiteReport.id}_ts_executionResultChart, {
                     type: 'pie',
-                    data: tsu1_ts_executionResultData,
+                    data: tsu${testSuiteReport.id}_ts_executionResultData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_tc_executionStatusData = {
+            var tsu${testSuiteReport.id}_tc_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
                     {
@@ -298,16 +299,16 @@
                     }
                 ]
             };
-            var tsu1_tc_executionStatusChart = document.getElementById("tsu1_tc_executionStatusChart");
-            if (tsu1_tc_executionStatusChart) {
-                new Chart(tsu1_tc_executionStatusChart, {
+            var tsu${testSuiteReport.id}_tc_executionStatusChart = document.getElementById("tsu${testSuiteReport.id}_tc_executionStatusChart");
+            if (tsu${testSuiteReport.id}_tc_executionStatusChart) {
+                new Chart(tsu${testSuiteReport.id}_tc_executionStatusChart, {
                     type: 'pie',
-                    data: tsu1_tc_executionStatusData,
+                    data: tsu${testSuiteReport.id}_tc_executionStatusData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_tc_executionResultData = {
+            var tsu${testSuiteReport.id}_tc_executionResultData = {
                 labels: ['Pass', 'Fail'],
                 datasets: [
                     {
@@ -317,16 +318,16 @@
                     }
                 ]
             };
-            var tsu1_tc_executionResultChart = document.getElementById("tsu1_tc_executionResultChart");
-            if (tsu1_tc_executionResultChart) {
-                new Chart(tsu1_tc_executionResultChart, {
+            var tsu${testSuiteReport.id}_tc_executionResultChart = document.getElementById("tsu${testSuiteReport.id}_tc_executionResultChart");
+            if (tsu${testSuiteReport.id}_tc_executionResultChart) {
+                new Chart(tsu${testSuiteReport.id}_tc_executionResultChart, {
                     type: 'pie',
-                    data: tsu1_tc_executionResultData,
+                    data: tsu${testSuiteReport.id}_tc_executionResultData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_ac_executionStatusData = {
+            var tsu${testSuiteReport.id}_ac_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
                     {
@@ -337,16 +338,16 @@
                 ]
             };
 
-            var tsu1_ac_executionStatusChart = document.getElementById("tsu1_ac_executionStatusChart");
-            if (tsu1_ac_executionStatusChart) {
-                new Chart(tsu1_ac_executionStatusChart, {
+            var tsu${testSuiteReport.id}_ac_executionStatusChart = document.getElementById("tsu${testSuiteReport.id}_ac_executionStatusChart");
+            if (tsu${testSuiteReport.id}_ac_executionStatusChart) {
+                new Chart(tsu${testSuiteReport.id}_ac_executionStatusChart, {
                     type: 'pie',
-                    data: tsu1_ac_executionStatusData,
+                    data: tsu${testSuiteReport.id}_ac_executionStatusData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_ac_executionResultData = {
+            var tsu${testSuiteReport.id}_ac_executionResultData = {
                 labels: ['Pass', 'Fail'],
                 datasets: [
                     {
@@ -356,17 +357,19 @@
                     }
                 ]
             };
-            var tsu1_ac_executionResultChart = document.getElementById("tsu1_ac_executionResultChart");
-            if (tsu1_ac_executionResultChart) {
-                new Chart(tsu1_ac_executionResultChart, {
+            var tsu${testSuiteReport.id}_ac_executionResultChart = document.getElementById("tsu${testSuiteReport.id}_ac_executionResultChart");
+            if (tsu${testSuiteReport.id}_ac_executionResultChart) {
+                new Chart(tsu${testSuiteReport.id}_ac_executionResultChart, {
                     type: 'pie',
-                    data: tsu1_ac_executionResultData,
+                    data: tsu${testSuiteReport.id}_ac_executionResultData,
                     options: chartOptions
                 });
             }
 
+
+  <#list testSuiteReport.testScenarioReports as testScenarioReport>
             //Charts Inside Test Scenario1
-            var tsu1_ts1_tc_executionStatusData = {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
                     {
@@ -376,16 +379,16 @@
                     }
                 ]
             };
-            var tsu1_ts1_tc_executionStatusChart = document.getElementById("tsu1_ts1_tc_executionStatusChart");
-            if (tsu1_ts1_tc_executionStatusChart) {
-                new Chart(tsu1_ts1_tc_executionStatusChart, {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionStatusChart = document.getElementById("tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionStatusChart");
+            if (tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionStatusChart) {
+                new Chart(tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionStatusChart, {
                     type: 'pie',
-                    data: tsu1_ts1_tc_executionStatusData,
+                    data: tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionStatusData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_ts1_tc_executionResultData = {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionResultData = {
                 labels: ['Pass', 'Fail'],
                 datasets: [
                     {
@@ -395,16 +398,16 @@
                     }
                 ]
             };
-            var tsu1_ts1_tc_executionResultChart = document.getElementById("tsu1_ts1_tc_executionResultChart");
-            if (tsu1_ts1_tc_executionResultChart) {
-                new Chart(tsu1_ts1_tc_executionResultChart, {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionResultChart = document.getElementById("tsu${testSuiteReport.id}_ts${testSuiteReport.id}_tc_executionResultChart");
+            if (tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionResultChart) {
+                new Chart(tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionResultChart, {
                     type: 'pie',
-                    data: tsu1_ts1_tc_executionResultData,
+                    data: tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionResultData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_ts1_ac_executionStatusData = {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
                     {
@@ -414,16 +417,16 @@
                     }
                 ]
             };
-            var tsu1_ts1_ac_executionStatusChart = document.getElementById("tsu1_ts1_ac_executionStatusChart");
-            if (tsu1_ts1_ac_executionStatusChart) {
-                new Chart(tsu1_ts1_ac_executionStatusChart, {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionStatusChart = document.getElementById("tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionStatusChart");
+            if (tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionStatusChart) {
+                new Chart(tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionStatusChart, {
                     type: 'pie',
-                    data: tsu1_ts1_ac_executionStatusData,
+                    data: tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionStatusData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_ts1_ac_executionResultData = {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionResultData = {
                 labels: ['Pass', 'Fail'],
                 datasets: [
                     {
@@ -433,17 +436,18 @@
                     }
                 ]
             };
-            var tsu1_ts1_ac_executionResultChart = document.getElementById("tsu1_ts1_ac_executionResultChart");
-            if (tsu1_ts1_ac_executionResultChart) {
-                new Chart(tsu1_ts1_ac_executionResultChart, {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionResultChart = document.getElementById("tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionResultChart");
+            if (tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionResultChart) {
+                new Chart(tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionResultChart, {
                     type: 'pie',
-                    data: tsu1_ts1_ac_executionResultData,
+                    data: tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionResultData,
                     options: chartOptions
                 });
             }
 
+      <#list testScenarioReport.testCaseReports as testCaseReport>
             //Inside test case
-            var tsu1_ts1_tc1_ac_executionStatusData = {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
                     {
@@ -453,16 +457,16 @@
                     }
                 ]
             };
-            var tsu1_ts1_tc1_ac_executionStatusChart = document.getElementById("tsu1_ts1_tc1_ac_executionStatusChart");
-            if (tsu1_ts1_tc1_ac_executionStatusChart) {
-                new Chart(tsu1_ts1_tc1_ac_executionStatusChart, {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionStatusChart = document.getElementById("tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionStatusChart");
+            if (tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionStatusChart) {
+                new Chart(tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionStatusChart, {
                     type: 'pie',
-                    data: tsu1_ts1_tc1_ac_executionStatusData,
+                    data: tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionStatusData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_ts1_tc1_ac_executionResultData = {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionResultData = {
                 labels: ['Pass', 'Fail'],
                 datasets: [
                     {
@@ -472,18 +476,19 @@
                     }
                 ]
             };
-            var tsu1_ts1_tc1_ac_executionResultChart = document.getElementById("tsu1_ts1_tc1_ac_executionResultChart");
-            if (tsu1_ts1_tc1_ac_executionResultChart) {
-                new Chart(tsu1_ts1_tc1_ac_executionResultChart, {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionResultChart = document.getElementById("tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionResultChart");
+            if (tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionResultChart) {
+                new Chart(tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionResultChart, {
                     type: 'pie',
-                    data: tsu1_ts1_tc1_ac_executionResultData,
+                    data: tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionResultData,
                     options: chartOptions
                 });
             }
 
 
+            <#list testCaseReport.apiCallReports as apiCallReport>
             //API Call
-            var tsu1_ts1_tc1_ac1_ass_executionStatusData = {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionStatusData = {
                 labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
                 datasets: [
                     {
@@ -493,16 +498,16 @@
                     }
                 ]
             };
-            var tsu1_ts1_tc1_ac1_ass_executionStatusChart = document.getElementById("tsu1_ts1_tc1_ac1_ass_executionStatusChart");
-            if (tsu1_ts1_tc1_ac1_ass_executionStatusChart) {
-                new Chart(tsu1_ts1_tc1_ac1_ass_executionStatusChart, {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionStatusChart = document.getElementById("tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionStatusChart");
+            if (tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionStatusChart) {
+                new Chart(tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionStatusChart, {
                     type: 'pie',
-                    data: tsu1_ts1_tc1_ac1_ass_executionStatusData,
+                    data: tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionStatusData,
                     options: chartOptions
                 });
             }
 
-            var tsu1_ts1_tc1_ac1_ass_executionResultData = {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionResultData = {
                 labels: ['Pass', 'Fail'],
                 datasets: [
                     {
@@ -512,15 +517,18 @@
                     }
                 ]
             };
-            var tsu1_ts1_tc1_ac1_ass_executionResultChart = document.getElementById("tsu1_ts1_tc1_ac1_ass_executionResultChart");
-            if (tsu1_ts1_tc1_ac1_ass_executionResultChart) {
-                new Chart(tsu1_ts1_tc1_ac1_ass_executionResultChart, {
+            var tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionResultChart = document.getElementById("tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionResultChart");
+            if (tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionResultChart) {
+                new Chart(tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionResultChart, {
                     type: 'pie',
-                    data: tsu1_ts1_tc1_ac1_ass_executionResultData,
+                    data: tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionResultData,
                     options: chartOptions
                 });
             }
-
+            </#list>
+        </#list>
+   </#list>
+</#list>
         });
 
 
@@ -731,23 +739,23 @@
                         <tbody>
                         <tr>
                             <td>Executed</td>
-                            <td>>${report.totalExecutedTestCasesCount}</td>
-                            <td>>${report.executedTestCasesPercentage}%</td>
+                            <td>${report.totalExecutedTestCasesCount}</td>
+                            <td>${report.executedTestCasesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Skipped</td>
-                            <td>>${report.totalSkippedTestCasesCount}</td>
+                            <td>${report.totalSkippedTestCasesCount}</td>
                             <td>>${report.skippedTestCasesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
-                            <td>>${report.totalFailedTestCasesCount}</td>
-                            <td>>${report.failedTestCasesPercentage}%</td>
+                            <td>${report.totalFailedTestCasesCount}</td>
+                            <td>${report.failedTestCasesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Invalid</td>
-                            <td>>${report.totalInvalidTestCasesCount}</td>
-                            <td>>${report.invalidTestCasesPercentage}%</td>
+                            <td>${report.totalInvalidTestCasesCount}</td>
+                            <td>${report.invalidTestCasesPercentage}%</td>
                         </tr>
                         </tbody>
                     </table>
@@ -874,17 +882,22 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="row-space"></div>
+    </div>
     <div class="panel-group" id="testSuiteData" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="testSuiteHeading1" style="background-color: #64B5F6">
+        <#list report.testSuiteReportList as testSuiteReport>
+            <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="testSuiteHeading${testSuiteReport.id}" style="background-color: #64B5F6">
                 <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testSuiteData" href="#testSuiteCollapse1"
-                       aria-expanded="false" aria-controls="testSuiteCollapse1">
-                        Account API Test Suite (14/20)
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testSuiteData" href="#testSuiteCollapse${testSuiteReport.id}"
+                       aria-expanded="false" aria-controls="testSuiteCollapse${testSuiteReport.id}">
+                        [Test Suite] ${testSuiteReport.testSuiteName} (${testSuiteReport.passTestScenariosCount}/${testSuiteReport
+                        .totalTestScenariosCount})
                     </a>
                 </h4>
             </div>
-            <div id="testSuiteCollapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testSuiteHeading1">
+            <div id="testSuiteCollapse${testSuiteReport.id}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testSuiteHeading${testSuiteReport.id}">
                 <div class="panel-body">
                     <div class="container">
                         <!--Test Scenario Report-->
@@ -892,17 +905,17 @@
                             <div class="row">
                                 <div class="col-sm-4 ">
                                     <div class="alert alert-info">
-                                        <strong>Total Test Scenarios</strong> 20
+                                        <strong>Total Test Scenarios ${testSuiteReport.totalTestScenariosCount}</strong>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 ">
                                     <div class="alert alert-success">
-                                        <strong>Pass Test Scenarios</strong> 14
+                                        <strong>Pass Test Scenarios ${testSuiteReport.passTestScenariosCount}</strong>
                                     </div>
                                 </div>
                                 <div class="col-sm-4 ">
                                     <div class="alert alert-danger">
-                                        <strong>Failed Test Scenarios</strong> 6
+                                        <strong>Failed Test Scenarios ${testSuiteReport.notPassTestScenariosCount}</strong>
                                     </div>
                                 </div>
                             </div>
@@ -920,23 +933,23 @@
                                         <tbody>
                                         <tr>
                                             <td>Executed</td>
-                                            <td>14</td>
-                                            <td>70%</td>
+                                            <td>${testSuiteReport.totalExecutedTestScenariosCount}</td>
+                                            <td>${testSuiteReport.executedTestScenariosPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Skipped</td>
-                                            <td>3</td>
-                                            <td>15%</td>
+                                            <td>${testSuiteReport.totalSkippedTestScenariosCount}</td>
+                                            <td>${testSuiteReport.skippedTestScenariosPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Failed</td>
-                                            <td>2</td>
-                                            <td>10%</td>
+                                            <td>${testSuiteReport.totalFailedTestScenariosCount}</td>
+                                            <td>${testSuiteReport.failedTestScenariosPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Invalid</td>
-                                            <td>1</td>
-                                            <td>5%</td>
+                                            <td>${testSuiteReport.totalInvalidTestScenariosCount}</td>
+                                            <td>${testSuiteReport.invalidTestScenariosPercentage}%</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -944,7 +957,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_ts_executionStatusChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu${testSuiteReport.id}_ts_executionStatusChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -977,7 +990,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_ts_executionResultChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu${testSuiteReport.id}_ts_executionResultChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -1026,7 +1039,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_tc_executionStatusChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu${testSuiteReport.id}_tc_executionStatusChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -1059,7 +1072,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_tc_executionResultChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu${testSuiteReport.id}_tc_executionResultChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -1069,6 +1082,8 @@
                         <div class="row-space">
                             <hr/>
                         </div>
+
+
                         <!--Api Call Report-->
                         <div class="container">
                             <div class="row">
@@ -1109,7 +1124,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_ac_executionStatusChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu${testSuiteReport.id}_ac_executionStatusChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -1142,7 +1157,7 @@
                                 <div class="col-sm-4">
                                     <div class="card">
                                         <div class="card-body" style="width: 70%; alignment: center">
-                                            <canvas id="tsu1_ac_executionResultChart" style="alignment: center"></canvas>
+                                            <canvas id="tsu${testSuiteReport.id}_ac_executionResultChart" style="alignment: center"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -1152,20 +1167,23 @@
 
                     <div class="row-space">
                     </div>
+
                     <!-- Test Scenario Panel-->
-                    <div class="panel-group" id="testScenarioData" role="tablist" aria-multiselectable="true">
+                    <div class="panel-group" id="testScenarioData${testSuiteReport.id}" role="tablist" aria-multiselectable="true">
+
+            <#list testSuiteReport.testScenarioReports as testScenarioReport>
                         <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="testScenarioHeading1" style="background-color: #90CAF9">
+                            <div class="panel-heading" role="tab" id="testScenarioHeading${testScenarioReport.id}" style="background-color: #90CAF9">
                                 <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testScenarioData"
-                                       href="#testScenarioCollapse1" aria-expanded="false"
-                                       aria-controls="testSuiteCollapse1">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testScenarioData${testSuiteReport.id}"
+                                       href="#testScenarioCollapse${testScenarioReport.id}" aria-expanded="false"
+                                       aria-controls="testSuiteCollapse${testScenarioReport.id}">
                                         [Test Scenario] Create Account Successfully
                                     </a>
                                 </h4>
                             </div>
-                            <div id="testScenarioCollapse1" class="panel-collapse collapse" role="tabpanel"
-                                 aria-labelledby="testScenarioHeading1">
+                            <div id="testScenarioCollapse${testScenarioReport.id}" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="testScenarioHeading${testScenarioReport.id}">
                                 <div class="panel-body">
                                     <div class="container">
                                         <!--Test Case Report-->
@@ -1225,7 +1243,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="card">
                                                         <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu1_ts1_tc_executionStatusChart" style="alignment: center"></canvas>
+                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionStatusChart" style="alignment: center"></canvas>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1258,7 +1276,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="card">
                                                         <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu1_ts1_tc_executionResultChart" style="alignment: center"></canvas>
+                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc_executionResultChart" style="alignment: center"></canvas>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1308,7 +1326,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="card">
                                                         <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu1_ts1_ac_executionStatusChart" style="alignment: center"></canvas>
+                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionStatusChart" style="alignment: center"></canvas>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1341,7 +1359,7 @@
                                                 <div class="col-sm-4">
                                                     <div class="card">
                                                         <div class="card-body" style="width: 70%; alignment: center">
-                                                            <canvas id="tsu1_ts1_ac_executionResultChart" style="alignment: center"></canvas>
+                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_ac_executionResultChart" style="alignment: center"></canvas>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1354,19 +1372,21 @@
 
 
                                     <!-- Test Case Panel-->
-                                    <div class="panel-group" id="testcaseData" role="tablist" aria-multiselectable="true">
+                                    <div class="panel-group" id="testcaseData${testScenarioReport.id}" role="tablist" aria-multiselectable="true">
+
+                        <#list testScenarioReport.testCaseReports as testCaseReport>
                                         <div class="panel panel-default">
-                                            <div class="panel-heading" role="tab" id="testcaseHeading1" style="background-color: #BBDEFB">
+                                            <div class="panel-heading" role="tab" id="testcaseHeading${testCaseReport.id}" style="background-color: #BBDEFB">
                                                 <h4 class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testcaseData"
-                                                       href="#testcaseCollapse1" aria-expanded="false"
-                                                       aria-controls="testSuiteCollapse1">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testcaseData${testScenarioReport.id}"
+                                                       href="#testcaseCollapse${testCaseReport.id}" aria-expanded="false"
+                                                       aria-controls="testSuiteCollapse${testCaseReport.id}">
                                                         [Test Case] Create Simple Account
                                                     </a>
                                                 </h4>
                                             </div>
-                                            <div id="testcaseCollapse1" class="panel-collapse collapse" role="tabpanel"
-                                                 aria-labelledby="testcaseHeading1">
+                                            <div id="testcaseCollapse${testCaseReport.id}" class="panel-collapse collapse" role="tabpanel"
+                                                 aria-labelledby="testcaseHeading${testCaseReport.id}">
                                                 <div class="panel-body">
                                                     <div class="container">
                                                         <!--Api call Report-->
@@ -1426,7 +1446,7 @@
                                                                 <div class="col-sm-4">
                                                                     <div class="card">
                                                                         <div class="card-body" style="width: 70%; alignment: center">
-                                                                            <canvas id="tsu1_ts1_tc1_ac_executionStatusChart"
+                                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionStatusChart"
                                                                                     style="alignment: center"></canvas>
                                                                         </div>
                                                                     </div>
@@ -1460,7 +1480,7 @@
                                                                 <div class="col-sm-4">
                                                                     <div class="card">
                                                                         <div class="card-body" style="width: 70%; alignment: center">
-                                                                            <canvas id="tsu1_ts1_tc1_ac_executionResultChart"
+                                                                            <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac_executionResultChart"
                                                                                     style="alignment: center"></canvas>
                                                                         </div>
                                                                     </div>
@@ -1473,21 +1493,24 @@
                                                     </div>
 
                                                     <!-- Api Call Panel-->
-                                                    <div class="panel-group" id="apiCallData" role="tablist" aria-multiselectable="true">
+                                                    <div class="panel-group" id="apiCallData${testCaseReport.id}" role="tablist" aria-multiselectable="true">
+
+                                             <#list testCaseReport.apiCallReports as apiCallReport>
+
                                                         <div class="panel panel-default">
-                                                            <div class="panel-heading" role="tab" id="apiCallHeading1"
+                                                            <div class="panel-heading" role="tab" id="apiCallHeading${apiCallReport.id}"
                                                                  style="background-color: #E3F2FD">
                                                                 <h4 class="panel-title">
                                                                     <a class="collapsed" role="button" data-toggle="collapse"
-                                                                       data-parent="#apiCallData"
-                                                                       href="#apiCallCollapse1" aria-expanded="false"
-                                                                       aria-controls="testSuiteCollapse1">
+                                                                       data-parent="#apiCallData${testCaseReport.id}"
+                                                                       href="#apiCallCollapse${apiCallReport.id}" aria-expanded="false"
+                                                                       aria-controls="testSuiteCollapse${apiCallReport.id}">
                                                                         [Api Call] Create Account API Call
                                                                     </a>
                                                                 </h4>
                                                             </div>
-                                                            <div id="apiCallCollapse1" class="panel-collapse collapse" role="tabpanel"
-                                                                 aria-labelledby="apiCallHeading1">
+                                                            <div id="apiCallCollapse${apiCallReport.id}" class="panel-collapse collapse" role="tabpanel"
+                                                                 aria-labelledby="apiCallHeading${apiCallReport.id}">
                                                                 <div class="panel-body">
 
                                                                     <div class="row">
@@ -1546,7 +1569,7 @@
                                                                         <div class="col-sm-4">
                                                                             <div class="card">
                                                                                 <div class="card-body" style="width: 70%; alignment: center">
-                                                                                    <canvas id="tsu1_ts1_tc1_ac1_ass_executionStatusChart"
+                                                                                    <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionStatusChart"
                                                                                             style="alignment: center"></canvas>
                                                                                 </div>
                                                                             </div>
@@ -1581,7 +1604,7 @@
                                                                         <div class="col-sm-4">
                                                                             <div class="card">
                                                                                 <div class="card-body" style="width: 70%; alignment: center">
-                                                                                    <canvas id="tsu1_ts1_tc1_ac1_ass_executionResultChart"
+                                                                                    <canvas id="tsu${testSuiteReport.id}_ts${testScenarioReport.id}_tc${testCaseReport.id}_ac${apiCallReport.id}_ass_executionResultChart"
                                                                                             style="alignment: center"></canvas>
                                                                                 </div>
                                                                             </div>
@@ -1644,18 +1667,22 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                             </#list>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                        </#list>
                                     </div>
                                 </div>
                             </div>
                         </div>
+            </#list>
                     </div>
                 </div>
             </div>
         </div>
+        </#list>
     </div>
 </div>
 </body>
