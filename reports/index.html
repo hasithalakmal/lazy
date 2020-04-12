@@ -277,6 +277,45 @@
                 });
             }
 
+            //Inside test case
+            var tsu1_ts1_tc1_ac_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var tsu1_ts1_tc1_ac_executionStatusChart = document.getElementById("tsu1_ts1_tc1_ac_executionStatusChart");
+            if (tsu1_ts1_tc1_ac_executionStatusChart) {
+                new Chart(tsu1_ts1_tc1_ac_executionStatusChart, {
+                    type: 'pie',
+                    data: tsu1_ts1_tc1_ac_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ts1_tc1_ac_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var tsu1_ts1_tc1_ac_executionResultChart = document.getElementById("tsu1_ts1_tc1_ac_executionResultChart");
+            if (tsu1_ts1_tc1_ac_executionResultChart) {
+                new Chart(tsu1_ts1_tc1_ac_executionResultChart, {
+                    type: 'pie',
+                    data: tsu1_ts1_tc1_ac_executionResultData,
+                    options: chartOptions
+                });
+            }
+
 
         });
 
@@ -779,8 +818,109 @@
                                             <div id="testcaseCollapse1" class="panel-collapse collapse" role="tabpanel"
                                                  aria-labelledby="testcaseHeading1">
                                                 <div class="panel-body">
-                                                    
+                                                    <div class="container">
+                                                        <!--Api call Report-->
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-sm-4 ">
+                                                                    <div class="alert alert-info">
+                                                                        <strong>Total Api Call</strong> 20
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 ">
+                                                                    <div class="alert alert-success">
+                                                                        <strong>Pass Api Call</strong> 14
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 ">
+                                                                    <div class="alert alert-danger">
+                                                                        <strong>Failed Api Call</strong> 6
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-8">
+                                                                    <h3 style="color: #3E2723">Api Call Execution Status Summery</h3>
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th>Execution Status</th>
+                                                                            <th>Count</th>
+                                                                            <th>Percentage</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>Executed</td>
+                                                                            <td>14</td>
+                                                                            <td>70%</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Skipped</td>
+                                                                            <td>3</td>
+                                                                            <td>15%</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Failed</td>
+                                                                            <td>2</td>
+                                                                            <td>10%</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Invalid</td>
+                                                                            <td>1</td>
+                                                                            <td>5%</td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="card">
+                                                                        <div class="card-body" style="width: 70%; alignment: center">
+                                                                            <canvas id="tsu1_ts1_tc1_ac_executionStatusChart"
+                                                                                    style="alignment: center"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-8">
+                                                                    <h3 style="color: #3E2723">Api Call Execution Result Summery</h3>
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th>Result</th>
+                                                                            <th>Count</th>
+                                                                            <th>Percentage</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>Pass</td>
+                                                                            <td>14</td>
+                                                                            <td>70%</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Failed</td>
+                                                                            <td>6</td>
+                                                                            <td>30%</td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="card">
+                                                                        <div class="card-body" style="width: 70%; alignment: center">
+                                                                            <canvas id="tsu1_ts1_tc1_ac_executionResultChart"
+                                                                                    style="alignment: center"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
+                                                    <div class="row-space">
+                                                    </div>
 
                                                     <!-- Api Call Panel-->
                                                     <div class="panel-group" id="apiCallData" role="tablist" aria-multiselectable="true">
