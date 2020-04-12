@@ -130,7 +130,7 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [14, 3, 2, 1]
+                        data: [${report.totalExecutedTestScenariosCount}, ${report.totalSkippedTestScenariosCount}, ${report.totalFailedTestScenariosCount}, ${report.totalInvalidTestScenariosCount}]
                     }
                 ]
             };
@@ -268,7 +268,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [70, 30]
+                        data: [${testSuiteReport.passTestScenariosCount}, ${testSuiteReport.notPassTestScenariosCount}]
                     }
                 ]
             };
@@ -287,7 +287,7 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [90, 5, 5, 0]
+                        data: [${testSuiteReport.totalExecutedTestCasesCount}, ${testSuiteReport.totalSkippedTestCasesCount}, ${testSuiteReport.totalFailedTestCasesCount}, ${testSuiteReport.totalInvalidTestCasesCount}]
                     }
                 ]
             };
@@ -306,7 +306,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [75, 25]
+                        data: [${testSuiteReport.passTestCasesCount}, ${testSuiteReport.notPassTestCasesCount}]
                     }
                 ]
             };
@@ -325,7 +325,7 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [95, 0, 5, 0]
+                        data: [${testSuiteReport.totalExecutedApiCallCount}, ${testSuiteReport.totalSkippedApiCallCount}, ${testSuiteReport.totalFailedApiCallCount}, ${testSuiteReport.totalInvalidApiCallCount}]
                     }
                 ]
             };
@@ -345,7 +345,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [90, 10]
+                        data: [${testSuiteReport.passApiCallCount}, ${testSuiteReport.notPassApiCallCount}]
                     }
                 ]
             };
@@ -367,7 +367,7 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [14, 3, 2, 1]
+                        data: [${testScenarioReport.totalExecutedTestCasesCount}, ${testScenarioReport.totalSkippedTestCasesCount}, ${testScenarioReport.totalFailedTestCasesCount}, ${testScenarioReport.totalInvalidTestCasesCount}]
                     }
                 ]
             };
@@ -386,7 +386,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [70, 30]
+                        data: [${testScenarioReport.passTestCasesCount}, ${testScenarioReport.notPassTestCasesCount}]
                     }
                 ]
             };
@@ -405,7 +405,7 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [14, 3, 2, 1]
+                        data: [${testScenarioReport.totalExecutedApiCallCount}, ${testScenarioReport.totalSkippedApiCallCount}, ${testScenarioReport.totalFailedApiCallCount}, ${testScenarioReport.totalInvalidApiCallCount}]
                     }
                 ]
             };
@@ -424,7 +424,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [70, 30]
+                        data: [${testScenarioReport.passApiCallCount}, ${testScenarioReport.notPassApiCallCount}]
                     }
                 ]
             };
@@ -445,7 +445,7 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [14, 3, 2, 1]
+                        data: [${testCaseReport.totalExecutedApiCallCount}, ${testCaseReport.totalSkippedApiCallCount}, ${testCaseReport.totalFailedApiCallCount}, ${testCaseReport.totalInvalidApiCallCount}]
                     }
                 ]
             };
@@ -464,7 +464,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [70, 30]
+                        data: [${testCaseReport.passApiCallCount}, ${testCaseReport.notPassApiCallCount}]
                     }
                 ]
             };
@@ -486,7 +486,7 @@
                     {
                         backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
                         borderWidth: 0,
-                        data: [14, 3, 2, 1]
+                        data: [${apiCallReport.totalExecutedAssertionsCount}, ${apiCallReport.totalSkippedAssertionsCount}, ${apiCallReport.totalFailedAssertionsCount}, ${apiCallReport.totalInvalidAssertionsCount}]
                     }
                 ]
             };
@@ -737,7 +737,7 @@
                         <tr>
                             <td>Skipped</td>
                             <td>${report.totalSkippedTestCasesCount}</td>
-                            <td>>${report.skippedTestCasesPercentage}%</td>
+                            <td>${report.skippedTestCasesPercentage}%</td>
                         </tr>
                         <tr>
                             <td>Failed</td>
