@@ -23,10 +23,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import static java.text.MessageFormat.format;
+
 @Service
 public class LazyManagerImpl extends LazyBaseManager implements LazyManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LazyManagerImpl.class);
+    public static final String REPORT_V1_TEMPLATE = "reports/template-v1/report_template_v1.ftl";
+    public static final String HTML_FILE_PATH = "{0}sampleReport{1}.html";
 
     @Autowired
     AssertionHandlerImpl assertionHandler;
@@ -89,7 +93,8 @@ public class LazyManagerImpl extends LazyBaseManager implements LazyManager {
 
         printResultTable(lazyExecutionData);
         LazyReport report = reportDataHandler.populateReportData(lazyExecutionData);
-        htmlReportGenerator.setRequestBodyFromJsonTemplate("reports/template-v1/report_template_v1.ftl", report, "sampleReport.html");
+        htmlReportGenerator.setRequestBodyFromJsonTemplate(REPORT_V1_TEMPLATE, report, format(HTML_FILE_PATH,
+              lazySuite.getReportFilePath(), report.getDate()));
         return lazyExecutionData;
     }
 

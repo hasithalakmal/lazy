@@ -10,6 +10,7 @@ public class SmileLazySuite0 {
         lazySuite.getTestSuites().add(AccountTestSuite.getAccountApiTestSuite());
         lazySuite.getTestSuites().add(AccountTestSuite.getStudentTestSuite());
         lazySuite.getTestSuites().add(AccountTestSuite.getStudentTestSuite2());
+        lazySuite.setReportFilePath("/opt/lazy_reports/");
         return lazySuite;
     }
 }

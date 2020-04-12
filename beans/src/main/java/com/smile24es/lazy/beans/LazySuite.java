@@ -26,6 +26,7 @@ public class LazySuite implements Serializable {
     private List<TestSuite> testSuites;
     private Stack stack;
     private Global global;
+    private String reportFilePath;
 
 
     public LazySuite(String lazySuiteName) {
@@ -110,6 +111,17 @@ public class LazySuite implements Serializable {
         this.global = global;
     }
 
+    public String getReportFilePath() {
+        if (reportFilePath == null) {
+            reportFilePath ="";
+        }
+        return reportFilePath;
+    }
+
+    public void setReportFilePath(String reportFilePath) {
+        this.reportFilePath = reportFilePath;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -131,6 +143,7 @@ public class LazySuite implements Serializable {
               .append(testSuites, lazySuite.testSuites)
               .append(stack, lazySuite.stack)
               .append(global, lazySuite.global)
+              .append(reportFilePath, lazySuite.reportFilePath)
               .isEquals();
     }
 
@@ -145,6 +158,7 @@ public class LazySuite implements Serializable {
               .append(testSuites)
               .append(stack)
               .append(global)
+              .append(reportFilePath)
               .toHashCode();
     }
 
@@ -159,6 +173,7 @@ public class LazySuite implements Serializable {
               ", testSuites=" + testSuites +
               ", stack=" + stack +
               ", global=" + global +
+              ", reportFilePath=" + reportFilePath +
               '}';
     }
 }
