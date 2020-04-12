@@ -1372,13 +1372,16 @@
 
 
                                     <!-- Test Case Panel-->
-                                    <div class="panel-group" id="testcaseData${testScenarioReport.id}" role="tablist" aria-multiselectable="true">
+                                    <div class="panel-group" id="testcaseData_${testSuiteReport.id}_${testScenarioReport.id}" role="tablist"
+                                         aria-multiselectable="true">
 
                         <#list testScenarioReport.testCaseReports as testCaseReport>
                                         <div class="panel panel-default">
-                                            <div class="panel-heading" role="tab" id="testcaseHeading${testCaseReport.id}" style="background-color: #BBDEFB">
+                                            <div class="panel-heading" role="tab" id="testcaseHeading${testCaseReport.id}"
+                                                 style="background-color: #BBDEFB">
                                                 <h4 class="panel-title">
-                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testcaseData${testScenarioReport.id}"
+                                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                                       data-parent="#testcaseData_${testSuiteReport.id}_${testScenarioReport.id}"
                                                        href="#testcaseCollapse${testCaseReport.id}" aria-expanded="false"
                                                        aria-controls="testSuiteCollapse${testCaseReport.id}">
                                                         [Test Case] Create Simple Account
@@ -1493,7 +1496,8 @@
                                                     </div>
 
                                                     <!-- Api Call Panel-->
-                                                    <div class="panel-group" id="apiCallData${testCaseReport.id}" role="tablist" aria-multiselectable="true">
+                                                    <div class="panel-group" id="apiCallData_${testSuiteReport.id}_${testScenarioReport
+                                                    .id}_${testCaseReport.id}" role="tablist" aria-multiselectable="true">
 
                                              <#list testCaseReport.apiCallReports as apiCallReport>
 
@@ -1502,7 +1506,8 @@
                                                                  style="background-color: #E3F2FD">
                                                                 <h4 class="panel-title">
                                                                     <a class="collapsed" role="button" data-toggle="collapse"
-                                                                       data-parent="#apiCallData${testCaseReport.id}"
+                                                                       data-parent="#apiCallData_${testSuiteReport.id}_${testScenarioReport
+                                                                       .id}_${testCaseReport.id}"
                                                                        href="#apiCallCollapse${apiCallReport.id}" aria-expanded="false"
                                                                        aria-controls="testSuiteCollapse${apiCallReport.id}">
                                                                         [Api Call] Create Account API Call
