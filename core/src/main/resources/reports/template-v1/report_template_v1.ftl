@@ -976,13 +976,13 @@
                                         <tbody>
                                         <tr>
                                             <td>Pass</td>
-                                            <td>14</td>
-                                            <td>70%</td>
+                                            <td>${testSuiteReport.passTestScenariosCount}</td>
+                                            <td>${testSuiteReport.passTestScenariosPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Failed</td>
-                                            <td>6</td>
-                                            <td>30%</td>
+                                            <td>${testSuiteReport.notPassTestScenariosCount}</td>
+                                            <td>${testSuiteReport.notPassTestScenariosPercentage}%</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -1015,23 +1015,23 @@
                                         <tbody>
                                         <tr>
                                             <td>Executed</td>
-                                            <td>90</td>
-                                            <td>90%</td>
+                                            <td>${testSuiteReport.totalExecutedTestCasesCount}</td>
+                                            <td>${testSuiteReport.executedTestCasesPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Skipped</td>
-                                            <td>5</td>
-                                            <td>5%</td>
+                                            <td>${testSuiteReport.totalSkippedTestCasesCount}</td>
+                                            <td>${testSuiteReport.skippedTestCasesPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Failed</td>
-                                            <td>5</td>
-                                            <td>5%</td>
+                                            <td>${testSuiteReport.totalFailedTestCasesCount}</td>
+                                            <td>${testSuiteReport.failedTestCasesPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Invalid</td>
-                                            <td>0</td>
-                                            <td>0%</td>
+                                            <td>${testSuiteReport.totalInvalidTestCasesCount}</td>
+                                            <td>${testSuiteReport.invalidTestCasesPercentage}%</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -1058,13 +1058,13 @@
                                         <tbody>
                                         <tr>
                                             <td>Pass</td>
-                                            <td>75</td>
-                                            <td>75%</td>
+                                            <td>${testSuiteReport.passTestCasesCount}</td>
+                                            <td>${testSuiteReport.passTestCasesPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Failed</td>
-                                            <td>25</td>
-                                            <td>25%</td>
+                                            <td>${testSuiteReport.notPassTestCasesCount}</td>
+                                            <td>${testSuiteReport.notPassTestCasesPercentage}%</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -1100,23 +1100,23 @@
                                         <tbody>
                                         <tr>
                                             <td>Executed</td>
-                                            <td>95</td>
-                                            <td>95%</td>
+                                            <td>${testSuiteReport.totalExecutedApiCallCount}</td>
+                                            <td>${testSuiteReport.executedApiCallPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Skipped</td>
-                                            <td>0</td>
-                                            <td>0%</td>
+                                            <td>${testSuiteReport.totalSkippedApiCallCount}</td>
+                                            <td>${testSuiteReport.skippedApiCallPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Failed</td>
-                                            <td>5</td>
-                                            <td>5%</td>
+                                            <td>${testSuiteReport.totalFailedApiCallCount}</td>
+                                            <td>${testSuiteReport.failedApiCallPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Invalid</td>
-                                            <td>0</td>
-                                            <td>0%</td>
+                                            <td>${testSuiteReport.totalInvalidApiCallCount}</td>
+                                            <td>${testSuiteReport.invalidApiCallPercentage}%</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -1143,13 +1143,13 @@
                                         <tbody>
                                         <tr>
                                             <td>Pass</td>
-                                            <td>80</td>
-                                            <td>80%</td>
+                                            <td>${testSuiteReport.passApiCallCount}</td>
+                                            <td>${testSuiteReport.passApiCallPercentage}%</td>
                                         </tr>
                                         <tr>
                                             <td>Failed</td>
-                                            <td>20</td>
-                                            <td>20%</td>
+                                            <td>${testSuiteReport.notPassApiCallCount}</td>
+                                            <td>${testSuiteReport.notPassApiCallPercentage}%</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -1178,7 +1178,7 @@
                                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testScenarioData${testSuiteReport.id}"
                                        href="#testScenarioCollapse${testScenarioReport.id}" aria-expanded="false"
                                        aria-controls="testSuiteCollapse${testScenarioReport.id}">
-                                        [Test Scenario] Create Account Successfully
+                                        [Test Scenario] ${testScenarioReport.testScenarioName} (${testScenarioReport.passTestCasesCount}/${testScenarioReport.totalTestCasesCount})
                                     </a>
                                 </h4>
                             </div>
@@ -1191,17 +1191,17 @@
                                             <div class="row">
                                                 <div class="col-sm-4 ">
                                                     <div class="alert alert-info">
-                                                        <strong>Total Test Case</strong> 20
+                                                        <strong>Total Test Case ${testScenarioReport.totalTestCasesCount}</strong>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4 ">
                                                     <div class="alert alert-success">
-                                                        <strong>Pass Test Case</strong> 14
+                                                        <strong>Pass Test Case ${testScenarioReport.passTestCasesCount}</strong>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4 ">
                                                     <div class="alert alert-danger">
-                                                        <strong>Failed Test Case</strong> 6
+                                                        <strong>Failed Test Case ${testScenarioReport.notPassTestCasesCount}</strong>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1219,23 +1219,23 @@
                                                         <tbody>
                                                         <tr>
                                                             <td>Executed</td>
-                                                            <td>14</td>
-                                                            <td>70%</td>
+                                                            <td>${testScenarioReport.totalExecutedTestCasesCount}</td>
+                                                            <td>${testScenarioReport.executedTestCasesPercentage}%</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Skipped</td>
-                                                            <td>3</td>
-                                                            <td>15%</td>
+                                                            <td>${testScenarioReport.totalSkippedTestCasesCount}</td>
+                                                            <td>${testScenarioReport.skippedTestCasesPercentage}%</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Failed</td>
-                                                            <td>2</td>
-                                                            <td>10%</td>
+                                                            <td>${testScenarioReport.totalFailedTestCasesCount}</td>
+                                                            <td>${testScenarioReport.failedTestCasesPercentage}%</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Invalid</td>
-                                                            <td>1</td>
-                                                            <td>5%</td>
+                                                            <td>${testScenarioReport.totalInvalidTestCasesCount}</td>
+                                                            <td>${testScenarioReport.invalidTestCasesPercentage}%</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -1262,13 +1262,13 @@
                                                         <tbody>
                                                         <tr>
                                                             <td>Pass</td>
-                                                            <td>14</td>
-                                                            <td>70%</td>
+                                                            <td>${testScenarioReport.passTestCasesCount}</td>
+                                                            <td>${testScenarioReport.notPassTestCasesCount}%</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Failed</td>
-                                                            <td>6</td>
-                                                            <td>30%</td>
+                                                            <td>${testScenarioReport.passTestCasesPercentage}</td>
+                                                            <td>${testScenarioReport.notPassTestCasesPercentage}%</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -1302,23 +1302,23 @@
                                                         <tbody>
                                                         <tr>
                                                             <td>Executed</td>
-                                                            <td>95</td>
-                                                            <td>95%</td>
+                                                            <td>${testScenarioReport.totalExecutedApiCallCount}</td>
+                                                            <td>${testScenarioReport.executedApiCallPercentage}%</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Skipped</td>
-                                                            <td>0</td>
-                                                            <td>0%</td>
+                                                            <td>${testScenarioReport.totalSkippedApiCallCount}</td>
+                                                            <td>${testScenarioReport.skippedApiCallPercentage}%</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Failed</td>
-                                                            <td>5</td>
-                                                            <td>5%</td>
+                                                            <td>${testScenarioReport.totalFailedApiCallCount}</td>
+                                                            <td>${testScenarioReport.failedApiCallPercentage}%</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Invalid</td>
-                                                            <td>0</td>
-                                                            <td>0%</td>
+                                                            <td>${testScenarioReport.totalInvalidApiCallCount}</td>
+                                                            <td>${testScenarioReport.invalidApiCallPercentage}%</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -1345,13 +1345,13 @@
                                                         <tbody>
                                                         <tr>
                                                             <td>Pass</td>
-                                                            <td>80</td>
-                                                            <td>80%</td>
+                                                            <td>${testScenarioReport.passApiCallCount}</td>
+                                                            <td>${testScenarioReport.passApiCallPercentage}%</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Failed</td>
-                                                            <td>20</td>
-                                                            <td>20%</td>
+                                                            <td>${testScenarioReport.notPassApiCallCount}</td>
+                                                            <td>${testScenarioReport.notPassApiCallPercentage}%</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -1384,7 +1384,7 @@
                                                        data-parent="#testcaseData_${testSuiteReport.id}_${testScenarioReport.id}"
                                                        href="#testcaseCollapse${testCaseReport.id}" aria-expanded="false"
                                                        aria-controls="testSuiteCollapse${testCaseReport.id}">
-                                                        [Test Case] Create Simple Account
+                                                        [Test Case] ${testCaseReport.testCaseName} (${testCaseReport.passApiCallCount}/${testCaseReport.totalApiCallCount})
                                                     </a>
                                                 </h4>
                                             </div>
@@ -1397,17 +1397,17 @@
                                                             <div class="row">
                                                                 <div class="col-sm-4 ">
                                                                     <div class="alert alert-info">
-                                                                        <strong>Total Api Call</strong> 20
+                                                                        <strong>Total Api Call ${testCaseReport.totalApiCallCount}</strong>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4 ">
                                                                     <div class="alert alert-success">
-                                                                        <strong>Pass Api Call</strong> 14
+                                                                        <strong>Pass Api Call ${testCaseReport.passApiCallCount}</strong>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4 ">
                                                                     <div class="alert alert-danger">
-                                                                        <strong>Failed Api Call</strong> 6
+                                                                        <strong>Failed Api Call ${testCaseReport.notPassApiCallCount}</strong>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1425,23 +1425,23 @@
                                                                         <tbody>
                                                                         <tr>
                                                                             <td>Executed</td>
-                                                                            <td>14</td>
-                                                                            <td>70%</td>
+                                                                            <td>${testCaseReport.totalExecutedApiCallCount}</td>
+                                                                            <td>${testCaseReport.executedApiCallPercentage}%</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Skipped</td>
-                                                                            <td>3</td>
-                                                                            <td>15%</td>
+                                                                            <td>${testCaseReport.totalSkippedApiCallCount}</td>
+                                                                            <td>${testCaseReport.skippedApiCallPercentage}%</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Failed</td>
-                                                                            <td>2</td>
-                                                                            <td>10%</td>
+                                                                            <td>${testCaseReport.totalFailedApiCallCount}</td>
+                                                                            <td>${testCaseReport.failedApiCallPercentage}%</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Invalid</td>
-                                                                            <td>1</td>
-                                                                            <td>5%</td>
+                                                                            <td>${testCaseReport.totalInvalidApiCallCount}</td>
+                                                                            <td>${testCaseReport.invalidApiCallPercentage}%</td>
                                                                         </tr>
                                                                         </tbody>
                                                                     </table>
@@ -1469,13 +1469,13 @@
                                                                         <tbody>
                                                                         <tr>
                                                                             <td>Pass</td>
-                                                                            <td>14</td>
-                                                                            <td>70%</td>
+                                                                            <td>${testCaseReport.passApiCallCount}</td>
+                                                                            <td>${testCaseReport.passApiCallPercentage}%</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>Failed</td>
-                                                                            <td>6</td>
-                                                                            <td>30%</td>
+                                                                            <td>${testCaseReport.notPassApiCallCount}</td>
+                                                                            <td>${testCaseReport.notPassApiCallPercentage}%</td>
                                                                         </tr>
                                                                         </tbody>
                                                                     </table>
@@ -1510,7 +1510,7 @@
                                                                        .id}_${testCaseReport.id}"
                                                                        href="#apiCallCollapse${apiCallReport.id}" aria-expanded="false"
                                                                        aria-controls="testSuiteCollapse${apiCallReport.id}">
-                                                                        [Api Call] Create Account API Call
+                                                                        [Api Call] ${apiCallReport.name} (${apiCallReport.passAssertionsCount}/${apiCallReport.totalAssertionsCount})
                                                                     </a>
                                                                 </h4>
                                                             </div>
@@ -1521,17 +1521,17 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-4 ">
                                                                             <div class="alert alert-info">
-                                                                                <strong>Total Assertions</strong> 27
+                                                                                <strong>Total Assertions ${apiCallReport.totalAssertionsCount}</strong>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-4 ">
                                                                             <div class="alert alert-success">
-                                                                                <strong>Pass Assertions</strong> 14
+                                                                                <strong>Pass Assertions ${apiCallReport.passAssertionsCount}</strong>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-sm-4 ">
                                                                             <div class="alert alert-danger">
-                                                                                <strong>Failed Assertions</strong> 6
+                                                                                <strong>Failed Assertions ${apiCallReport.notPassAssertionsCount}</strong>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -1550,23 +1550,23 @@
                                                                                 <tbody>
                                                                                 <tr>
                                                                                     <td>Executed</td>
-                                                                                    <td>14</td>
-                                                                                    <td>70%</td>
+                                                                                    <td>${apiCallReport.totalExecutedAssertionsCount}</td>
+                                                                                    <td>${apiCallReport.executedAssertionsPercentage}%</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Skipped</td>
-                                                                                    <td>3</td>
-                                                                                    <td>15%</td>
+                                                                                    <td>${apiCallReport.totalSkippedAssertionsCount}</td>
+                                                                                    <td>${apiCallReport.skippedAssertionsPercentage}%</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Failed</td>
-                                                                                    <td>2</td>
-                                                                                    <td>10%</td>
+                                                                                    <td>${apiCallReport.totalFailedAssertionsCount}</td>
+                                                                                    <td>${apiCallReport.failedAssertionsPercentage}%</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Invalid</td>
-                                                                                    <td>1</td>
-                                                                                    <td>5%</td>
+                                                                                    <td>${apiCallReport.totalInvalidAssertionsCount}</td>
+                                                                                    <td>${apiCallReport.invalidAssertionsPercentage}%</td>
                                                                                 </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -1595,13 +1595,13 @@
                                                                                 <tbody>
                                                                                 <tr>
                                                                                     <td>Pass</td>
-                                                                                    <td>14</td>
-                                                                                    <td>70%</td>
+                                                                                    <td>${apiCallReport.passAssertionsCount}</td>
+                                                                                    <td>${apiCallReport.passAssertionsPercentage}%</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Failed</td>
-                                                                                    <td>6</td>
-                                                                                    <td>30%</td>
+                                                                                    <td>${apiCallReport.notPassAssertionsCount}</td>
+                                                                                    <td>${apiCallReport.notPassAssertionsPercentage}%</td>
                                                                                 </tr>
                                                                                 </tbody>
                                                                             </table>
@@ -1633,37 +1633,42 @@
                                                                                 <tbody>
                                                                                 <tr>
                                                                                     <td>HTTP Metod</td>
-                                                                                    <td>POST</td>
+                                                                                    <td>${apiCallReport.httpMethod}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>URL</td>
-                                                                                    <td>http://localhost:8080/account-api/service/accounts</td>
+                                                                                    <td>${apiCallReport.url}</td>
                                                                                 </tr>
-                                                                                <tr>
-                                                                                    <td>Request Body</td>
-                                                                                    <td>
-                                                                                        {"settings":[{"value":"1577641690","key":"setting1"},{"value":"1577641690","key":"setting2"}],"versionId":"1.0.0","ownerName":"Hasitha-1577641690","createdBy":"12345","accountName":"Sathara-1577641690","enterpriseId":"1","parentId":"1","status":"ACTIVE"}
-                                                                                    </td>
-                                                                                </tr>
+                                                                                 <#if apiCallReport.requestBody?has_content>
+                                                                                    <tr>
+                                                                                        <td>Request Body</td>
+                                                                                        <td>
+                                                                                            ${apiCallReport.requestBody}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                 </#if>
                                                                                 <tr>
                                                                                     <td>Header List</td>
-                                                                                    <td>[accept:application/json], [content-type:application/json]
+                                                                                    <td>
+                                                                                        ${apiCallReport.headers}
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Execution time</td>
-                                                                                    <td>150ms</td>
+                                                                                    <td>${apiCallReport.executionTime}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>HTTP status code</td>
-                                                                                    <td>201</td>
+                                                                                    <td>${apiCallReport.httpStatusCode}</td>
                                                                                 </tr>
-                                                                                <tr>
-                                                                                    <td>Response</td>
-                                                                                    <td>
-                                                                                        {"status":"ACTIVE","createdBy":"12345","accountId":"801","parentId":"1","enterpriseId":"1","accountName":"Sathara-1577641690","ownerName":"Hasitha-1577641690","versionId":"1.0.0","addresses":[],"settings":[{"createdTimestamp":1586636880409,"updatedTimestamp":0,"id":"1552","key":"setting1","value":"1577641690","settingStatus":"ACTIVE","accountId":"801"},{"createdTimestamp":1586636880409,"updatedTimestamp":0,"id":"1553","key":"setting2","value":"1577641690","settingStatus":"ACTIVE","accountId":"801"}]}
-                                                                                    </td>
-                                                                                </tr>
+                                                                                 <#if apiCallReport.response?has_content>
+                                                                                    <tr>
+                                                                                        <td>Response</td>
+                                                                                        <td>
+                                                                                            ${apiCallReport.response}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                 </#if>
                                                                                 </tbody>
                                                                             </table>
                                                                         </div>

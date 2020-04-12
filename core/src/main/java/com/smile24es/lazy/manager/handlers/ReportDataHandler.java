@@ -138,7 +138,7 @@ public class ReportDataHandler {
                         apiCallReport.setRequestBody(apiCallExecutionData.getRequestBody());
                         apiCallReport.setExecutionTime(apiCallExecutionData.getResponse().getResponseTime()+"ms");
                         apiCallReport.setHttpStatusCode(apiCallExecutionData.getResponse().getCloseableHttpResponse().getStatusLine().getStatusCode());
-                        apiCallReport.setRequestBody(apiCallExecutionData.getRequestBody());
+                        apiCallReport.setResponse(apiCallExecutionData.getResponse().getResponseBody());
 
 
                         int totalAssertions = 0;
