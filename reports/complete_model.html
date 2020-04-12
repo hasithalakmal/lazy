@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+        body {
+            padding: 10px;
+            background: #fff;
+        }
+
+        .wrapper {
+            width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .wrapper {
+                width: 100%;
+            }
+        }
+
+        .panel-heading {
+            padding: 0;
+            border: 0;
+        }
+
+        .panel-title > a, .panel-title > a:active {
+            display: block;
+            padding: 15px;
+            color: #555;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            word-spacing: 3px;
+            text-decoration: none;
+        }
+
+        .panel-heading a:before {
+            font-family: 'Glyphicons Halflings';
+            content: "\e114";
+            float: right;
+            transition: all 0.5s;
+        }
+
+        .panel-heading.active a:before {
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+
+        .row-space {
+            height: 10px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('.panel-collapse').on('show.bs.collapse', function () {
+                $(this).siblings('.panel-heading').addClass('active');
+            });
+
+            $('.panel-collapse').on('hide.bs.collapse', function () {
+                $(this).siblings('.panel-heading').removeClass('active');
+            });
+
+            var chartOptions = {
+                cutoutPercentage: 70,
+                segmentShowStroke: false,
+                animateScale: true,
+                duration: 5000,
+                legend: {
+                    labels: {pointStyle: 'circle', usePointStyle: true}
+                    // labels: {
+                    //         render: 'label',
+                    //         position: 'outside'
+                    //     },
+                }
+            };
+
+            var tsu1_ts_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var tsu1_ts_executionStatusChart = document.getElementById("tsu1_ts_executionStatusChart");
+            if (tsu1_ts_executionStatusChart) {
+                new Chart(tsu1_ts_executionStatusChart, {
+                    type: 'pie',
+                    data: tsu1_ts_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ts_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var tsu1_ts_executionResultChart = document.getElementById("tsu1_ts_executionResultChart");
+            if (tsu1_ts_executionResultChart) {
+                new Chart(tsu1_ts_executionResultChart, {
+                    type: 'pie',
+                    data: tsu1_ts_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_tc_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [90, 5, 5, 0]
+                    }
+                ]
+            };
+            var tsu1_tc_executionStatusChart = document.getElementById("tsu1_tc_executionStatusChart");
+            if (tsu1_tc_executionStatusChart) {
+                new Chart(tsu1_tc_executionStatusChart, {
+                    type: 'pie',
+                    data: tsu1_tc_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_tc_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [75, 25]
+                    }
+                ]
+            };
+            var tsu1_tc_executionResultChart = document.getElementById("tsu1_tc_executionResultChart");
+            if (tsu1_tc_executionResultChart) {
+                new Chart(tsu1_tc_executionResultChart, {
+                    type: 'pie',
+                    data: tsu1_tc_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ac_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [95, 0, 5, 0]
+                    }
+                ]
+            };
+
+            var tsu1_ac_executionStatusChart = document.getElementById("tsu1_ac_executionStatusChart");
+            if (tsu1_ac_executionStatusChart) {
+                new Chart(tsu1_ac_executionStatusChart, {
+                    type: 'pie',
+                    data: tsu1_ac_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ac_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [90, 10]
+                    }
+                ]
+            };
+            var tsu1_ac_executionResultChart = document.getElementById("tsu1_ac_executionResultChart");
+            if (tsu1_ac_executionResultChart) {
+                new Chart(tsu1_ac_executionResultChart, {
+                    type: 'pie',
+                    data: tsu1_ac_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+            //Charts Inside Test Scenario1
+            var tsu1_ts1_tc_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var tsu1_ts1_tc_executionStatusChart = document.getElementById("tsu1_ts1_tc_executionStatusChart");
+            if (tsu1_ts1_tc_executionStatusChart) {
+                new Chart(tsu1_ts1_tc_executionStatusChart, {
+                    type: 'pie',
+                    data: tsu1_ts1_tc_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ts1_tc_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var tsu1_ts1_tc_executionResultChart = document.getElementById("tsu1_ts1_tc_executionResultChart");
+            if (tsu1_ts1_tc_executionResultChart) {
+                new Chart(tsu1_ts1_tc_executionResultChart, {
+                    type: 'pie',
+                    data: tsu1_ts1_tc_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ts1_ac_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var tsu1_ts1_ac_executionStatusChart = document.getElementById("tsu1_ts1_ac_executionStatusChart");
+            if (tsu1_ts1_ac_executionStatusChart) {
+                new Chart(tsu1_ts1_ac_executionStatusChart, {
+                    type: 'pie',
+                    data: tsu1_ts1_ac_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ts1_ac_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var tsu1_ts1_ac_executionResultChart = document.getElementById("tsu1_ts1_ac_executionResultChart");
+            if (tsu1_ts1_ac_executionResultChart) {
+                new Chart(tsu1_ts1_ac_executionResultChart, {
+                    type: 'pie',
+                    data: tsu1_ts1_ac_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+            //Inside test case
+            var tsu1_ts1_tc1_ac_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var tsu1_ts1_tc1_ac_executionStatusChart = document.getElementById("tsu1_ts1_tc1_ac_executionStatusChart");
+            if (tsu1_ts1_tc1_ac_executionStatusChart) {
+                new Chart(tsu1_ts1_tc1_ac_executionStatusChart, {
+                    type: 'pie',
+                    data: tsu1_ts1_tc1_ac_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ts1_tc1_ac_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var tsu1_ts1_tc1_ac_executionResultChart = document.getElementById("tsu1_ts1_tc1_ac_executionResultChart");
+            if (tsu1_ts1_tc1_ac_executionResultChart) {
+                new Chart(tsu1_ts1_tc1_ac_executionResultChart, {
+                    type: 'pie',
+                    data: tsu1_ts1_tc1_ac_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+
+            //API Call
+            var tsu1_ts1_tc1_ac1_ass_executionStatusData = {
+                labels: ['Executed', 'Skipped', 'Failed', "Invalid"],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#ffc107", "#dc3545", "#6c757d"],
+                        borderWidth: 0,
+                        data: [14, 3, 2, 1]
+                    }
+                ]
+            };
+            var tsu1_ts1_tc1_ac1_ass_executionStatusChart = document.getElementById("tsu1_ts1_tc1_ac1_ass_executionStatusChart");
+            if (tsu1_ts1_tc1_ac1_ass_executionStatusChart) {
+                new Chart(tsu1_ts1_tc1_ac1_ass_executionStatusChart, {
+                    type: 'pie',
+                    data: tsu1_ts1_tc1_ac1_ass_executionStatusData,
+                    options: chartOptions
+                });
+            }
+
+            var tsu1_ts1_tc1_ac1_ass_executionResultData = {
+                labels: ['Pass', 'Fail'],
+                datasets: [
+                    {
+                        backgroundColor: ["#28a745", "#dc3545"],
+                        borderWidth: 0,
+                        data: [70, 30]
+                    }
+                ]
+            };
+            var tsu1_ts1_tc1_ac1_ass_executionResultChart = document.getElementById("tsu1_ts1_tc1_ac1_ass_executionResultChart");
+            if (tsu1_ts1_tc1_ac1_ass_executionResultChart) {
+                new Chart(tsu1_ts1_tc1_ac1_ass_executionResultChart, {
+                    type: 'pie',
+                    data: tsu1_ts1_tc1_ac1_ass_executionResultData,
+                    options: chartOptions
+                });
+            }
+
+        });
+
+
+    </script>
+</head>
+<body>
+<div class="wrapper center-block">
+    <div class="panel-group" id="testSuiteData" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="testSuiteHeading1" style="background-color: #64B5F6">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testSuiteData" href="#testSuiteCollapse1"
+                       aria-expanded="false" aria-controls="testSuiteCollapse1">
+                        Account API Test Suite (14/20)
+                    </a>
+                </h4>
+            </div>
+            <div id="testSuiteCollapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testSuiteHeading1">
+                <div class="panel-body">
+                    <div class="container">
+                        <!--Test Scenario Report-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-4 ">
+                                    <div class="alert alert-info">
+                                        <strong>Total Test Scenarios</strong> 20
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 ">
+                                    <div class="alert alert-success">
+                                        <strong>Pass Test Scenarios</strong> 14
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 ">
+                                    <div class="alert alert-danger">
+                                        <strong>Failed Test Scenarios</strong> 6
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h3 style="color: #3E2723">Test Scenario Execution Status Summery</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Execution Status</th>
+                                            <th>Count</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Executed</td>
+                                            <td>14</td>
+                                            <td>70%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Skipped</td>
+                                            <td>3</td>
+                                            <td>15%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Failed</td>
+                                            <td>2</td>
+                                            <td>10%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Invalid</td>
+                                            <td>1</td>
+                                            <td>5%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-body" style="width: 70%; alignment: center">
+                                            <canvas id="tsu1_ts_executionStatusChart" style="alignment: center"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h3 style="color: #3E2723">Test Scenario Execution Result Summery</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Result</th>
+                                            <th>Count</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Pass</td>
+                                            <td>14</td>
+                                            <td>70%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Failed</td>
+                                            <td>6</td>
+                                            <td>30%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-body" style="width: 70%; alignment: center">
+                                            <canvas id="tsu1_ts_executionResultChart" style="alignment: center"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-space">
+                            <hr/>
+                        </div>
+                        <!--Test Case Report-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h3 style="color: #6D4C41">Test Case Execution Status Summery</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Execution Status</th>
+                                            <th>Count</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Executed</td>
+                                            <td>90</td>
+                                            <td>90%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Skipped</td>
+                                            <td>5</td>
+                                            <td>5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Failed</td>
+                                            <td>5</td>
+                                            <td>5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Invalid</td>
+                                            <td>0</td>
+                                            <td>0%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-body" style="width: 70%; alignment: center">
+                                            <canvas id="tsu1_tc_executionStatusChart" style="alignment: center"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h3 style="color: #6D4C41">Test Case Execution Result Summery</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Result</th>
+                                            <th>Count</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Pass</td>
+                                            <td>75</td>
+                                            <td>75%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Failed</td>
+                                            <td>25</td>
+                                            <td>25%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-body" style="width: 70%; alignment: center">
+                                            <canvas id="tsu1_tc_executionResultChart" style="alignment: center"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-space">
+                            <hr/>
+                        </div>
+                        <!--Api Call Report-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h3 style="color: #A1887F">Api Call Execution Status Summery</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Execution Status</th>
+                                            <th>Count</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Executed</td>
+                                            <td>95</td>
+                                            <td>95%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Skipped</td>
+                                            <td>0</td>
+                                            <td>0%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Failed</td>
+                                            <td>5</td>
+                                            <td>5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Invalid</td>
+                                            <td>0</td>
+                                            <td>0%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-body" style="width: 70%; alignment: center">
+                                            <canvas id="tsu1_ac_executionStatusChart" style="alignment: center"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h3 style="color: #A1887F">Api Call Execution Result Summery</h3>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Result</th>
+                                            <th>Count</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Pass</td>
+                                            <td>80</td>
+                                            <td>80%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Failed</td>
+                                            <td>20</td>
+                                            <td>20%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <div class="card-body" style="width: 70%; alignment: center">
+                                            <canvas id="tsu1_ac_executionResultChart" style="alignment: center"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-space">
+                    </div>
+                    <!-- Test Scenario Panel-->
+                    <div class="panel-group" id="testScenarioData" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="testScenarioHeading1" style="background-color: #90CAF9">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testScenarioData"
+                                       href="#testScenarioCollapse1" aria-expanded="false"
+                                       aria-controls="testSuiteCollapse1">
+                                        [Test Scenario] Create Account Successfully
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="testScenarioCollapse1" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="testScenarioHeading1">
+                                <div class="panel-body">
+                                    <div class="container">
+                                        <!--Test Case Report-->
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-sm-4 ">
+                                                    <div class="alert alert-info">
+                                                        <strong>Total Test Case</strong> 20
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 ">
+                                                    <div class="alert alert-success">
+                                                        <strong>Pass Test Case</strong> 14
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 ">
+                                                    <div class="alert alert-danger">
+                                                        <strong>Failed Test Case</strong> 6
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <h3 style="color: #3E2723">Test Case Execution Status Summery</h3>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Execution Status</th>
+                                                            <th>Count</th>
+                                                            <th>Percentage</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>Executed</td>
+                                                            <td>14</td>
+                                                            <td>70%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Skipped</td>
+                                                            <td>3</td>
+                                                            <td>15%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Failed</td>
+                                                            <td>2</td>
+                                                            <td>10%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Invalid</td>
+                                                            <td>1</td>
+                                                            <td>5%</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body" style="width: 70%; alignment: center">
+                                                            <canvas id="tsu1_ts1_tc_executionStatusChart" style="alignment: center"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <h3 style="color: #3E2723">Test Case Execution Result Summery</h3>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Result</th>
+                                                            <th>Count</th>
+                                                            <th>Percentage</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>Pass</td>
+                                                            <td>14</td>
+                                                            <td>70%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Failed</td>
+                                                            <td>6</td>
+                                                            <td>30%</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body" style="width: 70%; alignment: center">
+                                                            <canvas id="tsu1_ts1_tc_executionResultChart" style="alignment: center"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row-space">
+                                            <hr/>
+                                        </div>
+                                        <!--Api Call Report-->
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <h3 style="color: #A1887F">Api Call Execution Status Summery</h3>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Execution Status</th>
+                                                            <th>Count</th>
+                                                            <th>Percentage</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>Executed</td>
+                                                            <td>95</td>
+                                                            <td>95%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Skipped</td>
+                                                            <td>0</td>
+                                                            <td>0%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Failed</td>
+                                                            <td>5</td>
+                                                            <td>5%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Invalid</td>
+                                                            <td>0</td>
+                                                            <td>0%</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body" style="width: 70%; alignment: center">
+                                                            <canvas id="tsu1_ts1_ac_executionStatusChart" style="alignment: center"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <h3 style="color: #A1887F">Api Call Execution Result Summery</h3>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Result</th>
+                                                            <th>Count</th>
+                                                            <th>Percentage</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>Pass</td>
+                                                            <td>80</td>
+                                                            <td>80%</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Failed</td>
+                                                            <td>20</td>
+                                                            <td>20%</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body" style="width: 70%; alignment: center">
+                                                            <canvas id="tsu1_ts1_ac_executionResultChart" style="alignment: center"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-space">
+                                    </div>
+
+
+                                    <!-- Test Case Panel-->
+                                    <div class="panel-group" id="testcaseData" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="testcaseHeading1" style="background-color: #BBDEFB">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testcaseData"
+                                                       href="#testcaseCollapse1" aria-expanded="false"
+                                                       aria-controls="testSuiteCollapse1">
+                                                        [Test Case] Create Simple Account
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="testcaseCollapse1" class="panel-collapse collapse" role="tabpanel"
+                                                 aria-labelledby="testcaseHeading1">
+                                                <div class="panel-body">
+                                                    <div class="container">
+                                                        <!--Api call Report-->
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-sm-4 ">
+                                                                    <div class="alert alert-info">
+                                                                        <strong>Total Api Call</strong> 20
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 ">
+                                                                    <div class="alert alert-success">
+                                                                        <strong>Pass Api Call</strong> 14
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4 ">
+                                                                    <div class="alert alert-danger">
+                                                                        <strong>Failed Api Call</strong> 6
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-8">
+                                                                    <h3 style="color: #3E2723">Api Call Execution Status Summery</h3>
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th>Execution Status</th>
+                                                                            <th>Count</th>
+                                                                            <th>Percentage</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>Executed</td>
+                                                                            <td>14</td>
+                                                                            <td>70%</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Skipped</td>
+                                                                            <td>3</td>
+                                                                            <td>15%</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Failed</td>
+                                                                            <td>2</td>
+                                                                            <td>10%</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Invalid</td>
+                                                                            <td>1</td>
+                                                                            <td>5%</td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="card">
+                                                                        <div class="card-body" style="width: 70%; alignment: center">
+                                                                            <canvas id="tsu1_ts1_tc1_ac_executionStatusChart"
+                                                                                    style="alignment: center"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-sm-8">
+                                                                    <h3 style="color: #3E2723">Api Call Execution Result Summery</h3>
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <th>Result</th>
+                                                                            <th>Count</th>
+                                                                            <th>Percentage</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>Pass</td>
+                                                                            <td>14</td>
+                                                                            <td>70%</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Failed</td>
+                                                                            <td>6</td>
+                                                                            <td>30%</td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="card">
+                                                                        <div class="card-body" style="width: 70%; alignment: center">
+                                                                            <canvas id="tsu1_ts1_tc1_ac_executionResultChart"
+                                                                                    style="alignment: center"></canvas>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row-space">
+                                                    </div>
+
+                                                    <!-- Api Call Panel-->
+                                                    <div class="panel-group" id="apiCallData" role="tablist" aria-multiselectable="true">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading" role="tab" id="apiCallHeading1"
+                                                                 style="background-color: #E3F2FD">
+                                                                <h4 class="panel-title">
+                                                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                                                       data-parent="#apiCallData"
+                                                                       href="#apiCallCollapse1" aria-expanded="false"
+                                                                       aria-controls="testSuiteCollapse1">
+                                                                        [Api Call] Create Account API Call
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="apiCallCollapse1" class="panel-collapse collapse" role="tabpanel"
+                                                                 aria-labelledby="apiCallHeading1">
+                                                                <div class="panel-body">
+
+                                                                    <div class="row">
+                                                                        <div class="col-sm-4 ">
+                                                                            <div class="alert alert-info">
+                                                                                <strong>Total Assertions</strong> 27
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-4 ">
+                                                                            <div class="alert alert-success">
+                                                                                <strong>Pass Assertions</strong> 14
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-4 ">
+                                                                            <div class="alert alert-danger">
+                                                                                <strong>Failed Assertions</strong> 6
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <h3 style="color: #3E2723">Assertions Execution Status
+                                                                                Summery</h3>
+                                                                            <table class="table table-striped">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>Execution Status</th>
+                                                                                    <th>Count</th>
+                                                                                    <th>Percentage</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td>Executed</td>
+                                                                                    <td>14</td>
+                                                                                    <td>70%</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Skipped</td>
+                                                                                    <td>3</td>
+                                                                                    <td>15%</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Failed</td>
+                                                                                    <td>2</td>
+                                                                                    <td>10%</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Invalid</td>
+                                                                                    <td>1</td>
+                                                                                    <td>5%</td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <div class="card">
+                                                                                <div class="card-body" style="width: 70%; alignment: center">
+                                                                                    <canvas id="tsu1_ts1_tc1_ac1_ass_executionStatusChart"
+                                                                                            style="alignment: center"></canvas>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <h3 style="color: #3E2723">Assertions Execution Result
+                                                                                Summery</h3>
+                                                                            <table class="table table-striped">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>Result</th>
+                                                                                    <th>Count</th>
+                                                                                    <th>Percentage</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td>Pass</td>
+                                                                                    <td>14</td>
+                                                                                    <td>70%</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Failed</td>
+                                                                                    <td>6</td>
+                                                                                    <td>30%</td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <div class="card">
+                                                                                <div class="card-body" style="width: 70%; alignment: center">
+                                                                                    <canvas id="tsu1_ts1_tc1_ac1_ass_executionResultChart"
+                                                                                            style="alignment: center"></canvas>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row-space">
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <h3 style="color: #3E2723">Assertions Execution Status
+                                                                                Summery</h3>
+                                                                            <table class="table table-striped">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>Key</th>
+                                                                                    <th>Value</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td>HTTP Metod</td>
+                                                                                    <td>POST</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>URL</td>
+                                                                                    <td>http://localhost:8080/account-api/service/accounts</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Request Body</td>
+                                                                                    <td>
+                                                                                        {"settings":[{"value":"1577641690","key":"setting1"},{"value":"1577641690","key":"setting2"}],"versionId":"1.0.0","ownerName":"Hasitha-1577641690","createdBy":"12345","accountName":"Sathara-1577641690","enterpriseId":"1","parentId":"1","status":"ACTIVE"}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Header List</td>
+                                                                                    <td>[accept:application/json], [content-type:application/json]
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Execution time</td>
+                                                                                    <td>150ms</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>HTTP status code</td>
+                                                                                    <td>201</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Response</td>
+                                                                                    <td>
+                                                                                        {"status":"ACTIVE","createdBy":"12345","accountId":"801","parentId":"1","enterpriseId":"1","accountName":"Sathara-1577641690","ownerName":"Hasitha-1577641690","versionId":"1.0.0","addresses":[],"settings":[{"createdTimestamp":1586636880409,"updatedTimestamp":0,"id":"1552","key":"setting1","value":"1577641690","settingStatus":"ACTIVE","accountId":"801"},{"createdTimestamp":1586636880409,"updatedTimestamp":0,"id":"1553","key":"setting2","value":"1577641690","settingStatus":"ACTIVE","accountId":"801"}]}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading" role="tab" id="apiCallHeading2"
+                                                                 style="background-color: #E3F2FD">
+                                                                <h4 class="panel-title">
+                                                                    <a class="collapsed" role="button" data-toggle="collapse"
+                                                                       data-parent="#apiCallData"
+                                                                       href="#apiCallCollapse2" aria-expanded="false"
+                                                                       aria-controls="apiCallCollapse2">
+                                                                        [Api Call] Get Account API Call
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="apiCallCollapse2" class="panel-collapse collapse" role="tabpanel"
+                                                                 aria-labelledby="apiCallHeading2">
+                                                                <div class="panel-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-4 ">
+                                                                            <div class="alert alert-info">
+                                                                                <strong>Total Assertions</strong> 30
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-4 ">
+                                                                            <div class="alert alert-success">
+                                                                                <strong>Pass Assertions</strong> 14
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-4 ">
+                                                                            <div class="alert alert-danger">
+                                                                                <strong>Failed Assertions</strong> 6
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <h3 style="color: #3E2723">Assertions Execution Status Summery</h3>
+                                                                            <table class="table table-striped">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>Execution Status</th>
+                                                                                    <th>Count</th>
+                                                                                    <th>Percentage</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td>Executed</td>
+                                                                                    <td>14</td>
+                                                                                    <td>70%</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Skipped</td>
+                                                                                    <td>3</td>
+                                                                                    <td>15%</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Failed</td>
+                                                                                    <td>2</td>
+                                                                                    <td>10%</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Invalid</td>
+                                                                                    <td>1</td>
+                                                                                    <td>5%</td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <div class="card">
+                                                                                <div class="card-body" style="width: 70%; alignment: center">
+                                                                                    <canvas id="tsu1_ts1_tc1_ac2_ass_executionStatusChart"
+                                                                                            style="alignment: center"></canvas>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <h3 style="color: #3E2723">Assertions Execution Result Summery</h3>
+                                                                            <table class="table table-striped">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th>Result</th>
+                                                                                    <th>Count</th>
+                                                                                    <th>Percentage</th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td>Pass</td>
+                                                                                    <td>14</td>
+                                                                                    <td>70%</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>Failed</td>
+                                                                                    <td>6</td>
+                                                                                    <td>30%</td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <div class="card">
+                                                                                <div class="card-body" style="width: 70%; alignment: center">
+                                                                                    <canvas id="tsu1_ts1_tc1_ac2_ass_executionResultChart"
+                                                                                            style="alignment: center"></canvas>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="testcaseHeading2" style="background-color: #BBDEFB">
+                                                <h4 class="panel-title">
+                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testcaseData"
+                                                       href="#testcaseCollapse2" aria-expanded="false"
+                                                       aria-controls="testcaseCollapse2">
+                                                        [Test Case] Create Account With Settings
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="testcaseCollapse2" class="panel-collapse collapse" role="tabpanel"
+                                                 aria-labelledby="testcaseHeading2">
+                                                <div class="panel-body">
+                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
+                                                    squid. 3
+                                                    wolf moon
+                                                    officia aute, non
+                                                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
+                                                    moon
+                                                    tempor, sunt
+                                                    aliqua put a bird
+                                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+                                                    craft beer labore
+                                                    wes anderson cred
+                                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
+                                                    beer
+                                                    farm-to-table,
+                                                    raw denim
+                                                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="testScenarioHeading2" style="background-color: #90CAF9">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testScenarioData"
+                                       href="#testScenarioCollapse2" aria-expanded="false"
+                                       aria-controls="testScenarioCollapse2">
+                                        [Test Scenario] Get Account Successfully
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="testScenarioCollapse2" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="testScenarioHeading2">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+                                    officia aute, non
+                                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
+                                    aliqua put a bird
+                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer
+                                    labore
+                                    wes anderson cred
+                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                    farm-to-table,
+                                    raw denim
+                                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="testScenarioHeading3" style="background-color: #90CAF9">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testScenarioData"
+                                       href="#testScenarioCollapse3" aria-expanded="false"
+                                       aria-controls="testScenarioCollapse3">
+                                        [Test Scenario] Get Account by Invalid Id
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="testScenarioCollapse3" class="panel-collapse collapse" role="tabpanel"
+                                 aria-labelledby="testScenarioHeading3">
+                                <div class="panel-body">
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon
+                                    officia aute, non
+                                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
+                                    aliqua put a bird
+                                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer
+                                    labore
+                                    wes anderson cred
+                                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                    farm-to-table,
+                                    raw denim
+                                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="testSuiteHeading2" style="background-color: #64B5F6">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testSuiteData" href="#testSuiteCollapse2"
+                       aria-expanded="false"
+                       aria-controls="testSuiteCollapse2">
+                        Student API Test Suite
+                    </a>
+                </h4>
+            </div>
+            <div id="testSuiteCollapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testSuiteHeading2">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
+                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a
+                    bird
+                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
+                    cred
+                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="testSuiteHeading3" style="background-color: #64B5F6">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#testSuiteData" href="#testSuiteCollapse3"
+                       aria-expanded="false"
+                       aria-controls="testSuiteCollapse3">
+                        Mock API Test Suite
+                    </a>
+                </h4>
+            </div>
+            <div id="testSuiteCollapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="testSuiteHeading3">
+                <div class="panel-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
+                    cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a
+                    bird
+                    on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
+                    cred
+                    nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim
+                    aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
