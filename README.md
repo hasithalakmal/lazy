@@ -458,98 +458,98 @@ Response            : [{"status":"ACTIVE","createdBy":"12345","createdTimestamp"
 ```
 
 # Assert API
-Lazy Assert API provides a rich set of assertion methods that you can use for your assertions. This is about It's main assertion methods
+Lazy Assert API provides a rich set of assertion methods that you can use for your assertions. This is about It's main assertion methods. Please
+ note that we have introduce overloaded method for each assertion method to define assertion name.
 
 Assertion Method     | Description
 --- | ---
 responseBodyNotNull() | Response body not null assertion
-nullValue(String jsonPath)  | Check for response body attribute null value
-responseBodyNotNull(String assertionName) | Check for response body attribute null value (overloaded method with name)
-nullValue(String jsonPath)  | Check for response body attribute null value
-nullValue(String assertionName, String jsonPath) |
-notNull(String jsonPath) |
-notNull(String assertionName, String jsonPath) | 
-isKeyAvailable(String jsonPath) | 
-isKeyAvailable(String assertionName, String jsonPath) |
-isKeyUnavailable(String jsonPath)   |
-isKeyUnavailable(String assertionName, String jsonPath) |
-equal(String jsonPath, String value) |
-equal(String assertionName, String jsonPath, String value) |
-equal(String jsonPath, Integer value)   |
-equal(String assertionName, String jsonPath, Integer value) |
-equal(String jsonPath, Double value) |
-equal(String assertionName, String jsonPath, Double value) |
-equal(String jsonPath, Boolean value) |
-equal(String assertionName, String jsonPath, Boolean value) |
-notEqual(String jsonPath, String value) |
-notEqual(String assertionName, String jsonPath, String value) |
-notEqual(String jsonPath, Integer value) |
-notEqual(String assertionName, String jsonPath, Integer value)  |
-notEqual(String jsonPath, Double value) |
-notEqual(String assertionName, String jsonPath, Double value) |
-notEqual(String jsonPath, Boolean value) | 
-notEqual(String assertionName, String jsonPath, Boolean value) | 
-greaterThan(String jsonPath, String value)  | 
-AssertionRule greaterThan(String assertionName, String jsonPath, String value) |
-greaterThan(String jsonPath, Integer value) |
-greaterThan(String assertionName, String jsonPath, Integer value) |
-greaterThan(String jsonPath, Double value) |
-greaterThan(String assertionName, String jsonPath, Double value)  |
-greaterThanOrEqual(String jsonPath, String value) |
-greaterThanOrEqual(String assertionName, String jsonPath, String value) |
-greaterThanOrEqual(String jsonPath, Integer value) |
-greaterThanOrEqual(String assertionName, String jsonPath, Integer value)  |
-greaterThanOrEqual(String jsonPath, Double value) |
-greaterThanOrEqual(String assertionName, String jsonPath, Double value) |
-lessThan(String jsonPath, String value) |
-lessThan(String assertionName, String jsonPath, String value) |
-lessThan(String jsonPath, Integer value) |
-lessThan(String assertionName, String jsonPath, Integer value) |
-lessThan(String jsonPath, Double value) |
-lessThan(String assertionName, String jsonPath, Double value) |
-lessThanOrEqual(String jsonPath, String value) | 
-lessThanOrEqual(String assertionName, String jsonPath, String value)
-lessThanOrEqual(String jsonPath, Integer value) |
-lessThanOrEqual(String assertionName, String jsonPath, Integer value) |
-lessThanOrEqual(String jsonPath, Double value) | 
-lessThanOrEqual(String assertionName, String jsonPath, Double value) | 
-between(String jsonPath, String value1, String value2) | 
-between(String assertionName, String jsonPath, String value1, String value2) | 
-between(String jsonPath, Integer value1, Integer value2) | 
-between(String assertionName, String jsonPath, Integer value1, Integer value2) |
-between(String jsonPath, Double value1, Double value2) |
-between(String assertionName, String jsonPath, Double value1, Double value2) |
-contains(String jsonPath, String value) | 
-contains(String assertionName, String jsonPath, String value) |
-notContains(String jsonPath, String value) |
-notContains(String assertionName, String jsonPath, String value) |
-containsExactly(String jsonPath, List values) |
-containsExactly(String assertionName, String jsonPath, List values) |
-containsAll(String jsonPath, List values) |
-containsAll(String assertionName, String jsonPath, List values) |
-containsAny(String jsonPath, List values)  | 
-containsAny(String assertionName, String jsonPath, List values) | 
-responseTimeLessThan(String time) | 
-responseTimeLessThan(String assertionName, String time) | 
-responseTimeLessThanOrEqual(String time) | 
-responseTimeLessThanOrEqual(String assertionName, String time) | 
-responseTimeGreaterThan(String time) |
-responseTimeGreaterThan(String assertionName, String time)  |
-responseTimeGreaterThanOrEqual(String time)  |
-responseTimeGreaterThanOrEqual(String assertionName, String time) |
-responseCodeEqual(Integer code) |
-responseCodeEqual(String assertionName, Integer code) | 
-responseCodeNotEqual(Integer code) | 
-responseCodeNotEqual(String assertionName, Integer code) | 
-responseCodeLessThan(Integer code) | 
-responseCodeLessThan(String assertionName, Integer code) | 
-responseCodeLessThanOrEqual(Integer code) | 
-responseCodeLessThanOrEqual(String assertionName, Integer code) | 
-responseCodeGreaterThan(Integer code) | 
-responseCodeGreaterThanOrEqual(Integer code) | 
-responseCodeGreaterThanOrEqual(String assertionName, Integer code) | 
-responseCodeBetween(Integer code1, Integer code2) | 
-responseCodeBetween(String assertionName, Integer code1, Integer code2) | 
+responseBodyNotNull(String assertionName) | Response body not null assertion (overloaded method with name)
+nullValue(String jsonPath)  | Response body attribute null value
+nullValue(String assertionName, String jsonPath) | Response body attribute null value
+notNull(String jsonPath) | Response body attribute not null
+notNull(String assertionName, String jsonPath) | Response body attribute not null
+isKeyAvailable(String jsonPath) | Response body attribute existence
+isKeyAvailable(String assertionName, String jsonPath) | Response body attribute existence
+isKeyUnavailable(String jsonPath)   | Response body attribute not existence
+isKeyUnavailable(String assertionName, String jsonPath) | Response body attribute not existence
+equal(String jsonPath, String value) | Response body attribute equal
+equal(String assertionName, String jsonPath, String value) | Response body attribute equal
+equal(String jsonPath, Integer value)   | Response body attribute equal
+equal(String assertionName, String jsonPath, Integer value) | Response body attribute equal
+equal(String jsonPath, Double value) | Response body attribute equal
+equal(String assertionName, String jsonPath, Double value) | Response body attribute equal
+equal(String jsonPath, Boolean value) | Response body attribute equal
+equal(String assertionName, String jsonPath, Boolean value) | Response body attribute equal
+notEqual(String jsonPath, String value) | Response body attribute not equal
+notEqual(String assertionName, String jsonPath, String value) | Response body attribute not equal
+notEqual(String jsonPath, Integer value) | Response body attribute not equal
+notEqual(String assertionName, String jsonPath, Integer value)  | Response body attribute not equal
+notEqual(String jsonPath, Double value) | Response body attribute not equal
+notEqual(String assertionName, String jsonPath, Double value) | Response body attribute not equal
+notEqual(String jsonPath, Boolean value) |  Response body attribute not equal
+notEqual(String assertionName, String jsonPath, Boolean value) |  Response body attribute not equal
+greaterThan(String jsonPath, String value)  | Response body attribute value comparison
+greaterThan(String assertionName, String jsonPath, String value) | Response body attribute value comparison
+greaterThan(String jsonPath, Integer value) | Response body attribute value comparison
+greaterThan(String assertionName, String jsonPath, Integer value) | Response body attribute value comparison
+greaterThan(String jsonPath, Double value) | Response body attribute value comparison
+greaterThan(String assertionName, String jsonPath, Double value)  | Response body attribute value comparison
+greaterThanOrEqual(String jsonPath, String value) | Response body attribute value comparison
+greaterThanOrEqual(String assertionName, String jsonPath, String value) | Response body attribute value comparison
+greaterThanOrEqual(String jsonPath, Integer value) | Response body attribute value comparison
+greaterThanOrEqual(String assertionName, String jsonPath, Integer value)  | Response body attribute value comparison
+greaterThanOrEqual(String jsonPath, Double value) | Response body attribute value comparison
+greaterThanOrEqual(String assertionName, String jsonPath, Double value) | Response body attribute value comparison
+lessThan(String jsonPath, String value) | Response body attribute value comparison
+lessThan(String assertionName, String jsonPath, String value) | Response body attribute value comparison
+lessThan(String jsonPath, Integer value) | Response body attribute value comparison
+lessThan(String assertionName, String jsonPath, Integer value) | Response body attribute value comparison
+lessThan(String jsonPath, Double value) | Response body attribute value comparison
+lessThan(String assertionName, String jsonPath, Double value) | Response body attribute value comparison
+lessThanOrEqual(String jsonPath, String value) |  Response body attribute value comparison
+lessThanOrEqual(String assertionName, String jsonPath, String value) | Response body attribute value comparison
+lessThanOrEqual(String jsonPath, Integer value) | Response body attribute value comparison
+lessThanOrEqual(String assertionName, String jsonPath, Integer value) | Response body attribute value comparison
+lessThanOrEqual(String jsonPath, Double value) | Response body attribute value comparison
+lessThanOrEqual(String assertionName, String jsonPath, Double value) | Response body attribute value comparison
+between(String jsonPath, String value1, String value2) | Response body attribute value comparison
+between(String assertionName, String jsonPath, String value1, String value2) | Response body attribute value comparison
+between(String jsonPath, Integer value1, Integer value2) | Response body attribute value comparison
+between(String assertionName, String jsonPath, Integer value1, Integer value2) | Response body attribute value comparison
+between(String jsonPath, Double value1, Double value2) | Response body attribute value comparison
+between(String assertionName, String jsonPath, Double value1, Double value2) | Response body attribute value comparison
+contains(String jsonPath, String value) |  Response body attribute value contains
+contains(String assertionName, String jsonPath, String value) | Response body attribute value contains
+notContains(String jsonPath, String value) | Response body attribute value not contains
+notContains(String assertionName, String jsonPath, String value) | Response body attribute value not contains
+containsExactly(String jsonPath, List values) | Response body attribute value list exact match with provided value list
+containsExactly(String assertionName, String jsonPath, List values) |  Response body attribute value list exact match with provided value list
+containsAll(String jsonPath, List values) |  Response body attribute value list contains match with all provided value list. Additional values will contains in the response body attribute value list. 
+containsAll(String assertionName, String jsonPath, List values) | Response body attribute value list contains match with all provided value list. Additional values will contains in the response body attribute value list.
+containsAny(String jsonPath, List values)  | Response body attribute value list contains at lease one provided value. 
+containsAny(String assertionName, String jsonPath, List values) | Response body attribute value list contains at lease one provided value. 
+responseTimeLessThan(String time) | Response time assertion
+responseTimeLessThan(String assertionName, String time) | Response time assertion
+responseTimeLessThanOrEqual(String time) | Response time assertion
+responseTimeLessThanOrEqual(String assertionName, String time) | Response time assertion
+responseTimeGreaterThan(String time) |Response time assertion
+responseTimeGreaterThan(String assertionName, String time)  | Response time assertion
+responseTimeGreaterThanOrEqual(String time)  | Response time assertion
+responseTimeGreaterThanOrEqual(String assertionName, String time) | Response time assertion
+responseCodeEqual(Integer code) | Response code assertion
+responseCodeEqual(String assertionName, Integer code) | Response code assertion
+responseCodeNotEqual(Integer code) | Response code assertion
+responseCodeNotEqual(String assertionName, Integer code) | Response code assertion
+responseCodeLessThan(Integer code) | Response code assertion
+responseCodeLessThan(String assertionName, Integer code) | Response code assertion
+responseCodeLessThanOrEqual(Integer code) | Response code assertion
+responseCodeLessThanOrEqual(String assertionName, Integer code) | Response code assertion
+responseCodeGreaterThan(Integer code) | Response code assertion
+responseCodeGreaterThanOrEqual(Integer code) | Response code assertion
+responseCodeGreaterThanOrEqual(String assertionName, Integer code) | Response code assertion
+responseCodeBetween(Integer code1, Integer code2) | Response code assertion
+responseCodeBetween(String assertionName, Integer code1, Integer code2) | Response code assertion
 
 We have used JSON path to provide very powerful and easy way to write assertions. Please refer JSON path documentation [https://github.com/json-path
 /JsonPath]. You can validate your JSON path with this [http://jsonpath.herokuapp.com/]. 
