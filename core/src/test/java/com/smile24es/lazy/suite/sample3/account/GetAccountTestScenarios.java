@@ -26,6 +26,12 @@ public class GetAccountTestScenarios {
         return successAccountCreation;
     }
 
+    public static TestScenario mixTestScenarios() throws LazyCoreException {
+        TestScenario successAccountCreation = new TestScenario("Update Account Test Scenarios");
+        successAccountCreation.getTestCases().add(GetAccountTestCases.mixTestCases());
+        return successAccountCreation;
+    }
+
     public static TestScenario getAccountErrorScenarios() throws LazyCoreException {
         TestScenario invalidAccountGetScenarios = new TestScenario("Account API Error Scenarios");
         invalidAccountGetScenarios.getTestCases().add(GetAccountTestCases.getInvalidAccount());

@@ -44,6 +44,7 @@ public class AccountTestSuite {
         accountApiTestSuite.getTestScenarios().add(GetAccountTestScenarios.createAccountTestScenario());
         accountApiTestSuite.getTestScenarios().add(GetAccountTestScenarios.getAccountErrorScenarios());
         accountApiTestSuite.getTestScenarios().add(GetAccountTestScenarios.updateaccountTestScenarios());
+        accountApiTestSuite.getTestScenarios().add(GetAccountTestScenarios.mixTestScenarios());
         return accountApiTestSuite;
     }
 }
