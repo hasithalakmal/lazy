@@ -135,6 +135,12 @@ We are providing comprehensive result analysis in few ways.
 3. JSON file - You can get the result as a JSON file and build your own custom dahsboards 
 4. CSV file - you can generate a CSV file with execution results
 
+ <img src="docs/images/report/summery_reports.png" width="100%"  alt="Hierarchy"/>
+ 
+  <img src="docs/images/report/user_friendly_tree_structure.png" width="100%"  alt="Hierarchy"/>
+   <img src="docs/images/report/api_call_response.png" width="100%"  alt="Hierarchy"/>
+    <img src="docs/images/report/assertion_result.png" width="100%"  alt="Hierarchy"/>
+
 Please refer to the HTML sample report - [http://sample.lazy.smile24es.com/sample-lazy-report.html]
 
 # Independent executions
