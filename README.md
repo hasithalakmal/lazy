@@ -2,8 +2,7 @@
 Lazy is a tool based on meta-modeling to implement API testing. In version 1.0.0 include only java code base API testing framework
 . API test suite can be initiated within a few minutes using the lazy framework. 
 
-<iframe src="https://player.vimeo.com/video/407292898" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-<p><a href="https://vimeo.com/407292898">Lazy - For Smart People</a> from <a href="https://vimeo.com/user105001512">Hasitha Gamage</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+Please watch this video: <a href="https://vimeo.com/407292898" onclick="window.open('https://vimeo.com/407292898', '_blank');"> https://vimeo.com/407292898 </a>
 
 # Why Lazy is Special from other frameworks
 1. Hierarchical approach
