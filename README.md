@@ -142,6 +142,8 @@ We are providing comprehensive result analysis in few ways.
     <img src="docs/images/report/assertion_result.png" width="100%"  alt="Hierarchy"/>
 
 Please refer to the HTML sample report - [http://sample.lazy.smile24es.com/sample-lazy-report.html]
+<a href="http://sample.lazy.smile24es.com/sample-lazy-report.html" onclick="window.open('http://sample.lazy.smile24es.com/sample-lazy-report.html
+', '_self');"> Sample Report </a>
 
 # Independent executions
 Lazy provides a separate execution API to execute your test suite. It has three main levels/ways you can execute your test suite. 
