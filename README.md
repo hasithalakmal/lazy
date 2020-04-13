@@ -142,8 +142,7 @@ We are providing comprehensive result analysis in few ways.
     <img src="docs/images/report/assertion_result.png" width="100%"  alt="Hierarchy"/>
 
 Please refer to the HTML sample report -
-<a href="http://sample.lazy.smile24es.com/sample-lazy-report.html" onclick="window.open('http://sample.lazy.smile24es.com/sample-lazy-report.html
-', '_blank');"> http://sample.lazy.smile24es.com/sample-lazy-report.html </a>
+<a href="http://sample.lazy.smile24es.com/sample-lazy-report.html" onclick="window.open('http://sample.lazy.smile24es.com/sample-lazy-report.html', '_blank');"> http://sample.lazy.smile24es.com/sample-lazy-report.html </a>
 
 # Independent executions
 Lazy provides a separate execution API to execute your test suite. It has three main levels/ways you can execute your test suite. 
@@ -208,7 +207,7 @@ It's only two steps
     <version>1.0.0</version>
 </dependency>
 ```
-Please refer to the sample project - [https://github.com/hasithalakmal/lazy-example-1]
+Please refer to the sample project - <a href="https://github.com/hasithalakmal/lazy-example-1" onclick="window.open('https://github.com/hasithalakmal/lazy-example-1', '_blank');"> https://github.com/hasithalakmal/lazy-example-1 </a> 
 
 # Proposed Project structure
 ```$xslt
@@ -717,13 +716,13 @@ executeTestCase(TestCase testCase, Stack stack) | Execute given test case. In he
 executeApiCall(ApiCall apiCall, Stack stack) | Execute given api call. In here it not inheriting any attribute from the parent. since you have to define stack.
 
 # Sample Projects
-You can use [https://github.com/hasithalakmal/lazy-example-1] this sample implementation for your references. Currently it contains three samples.
+You can use <a href="https://github.com/hasithalakmal/lazy-example-1" onclick="window.open('https://github.com/hasithalakmal/lazy-example-1', '_blank');"> https://github.com/hasithalakmal/lazy-example-1 </a> this sample implementation for your references. Currently it contains three samples.
 
 Sample0 - Assertion explanation
 Sample1 - Explain project structure and basic features
 Sample2 - Advance feature examples
 
-To execute that suite you can use - [https://github.com/hasithalakmal/lazy-mock-api] project. 
+To execute that suite you can use -  <a href="https://github.com/hasithalakmal/lazy-mock-api" onclick="window.open('https://github.com/hasithalakmal/lazy-mock-api', '_blank');"> https://github.com/hasithalakmal/lazy-mock-api </a> project. 
 
 These code bases will be improve 
 
