@@ -18,6 +18,11 @@ public class QueryParam implements Serializable {
     private String key;
     private String value;
 
+    public QueryParam(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
+
     public int getQueryParamId() {
         return queryParamId;
     }

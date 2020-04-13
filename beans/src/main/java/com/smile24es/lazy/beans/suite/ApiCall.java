@@ -193,11 +193,18 @@ public class ApiCall implements Serializable {
     }
 
     public List<QueryParam> getQueryParams() {
+        if (queryParams == null) {
+            queryParams = new ArrayList<>();
+        }
         return queryParams;
     }
 
     public void setQueryParams(List<QueryParam> queryParams) {
         this.queryParams = queryParams;
+    }
+
+    public void setQueryParams(QueryParam queryParam) {
+        getQueryParams().add(queryParam);
     }
 
     public HeaderGroup getHeaderGroup() {

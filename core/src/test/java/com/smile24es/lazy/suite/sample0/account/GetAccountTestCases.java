@@ -9,7 +9,7 @@ import com.smile24es.lazy.suite.sample0.dto.ErrorTo;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.smile24es.lazy.suite.sample0.account.AccountApiCall.mockApiCall;
+import static com.smile24es.lazy.suite.sample0.account.AccountApiCall.updateCompleteAccount;
 import static java.text.MessageFormat.format;
 
 public class GetAccountTestCases {
@@ -30,7 +30,7 @@ public class GetAccountTestCases {
 
     public static TestCase mockApiTest() throws LazyCoreException {
         TestCase createAccountTC = new TestCase("Mock API test");
-        createAccountTC.getApiCalls().add(mockApiCall());
+        createAccountTC.getApiCalls().add(updateCompleteAccount());
         return createAccountTC;
     }
 

@@ -17,6 +17,7 @@ import com.smile24es.lazy.beans.suite.TestSuite;
 import com.smile24es.lazy.suite.sample0.SmileLazySuite0;
 import com.smile24es.lazy.suite.sample1.SampleLazySuite1;
 import com.smile24es.lazy.suite.sample1.suites.AccountApiTestSuite;
+import com.smile24es.lazy.suite.sample3.SmileLazyReportDemoSuite;
 import com.smile24es.lazy.utils.JsonUtil;
 import com.smile24es.lazy.wrapper.Executor;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,20 @@ public class LazyManagerTest extends BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(LazyManagerTest.class);
     @Autowired
     private Executor executor;
+
+    @Test
+    public void accountApiSample3() {
+        try {
+            LazySuite sampleLazySuite = SmileLazyReportDemoSuite.populateSampleLazySuite();
+            LazyExecutionData results = executor.executeLazySuite(sampleLazySuite);
+            Assert.assertNotNull(results);
+            Assert.assertNotNull(results.getTestSuiteExecutionData());
+//            String resultString = JsonUtil.getJsonStringFromObjectProtectedAndPublic(results);
+//            LOGGER.debug(EXECUTION_RESULTS_LOG, resultString);
+        } catch (Exception ex) {
+            Assert.fail(SUCCESS_SCENARIOS_SHOULD_NOT_BE_FAILED, ex);
+        }
+    }
 
     @Test
     public void accountApiSample0() {

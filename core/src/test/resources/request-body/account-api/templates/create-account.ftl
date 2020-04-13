@@ -6,12 +6,14 @@
 "accountName": "${accountName}",
 "ownerName": "Hasitha-1577641690",
 "versionId": "${versionId}",
-"settings": [
-<#list settings as setting>
-    {
-    "key": "${setting.key}",
-    "value": "${setting.value}"
-    }
-</#list>
+<#if settings??>
+    "settings": [
+    <#list settings as setting>
+        {
+        "key": "${setting.key}",
+        "value": "${setting.value}"
+        }
+    </#list>
 ]
+</#if>
 }

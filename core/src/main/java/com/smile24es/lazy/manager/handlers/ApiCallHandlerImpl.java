@@ -5,8 +5,10 @@ import com.smile24es.lazy.beans.executor.ApiCallExecutionData;
 import com.smile24es.lazy.beans.response.LazyApiCallResponse;
 import com.smile24es.lazy.beans.suite.ApiCall;
 import com.smile24es.lazy.beans.suite.Header;
+import com.smile24es.lazy.beans.suite.QueryParam;
 import com.smile24es.lazy.common.ErrorCodes;
 import com.smile24es.lazy.exception.LazyException;
+import com.smile24es.lazy.utils.VariableManipulationUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -197,8 +199,21 @@ public class ApiCallHandlerImpl {
         final String apiPath = StringUtils.isBlank(apiCall.getContextPath()) ? "/".concat(apiCall.getUri()) :
               "/".concat(apiCall.getContextPath().concat("/").concat(apiCall.getUri()));
 
+        String query = "";
+        if (!CollectionUtils.isEmpty(apiCall.getQueryParams())) {
+            int qParamCount = apiCall.getQueryParams().size();
+            int count =1;
+            for (QueryParam queryParam: apiCall.getQueryParams()) {
+                if (count < qParamCount) {
+                    query += VariableManipulationUtil.getVariableValue(queryParam.getKey(), apiCall.getStack()) + "=" + VariableManipulationUtil.getVariableValue(queryParam.getValue(), apiCall.getStack())+"&";
+                } else {
+                    query += VariableManipulationUtil.getVariableValue(queryParam.getKey(), apiCall.getStack()) + "=" + VariableManipulationUtil.getVariableValue(queryParam.getValue(), apiCall.getStack());
+                }
+                count++;
+            }
+        }
         return new URI(apiCall.getProtocol(), null, apiCall.getHostName(), apiCall.getPort(), apiPath,
-              null, null);
+              StringUtils.isBlank(query)?null:query, null);
     }
 
 }
