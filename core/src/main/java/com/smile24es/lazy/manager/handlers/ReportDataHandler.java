@@ -138,7 +138,17 @@ public class ReportDataHandler {
                         apiCallReport.setRequestBody(apiCallExecutionData.getRequestBody());
                         apiCallReport.setExecutionTime(apiCallExecutionData.getResponse().getResponseTime()+"ms");
                         apiCallReport.setHttpStatusCode(apiCallExecutionData.getResponse().getCloseableHttpResponse().getStatusLine().getStatusCode());
-                        apiCallReport.setResponse(apiCallExecutionData.getResponse().getResponseBody());
+                        String responseBody = apiCallExecutionData.getResponse().getResponseBody();
+                        if (responseBody.contains("<html") && responseBody.contains("</html>")) {
+                            responseBody = responseBody.replace("&", "&amp;");
+                            responseBody = responseBody.replace("<", "&lt;");
+                            responseBody = responseBody.replace(">", "&gt;");
+                            responseBody = responseBody.trim();
+                        }
+                        LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..");
+                        LOGGER.info(responseBody);
+                        LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..");
+                        apiCallReport.setResponse(responseBody);
 
 
                         int totalAssertions = 0;
@@ -381,38 +391,38 @@ public class ReportDataHandler {
 
 
             //Test Case Data
-            testSuiteReport.setTotalTestCasesCount(lazy_totalTestCases);
-            testSuiteReport.setPassTestCasesCount(lazy_passTestCases);
-            testSuiteReport.setNotPassTestCasesCount(lazy_notPassTestCases);
-            testSuiteReport.setPassTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_passTestCases));
-            testSuiteReport.setNotPassTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_notPassTestCases));
+            testSuiteReport.setTotalTestCasesCount(tsu_totalTestCases);
+            testSuiteReport.setPassTestCasesCount(tsu_passTestCases);
+            testSuiteReport.setNotPassTestCasesCount(tsu_notPassTestCases);
+            testSuiteReport.setPassTestCasesPercentage(getPercentage(tsu_totalTestCases, tsu_passTestCases));
+            testSuiteReport.setNotPassTestCasesPercentage(getPercentage(tsu_totalTestCases, tsu_notPassTestCases));
 
-            testSuiteReport.setTotalExecutedTestCasesCount(lazy_executedTestCases);
-            testSuiteReport.setTotalSkippedTestCasesCount(lazy_skippedTestCases);
-            testSuiteReport.setTotalFailedTestCasesCount(lazy_failedTestCases);
-            testSuiteReport.setTotalInvalidTestCasesCount(lazy_invalidTestCases);
+            testSuiteReport.setTotalExecutedTestCasesCount(tsu_executedTestCases);
+            testSuiteReport.setTotalSkippedTestCasesCount(tsu_skippedTestCases);
+            testSuiteReport.setTotalFailedTestCasesCount(tsu_failedTestCases);
+            testSuiteReport.setTotalInvalidTestCasesCount(tsu_invalidTestCases);
 
-            testSuiteReport.setExecutedTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_executedTestCases));
-            testSuiteReport.setSkippedTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_skippedTestCases));
-            testSuiteReport.setFailedTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_failedTestCases));
-            testSuiteReport.setInvalidTestCasesPercentage(getPercentage(lazy_totalTestCases, lazy_invalidTestCases));
+            testSuiteReport.setExecutedTestCasesPercentage(getPercentage(tsu_totalTestCases, tsu_executedTestCases));
+            testSuiteReport.setSkippedTestCasesPercentage(getPercentage(tsu_totalTestCases, tsu_skippedTestCases));
+            testSuiteReport.setFailedTestCasesPercentage(getPercentage(tsu_totalTestCases, tsu_failedTestCases));
+            testSuiteReport.setInvalidTestCasesPercentage(getPercentage(tsu_totalTestCases, tsu_invalidTestCases));
 
             //Api Call Data
-            testSuiteReport.setTotalApiCallCount(lazy_totalApiCalls);
-            testSuiteReport.setPassApiCallCount(lazy_passApiCalls);
-            testSuiteReport.setNotPassApiCallCount(lazy_notPassApiCalls);
-            testSuiteReport.setPassApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_passApiCalls));
-            testSuiteReport.setNotPassApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_notPassApiCalls));
+            testSuiteReport.setTotalApiCallCount(tsu_totalApiCalls);
+            testSuiteReport.setPassApiCallCount(tsu_passApiCalls);
+            testSuiteReport.setNotPassApiCallCount(tsu_notPassApiCalls);
+            testSuiteReport.setPassApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_passApiCalls));
+            testSuiteReport.setNotPassApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_notPassApiCalls));
 
-            testSuiteReport.setTotalExecutedApiCallCount(lazy_executedApiCalls);
-            testSuiteReport.setTotalSkippedApiCallCount(lazy_skippedApiCalls);
-            testSuiteReport.setTotalFailedApiCallCount(lazy_failedApiCalls);
-            testSuiteReport.setTotalInvalidApiCallCount(lazy_invalidApiCalls);
+            testSuiteReport.setTotalExecutedApiCallCount(tsu_executedApiCalls);
+            testSuiteReport.setTotalSkippedApiCallCount(tsu_skippedApiCalls);
+            testSuiteReport.setTotalFailedApiCallCount(tsu_failedApiCalls);
+            testSuiteReport.setTotalInvalidApiCallCount(tsu_invalidApiCalls);
 
-            testSuiteReport.setExecutedApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_executedApiCalls));
-            testSuiteReport.setSkippedApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_skippedApiCalls));
-            testSuiteReport.setFailedApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_failedApiCalls));
-            testSuiteReport.setInvalidApiCallPercentage(getPercentage(lazy_totalApiCalls, lazy_invalidApiCalls));
+            testSuiteReport.setExecutedApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_executedApiCalls));
+            testSuiteReport.setSkippedApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_skippedApiCalls));
+            testSuiteReport.setFailedApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_failedApiCalls));
+            testSuiteReport.setInvalidApiCallPercentage(getPercentage(tsu_totalApiCalls, tsu_invalidApiCalls));
 
             totalTestSuite++;
 
@@ -509,7 +519,7 @@ public class ReportDataHandler {
 
 
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy-HH:mm:ss");
         lazyReport.setDate(formatter.format(date));
         return lazyReport;
     }

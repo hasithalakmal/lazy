@@ -60,6 +60,14 @@
         .row-space {
             height: 10px;
         }
+
+        pre {
+            white-space: pre-wrap;       /* Since CSS 2.1 */
+            white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -149,7 +157,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [${report.totalTestScenariosCount}, ${report.passTestScenariosCount}]
+                        data: [${report.passTestScenariosCount}, ${report.notPassTestSuitesCount}]
                     }
                 ]
             };
@@ -188,7 +196,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [${report.totalTestCasesCount}, ${report.passTestCasesCount}]
+                        data: [${report.passTestCasesCount}, ${report.notPassTestCasesCount}]
                     }
                 ]
             };
@@ -505,7 +513,7 @@
                     {
                         backgroundColor: ["#28a745", "#dc3545"],
                         borderWidth: 0,
-                        data: [70, 30]
+                        data: [${apiCallReport.passAssertionsCount}, ${apiCallReport.notPassAssertionsCount}]
                     }
                 ]
             };
@@ -1261,11 +1269,11 @@
                                                                 <tr>
                                                                     <td>Pass</td>
                                                                     <td>${testScenarioReport.passTestCasesCount}</td>
-                                                                    <td>${testScenarioReport.notPassTestCasesCount}%</td>
+                                                                    <td>${testScenarioReport.passTestCasesPercentage}%</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Failed</td>
-                                                                    <td>${testScenarioReport.passTestCasesPercentage}</td>
+                                                                    <td>${testScenarioReport.notPassTestCasesCount}</td>
                                                                     <td>${testScenarioReport.notPassTestCasesPercentage}%</td>
                                                                 </tr>
                                                                 </tbody>
@@ -1687,8 +1695,10 @@
                                                                                                 <#if apiCallReport.response?has_content>
                                                                                                     <tr>
                                                                                                         <td>Response</td>
-                                                                                                        <td>
-                                                                                                            ${apiCallReport.response}
+                                                                                                        <td >
+                                                                                                            <div overflow>
+                                                                                                                <pre>${apiCallReport.response}</pre>
+                                                                                                            </div>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </#if>
