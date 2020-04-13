@@ -155,7 +155,8 @@ public class StudentApiCall {
     //Skipped assertion - invalid JSON path
     public static ApiCall getSkippedRuleApiCall(String accountId, ErrorTo errorTo) {
         ApiCall getAccountApiCall = new ApiCall("Get invalid student by Id");
-        getAccountApiCall.setUri(format("service/accounts-invalid/{0}", accountId));
+        getAccountApiCall.setPort(5050);
+        getAccountApiCall.setUri(format("service/accounts/{0}", accountId));
         getAccountApiCall.addAssertionRule(Assert.responseCodeEqual(404));
         getAccountApiCall.addAssertionRule(Assert.notNull("$.codeInvalid"));
         getAccountApiCall.addAssertionRule(Assert.notNull("$.description"));

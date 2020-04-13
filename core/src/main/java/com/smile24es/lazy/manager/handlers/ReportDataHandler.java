@@ -8,6 +8,7 @@ import com.smile24es.lazy.beans.executor.LazyExecutionData;
 import com.smile24es.lazy.beans.executor.TestCaseExecutionData;
 import com.smile24es.lazy.beans.executor.TestScenarioExecutionData;
 import com.smile24es.lazy.beans.executor.TestSuiteExecutionData;
+import com.smile24es.lazy.beans.response.LazyApiCallResponse;
 import com.smile24es.lazy.beans.suite.Header;
 import com.smile24es.lazy.beans.suite.assertions.AssertionValue;
 import com.smile24es.lazy.manager.impl.LazyManagerImpl;
@@ -136,19 +137,19 @@ public class ReportDataHandler {
                         }
                         apiCallReport.setHeaders(headerString);
                         apiCallReport.setRequestBody(apiCallExecutionData.getRequestBody());
-                        apiCallReport.setExecutionTime(apiCallExecutionData.getResponse().getResponseTime()+"ms");
-                        apiCallReport.setHttpStatusCode(apiCallExecutionData.getResponse().getCloseableHttpResponse().getStatusLine().getStatusCode());
-                        String responseBody = apiCallExecutionData.getResponse().getResponseBody();
-                        if (responseBody.contains("<html") && responseBody.contains("</html>")) {
-                            responseBody = responseBody.replace("&", "&amp;");
-                            responseBody = responseBody.replace("<", "&lt;");
-                            responseBody = responseBody.replace(">", "&gt;");
-                            responseBody = responseBody.trim();
+                        LazyApiCallResponse response = apiCallExecutionData.getResponse();
+                        if (response != null) {
+                            apiCallReport.setExecutionTime(response.getResponseTime() + "ms");
+                            apiCallReport.setHttpStatusCode(response.getCloseableHttpResponse().getStatusLine().getStatusCode());
+                            String responseBody = response.getResponseBody();
+                            if (responseBody.contains("<html") && responseBody.contains("</html>")) {
+                                responseBody = responseBody.replace("&", "&amp;");
+                                responseBody = responseBody.replace("<", "&lt;");
+                                responseBody = responseBody.replace(">", "&gt;");
+                                responseBody = responseBody.trim();
+                            }
+                            apiCallReport.setResponse(responseBody);
                         }
-                        LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..");
-                        LOGGER.info(responseBody);
-                        LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>..");
-                        apiCallReport.setResponse(responseBody);
 
 
                         int totalAssertions = 0;

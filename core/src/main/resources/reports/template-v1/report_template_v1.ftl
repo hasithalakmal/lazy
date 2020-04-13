@@ -1662,14 +1662,18 @@
                                                                                                 </tr>
                                                                                                 </thead>
                                                                                                 <tbody>
+                                                                                                <#if apiCallReport.httpMethod?has_content>
                                                                                                 <tr>
                                                                                                     <td>HTTP Metod</td>
                                                                                                     <td>${apiCallReport.httpMethod}</td>
                                                                                                 </tr>
+                                                                                                </#if>
+                                                                                                <#if apiCallReport.url?has_content>
                                                                                                 <tr>
                                                                                                     <td>URL</td>
                                                                                                     <td>${apiCallReport.url}</td>
                                                                                                 </tr>
+                                                                                                </#if>
                                                                                                 <#if apiCallReport.requestBody?has_content>
                                                                                                     <tr>
                                                                                                         <td>Request Body</td>
@@ -1678,20 +1682,26 @@
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </#if>
+                                                                                                <#if apiCallReport.headers?has_content>
                                                                                                 <tr>
                                                                                                     <td>Header List</td>
                                                                                                     <td>
                                                                                                         ${apiCallReport.headers}
                                                                                                     </td>
                                                                                                 </tr>
+                                                                                                </#if>
+                                                                                                <#if apiCallReport.executionTime?has_content>
                                                                                                 <tr>
                                                                                                     <td>Execution time</td>
                                                                                                     <td>${apiCallReport.executionTime}</td>
                                                                                                 </tr>
+                                                                                                 </#if>
+                                                                                                <#if apiCallReport.httpStatusCode?has_content>
                                                                                                 <tr>
                                                                                                     <td>HTTP status code</td>
                                                                                                     <td>${apiCallReport.httpStatusCode}</td>
                                                                                                 </tr>
+                                                                                                </#if>
                                                                                                 <#if apiCallReport.response?has_content>
                                                                                                     <tr>
                                                                                                         <td>Response</td>
@@ -1699,6 +1709,16 @@
                                                                                                             <div overflow>
                                                                                                                 <pre>${apiCallReport.response}</pre>
                                                                                                             </div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                <#else>
+                                                                                                    <tr>
+                                                                                                        <td>Response</td>
+                                                                                                        <td >
+                                                                                                            No Response Found due to API. It might
+                                                                                                            be due to a connectivity issue. Please
+                                                                                                            check the configurations and
+                                                                                                            application status.
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </#if>
