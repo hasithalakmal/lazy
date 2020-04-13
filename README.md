@@ -727,7 +727,7 @@ Lazy version one **(1.0.0)** has released on 2020-04-14 as a beta release. We ar
  Lazy. There are so many things to improve on version 1.0.0 and we are on it. We are encouraging you to try Lazy and provide some feedback to
   improve our framework. Also our next releases will align with your feedback. 
   
-## Next Release 
+## Next Release I
 ### Date 
 `2020 Aug`
 ### Type
@@ -740,7 +740,7 @@ This will be the first major release of Lazy
 5. Embedded code execution with Lazy
 6. DSL Implementation
 
-## Next Release 
+## Next Release II
 ### Date 
 `2021 Jan`
 ### Type
