@@ -135,7 +135,7 @@ We are providing comprehensive result analysis in few ways.
 3. JSON file - You can get the result as a JSON file and build your own custom dahsboards 
 4. CSV file - you can generate a CSV file with execution results
 
-Please refer to the HTML sample report - (http://sample.lazy.smile24es.com/sample-lazy-report.html)
+Please refer to the HTML sample report - [http://sample.lazy.smile24es.com/sample-lazy-report.html]
 
 # Independent executions
 Lazy provides a separate execution API to execute your test suite. It has three main levels/ways you can execute your test suite. 
@@ -197,9 +197,10 @@ It's only two steps
 <dependency>
     <groupId>com.smile24es</groupId>
     <artifactId>lazy-core</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
 </dependency>
 ```
+Please refer to the sample project - [https://github.com/hasithalakmal/lazy-example-1]
 
 # Proposed Project structure
 ```$xslt
@@ -707,3 +708,42 @@ executeTestScenario(TestScenario testScenario, Stack stack) | Execute given test
 executeTestCase(TestCase testCase, Stack stack) | Execute given test case. In here it not inheriting any attribute from the parent. since you have to define stack.
 executeApiCall(ApiCall apiCall, Stack stack) | Execute given api call. In here it not inheriting any attribute from the parent. since you have to define stack.
 
+# Sample Projects
+You can use [https://github.com/hasithalakmal/lazy-example-1] this sample implementation for your references. Currently it contains three samples.
+
+Sample0 - Assertion explanation
+Sample1 - Explain project structure and basic features
+Sample2 - Advance feature examples
+
+To execute that suite you can use - [https://github.com/hasithalakmal/lazy-mock-api] project. 
+
+These code bases will be improve 
+
+# Versioning & Releases
+We are using three digit version number. First digit represent a major release. Second digit represents a feature. Last digit represents a bug fix
+ or minor improvements. 
+
+Lazy version one **(1.0.0)** has released on 2020-04-14 as a beta release. We are warmly welcome all developers/quality engineers and all of you to
+ Lazy. There are so many things to improve on version 1.0.0 and we are on it. We are encouraging you to try Lazy and provide some feedback to
+  improve our framework. Also our next releases will align with your feedback. 
+  
+## Next Release 
+### Date 
+`2020 Aug`
+### Type
+This will be the first major release of Lazy
+### Features
+1. Improve coding standards
+2. Unit test coverage
+3. Minor feature improvements
+4. Improve test scenario coverage by auto generated test values  
+5. Embedded code execution with Lazy
+6. DSL Implementation
+
+## Next Release 
+### Date 
+`2021 Jan`
+### Type
+This will be the second major release of Lazy
+### Features
+1. Lazy UI to create and build your test cases
