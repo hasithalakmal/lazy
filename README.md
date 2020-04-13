@@ -135,6 +135,8 @@ We are providing comprehensive result analysis in few ways.
 3. JSON file - You can get the result as a JSON file and build your own custom dahsboards 
 4. CSV file - you can generate a CSV file with execution results
 
+Please refer to the HTML sample report - (http://sample.lazy.smile24es.com/sample-lazy-report.html)
+
 # Independent executions
 Lazy provides a separate execution API to execute your test suite. It has three main levels/ways you can execute your test suite. 
 1. Execute complete suite
@@ -171,6 +173,7 @@ You can define a set of test groups to execute on a particular test level. As a 
 1. Lazy Language - DSL implementation to improve user friendliness
 2. Web UI to create your test suite visually. 
 3. Improve test scenario coverage by auto generated test values  
+4. Embedded code execution with Lazy
 
 
 # Why you should trust us?
@@ -458,18 +461,96 @@ Lazy Assert API provides a rich set of assertion methods that you can use for yo
 
 Assertion Method     | Description
 --- | ---
-Assert.responseBodyNotNull() | Response body null assertion 
-Assert.responseBodyNotNull(String assertionName) | Response body null assertion with assertion name
-notNullBodyValueAssertion(String jsonPath)  | Check the response body value is not null for the provided json path
-notNullBodyValueAssertion(String assertionName, String jsonPath) | Check the response body value is not null for the provided json path with name
-equalBodyValueAssertion(String jsonPath, String value) | Check the response body value is equal to provided value for the provided json path
-equalBodyValueAssertion(String assertionName, String jsonPath, String value) | Check the response body value is equal to provided value for the provided json path with assertion name
-responseTimeAssertionGreaterThanGivenMilliSeconds(String time) | Validate response time against to the provided milliseconds
-responseTimeAssertionGreaterThanGivenMilliSeconds(String assertionName, String time)  | Validate response time against to the provided milliseconds with assertion name
-responseCodeAssertion(String code) | HTTP response code value assertion
-responseCodeAssertion(String assertionName, String code) | HTTP response code value assertion with assertion name
+responseBodyNotNull() | Response body not null assertion
+nullValue(String jsonPath)  | Check for response body attribute null value
+responseBodyNotNull(String assertionName) | Check for response body attribute null value (overloaded method with name)
+nullValue(String jsonPath)  | Check for response body attribute null value
+nullValue(String assertionName, String jsonPath) |
+notNull(String jsonPath) |
+notNull(String assertionName, String jsonPath) | 
+isKeyAvailable(String jsonPath) | 
+isKeyAvailable(String assertionName, String jsonPath) |
+isKeyUnavailable(String jsonPath)   |
+isKeyUnavailable(String assertionName, String jsonPath) |
+equal(String jsonPath, String value) |
+equal(String assertionName, String jsonPath, String value) |
+equal(String jsonPath, Integer value)   |
+equal(String assertionName, String jsonPath, Integer value) |
+equal(String jsonPath, Double value) |
+equal(String assertionName, String jsonPath, Double value) |
+equal(String jsonPath, Boolean value) |
+equal(String assertionName, String jsonPath, Boolean value) |
+notEqual(String jsonPath, String value) |
+notEqual(String assertionName, String jsonPath, String value) |
+notEqual(String jsonPath, Integer value) |
+notEqual(String assertionName, String jsonPath, Integer value)  |
+notEqual(String jsonPath, Double value) |
+notEqual(String assertionName, String jsonPath, Double value) |
+notEqual(String jsonPath, Boolean value) | 
+notEqual(String assertionName, String jsonPath, Boolean value) | 
+greaterThan(String jsonPath, String value)  | 
+AssertionRule greaterThan(String assertionName, String jsonPath, String value) |
+greaterThan(String jsonPath, Integer value) |
+greaterThan(String assertionName, String jsonPath, Integer value) |
+greaterThan(String jsonPath, Double value) |
+greaterThan(String assertionName, String jsonPath, Double value)  |
+greaterThanOrEqual(String jsonPath, String value) |
+greaterThanOrEqual(String assertionName, String jsonPath, String value) |
+greaterThanOrEqual(String jsonPath, Integer value) |
+greaterThanOrEqual(String assertionName, String jsonPath, Integer value)  |
+greaterThanOrEqual(String jsonPath, Double value) |
+greaterThanOrEqual(String assertionName, String jsonPath, Double value) |
+lessThan(String jsonPath, String value) |
+lessThan(String assertionName, String jsonPath, String value) |
+lessThan(String jsonPath, Integer value) |
+lessThan(String assertionName, String jsonPath, Integer value) |
+lessThan(String jsonPath, Double value) |
+lessThan(String assertionName, String jsonPath, Double value) |
+lessThanOrEqual(String jsonPath, String value) | 
+lessThanOrEqual(String assertionName, String jsonPath, String value)
+lessThanOrEqual(String jsonPath, Integer value) |
+lessThanOrEqual(String assertionName, String jsonPath, Integer value) |
+lessThanOrEqual(String jsonPath, Double value) | 
+lessThanOrEqual(String assertionName, String jsonPath, Double value) | 
+between(String jsonPath, String value1, String value2) | 
+between(String assertionName, String jsonPath, String value1, String value2) | 
+between(String jsonPath, Integer value1, Integer value2) | 
+between(String assertionName, String jsonPath, Integer value1, Integer value2) |
+between(String jsonPath, Double value1, Double value2) |
+between(String assertionName, String jsonPath, Double value1, Double value2) |
+contains(String jsonPath, String value) | 
+contains(String assertionName, String jsonPath, String value) |
+notContains(String jsonPath, String value) |
+notContains(String assertionName, String jsonPath, String value) |
+containsExactly(String jsonPath, List values) |
+containsExactly(String assertionName, String jsonPath, List values) |
+containsAll(String jsonPath, List values) |
+containsAll(String assertionName, String jsonPath, List values) |
+containsAny(String jsonPath, List values)  | 
+containsAny(String assertionName, String jsonPath, List values) | 
+responseTimeLessThan(String time) | 
+responseTimeLessThan(String assertionName, String time) | 
+responseTimeLessThanOrEqual(String time) | 
+responseTimeLessThanOrEqual(String assertionName, String time) | 
+responseTimeGreaterThan(String time) |
+responseTimeGreaterThan(String assertionName, String time)  |
+responseTimeGreaterThanOrEqual(String time)  |
+responseTimeGreaterThanOrEqual(String assertionName, String time) |
+responseCodeEqual(Integer code) |
+responseCodeEqual(String assertionName, Integer code) | 
+responseCodeNotEqual(Integer code) | 
+responseCodeNotEqual(String assertionName, Integer code) | 
+responseCodeLessThan(Integer code) | 
+responseCodeLessThan(String assertionName, Integer code) | 
+responseCodeLessThanOrEqual(Integer code) | 
+responseCodeLessThanOrEqual(String assertionName, Integer code) | 
+responseCodeGreaterThan(Integer code) | 
+responseCodeGreaterThanOrEqual(Integer code) | 
+responseCodeGreaterThanOrEqual(String assertionName, Integer code) | 
+responseCodeBetween(Integer code1, Integer code2) | 
+responseCodeBetween(String assertionName, Integer code1, Integer code2) | 
 
-We have use JSON path to provide very powerful and easy way to write assertions. Please refer JSON path documentation [https://github.com/json-path
+We have used JSON path to provide very powerful and easy way to write assertions. Please refer JSON path documentation [https://github.com/json-path
 /JsonPath]. You can validate your JSON path with this [http://jsonpath.herokuapp.com/]. 
 
 This is the sample JSON response and valid JSON path based assertions for your references. 
@@ -514,9 +595,93 @@ This is the sample JSON response and valid JSON path based assertions for your r
 }
 ```
 
-Please refer to the assertion rules
+Please refer to the following assertion rule example to experience the beauty and power of the Lazy Assertion API. 
+```java
+Assert.responseCodeEqual(200);
+
+//Null/Not Null assertions
+Assert.notNull("$.accountId");
+Assert.notNull("$.accountName");
+Assert.notNull("$.isActive");
+Assert.notNull("$.monthlyCharge");
+Assert.notNull("$.phone");
+Assert.notNull("$.phone.number");
+Assert.notNull("$.settings");
+Assert.notNull("$.settings[0].id");
+Assert.notNull("$.settings[0].key");
+Assert.notNull("$.settings[0].value");
+Assert.notNull("$.settings[0].isActive");
+Assert.notNull("$.settings[0].chargeForFeature");
+Assert.notNull("$.settings[1].id");
+Assert.notNull("$.settings[1].key");
+Assert.notNull("$.settings[1].value");
+Assert.notNull("$.settings[1].isActive");
+Assert.notNull("$.settings[1].chargeForFeature");
+Assert.notNull("$.settings[1].supportedMethods");
+Assert.notNull("$.settings[1].supportedMethods[0].type");
+Assert.notNull("$.settings[1].supportedMethods[0].minValue");
+Assert.notNull("$.settings[1].supportedMethods[1].type");
+Assert.notNull("$.settings[1].supportedMethods[1].allowed");
+
+Assert.isKeyAvailable("$.accountName");
+Assert.isKeyUnavailable("$.invalidKey");
+
+//Equal assertions
+Assert.equal("$.accountId", 1);
+Assert.equal("$.accountName", "Smile24");
+Assert.equal("$.isActive", true);
+Assert.equal("$.monthlyCharge", 10.75);
+Assert.equal("$.phone.number", "12345678");
+Assert.equal("$.settings[0].id", 840);
+Assert.equal("$.settings[0].key", "payment.period");
+Assert.equal("$.settings[0].value", "monthly");
+Assert.equal("$.settings[0].isActive", true);
+Assert.equal("$.settings[0].chargeForFeature", 11.9);
+Assert.equal("$.settings[1].id", 841);
+Assert.equal("$.settings[1].key", "payment.method");
+Assert.equal("$.settings[1].value", "direct");
+Assert.equal("$.settings[1].isActive", true);
+Assert.equal("$.settings[1].chargeForFeature", 12.86);
+Assert.equal("$.settings[1].supportedMethods[0].type", "Card");
+Assert.equal("$.settings[1].supportedMethods[0].minValue", 1);
+Assert.equal("$.settings[1].supportedMethods[1].type", "Cash");
+
+//String operations
+Assert.contains("$.accountName", "Smile");
+Assert.notContains("$.accountName", "Lazy");
 
 
+//Max min - numeric logic
+Assert.greaterThan("$.monthlyCharge", 10.00);
+Assert.lessThan("$.monthlyCharge", 11.00);
+Assert.greaterThanOrEqual("$.monthlyCharge", 10.75);
+Assert.lessThanOrEqual("$.monthlyCharge", 10.75);
+Assert.between("$.monthlyCharge", 10.00, 11.00);
+
+//List related logic
+Assert.containsExactly("$.settings[*].key", Arrays.asList("payment.period", "payment.method"));
+Assert.containsExactly("$.settings[*].id", Arrays.asList(840, 841));
+Assert.containsExactly("$.settings[*].chargeForFeature", Arrays.asList(11.9, 12.86));
+Assert.containsExactly("$.settings[*].isActive", Arrays.asList(true, true));
+
+Assert.containsAll("$.settings[*].key", Arrays.asList("payment.period"));
+Assert.containsAll("$.settings[*].id", Arrays.asList(840));
+Assert.containsAll("$.settings[*].chargeForFeature", Arrays.asList(11.9));
+Assert.containsAll("$.settings[*].isActive", Arrays.asList(true));
+
+Assert.containsAny("$.settings[*].key", Arrays.asList("payment.period", "INVALID"));
+Assert.containsAny("$.settings[*].id", Arrays.asList(840, 1000));
+Assert.containsAny("$.settings[*].chargeForFeature", Arrays.asList(11.9, 1000));
+Assert.containsAny("$.settings[*].isActive", Arrays.asList(true, false));
+
+//Advanced list related logic
+Assert.containsExactly("$.settings[?(@.key=='payment.period')].value", Arrays.asList("monthly"));
+Assert.containsExactly("$.settings[?(@.supportedMethods)].id", Arrays.asList(841));
+Assert.containsExactly("$.settings[?(@.supportedMethods)].supportedMethods.[?(@.type == 'Card')].minValue", Arrays.asList(1));
+Assert.containsExactly("$.settings[?(@.supportedMethods)].supportedMethods.[?(@.type == 'Cash')].allowed[*]", Arrays.asList("SLR", "USD"));
+
+```
+Lazy API has supported very large range of assertions with single method call. 
 
 # Action API
 Lazy Action API provides some pre define actions you can execute before or after API call execution. API call supports for pre and post actions
