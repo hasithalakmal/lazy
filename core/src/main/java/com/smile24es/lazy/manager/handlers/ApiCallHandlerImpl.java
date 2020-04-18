@@ -180,7 +180,9 @@ public class ApiCallHandlerImpl {
 
     private void populateHeaders(ApiCall apiCall, HttpRequestBase request) {
         if (apiCall.getHeaderGroup() != null) {
-            apiCall.getHeaderGroup().getHeaders().forEach(header -> request.addHeader(header.getKey(), header.getValue()));
+            apiCall.getHeaderGroup().getHeaders().forEach(header -> request.addHeader(
+                  VariableManipulationUtil.getVariableValue(header.getKey(), apiCall.getStack()),
+                  VariableManipulationUtil.getVariableValue(header.getValue(), apiCall.getStack())));
         }
     }
 

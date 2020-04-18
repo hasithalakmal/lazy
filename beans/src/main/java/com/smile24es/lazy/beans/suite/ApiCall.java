@@ -372,6 +372,16 @@ public class ApiCall implements Serializable {
         requestBody = jsonObject.toJSONString();
     }
 
+    public void addHeader(Header header) {
+        if (this.headerGroup == null) {
+            headerGroup = new HeaderGroup("Default Header Group");
+            if (headerGroup.getHeaders() == null || headerGroup.getHeaders().isEmpty()) {
+                this.headerGroup.setHeaders(new ArrayList<>());
+            }
+        }
+        this.headerGroup.getHeaders().add(header);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
