@@ -52,7 +52,7 @@ public class LazyManagerImpl extends LazyBaseManager implements LazyManager {
     @Override
     public LazyExecutionData executeLazySuite(LazySuite lazySuite, LazyExecutionGroup lazyExecutionGroup) throws LazyException, LazyCoreException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Ready to execute lazy suite - [{}]", JsonUtil.getJsonStringFromObject(lazySuite));
+            LOGGER.debug("Ready to execute lazy suite - [{}]", lazySuite);
         }
 
         if (lazySuite == null) {

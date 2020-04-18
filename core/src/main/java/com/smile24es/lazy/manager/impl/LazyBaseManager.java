@@ -111,44 +111,44 @@ public class LazyBaseManager {
     protected void mergeStack(TestSuite testSuite, TestScenario testScenario, String testScenarioName) throws LazyCoreException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Merging two stacks for [{}] test scenario: parent stack [{}] - child stack [{}]", testScenarioName,
-                  JsonUtil.getJsonStringFromObject(testSuite.getStack()), JsonUtil.getJsonStringFromObject(testScenario.getStack()));
+                  testSuite.getStack(), testScenario.getStack());
         }
         testScenario.setStack(stackManager.mergeTwoStacks(testSuite.getStack(), testScenario.getStack()));
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Merged stacks on test scenario level for [{}] : merged [{}]", testScenarioName, JsonUtil.getJsonStringFromObject(testScenario.getStack()));
+            LOGGER.debug("Merged stacks on test scenario level for [{}] : merged [{}]", testScenarioName, testScenario.getStack());
         }
     }
 
     protected void mergeStack(LazySuite lazySuite, TestSuite testSuite, String testSuiteName) throws LazyCoreException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Merging two stacks for [{}] test suite : parent stack [{}] - child stack [{}]", testSuiteName,
-                  JsonUtil.getJsonStringFromObject(lazySuite.getStack()), JsonUtil.getJsonStringFromObject(testSuite.getStack()));
+                  lazySuite.getStack(), testSuite.getStack());
         }
         testSuite.setStack(stackManager.mergeTwoStacks(lazySuite.getStack(), testSuite.getStack()));
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Merged stacks on test suite level for [{}] : merged [{}]", testSuiteName, JsonUtil.getJsonStringFromObject(testSuite.getStack()));
+            LOGGER.debug("Merged stacks on test suite level for [{}] : merged [{}]", testSuiteName, testSuite.getStack());
         }
     }
 
     protected void mergeStack(TestScenario testScenario, TestCase testCase, String testCaseName) throws LazyCoreException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Merging two stacks for [{}] test case: parent stack [{}] - child stack [{}]", testCaseName,
-                  JsonUtil.getJsonStringFromObject(testScenario.getStack()), JsonUtil.getJsonStringFromObject(testCase.getStack()));
+                  testScenario.getStack(), testCase.getStack());
         }
         testCase.setStack(stackManager.mergeTwoStacks(testScenario.getStack(), testCase.getStack()));
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Merged stacks on test case level for [{}] : merged [{}]", testCaseName, JsonUtil.getJsonStringFromObject(testCase.getStack()));
+            LOGGER.debug("Merged stacks on test case level for [{}] : merged [{}]", testCaseName, testCase.getStack());
         }
     }
 
     protected void mergeStack(TestCase testCase, ApiCall apiCall, String apiCallName) throws LazyCoreException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Merging two stacks for [{}] api call: parent stack [{}] - child stack [{}]", apiCallName,
-                  JsonUtil.getJsonStringFromObject(testCase.getStack()), JsonUtil.getJsonStringFromObject(apiCall.getStack()));
+                  testCase.getStack(), apiCall.getStack());
         }
         apiCall.setStack(stackManager.mergeTwoStacks(testCase.getStack(), apiCall.getStack()));
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Merged stacks on test case level for [{}] : merged [{}]", apiCallName, JsonUtil.getJsonStringFromObject(apiCall.getStack()));
+            LOGGER.debug("Merged stacks on test case level for [{}] : merged [{}]", apiCallName, apiCall.getStack());
         }
     }
 }

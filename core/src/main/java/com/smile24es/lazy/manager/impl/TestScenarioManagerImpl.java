@@ -135,7 +135,7 @@ public class TestScenarioManagerImpl extends LazyBaseManager implements com.smil
 
     private void validateTestScenario(TestScenario testScenario) throws LazyCoreException, LazyException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Ready to execute test scenario - [{}]", JsonUtil.getJsonStringFromObject(testScenario));
+            LOGGER.debug("Ready to execute test scenario - [{}]", testScenario);
         }
 
         if (testScenario == null) {

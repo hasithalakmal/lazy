@@ -148,7 +148,7 @@ public class TestCaseManagerImpl extends LazyBaseManager implements com.smile24e
 
     private void validateTestCase(TestCase testCase) throws LazyCoreException, LazyException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Ready to execute test case - [{}]", JsonUtil.getJsonStringFromObject(testCase));
+            LOGGER.debug("Ready to execute test case - [{}]", testCase);
         }
 
         if (testCase == null) {

@@ -204,7 +204,7 @@ public class ApiCallManagerImpl extends LazyBaseManager implements com.smile24es
         List<Action> postActions = apiCall.getPostActions();
         for (Action postAction : postActions) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Ready to execute post action - [{}]", JsonUtil.getJsonStringFromObject(postAction));
+                LOGGER.debug("Ready to execute post action - [{}]", postAction);
             } else {
                 LOGGER.info("Ready to execute post action...");
             }
@@ -218,7 +218,7 @@ public class ApiCallManagerImpl extends LazyBaseManager implements com.smile24es
         List<Action> postActions = apiCall.getPostActions();
         for (Action postAction : postActions) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Ready to execute post action - [{}]", JsonUtil.getJsonStringFromObject(postAction));
+                LOGGER.debug("Ready to execute post action - [{}]", postAction);
             } else {
                 LOGGER.info("Ready to execute post action...");
             }
@@ -232,7 +232,7 @@ public class ApiCallManagerImpl extends LazyBaseManager implements com.smile24es
         List<Action> preActions = apiCall.getPreActions();
         for (Action preAction : preActions) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Ready to execute pre action - [{}]", JsonUtil.getJsonStringFromObject(preAction));
+                LOGGER.debug("Ready to execute pre action - [{}]", preAction);
             }
             actionHandler.executePreAction(lazySuite, preAction);
         }
@@ -252,7 +252,7 @@ public class ApiCallManagerImpl extends LazyBaseManager implements com.smile24es
 
     private void validateApiCall(ApiCall apiCall) throws LazyCoreException, LazyException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Ready to execute api call - [{}]", JsonUtil.getJsonStringFromObject(apiCall));
+            LOGGER.debug("Ready to execute api call - [{}]", apiCall);
         }
 
         if (apiCall == null) {

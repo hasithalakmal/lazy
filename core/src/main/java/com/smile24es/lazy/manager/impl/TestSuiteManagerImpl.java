@@ -118,7 +118,7 @@ public class TestSuiteManagerImpl extends LazyBaseManager implements com.smile24
 
     private void validateTestSuite(TestSuite testSuite) throws LazyCoreException, LazyException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Ready to execute test suite - [{}]", JsonUtil.getJsonStringFromObject(testSuite));
+            LOGGER.debug("Ready to execute test suite - [{}]", testSuite);
         }
 
         if (testSuite == null) {

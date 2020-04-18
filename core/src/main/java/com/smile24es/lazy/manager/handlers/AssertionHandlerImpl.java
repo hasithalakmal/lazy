@@ -129,7 +129,7 @@ public class AssertionHandlerImpl {
 
     private void validateAssertionRule(AssertionRule assertionRule) throws LazyCoreException, LazyException {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Ready to execute assertion rule - [{}]", JsonUtil.getJsonStringFromObject(assertionRule));
+            LOGGER.debug("Ready to execute assertion rule - [{}]", assertionRule);
         }
 
         if (assertionRule == null) {

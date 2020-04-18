@@ -2,10 +2,14 @@ package com.smile24es.lazy.manager.handlers;
 
 import com.smile24es.lazy.beans.DefaultValues;
 import com.smile24es.lazy.beans.environment.Environment;
+import com.smile24es.lazy.beans.suite.ApiCall;
+import com.smile24es.lazy.beans.suite.HeaderGroup;
 import com.smile24es.lazy.beans.suite.Stack;
 import com.smile24es.lazy.beans.suite.assertions.AssertionRule;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +18,8 @@ import java.util.Map;
 
 @Service
 public class StackHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(StackHandler.class);
 
     public Stack mergeTwoStacks(Stack parentStack, Stack childStack) {
 
@@ -47,7 +53,23 @@ public class StackHandler {
             }
 
             if (childDefaultValues.getHeaderGroup() != null) {
-                mergedDefaultValues.setHeaderGroup(childDefaultValues.getHeaderGroup());
+                HeaderGroup mergeHeaderGroup = new HeaderGroup();
+                List<String> childHeaderNames = new ArrayList<>();
+                childDefaultValues.getHeaderGroup().getHeaders().forEach(childHeaders -> {
+                    if (childHeaders != null) {
+                        mergeHeaderGroup.getHeaders().add(childHeaders);
+                        childHeaderNames.add(childHeaders.getValue());
+                    }
+                });
+                HeaderGroup parentHeaderGroup = parentStack.getDefaultValues().getHeaderGroup();
+                if (parentHeaderGroup != null && !parentHeaderGroup.getHeaders().isEmpty()){
+                    parentHeaderGroup.getHeaders().forEach(parentHeaders -> {
+                        if (parentHeaders!= null && !childHeaderNames.contains(parentHeaders.getKey())) {
+                            mergeHeaderGroup.getHeaders().add(parentHeaders);
+                        }
+                    });
+                }
+                mergedDefaultValues.setHeaderGroup(mergeHeaderGroup);
             }
             mergedStack.setDefaultValues(mergedDefaultValues);
         }

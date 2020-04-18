@@ -19,6 +19,9 @@ public class HeaderGroup implements Serializable {
     private Boolean active;
     private List<Header> headers;
 
+    public HeaderGroup() {
+    }
+
     public HeaderGroup(String headerGroupName) {
         this.headerGroupName = headerGroupName;
     }

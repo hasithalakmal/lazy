@@ -5,6 +5,7 @@ import com.smile24es.lazy.beans.executor.ApiCallExecutionData;
 import com.smile24es.lazy.beans.response.LazyApiCallResponse;
 import com.smile24es.lazy.beans.suite.ApiCall;
 import com.smile24es.lazy.beans.suite.Header;
+import com.smile24es.lazy.beans.suite.HeaderGroup;
 import com.smile24es.lazy.beans.suite.QueryParam;
 import com.smile24es.lazy.common.ErrorCodes;
 import com.smile24es.lazy.exception.LazyException;
@@ -30,6 +31,8 @@ import org.springframework.util.CollectionUtils;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.text.MessageFormat.format;
 import static org.apache.http.impl.client.HttpClients.createDefault;
@@ -180,9 +183,31 @@ public class ApiCallHandlerImpl {
 
     private void populateHeaders(ApiCall apiCall, HttpRequestBase request) {
         if (apiCall.getHeaderGroup() != null) {
-            apiCall.getHeaderGroup().getHeaders().forEach(header -> request.addHeader(
-                  VariableManipulationUtil.getVariableValue(header.getKey(), apiCall.getStack()),
-                  VariableManipulationUtil.getVariableValue(header.getValue(), apiCall.getStack())));
+            HeaderGroup allHeaders = new HeaderGroup();
+            List<String> childHeaderNames = new ArrayList<>();
+            apiCall.getHeaderGroup().getHeaders().forEach(childHeaders -> {
+                if (childHeaders != null) {
+                    allHeaders.getHeaders().add(childHeaders);
+                    childHeaderNames.add(childHeaders.getValue());
+                }
+            });
+            HeaderGroup parentHeaderGroup = apiCall.getStack().getDefaultValues().getHeaderGroup();
+            if (parentHeaderGroup != null && !parentHeaderGroup.getHeaders().isEmpty()){
+                parentHeaderGroup.getHeaders().forEach(parentHeaders -> {
+                    if (parentHeaders!= null && !childHeaderNames.contains(parentHeaders.getKey())) {
+                        allHeaders.getHeaders().add(parentHeaders);
+                    }
+                });
+            }
+
+            HeaderGroup actualHeaderGroup = new HeaderGroup();
+            allHeaders.getHeaders().forEach(header -> {
+                String headerKey = VariableManipulationUtil.getVariableValue(header.getKey(), apiCall.getStack());
+                String headerValue = VariableManipulationUtil.getVariableValue(header.getValue(), apiCall.getStack());
+                request.addHeader(headerKey, headerValue);
+                actualHeaderGroup.getHeaders().add(new Header(headerKey, headerValue));
+            });
+            apiCall.setHeaderGroup(actualHeaderGroup);
         }
     }
 
